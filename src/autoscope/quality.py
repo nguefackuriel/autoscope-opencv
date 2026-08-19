@@ -10,11 +10,30 @@ from dataclasses import asdict, dataclass
 import cv2 as cv
 import numpy as np
 
-# Thresholds are starting points measured on the NLM thick smear set. Re-fit
-# them in eval/ before the final report rather than trusting these.
-FOCUS_MIN = 120.0
-UNIFORMITY_MIN = 0.75
-DEBRIS_MAX = 0.35
+from autoscope import fov
+
+# Every metric here works inside the round field of view, never on the raw
+# frame. See autoscope/fov.py: about 54% of a phone-through-eyepiece capture is
+# the black surround, and a statistic taken over the whole frame is mostly a
+# statistic about that border.
+#
+# Measured on 300 images across all 150 patients of the NLM thick smear set,
+# see eval/focus_survey.py and eval/results/focus_survey.json. Each threshold
+# sits just outside the 5th or 95th percentile, so a normal field passes and
+# only the genuinely bad ones get flagged.
+#
+# DEBRIS_MAX especially is a placeholder with a number behind it rather than a
+# validated limit. A thick smear is lysed blood and is full of small particles
+# by nature, so the median image already scores 0.69. Before the final report,
+# check this against fields the counter actually got wrong, not against the
+# distribution.
+#
+# Do not carry these to another dataset. Laplacian variance scales with
+# resolution, magnification and stain, so a threshold fitted on 4032x3024 phone
+# captures means nothing on a different rig. Re-run the survey instead.
+FOCUS_MIN = 11.0        # p5 of the real data is 10.1
+UNIFORMITY_MIN = 0.90   # p5 is 0.915, median 0.965
+DEBRIS_MAX = 0.85       # p95 is 0.80, median 0.685
 
 
 @dataclass(frozen=True)
@@ -52,64 +71,105 @@ def _gray(image: np.ndarray) -> np.ndarray:
     return cv.cvtColor(image, cv.COLOR_BGR2GRAY)
 
 
-def focus_score(image: np.ndarray) -> float:
+def _inside(mask: np.ndarray | None, shape: tuple[int, int]) -> np.ndarray:
+    if mask is None:
+        return np.full(shape, 255, np.uint8)
+    return mask
+
+
+def focus_score(image: np.ndarray, mask: np.ndarray | None = None) -> float:
     """Variance of the Laplacian. Higher is sharper.
 
     Absolute values depend on magnification and stain, so this is only
     comparable between fields of the same slide. That is all the agent needs,
     because it only ever compares a field against the same field refocused.
     """
-    return float(cv.Laplacian(_gray(image), cv.CV_64F).var())
+    lap = cv.Laplacian(_gray(image), cv.CV_64F)
+    inside = _inside(mask, lap.shape).astype(bool)
+    values = lap[inside]
+    return float(values.var()) if values.size else 0.0
 
 
-def illumination_uniformity(image: np.ndarray, grid: int = 8) -> float:
-    """1.0 means perfectly even lighting, lower means vignetting or a bad lamp.
+def illumination_uniformity(
+    image: np.ndarray, mask: np.ndarray | None = None, grid: int = 8
+) -> float:
+    """1.0 means even lighting across the field, lower means vignetting.
 
-    Microscope images taken down a phone camera almost always darken at the
-    edges, so this decides whether stage 2 can rescue the field or not.
+    Measured on the background, not on the raw pixels. A thick smear is full of
+    dark cells, so raw tile means vary enormously between a crowded corner and
+    an empty one, and that variation says nothing about the lamp. Estimating
+    the background first with a heavy blur separates the illumination from the
+    cells, which is the thing stage 2 actually has to correct.
+
+    An earlier version skipped the blur and scored every real image at about
+    0.05, which would have rejected the whole dataset.
     """
-    gray = _gray(image).astype(np.float64)
-    h, w = gray.shape
-    tiles = [
-        gray[y : y + h // grid, x : x + w // grid].mean()
-        for y in range(0, h - h % grid, max(h // grid, 1))
-        for x in range(0, w - w % grid, max(w // grid, 1))
-    ]
-    tiles = np.asarray(tiles, dtype=np.float64)
-    if tiles.mean() <= 0:
+    gray = _gray(image)
+
+    # Lighting is low frequency, so shrink first. A wide blur on a 12 megapixel
+    # frame costs seconds; the same blur on a 256 pixel thumbnail costs nothing
+    # and tells us exactly the same thing.
+    small = cv.resize(gray, (256, 256), interpolation=cv.INTER_AREA).astype(np.float32)
+    background = cv.GaussianBlur(small, (0, 0), 10.0)
+
+    inside = cv.resize(
+        _inside(mask, gray.shape), (256, 256), interpolation=cv.INTER_NEAREST
+    ).astype(bool)
+
+    h, w = background.shape
+    step_y, step_x = max(h // grid, 1), max(w // grid, 1)
+    tiles = []
+    for y in range(0, h - h % grid, step_y):
+        for x in range(0, w - w % grid, step_x):
+            cell = background[y : y + step_y, x : x + step_x]
+            keep = inside[y : y + step_y, x : x + step_x]
+            # Only score tiles that are essentially all inside the disc. A tile
+            # straddling the rim is half black and would look like bad lighting.
+            if keep.mean() > 0.9:
+                tiles.append(cell[keep].mean())
+
+    if not tiles:
         return 0.0
-    return float(max(0.0, 1.0 - tiles.std() / tiles.mean()))
+    arr = np.asarray(tiles, dtype=np.float64)
+    if arr.mean() <= 0:
+        return 0.0
+    return float(max(0.0, 1.0 - arr.std() / arr.mean()))
 
 
-def _foreground_mask(image: np.ndarray) -> np.ndarray:
+def _foreground_mask(image: np.ndarray, mask: np.ndarray | None = None) -> np.ndarray:
     """Everything darker than its neighbourhood: cells, parasites and dirt."""
     gray = _gray(image)
     blurred = cv.medianBlur(gray, 5)
-    mask = cv.adaptiveThreshold(
+    binary = cv.adaptiveThreshold(
         blurred, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY_INV, 51, 8
     )
     kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (3, 3))
-    return cv.morphologyEx(mask, cv.MORPH_OPEN, kernel, iterations=1)
+    fg = cv.morphologyEx(binary, cv.MORPH_OPEN, kernel, iterations=1)
+    return cv.bitwise_and(fg, _inside(mask, fg.shape))
 
 
-def cell_density(image: np.ndarray) -> float:
+def cell_density(image: np.ndarray, mask: np.ndarray | None = None) -> float:
     """Fraction of the field covered by anything solid.
 
     A field with nothing in it wastes a count, and a field that is completely
     packed cannot be segmented, so the agent uses this at both ends.
     """
-    mask = _foreground_mask(image)
-    return float(np.count_nonzero(mask) / mask.size)
+    fg = _foreground_mask(image, mask)
+    inside = _inside(mask, fg.shape)
+    area = np.count_nonzero(inside)
+    return float(np.count_nonzero(fg) / area) if area else 0.0
 
 
-def debris_ratio(image: np.ndarray, min_cell_area: int = 40) -> float:
+def debris_ratio(
+    image: np.ndarray, mask: np.ndarray | None = None, min_cell_area: int = 40
+) -> float:
     """Share of foreground objects too small or too jagged to be cells.
 
     Stain precipitate and dust are the main false-positive source in thick
     smears, so we measure them rather than hoping the classifier copes.
     """
-    mask = _foreground_mask(image)
-    contours, _ = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+    fg = _foreground_mask(image, mask)
+    contours, _ = cv.findContours(fg, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
     if not contours:
         return 0.0
 
@@ -131,13 +191,23 @@ def debris_ratio(image: np.ndarray, min_cell_area: int = 40) -> float:
     return float(junk / len(contours))
 
 
-def assess_field(image: np.ndarray) -> FieldQuality:
-    """The agent's first tool. One image in, four numbers out."""
+def assess_field(image: np.ndarray, crop_to_fov: bool = True) -> FieldQuality:
+    """The agent's first tool. One image in, four numbers out.
+
+    Crops to the round field of view first, so the numbers describe the sample
+    and not the black surround. Pass crop_to_fov=False for an image that is
+    already a tile from inside a field.
+    """
+    if crop_to_fov:
+        image, mask = fov.crop(image)
+    else:
+        mask = None
+
     return FieldQuality(
-        focus_score=focus_score(image),
-        illumination_uniformity=illumination_uniformity(image),
-        cell_density=cell_density(image),
-        debris_ratio=debris_ratio(image),
+        focus_score=focus_score(image, mask),
+        illumination_uniformity=illumination_uniformity(image, mask),
+        cell_density=cell_density(image, mask),
+        debris_ratio=debris_ratio(image, mask),
     )
 
 
