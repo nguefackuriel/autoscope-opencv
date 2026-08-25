@@ -11,4 +11,3 @@ bench/results/*.json
 .DS_Store
 
 src/*.egg-info/
-eval/results/*.json
