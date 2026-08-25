@@ -22,22 +22,44 @@ purpose, never by accident.
 
 ## Data
 
+Two sets. We fit on the first and only ever test on the second.
+
 ```
-make data      # 3.9 GB, resumable, writes to data/raw/
+make data          # NLM thick smears, 3.9 GB, what we develop against
+make data-tanzania # Tanzania, 3.0 GB, held out for the generalisation test
 ```
 
-This pulls the NLM thick blood smear set: 150 patients, de-identified, labelled
-by expert readers at the Mahidol-Oxford Tropical Medicine Research Unit. The
+**NLM thick blood smears** (`data/download.py`). 150 patients, 1883 images,
+de-identified, labelled by expert readers at the Mahidol-Oxford Tropical
+Medicine Research Unit. 84 509 parasite and 35 449 white cell annotations. The
 images were taken with a phone held to a microscope eyepiece, which is how
-AutoScope captures too. Nothing in `data/` is committed.
+AutoScope captures too.
 
-The script prints the real folder layout after extracting. Read that output
-before writing anything that touches the files, rather than guessing the shape.
+**Tanzania** (`data/download_tanzania.py`). Collected in five health centres of
+the Tanga region on a 40X-2500X compound microscope with a 4K Sony IMX334
+camera. CC0, so no restrictions at all. Different country, different rig,
+different camera. Use `--thick-only` to skip 1.2 GB of thin smears.
+
+Nothing in `data/` is committed. Both scripts print the real folder layout after
+extracting; read that output before writing anything that touches the files.
+
+The Tanzania set is the held-out test and we keep it that way. No threshold gets
+fitted on it, no model gets trained on it, and nobody looks at its numbers until
+the pipeline is frozen. A held-out set you have already peeked at is not a
+held-out set, and the generalisation claim in the report depends on this.
+
+A third option exists if we want more: the Lacuna Malaria datasets from Ghana
+and Uganda, `doi:10.7910/DVN/VEADSE`, CC BY 4.0, 7.2 GB in rar archives.
 
 ## Layout
 
 ```
+docs/proposal/                what we submitted, and what the data has since
+                              contradicted
+docs/reference/               the WHO reports our numbers come from
+docs/data-notes.md            what the data actually is. Read before coding.
 src/autoscope/
+  fov.py                      find the round eyepiece view. Runs first.
   quality.py         stage 1  is this field worth counting
   photometry.py      stage 2  even out lighting and stain      (to write)
   registration.py    stage 3  line up views, measure overlap    (to write)
@@ -45,7 +67,7 @@ src/autoscope/
   classify.py        stage 5  ONNX model through cv.dnn         (to write)
   density.py         stage 6  count to parasites/uL with an error bar
   virtual_stage.py            the stage the agent moves around
-agent/                        the seven tools and the loop      (to write)
+src/autoscope/agent/          the seven tools, three policies, the loop
 bench/cool_bench.py           COOL against stock, medians and IQR
 eval/                         metrics and failure cases         (to write)
 infra/                        Terraform for AWS                 (to write)

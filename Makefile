@@ -1,4 +1,4 @@
-.PHONY: setup data test bench clean
+.PHONY: setup data data-tanzania test bench clean
 
 setup:                     ## create the venv and install pinned deps
 	uv venv --python 3.12
@@ -6,6 +6,9 @@ setup:                     ## create the venv and install pinned deps
 
 data:                      ## download the NLM thick smear set (3.9 GB, resumable)
 	.venv/bin/python data/download.py
+
+data-tanzania:             ## download the held-out Tanzania set (3.0 GB, CC0)
+	.venv/bin/python data/download_tanzania.py
 
 test:                      ## run the unit tests
 	.venv/bin/pytest -q
