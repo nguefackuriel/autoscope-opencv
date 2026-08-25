@@ -43,22 +43,23 @@ from autoscope import fov, photometry
 # roughly sixteen times cheaper. That matters: this is the stage we benchmark.
 SCALE = 0.25
 
-# Fitted against ground truth by eval/wbc_sweep.py, see eval/results/wbc_sweep.json.
+# Fitted by eval/wbc_sweep.py with stain normalisation on, applied by
+# eval/apply_sweep.py. See eval/results/wbc_sweep.json.
 #
-# The grid had a better F1 available: 0.745 at SEED_FRACTION 0.75 with a 24 px
-# close, against 0.696 here. We did not take it, because it over-counts cells by
-# 18% and this count is the denominator of the density. An 18% surplus of white
-# cells makes every parasitaemia we report 18% too low, for every patient, in the
-# same direction. These values cost a little localisation accuracy and bring the
-# count bias down to +1.8%.
+# Selection rule: among settings whose count bias is inside 1%, best F1 wins.
+# The grid offered F1 0.850 at +5.9% bias and we passed, because this count is
+# the denominator of the density: a systematic surplus of white cells makes
+# every parasitaemia too low by the same fraction, for every patient. What
+# shipped reads F1 0.815 at +0.5% bias on the fit set, and F1 0.793 at +2.5%
+# bias on the 50 held-out patients.
 #
 # Optimise the number that reaches the clinician, not the metric that looks best.
 STAIN_MIN = 55.0        # a - b inside a nucleus, in Lab units
 AREA_MIN_FULL = 1800    # px^2 at full resolution
 AREA_MAX_FULL = 30000
-CLOSE_KERNEL_FULL = 44  # px at full resolution, to rejoin nucleus lobes
+CLOSE_KERNEL_FULL = 24  # px at full resolution, to rejoin nucleus lobes
 MIN_SOLIDITY = 0.55
-SEED_FRACTION = 0.85    # of each blob's own distance maximum, never the image's
+SEED_FRACTION = 0.45    # of each blob's own distance maximum, never the image's
 
 
 @dataclass(frozen=True)

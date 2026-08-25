@@ -1,10 +1,13 @@
 """Take the sweep's least-biased parameters, write them into segmentation.py,
 and re-score on the held-out patients.
 
-Selection rule, stated once so it does not drift: choose the least absolute
-count bias, break ties on F1. The count is the denominator of the density, so a
-systematic surplus or deficit poisons every parasitaemia in the same direction,
-while localisation errors average out across a session.
+Selection rule, stated once so it does not drift: among settings whose absolute
+count bias is under BIAS_TOLERANCE, take the best F1; if none qualify, take the
+least biased. The count is the denominator of the density, so a systematic
+surplus poisons every parasitaemia in the same direction, which is why bias
+gates the choice. But bias differences well inside measurement noise do not
+justify giving up real F1: on a 100-image fit set, 0.1pp of bias is noise and
+5pp of F1 is not.
 """
 
 import json
@@ -13,12 +16,17 @@ import subprocess
 import sys
 from pathlib import Path
 
+BIAS_TOLERANCE = 1.0  # percentage points
+
 HERE = Path(__file__).resolve().parent
 SEG = HERE.parent / "src" / "autoscope" / "segmentation.py"
 
 
 def pick(grid: list[dict]) -> dict:
-    return min(grid, key=lambda r: (abs(r["count_bias_pct"]), -r["f1"]))
+    unbiased = [r for r in grid if abs(r["count_bias_pct"]) <= BIAS_TOLERANCE]
+    if unbiased:
+        return max(unbiased, key=lambda r: r["f1"])
+    return min(grid, key=lambda r: abs(r["count_bias_pct"]))
 
 
 def main() -> None:
