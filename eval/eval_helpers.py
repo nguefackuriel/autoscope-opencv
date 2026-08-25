@@ -5,13 +5,18 @@ from pathlib import Path
 
 import cv2 as cv
 
-from autoscope import annotations as ann
+from autoscope import annotations as ann, photometry
 
 RAW = Path(__file__).resolve().parents[1] / "data" / "raw"
 
 
-def load_pairs(limit: int, seed: int = 0, per_patient: int = 1):
-    """Load (image, ground truth) pairs once and keep them in memory."""
+def load_pairs(limit: int, seed: int = 0, per_patient: int = 1, normalise: bool = False):
+    """Load (image, ground truth) pairs once and keep them in memory.
+
+    With normalise=True the stain correction is applied here, once per image,
+    because it does not depend on the parameters a sweep varies. Doing it inside
+    the loop instead would repeat the same work at every grid point.
+    """
     rng = random.Random(seed)
     patients = sorted(p for p in RAW.iterdir() if p.is_dir() and p.name.startswith("TF"))
     rng.shuffle(patients)
@@ -29,6 +34,8 @@ def load_pairs(limit: int, seed: int = 0, per_patient: int = 1):
             truth = ann.for_image(path, w, h)
             if truth is None:
                 continue
+            if normalise:
+                img = photometry.normalise(img)
             pairs.append((img, truth))
             if len(pairs) >= limit:
                 return pairs

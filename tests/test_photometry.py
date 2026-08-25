@@ -77,3 +77,28 @@ def test_reference_is_the_measured_one():
     # these, the survey has to be re-run and this test updated with it.
     assert r.mean == (194.7, 134.6, 118.8)
     assert r.std == (24.4, 10.1, 10.0)
+
+
+def test_full_frame_statistics_ignore_the_surround():
+    """normalise() on an uncropped frame must find its own disc.
+
+    It used to fall back to treating the whole frame as sample when the mask it
+    fetched was a different size, which let the black border set the statistics.
+    """
+    size = 300
+    frame = np.zeros((size, size, 3), np.uint8)
+    cv.circle(frame, (size // 2, size // 2), 100, (200, 190, 210), -1)
+
+    auto = photometry.measure(frame)                       # no mask given
+    everything = photometry.measure(frame, np.full((size, size), 255, np.uint8))
+
+    assert auto.mean[0] > everything.mean[0] + 30, (
+        f"surround still counted: {auto.mean[0]:.0f} vs {everything.mean[0]:.0f}"
+    )
+
+
+def test_a_wrong_sized_mask_is_not_trusted():
+    frame = np.zeros((300, 300, 3), np.uint8)
+    cv.circle(frame, (150, 150), 100, (200, 190, 210), -1)
+    out = photometry.normalise(frame, mask=np.full((50, 50), 255, np.uint8))
+    assert out.shape == frame.shape

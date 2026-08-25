@@ -33,7 +33,8 @@ def score(pairs, seed_fraction: float, close_px: int) -> dict:
     bias = 0
     total_truth = 0
     for img, truth in pairs:
-        found = segmentation.find_white_cells(img)
+        # Already normalised in load_pairs, so do not repeat it per grid point.
+        found = segmentation.find_white_cells(img, normalise_stain=False)
         from wbc_eval import match
 
         h, f, m = match(found, truth.white_cells)
@@ -59,11 +60,14 @@ def score(pairs, seed_fraction: float, close_px: int) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--images", type=int, default=120)
+    ap.add_argument("--raw", action="store_true",
+                    help="sweep without stain normalisation, for comparison")
     args = ap.parse_args()
 
-    pairs = load_pairs(args.images)
+    pairs = load_pairs(args.images, normalise=not args.raw)
     fit_patients = sorted({t.path.parent.name for _, t in pairs})
-    print(f"fitting on {len(pairs)} images from {len(fit_patients)} patients\n")
+    print(f"fitting on {len(pairs)} images from {len(fit_patients)} patients, "
+          f"stain normalisation {'off' if args.raw else 'on'}\n")
 
     results = []
     print(f"{'seed':>6} {'close':>6} {'prec':>7} {'recall':>7} {'F1':>7} {'bias %':>8}")

@@ -65,13 +65,29 @@ NLM_REFERENCE = StainStats(
 )
 
 
+def field_mask(image_bgr: np.ndarray) -> np.ndarray:
+    """A mask of the lit disc, the same size as the image given.
+
+    Works whether the image is a full frame or already cropped to the disc.
+    An earlier version called fov.crop() and, when the returned mask did not
+    match the image size, fell back to marking everything as inside. On a full
+    frame that quietly handed the black surround a vote in every statistic,
+    which is the one thing this module exists to prevent.
+    """
+    disc = fov.detect(image_bgr)
+    if disc is None:
+        return np.full(image_bgr.shape[:2], 255, np.uint8)
+
+    mask = np.zeros(image_bgr.shape[:2], np.uint8)
+    cv.circle(mask, (disc.cx, disc.cy), int(disc.radius * 0.96), 255, -1)
+    return mask
+
+
 def measure(image_bgr: np.ndarray, mask: np.ndarray | None = None) -> StainStats:
     """Lab statistics inside the field of view."""
     lab = cv.cvtColor(image_bgr, cv.COLOR_BGR2Lab).astype(np.float32)
-    if mask is None:
-        _, mask = fov.crop(image_bgr)
-        if mask.shape[:2] != lab.shape[:2]:
-            mask = np.full(lab.shape[:2], 255, np.uint8)
+    if mask is None or mask.shape[:2] != lab.shape[:2]:
+        mask = field_mask(image_bgr)
 
     inside = mask > 0
     if not inside.any():
@@ -95,10 +111,8 @@ def normalise(
     is transformed, so the black surround shifts too, which is harmless because
     every later stage masks it out anyway.
     """
-    if mask is None:
-        _, mask = fov.crop(image_bgr)
-        if mask.shape[:2] != image_bgr.shape[:2]:
-            mask = np.full(image_bgr.shape[:2], 255, np.uint8)
+    if mask is None or mask.shape[:2] != image_bgr.shape[:2]:
+        mask = field_mask(image_bgr)
 
     source = measure(image_bgr, mask)
     lab = cv.cvtColor(image_bgr, cv.COLOR_BGR2Lab).astype(np.float32)
