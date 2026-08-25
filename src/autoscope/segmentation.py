@@ -130,15 +130,22 @@ def find_white_cells(
     image_bgr: np.ndarray,
     crop_to_fov: bool = True,
     scale: float = SCALE,
-    normalise_stain: bool = False,
+    normalise_stain: bool = True,
 ) -> list[Cell]:
     """Locate white cell nuclei. Coordinates are in the input image's frame.
 
     `normalise_stain` maps the slide onto a common reference before
-    thresholding. Off by default on the NLM set, where it is measurably not
-    needed: stain level there does not correlate with the count error (r=0.05).
-    Turn it on for any slide from another rig, where a fixed threshold in raw
-    Lab units has no reason to mean the same thing.
+    thresholding. On by default, because measuring it settled the question:
+    on held-out patients it takes F1 from 0.677 to 0.782 and halves the count
+    bias, from +6.4% to +3.3%.
+
+    Worth knowing why we nearly shipped it off. Global stain level does not
+    correlate with count error, r=+0.05, and we read that as evidence that
+    normalisation could not help. It was the wrong test. Normalisation also
+    rescales each channel's spread, so it changes how a fixed threshold meets
+    each image's contrast, and that effect is not a monotonic function of the
+    level a correlation could have seen. The A/B run is the evidence; the
+    correlation was not.
     """
     offset_x = offset_y = 0
     disc_mask = None

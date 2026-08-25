@@ -7,20 +7,25 @@ cells is what becomes a density, so an error here moves every number downstream.
 
 ## The honest number
 
-Fitted on 100 patients, reported on the **50 patients the fit never saw**:
+Fitted on 100 patients, reported on the **50 patients the fit never saw**.
+Stain normalisation is on, see `results-stain.md`:
 
-| | held out | fit set |
+| | held out | without normalisation |
 |---|---|---|
-| images | 144 | 290 |
-| annotated cells | 3046 | 6661 |
-| precision | **0.657** | 0.690 |
-| recall | **0.699** | 0.702 |
-| F1 | **0.677** | 0.696 |
-| count bias | **+6.4%** | +1.8% |
-| count MAE | 7.0 cells per image | |
+| images | 144 | 144 |
+| annotated cells | 3046 | 3046 |
+| precision | **0.770** | 0.657 |
+| recall | **0.795** | 0.699 |
+| F1 | **0.782** | 0.677 |
+| count bias | **+3.3%** | +6.4% |
+| count MAE | **5.4 cells per image** | 7.0 |
 
-Always quote the held-out column. The gap between +1.8% and +6.4% is exactly
-what fitting on your own test set buys you, and it is why the split exists.
+Always quote the held-out column. On the fit set the same detector reads +1.8%
+bias instead of +3.3%, and that gap is exactly what scoring yourself on your own
+tuning data buys you. It is why the split exists.
+
+The segmentation parameters were fitted before normalisation existed. Re-running
+the sweep with it on will probably do better still, and has not been done.
 
 ## Why not the best F1
 

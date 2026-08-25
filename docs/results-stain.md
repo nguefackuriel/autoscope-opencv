@@ -1,14 +1,27 @@
-# Stain normalisation, and what it does not fix
+# Stain normalisation
 
 24 August 2026. `src/autoscope/photometry.py`, measured by `eval/stain_survey.py`.
 
-## The question we started from
+## The result
 
-The white cell detector over-counts by 6.4% on held-out patients. The obvious
-suspect was stain: slides stained darker or lighter shift the colour a nucleus
-sits at, so a fixed threshold would cut in the wrong place.
+Normalising the stain before segmenting, measured on the 50 patients the
+parameter fit never saw:
 
-**It is not the cause.** Across 144 held-out images:
+| | off | on |
+|---|---|---|
+| precision | 0.657 | **0.770** |
+| recall | 0.699 | **0.795** |
+| F1 | 0.677 | **0.782** |
+| count bias | +6.4% | **+3.3%** |
+| count MAE per image | 7.02 | **5.38** |
+
+It is on by default.
+
+## We nearly shipped it off, and the reason is worth keeping
+
+Before building it we asked whether stain explains the counting bias, by
+correlating each image's stain statistics against its count error. Across 144
+held-out images:
 
 | correlation of relative count error with | r |
 |---|---|
@@ -19,11 +32,22 @@ sits at, so a fixed threshold would cut in the wrong place.
 
 Nothing. The nucleus level is already stable on this dataset, 113 to 129 in
 `a - b`, and the threshold at 55 sits comfortably between field and nucleus in
-every image.
+every image. We read that as evidence normalisation could not help.
 
-## What is the cause
+**It was the wrong test.** Those correlations are real and they are still
+correct: the global stain *level* does not predict the error. But normalisation
+does not only shift the level, it also rescales each channel's spread, which
+changes how a fixed threshold meets each image's contrast. That effect is not a
+monotonic function of the level, so no correlation against the level could have
+seen it.
 
-Crowding. Correlation of count error with the number of cells actually present:
+The lesson is cheap to state and was expensive to learn: a correlation between a
+summary statistic and an error is weak evidence of no effect. The A/B run is the
+evidence, it costs one evaluation, and it should have come first.
+
+## What still drives the residual error
+
+Crowding, and it survives normalisation. Correlation of count error with the number of cells actually present:
 **r = -0.55**.
 
 | | mean count error |
@@ -52,9 +76,9 @@ somebody will suggest it again. It needs a better estimate of the single-cell
 area than a median over surviving blobs, which debris drags down until one cell
 becomes three.
 
-## What normalisation is actually for
+## It also does what it was built for
 
-Transfer to another rig, and that it does well. Measured over 150 NLM patients,
+Transfer to another rig. Measured over 150 NLM patients,
 before and after mapping each slide onto the measured reference:
 
 | statistic | spread before (IQR) | after | narrowed |
@@ -76,12 +100,11 @@ country, another microscope and a 4K Sony IMX334. A threshold in raw Lab units
 has no reason to mean the same thing there. Normalising first is what makes the
 generalisation claim testable instead of hopeful.
 
-So `normalise_stain` is off by default on NLM, where it is measurably not
-needed, and it is the first thing to switch on for any other source.
+So `normalise_stain` is on by default everywhere.
 
-## Next, for the bias
+## Next, for the remaining bias
 
-Not stain. The split-and-merge behaviour, on evidence:
+The split-and-merge behaviour, on evidence:
 
 - separate the sparse and crowded cases and measure them apart, since a single
   parameter set is being asked to serve two opposite failures;
