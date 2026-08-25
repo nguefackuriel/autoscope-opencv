@@ -36,7 +36,7 @@ from dataclasses import dataclass
 import cv2 as cv
 import numpy as np
 
-from autoscope import fov
+from autoscope import fov, photometry
 
 # Detection runs on a quarter-scale image. Nuclei are 100 px across at full
 # resolution, so a quarter still leaves 25 px of blob, and the pipeline gets
@@ -130,8 +130,16 @@ def find_white_cells(
     image_bgr: np.ndarray,
     crop_to_fov: bool = True,
     scale: float = SCALE,
+    normalise_stain: bool = False,
 ) -> list[Cell]:
-    """Locate white cell nuclei. Coordinates are in the input image's frame."""
+    """Locate white cell nuclei. Coordinates are in the input image's frame.
+
+    `normalise_stain` maps the slide onto a common reference before
+    thresholding. Off by default on the NLM set, where it is measurably not
+    needed: stain level there does not correlate with the count error (r=0.05).
+    Turn it on for any slide from another rig, where a fixed threshold in raw
+    Lab units has no reason to mean the same thing.
+    """
     offset_x = offset_y = 0
     disc_mask = None
 
@@ -141,6 +149,9 @@ def find_white_cells(
             x, y, side, _ = disc.bounds
             offset_x, offset_y = max(x, 0), max(y, 0)
             image_bgr, disc_mask = fov.crop(image_bgr, disc)
+
+    if normalise_stain:
+        image_bgr = photometry.normalise(image_bgr, mask=disc_mask)
 
     small = cv.resize(image_bgr, None, fx=scale, fy=scale, interpolation=cv.INTER_AREA)
     small_mask = (

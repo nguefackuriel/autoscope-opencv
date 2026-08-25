@@ -54,7 +54,8 @@ def match(found: list, truth: list, tolerance: float = TOLERANCE_PX) -> tuple[in
     return hits, len(found) - hits, len(truth) - hits
 
 
-def evaluate(images: int, seed: int = 0, holdout: bool = False) -> dict:
+def evaluate(images: int, seed: int = 0, holdout: bool = False,
+             normalise: bool = False) -> dict:
     """Score the detector. With holdout=True, skip every patient the sweep used.
 
     The parameters were fitted on ground truth, so reporting on the same images
@@ -86,7 +87,7 @@ def evaluate(images: int, seed: int = 0, holdout: bool = False) -> dict:
             if truth is None:
                 continue
 
-            found = find_white_cells(img)
+            found = find_white_cells(img, normalise_stain=normalise)
             hits, false_alarms, misses = match(found, truth.white_cells)
             rows.append({
                 "patient": patient.name,
@@ -128,11 +129,13 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--per-patient", type=int, default=2)
     ap.add_argument("--tag", default="baseline")
+    ap.add_argument("--normalise", action="store_true",
+                    help="normalise stain to the reference before segmenting")
     ap.add_argument("--holdout", action="store_true",
                     help="only patients the parameter sweep never saw")
     args = ap.parse_args()
 
-    report = evaluate(args.per_patient, holdout=args.holdout)
+    report = evaluate(args.per_patient, holdout=args.holdout, normalise=args.normalise)
     OUT.mkdir(exist_ok=True)
     (OUT / f"wbc_eval_{args.tag}.json").write_text(json.dumps(report, indent=2))
 

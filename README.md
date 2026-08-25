@@ -61,9 +61,10 @@ docs/data-notes.md            what the data actually is. Read before coding.
 src/autoscope/
   fov.py                      find the round eyepiece view. Runs first.
   quality.py         stage 1  is this field worth counting
-  photometry.py      stage 2  even out lighting and stain      (to write)
+  photometry.py      stage 2  even out lighting and stain
   registration.py    stage 3  line up views, measure overlap    (to write)
-  segmentation.py    stage 4  find the cells                    (to write)
+  annotations.py              read the ground truth, in the image's own frame
+  segmentation.py    stage 4  find the cells
   classify.py        stage 5  ONNX model through cv.dnn         (to write)
   density.py         stage 6  count to parasites/uL with an error bar
   virtual_stage.py            the stage the agent moves around
