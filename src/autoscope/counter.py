@@ -49,6 +49,9 @@ def count_field(
         if model == "cnn":
             scorer = scorer or par._patch_scorer()
             scores = scorer.score(par.patches_at(prepared, cands))
+        elif model == "hybrid":
+            scorer = scorer or par._hybrid_scorer()
+            scores = scorer.score(par.patches_at(prepared, cands), np.stack([c.features for c in cands]))
         elif model == "mlp":
             scorer = scorer or par._scorer()
             scores = scorer.score(np.stack([c.features for c in cands]))
@@ -62,7 +65,8 @@ def count_field(
 
 def vision_counter(model: str = "cnn", threshold: float = 0.5):
     """A `Counter` for `agent.tools.Tools`, with the model loaded once."""
-    scorer = par.PatchScorer.load() if model == "cnn" else par.Scorer.load()
+    scorer = {"cnn": lambda: par.PatchScorer.load(), "hybrid": lambda: par.PatchScorer.load(par.HYBRID_PATH),
+              "mlp": lambda: par.Scorer.load()}[model]()
 
     def count(image_bgr: np.ndarray) -> tuple[int, int]:
         return count_field(image_bgr, model=model, threshold=threshold, scorer=scorer).as_tuple()

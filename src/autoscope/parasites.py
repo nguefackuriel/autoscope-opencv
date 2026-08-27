@@ -78,6 +78,7 @@ FEATURE_NAMES = [
 
 MODEL_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_mlp.onnx"
 CNN_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_cnn.onnx"
+HYBRID_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_hybrid.onnx"
 PATCH_PX = 32             # the patch network's input, centred on the peak
 
 
@@ -279,13 +280,20 @@ class PatchScorer:
             raise FileNotFoundError(f"{path} is missing. Train it with `make train-cnn`.")
         return cls(cv.dnn.readNetFromONNX(str(path)))
 
-    def score(self, patches: np.ndarray, batch: int = 1024) -> np.ndarray:
+    def score(self, patches: np.ndarray, features: np.ndarray | None = None,
+              batch: int = 1024) -> np.ndarray:
+        """`features` is required by the hybrid network (input "features"),
+        ignored by the plain patch network."""
         if len(patches) == 0:
             return np.zeros(0, np.float32)
         out = []
         for i in range(0, len(patches), batch):
             blob = np.ascontiguousarray(patches[i:i + batch].transpose(0, 3, 1, 2), dtype=np.float32)
-            self.net.setInput(blob)
+            if features is not None:
+                self.net.setInput(blob, "patch")
+                self.net.setInput(np.ascontiguousarray(features[i:i + batch], dtype=np.float32), "features")
+            else:
+                self.net.setInput(blob)
             out.append(self.net.forward().reshape(-1))
         return np.concatenate(out).astype(np.float32)
 
@@ -303,6 +311,14 @@ def patches_at(image_bgr: np.ndarray, cands: list[Candidate], size: int = PATCH_
 
 _SCORER: Scorer | None = None
 _PATCH_SCORER: PatchScorer | None = None
+_HYBRID_SCORER: PatchScorer | None = None
+
+
+def _hybrid_scorer() -> PatchScorer:
+    global _HYBRID_SCORER
+    if _HYBRID_SCORER is None:
+        _HYBRID_SCORER = PatchScorer.load(HYBRID_PATH)
+    return _HYBRID_SCORER
 
 
 def _scorer() -> Scorer:
@@ -329,8 +345,9 @@ def find_parasites(
 ) -> list[Parasite]:
     """Locate parasites. Coordinates are in the input image's frame.
 
-    `model` is "cnn" (patch network, the default) or "mlp" (the feature
-    network, kept as the cheaper baseline and for the ablation in the report).
+    `model` is "cnn" (patch network, the default), "hybrid" (patch network
+    plus the 19 context features) or "mlp" (the feature network, kept as the
+    cheaper baseline and for the ablation in the report).
     """
     img, mask, ox, oy = _prepare(image_bgr, crop_to_fov, normalise_stain)
     cands, _ = candidates(img, mask)
@@ -339,11 +356,14 @@ def find_parasites(
     if model == "cnn":
         scorer = scorer or _patch_scorer()
         scores = scorer.score(patches_at(img, cands))
+    elif model == "hybrid":
+        scorer = scorer or _hybrid_scorer()
+        scores = scorer.score(patches_at(img, cands), np.stack([c.features for c in cands]))
     elif model == "mlp":
         scorer = scorer or _scorer()
         scores = scorer.score(np.stack([c.features for c in cands]))
     else:
-        raise ValueError(f"unknown model {model!r}, expected 'cnn' or 'mlp'")
+        raise ValueError(f"unknown model {model!r}, expected 'cnn', 'hybrid' or 'mlp'")
     return [
         Parasite(c.x + ox, c.y + oy, c.area, float(s))
         for c, s in zip(cands, scores) if s >= threshold

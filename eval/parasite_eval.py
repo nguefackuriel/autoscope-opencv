@@ -23,7 +23,7 @@ import cv2 as cv
 import numpy as np
 
 from autoscope import annotations as ann
-from autoscope.parasites import PatchScorer, Scorer, find_parasites
+from autoscope.parasites import HYBRID_PATH, PatchScorer, Scorer, find_parasites
 from autoscope.segmentation import find_white_cells
 from wbc_eval import match
 
@@ -44,7 +44,8 @@ def evaluate(per_patient: int, seed: int, holdout: bool, threshold: float,
     if max_patients:
         patients = patients[:max_patients]
 
-    scorer = PatchScorer.load() if model == "cnn" else Scorer.load()
+    scorer = {"cnn": lambda: PatchScorer.load(), "hybrid": lambda: PatchScorer.load(HYBRID_PATH),
+              "mlp": lambda: Scorer.load()}[model]()
     rows = []
     for patient in patients:
         candidates = sorted(patient.glob("*.jpg"))
@@ -127,7 +128,7 @@ def main():
     ap.add_argument("--holdout", action="store_true")
     ap.add_argument("--max-patients", type=int, default=None)
     ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--model", choices=["cnn", "mlp"], default="cnn")
+    ap.add_argument("--model", choices=["cnn", "hybrid", "mlp"], default="cnn")
     args = ap.parse_args()
 
     report = evaluate(args.per_patient, args.seed, args.holdout, args.threshold, args.max_patients, args.model)

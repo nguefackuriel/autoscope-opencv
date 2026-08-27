@@ -219,6 +219,43 @@ to 0.80); what moved between fit and held-out is where the bias crosses zero,
 from about 0.78 to about 0.67. One image per patient is too few to calibrate a
 threshold on, which is the first reason to train on more.
 
-What comes next, in order: more training images (one per patient so far, the
-fit set has twelve), then the false alarms on sparse fields, which is where a
-negative slide would be called positive.
+## 7. Three images per patient instead of one
+
+Same network, same recipe, 128 432 patches from 298 fit images (3 per
+patient), 3 folds by patient, 8 epochs. Threshold 0.80, the fit-set grid
+point nearest zero bias (+4.1%).
+
+Cross-validated F1 did not move: 0.712 at 0.75, against 0.713 before. The
+held-out numbers did:
+
+| | 1 image / patient | **3 images / patient** |
+|---|---|---|
+| precision | 0.827 | 0.823 |
+| recall | 0.655 | **0.705** |
+| F1 | 0.732 | **0.759** |
+| count bias | -20.8% | **-14.4%** |
+| count MAE per image | 13.4 | **10.9** |
+| parasites per white cell, bias | -16.5% | **-7.9%** |
+| rank correlation of the ratio | 0.908 | **0.930** |
+
+Sensitivity on held-out (information only): F1 peaks at 0.763 at 0.75 and the
+bias crosses zero near 0.72, so the fit-set threshold is still a little high
+for these patients, but by less than before (0.78 against 0.67 last time).
+
+By parasite density:
+
+| parasites in truth | images | recall | precision | count bias |
+|---|---|---|---|---|
+| 0 to 9 | 33 | 0.676 | 0.542 | +24.7% |
+| 10 to 29 | 28 | 0.618 | 0.675 | -8.4% |
+| 30 to 79 | 17 | 0.604 | 0.776 | -22.1% |
+| 80 and more | 21 | 0.744 | 0.880 | -15.5% |
+
+This is the model shipped as `models/parasite_cnn.onnx`. The one-image model
+is in git history (commit 217fbed) for the ablation.
+
+What comes next: the false alarms on sparse fields, which is where a negative
+slide would be called positive. The candidate features that describe context
+(neighbours within 20 px, distance to the nearest white cell, local field
+level) are not visible in a 32 px patch, so the next experiment feeds them to
+the network alongside the patch (`--hybrid`).

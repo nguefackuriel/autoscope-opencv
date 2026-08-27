@@ -29,32 +29,42 @@ from torch import nn
 
 OUT = Path(__file__).resolve().parent / "results"
 MODEL = Path(__file__).resolve().parents[1] / "models" / "parasite_cnn.onnx"
+HYBRID = Path(__file__).resolve().parents[1] / "models" / "parasite_hybrid.onnx"
 CROP = 32
 
 
 class Net(nn.Module):
     """Input: BGR uint8-range float [n, 3, 32, 32]. Output: probability [n, 1]."""
 
-    def __init__(self, mean, std):
+    def __init__(self, mean, std, feat_mean=None, feat_std=None):
         super().__init__()
         self.register_buffer("mean", torch.tensor(mean, dtype=torch.float32).view(1, 3, 1, 1))
         self.register_buffer("std", torch.tensor(std, dtype=torch.float32).view(1, 3, 1, 1))
+        # hybrid: the 19 context features join the conv embedding before the head
+        self.hybrid = feat_mean is not None
+        n_feat = 0
+        if self.hybrid:
+            self.register_buffer("fmean", torch.tensor(feat_mean, dtype=torch.float32).view(1, -1))
+            self.register_buffer("fstd", torch.tensor(feat_std, dtype=torch.float32).view(1, -1))
+            n_feat = len(feat_mean)
 
         def block(i, o):
             return nn.Sequential(nn.Conv2d(i, o, 3, padding=1), nn.BatchNorm2d(o), nn.ReLU(),
                                  nn.Conv2d(o, o, 3, padding=1), nn.BatchNorm2d(o), nn.ReLU(),
                                  nn.MaxPool2d(2))
         self.features = nn.Sequential(block(3, 24), block(24, 48), block(48, 96))   # 32 -> 4
-        self.head = nn.Sequential(nn.Flatten(), nn.Dropout(0.3), nn.Linear(96 * 4 * 4, 96),
-                                  nn.ReLU(), nn.Dropout(0.3), nn.Linear(96, 1))
+        self.embed = nn.Sequential(nn.Flatten(), nn.Dropout(0.3), nn.Linear(96 * 4 * 4, 96), nn.ReLU())
+        self.head = nn.Sequential(nn.Dropout(0.3), nn.Linear(96 + n_feat, 1))
 
-    def forward(self, x):
+    def logits(self, x, f=None):
         x = (x - self.mean) / self.std
-        return torch.sigmoid(self.head(self.features(x)))
+        e = self.embed(self.features(x))
+        if self.hybrid:
+            e = torch.cat([e, (f - self.fmean) / self.fstd], dim=1)
+        return self.head(e)
 
-    def logits(self, x):
-        x = (x - self.mean) / self.std
-        return self.head(self.features(x))
+    def forward(self, x, f=None):
+        return torch.sigmoid(self.logits(x, f))
 
 
 def augment(P: torch.Tensor, rng: torch.Generator) -> torch.Tensor:
@@ -85,10 +95,15 @@ def prf(y, s, thr):
     return p, r, f, (tp + fp - (tp + fn)) / max(tp + fn, 1) * 100
 
 
-def train(P, y, epochs, seed, mean, std, lr=2e-3):
+def train(P, y, epochs, seed, mean, std, lr=2e-3, F=None):
     torch.manual_seed(seed)
     rng = torch.Generator().manual_seed(seed)
-    net = Net(mean, std)
+    if F is not None:
+        net = Net(mean, std, F.mean(axis=0), F.std(axis=0) + 1e-6)
+        Ft = torch.tensor(F, dtype=torch.float32)
+    else:
+        net = Net(mean, std)
+        Ft = None
     pos = float(y.mean())
     pos_weight = torch.tensor((1 - pos) / pos * 0.5)
     opt = torch.optim.AdamW(net.parameters(), lr=lr, weight_decay=1e-4)
@@ -102,18 +117,21 @@ def train(P, y, epochs, seed, mean, std, lr=2e-3):
         for i in range(0, len(y), 256):
             idx = perm[i:i + 256]
             xb = augment(Pt[idx], rng)
-            loss = nn.functional.binary_cross_entropy_with_logits(net.logits(xb).squeeze(1), yt[idx], pos_weight=pos_weight)
+            fb = Ft[idx] if Ft is not None else None
+            loss = nn.functional.binary_cross_entropy_with_logits(net.logits(xb, fb).squeeze(1), yt[idx], pos_weight=pos_weight)
             opt.zero_grad(); loss.backward(); opt.step(); sched.step()
     net.eval()
     return net
 
 
-def predict(net, P):
+def predict(net, P, F=None):
     Pt = centre(torch.tensor(P).permute(0, 3, 1, 2).float())
+    Ft = torch.tensor(F, dtype=torch.float32) if F is not None else None
     out = []
     with torch.no_grad():
         for i in range(0, len(Pt), 1024):
-            out.append(net(Pt[i:i + 1024]).squeeze(1).numpy())
+            fb = Ft[i:i + 1024] if Ft is not None else None
+            out.append(net(Pt[i:i + 1024], fb).squeeze(1).numpy())
     return np.concatenate(out)
 
 
@@ -123,12 +141,17 @@ def main():
     ap.add_argument("--folds", type=int, default=5)
     ap.add_argument("--no-cv", action="store_true", help="skip cross-validation, just train and export")
     ap.add_argument("--patches", default="parasite_patches.npz")
+    ap.add_argument("--hybrid", action="store_true",
+                    help="also feed the 19 context features (neighbours, distance to white cells, local field)")
     args = ap.parse_args()
     torch.set_num_threads(max(1, torch.get_num_threads() - 1))
 
     d = np.load(OUT / args.patches)
     P, y, patient = d["patches"], d["y"], d["patient"]
-    print(f"{len(y)} patches {P.shape[1:]}  {int(y.sum())} parasites  {len(set(patient))} patients")
+    F = d["X"].astype(np.float32) if args.hybrid else None
+    model_path = HYBRID if args.hybrid else MODEL
+    print(f"{len(y)} patches {P.shape[1:]}  {int(y.sum())} parasites  {len(set(patient))} patients"
+          + ("  + 19 features (hybrid)" if args.hybrid else ""))
     mean = P.reshape(-1, 3).mean(axis=0); std = P.reshape(-1, 3).std(axis=0)
 
     table = []
@@ -139,8 +162,8 @@ def main():
         scores = np.zeros(len(y), np.float32)
         for k in range(args.folds):
             tr, te = folds != k, folds == k
-            net = train(P[tr], y[tr], args.epochs, k, mean, std)
-            scores[te] = predict(net, P[te])
+            net = train(P[tr], y[tr], args.epochs, k, mean, std, F=None if F is None else F[tr])
+            scores[te] = predict(net, P[te], None if F is None else F[te])
             print(f"  fold {k}: {int(te.sum())} patches, F1@0.5 {prf(y[te], scores[te], 0.5)[2]:.3f}", flush=True)
         print("\ncross-validated by patient (candidate level):\n  thr   precision  recall   F1    count bias")
         for thr in np.arange(0.2, 0.81, 0.05):
@@ -149,18 +172,27 @@ def main():
                           "f1": round(f, 4), "count_bias_pct": round(b, 2)})
             print(f"  {thr:.2f}   {p:.3f}      {r:.3f}   {f:.3f}   {b:+.1f}%")
 
-    final = train(P, y, args.epochs, 0, mean, std)
-    MODEL.parent.mkdir(parents=True, exist_ok=True)
-    torch.onnx.export(final, torch.zeros(1, 3, CROP, CROP), str(MODEL), input_names=["patch"], output_names=["p"],
-                      dynamic_axes={"patch": {0: "n"}, "p": {0: "n"}}, opset_version=13, do_constant_folding=True)
-    check = predict(final, P[:512])
-    np.save(OUT / "parasite_cnn_check.npy", check)   # the runtime venv compares cv.dnn against this
-    (OUT / "parasite_cnn_train.json").write_text(json.dumps({
+    final = train(P, y, args.epochs, 0, mean, std, F=F)
+    model_path.parent.mkdir(parents=True, exist_ok=True)
+    if args.hybrid:
+        torch.onnx.export(final, (torch.zeros(1, 3, CROP, CROP), torch.zeros(1, F.shape[1])), str(model_path),
+                          input_names=["patch", "features"], output_names=["p"],
+                          dynamic_axes={"patch": {0: "n"}, "features": {0: "n"}, "p": {0: "n"}},
+                          opset_version=13, do_constant_folding=True)
+        check = predict(final, P[:512], F[:512])
+    else:
+        torch.onnx.export(final, torch.zeros(1, 3, CROP, CROP), str(model_path), input_names=["patch"], output_names=["p"],
+                          dynamic_axes={"patch": {0: "n"}, "p": {0: "n"}}, opset_version=13, do_constant_folding=True)
+        check = predict(final, P[:512])
+    tag = "hybrid" if args.hybrid else "cnn"
+    np.save(OUT / f"parasite_{tag}_check.npy", check)   # the runtime venv compares cv.dnn against this
+    (OUT / f"parasite_{tag}_train.json").write_text(json.dumps({
         "patches": int(len(y)), "positives": int(y.sum()), "patients": len(set(patient)),
         "epochs": args.epochs, "folds": args.folds, "crop": CROP, "cv_by_patient": table,
-        "input_mean_bgr": mean.tolist(), "input_std_bgr": std.tolist(),
+        "input_mean_bgr": mean.tolist(), "input_std_bgr": std.tolist(), "hybrid": args.hybrid,
+        "patches_file": args.patches,
     }, indent=2))
-    print(f"\nexported {MODEL.name}")
+    print(f"\nexported {model_path.name}")
 
 
 if __name__ == "__main__":
