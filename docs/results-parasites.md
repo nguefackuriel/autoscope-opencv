@@ -325,3 +325,37 @@ So the honest position on sparse fields: part of the gap is not ours to close,
 part of it is shape, and shape is what a longer-trained or slightly larger
 patch network should get. That is the next experiment, and it is cheap
 because it needs no new data.
+
+## 10. Twenty epochs instead of eight
+
+Same network and data as section 7. Because three-fold training at 20 epochs
+would take eight hours, the trainer got a validation-split mode
+(`--val-patients 20`): 20 fit patients held aside for the threshold table,
+one training on the other 80, and that model is the one exported. On the
+validation patients the bias crossed zero at 0.80 (-1.8%), so 0.80 it is.
+
+Held-out, same 50 patients:
+
+| | 8 epochs (section 7) | **20 epochs** |
+|---|---|---|
+| precision | 0.823 | **0.841** |
+| recall | 0.705 | 0.698 |
+| F1 | 0.759 | **0.762** |
+| count bias | -14.4% | -17.0% |
+| count MAE per image | 10.9 | 11.1 |
+| rank correlation of the ratio | 0.930 | **0.935** |
+| precision, fields with < 10 parasites | 0.542 | **0.575** |
+| precision, fields with 30 to 79 | 0.776 | **0.800** |
+
+Small, consistent, and in the direction section 9 predicted: longer training
+buys precision (the rod-and-streak group), at a slight cost in recall. The
+two criteria set before the run, better F1 and better sparse-field precision,
+are both met, so this is the shipped `models/parasite_cnn.onnx`. The 8-epoch
+model stays in git history (commit 189e64f).
+
+The calibration gap has not closed: zero bias sits at 0.80 on the validation
+patients and near 0.72 on the held-out ones (F1 0.754 there, bias +3.6%).
+That is a property of the patients, not of the epochs. The honest way to
+report the count is with this gap stated, and the practical way to narrow it
+is a threshold set per slide from the white cell density rather than one
+global number. That is a later experiment.
