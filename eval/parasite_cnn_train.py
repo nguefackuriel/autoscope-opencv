@@ -141,6 +141,9 @@ def main():
     ap.add_argument("--folds", type=int, default=5)
     ap.add_argument("--no-cv", action="store_true", help="skip cross-validation, just train and export")
     ap.add_argument("--patches", default="parasite_patches.npz")
+    ap.add_argument("--val-patients", type=int, default=0,
+                    help="instead of k-fold: hold this many fit patients out for the threshold table, "
+                         "train once on the rest, and export THAT model (no retrain on everything)")
     ap.add_argument("--hybrid", action="store_true",
                     help="also feed the 19 context features (neighbours, distance to white cells, local field)")
     args = ap.parse_args()
@@ -155,7 +158,20 @@ def main():
     mean = P.reshape(-1, 3).mean(axis=0); std = P.reshape(-1, 3).std(axis=0)
 
     table = []
-    if not args.no_cv:
+    if args.val_patients:
+        pats = sorted(set(patient)); rs = np.random.RandomState(0); rs.shuffle(pats)
+        val = set(pats[:args.val_patients])
+        te = np.array([p in val for p in patient]); tr = ~te
+        print(f"validation: {len(val)} patients, {int(te.sum())} patches; training on {int(tr.sum())}", flush=True)
+        final = train(P[tr], y[tr], args.epochs, 0, mean, std, F=None if F is None else F[tr])
+        scores = predict(final, P[te], None if F is None else F[te])
+        print("\nvalidation patients (candidate level):\n  thr   precision  recall   F1    count bias")
+        for thr in np.arange(0.2, 0.91, 0.05):
+            p_, r, f, b = prf(y[te], scores, thr)
+            table.append({"threshold": round(float(thr), 2), "precision": round(p_, 4), "recall": round(r, 4),
+                          "f1": round(f, 4), "count_bias_pct": round(b, 2)})
+            print(f"  {thr:.2f}   {p_:.3f}      {r:.3f}   {f:.3f}   {b:+.1f}%")
+    elif not args.no_cv:
         pats = sorted(set(patient)); rs = np.random.RandomState(0); rs.shuffle(pats)
         fold_of = {p: i % args.folds for i, p in enumerate(pats)}
         folds = np.array([fold_of[p] for p in patient])
@@ -172,7 +188,8 @@ def main():
                           "f1": round(f, 4), "count_bias_pct": round(b, 2)})
             print(f"  {thr:.2f}   {p:.3f}      {r:.3f}   {f:.3f}   {b:+.1f}%")
 
-    final = train(P, y, args.epochs, 0, mean, std, F=F)
+    if not args.val_patients:
+        final = train(P, y, args.epochs, 0, mean, std, F=F)
     model_path.parent.mkdir(parents=True, exist_ok=True)
     if args.hybrid:
         torch.onnx.export(final, (torch.zeros(1, 3, CROP, CROP), torch.zeros(1, F.shape[1])), str(model_path),
@@ -188,7 +205,8 @@ def main():
     np.save(OUT / f"parasite_{tag}_check.npy", check)   # the runtime venv compares cv.dnn against this
     (OUT / f"parasite_{tag}_train.json").write_text(json.dumps({
         "patches": int(len(y)), "positives": int(y.sum()), "patients": len(set(patient)),
-        "epochs": args.epochs, "folds": args.folds, "crop": CROP, "cv_by_patient": table,
+        "epochs": args.epochs, "folds": args.folds, "val_patients": args.val_patients, "crop": CROP,
+        "cv_by_patient" if not args.val_patients else "validation_patients": table,
         "input_mean_bgr": mean.tolist(), "input_std_bgr": std.tolist(), "hybrid": args.hybrid,
         "patches_file": args.patches,
     }, indent=2))
