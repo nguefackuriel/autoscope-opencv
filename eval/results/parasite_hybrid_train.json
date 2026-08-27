@@ -1,0 +1,113 @@
+{
+  "patches": 42237,
+  "positives": 3989,
+  "patients": 100,
+  "epochs": 10,
+  "folds": 5,
+  "crop": 32,
+  "cv_by_patient": [
+    {
+      "threshold": 0.2,
+      "precision": 0.4159,
+      "recall": 0.9576,
+      "f1": 0.5799,
+      "count_bias_pct": 130.26
+    },
+    {
+      "threshold": 0.25,
+      "precision": 0.441,
+      "recall": 0.9499,
+      "f1": 0.6023,
+      "count_bias_pct": 115.39
+    },
+    {
+      "threshold": 0.3,
+      "precision": 0.465,
+      "recall": 0.9408,
+      "f1": 0.6224,
+      "count_bias_pct": 102.33
+    },
+    {
+      "threshold": 0.35,
+      "precision": 0.4867,
+      "recall": 0.9321,
+      "f1": 0.6395,
+      "count_bias_pct": 91.5
+    },
+    {
+      "threshold": 0.4,
+      "precision": 0.5071,
+      "recall": 0.9255,
+      "f1": 0.6552,
+      "count_bias_pct": 82.5
+    },
+    {
+      "threshold": 0.45,
+      "precision": 0.5265,
+      "recall": 0.9153,
+      "f1": 0.6685,
+      "count_bias_pct": 73.83
+    },
+    {
+      "threshold": 0.5,
+      "precision": 0.5475,
+      "recall": 0.9022,
+      "f1": 0.6814,
+      "count_bias_pct": 64.8
+    },
+    {
+      "threshold": 0.55,
+      "precision": 0.5692,
+      "recall": 0.8854,
+      "f1": 0.693,
+      "count_bias_pct": 55.55
+    },
+    {
+      "threshold": 0.6,
+      "precision": 0.5924,
+      "recall": 0.8646,
+      "f1": 0.7031,
+      "count_bias_pct": 45.95
+    },
+    {
+      "threshold": 0.65,
+      "precision": 0.6173,
+      "recall": 0.8378,
+      "f1": 0.7108,
+      "count_bias_pct": 35.72
+    },
+    {
+      "threshold": 0.7,
+      "precision": 0.6445,
+      "recall": 0.8085,
+      "f1": 0.7172,
+      "count_bias_pct": 25.44
+    },
+    {
+      "threshold": 0.75,
+      "precision": 0.6725,
+      "recall": 0.7603,
+      "f1": 0.7137,
+      "count_bias_pct": 13.06
+    },
+    {
+      "threshold": 0.8,
+      "precision": 0.7121,
+      "recall": 0.7037,
+      "f1": 0.7079,
+      "count_bias_pct": -1.18
+    }
+  ],
+  "input_mean_bgr": [
+    209.4486291344082,
+    171.83070924189693,
+    193.16929099486234
+  ],
+  "input_std_bgr": [
+    13.20322692462845,
+    28.42950043178645,
+    19.23300332887711
+  ],
+  "hybrid": true,
+  "patches_file": "parasite_patches.npz"
+}
