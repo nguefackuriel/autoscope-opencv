@@ -77,3 +77,16 @@ def test_find_parasites_reports_in_the_input_frame():
     pts = np.array([[f.x, f.y] for f in found])
     for dx, dy in dots:
         assert np.min(np.hypot(pts[:, 0] - dx, pts[:, 1] - dy)) <= 4
+
+
+@pytest.mark.skipif(not par.MODEL_PATH.exists(), reason="model not trained yet")
+def test_vision_counter_matches_the_agent_protocol():
+    from autoscope.counter import count_field, vision_counter
+
+    img, dots, _ = _field(seed=4)
+    result = count_field(img, model="mlp", threshold=0.0)
+    assert result.parasites == len(result.parasite_points) >= len(dots)
+    assert result.white_cells == len(result.white_cell_points) >= 1   # the synthetic nucleus
+    counter = vision_counter(model="mlp", threshold=0.0)
+    p, w = counter(img)
+    assert (p, w) == result.as_tuple()

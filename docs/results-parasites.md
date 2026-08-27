@@ -60,9 +60,21 @@ are two peaks.
 | candidates per image | 300 | 422 |
 | true parasites among them | | 9.4% |
 
-The remaining 12% is split between the white cell exclusion zone, peaks that
-land more than 15 px from the annotated centre, and parasites with no local
-maximum of their own inside a cluster. That is the next thing to open.
+The remaining 10 to 12%, opened on 10 fit images (584 parasites):
+
+| why | share |
+|---|---|
+| inside the white cell exclusion zone | 3.6% |
+| outside the 0.96 disc inset or the feature margin | 3.3% |
+| a candidate exists, 15 to 25 px away | 2.6% |
+| no local maximum of its own | 0.2% |
+| top-hat below `PEAK_MIN` | 0% |
+
+Nothing is lost to the peak threshold. The rim loss is by design (the eyepiece
+edge is dim and smeared; the white cell count skips it too, so the ratio is
+consistent). The exclusion zone is the one worth a look later: some of those
+are parasites next to a nucleus, some may be parasite clusters that the
+quarter-scale nucleus mask mistakes for a small white cell.
 
 ## 3. The look-alikes
 
