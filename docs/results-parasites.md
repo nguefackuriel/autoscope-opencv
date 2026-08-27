@@ -134,5 +134,65 @@ This is the baseline. It is kept as `--model mlp` for the ablation.
 
 ## 5. Classifier B: a patch network
 
-(to fill from `eval/results/parasite_cnn_train.json` and
-`parasite_eval_holdout_cnn.json`)
+The same candidates, but instead of nineteen numbers the classifier sees the
+32 x 32 BGR patch around the peak (cut at 40 x 40, randomly cropped, flipped
+and turned during training). Three conv blocks (24, 48, 96 channels) to 4 x 4,
+then a 96-wide head. Trained with torch in its own venv (`make setup-train`,
+because the last torch wheel for this Mac needs NumPy 1), exported to ONNX,
+checked against `cv.dnn` to 2.4e-7, and run by `cv.dnn` like the MLP. Pixel
+normalisation is inside the graph.
+
+Cross-validated **by patient**, 5 folds, 10 epochs, 42 237 patches from 100
+fit images (candidate level):
+
+| threshold | precision | recall | F1 | count bias |
+|---|---|---|---|---|
+| 0.60 | 0.593 | 0.857 | 0.701 | +45% |
+| 0.70 | 0.648 | 0.790 | 0.712 | +22% |
+| 0.75 | 0.682 | 0.747 | **0.713** | +9.5% |
+| 0.80 | 0.723 | 0.688 | 0.705 | -4.8% |
+
+Against the feature MLP at its best threshold (0.657), that is +5.6 F1 points,
+and the bias crosses zero near 0.78, which is the threshold used end to end.
+Folds still spread from 0.64 to 0.74: the patient is the unit of variation,
+and 100 images is one image per patient.
+
+End to end on the 50 held-out patients: see section 6.
+
+## 6. End to end on the held-out patients
+
+Same 50 patients, 99 images, 4731 annotated parasites, nobody fitted anything
+on them. The threshold is the one chosen on the fit set (section 5), not
+re-chosen here.
+
+| | feature MLP (thr 0.70) | patch CNN (thr 0.78) |
+|---|---|---|
+| precision | 0.656 | **0.827** |
+| recall | 0.643 | 0.655 |
+| F1 | 0.650 | **0.732** |
+| count bias | -2.0% | **-20.8%** |
+| count MAE per image | 20.3 | 13.4 |
+| parasites per white cell, bias | +17.4% | -16.5% |
+| rank correlation of the ratio | 0.858 | **0.908** |
+
+Two readings of the same table.
+
+The patch network finds parasites more reliably: better precision by 17
+points, better per-image error, better ranking of patients by density. That
+is the number a screening tool needs, since the first job is to sort patients.
+
+But it **under-counts by a fifth** at this threshold, where the cross-validated
+bias on the fit set was near zero. The held-out patients carry more parasites
+per image (48 against 40), and a denser field is where the candidate step and
+the classifier both lose recall: parasites sit closer together, and a peak
+with neighbours looks less like the training median. The MLP's -2% is not
+better calibration, it is false alarms and misses cancelling, as its MAE of
+20 shows.
+
+The threshold sensitivity table (`parasite_eval_holdout_cnn.json`, `sweep`)
+is recorded for information. It is not used to pick the threshold, because
+choosing on the held-out set would make it a fit set.
+
+What comes next, in order: more training images (one per patient so far, the
+fit set has twelve), then the crowded-field recall, which is the same
+problem that limited the white cell count.

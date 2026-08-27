@@ -30,6 +30,7 @@ from wbc_eval import match
 RAW = Path(__file__).resolve().parents[1] / "data" / "raw"
 OUT = Path(__file__).resolve().parent / "results"
 TOLERANCE_PX = 15.0
+SWEEP = [0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85]
 
 
 def evaluate(per_patient: int, seed: int, holdout: bool, threshold: float,
@@ -57,14 +58,22 @@ def evaluate(per_patient: int, seed: int, holdout: bool, threshold: float,
             truth = ann.for_image(path, w, h)
             if truth is None:
                 continue
-            found = find_parasites(img, threshold=threshold, model=model, scorer=scorer)
+            scored = find_parasites(img, threshold=0.0, model=model, scorer=scorer)
+            found = [f for f in scored if f.score >= threshold]
             hits, fa, miss = match(found, truth.parasites, TOLERANCE_PX)
             wbc = len(find_white_cells(img))
+            # the same image at other thresholds, for the sensitivity table
+            at = {}
+            for thr in SWEEP:
+                sub = [f for f in scored if f.score >= thr]
+                h, f_, m = match(sub, truth.parasites, TOLERANCE_PX)
+                at[str(thr)] = [len(sub), h, f_, m]
             rows.append({
                 "patient": patient.name, "image": path.name,
                 "found": len(found), "truth": len(truth.parasites),
                 "hits": hits, "false_alarms": fa, "misses": miss,
                 "wbc_found": wbc, "wbc_truth": len(truth.white_cells),
+                "at": at,
             })
         if rows and len(rows) % 25 == 0:
             print(f"  {len(rows)} images")
@@ -84,7 +93,17 @@ def evaluate(per_patient: int, seed: int, holdout: bool, threshold: float,
     keep = (ours > 0) & (gt > 0)
     log_diff = np.log(ours[keep]) - np.log(gt[keep])
 
+    sweep = []
+    for thr in SWEEP:
+        k = str(thr)
+        H = sum(r["at"][k][1] for r in rows); FA = sum(r["at"][k][2] for r in rows); M = sum(r["at"][k][3] for r in rows)
+        pr = H / (H + FA) if H + FA else 0.0; rc = H / (H + M) if H + M else 0.0
+        sweep.append({"threshold": thr, "precision": round(pr, 4), "recall": round(rc, 4),
+                      "f1": round(2 * pr * rc / (pr + rc), 4) if pr + rc else 0.0,
+                      "count_bias_pct": round((H + FA - (H + M)) / max(H + M, 1) * 100, 2)})
+
     return {
+        "sweep": sweep,
         "images": len(rows), "patients": len({r["patient"] for r in rows}),
         "parasites_in_truth": int(truths.sum()), "threshold": threshold, "model": model,
         "precision": round(precision, 4), "recall": round(recall, 4), "f1": round(f1, 4),
@@ -125,6 +144,11 @@ def main():
     print(f"    bias           {report['ratio_bias_pct']:+.1f}%")
     print(f"    95% limits     {report['ratio_loa_pct'][0]:+.1f}% .. {report['ratio_loa_pct'][1]:+.1f}%")
     print(f"    rank corr.     {report['ratio_spearman']:.3f}")
+    print("\n  sensitivity to the threshold (information only, the threshold is chosen on the fit set):")
+    print("    thr   precision  recall   F1    count bias")
+    for row in report["sweep"]:
+        print(f"    {row['threshold']:.2f}   {row['precision']:.3f}      {row['recall']:.3f}   "
+              f"{row['f1']:.3f}   {row['count_bias_pct']:+.1f}%")
 
 
 if __name__ == "__main__":

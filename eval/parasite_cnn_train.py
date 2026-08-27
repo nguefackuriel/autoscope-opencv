@@ -122,10 +122,11 @@ def main():
     ap.add_argument("--epochs", type=int, default=12)
     ap.add_argument("--folds", type=int, default=5)
     ap.add_argument("--no-cv", action="store_true", help="skip cross-validation, just train and export")
+    ap.add_argument("--patches", default="parasite_patches.npz")
     args = ap.parse_args()
     torch.set_num_threads(max(1, torch.get_num_threads() - 1))
 
-    d = np.load(OUT / "parasite_patches.npz")
+    d = np.load(OUT / args.patches)
     P, y, patient = d["patches"], d["y"], d["patient"]
     print(f"{len(y)} patches {P.shape[1:]}  {int(y.sum())} parasites  {len(set(patient))} patients")
     mean = P.reshape(-1, 3).mean(axis=0); std = P.reshape(-1, 3).std(axis=0)

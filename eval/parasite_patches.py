@@ -30,13 +30,15 @@ PATCH = 40
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--images", type=int, default=100)
+    ap.add_argument("--per-patient", type=int, default=1)
+    ap.add_argument("--out", default="parasite_patches.npz")
     args = ap.parse_args()
 
     fit = set(json.loads((OUT / "wbc_sweep.json").read_text())["fit_patients"])
     half = PATCH // 2
     patches, feats, labels, meta = [], [], [], []
     n_img = total_truth = total_hit = 0
-    for img, truth in load_pairs(args.images * 2, per_patient=1):
+    for img, truth in load_pairs(args.images * 2, per_patient=args.per_patient):
         if truth.path.parent.name not in fit:
             continue
         if n_img >= args.images:
@@ -59,7 +61,7 @@ def main():
             print(f"  {n_img} images, {len(labels)} patches, candidate recall {total_hit / max(total_truth, 1):.3f}")
 
     P = np.stack(patches).astype(np.uint8)
-    np.savez_compressed(OUT / "parasite_patches.npz", patches=P, X=np.stack(feats),
+    np.savez_compressed(OUT / args.out, patches=P, X=np.stack(feats),
                         y=np.array(labels), patient=np.array(meta))
     print(f"saved {P.shape} patches, {int(np.sum(labels))} positives, {n_img} images")
 
