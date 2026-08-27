@@ -182,17 +182,43 @@ points, better per-image error, better ranking of patients by density. That
 is the number a screening tool needs, since the first job is to sort patients.
 
 But it **under-counts by a fifth** at this threshold, where the cross-validated
-bias on the fit set was near zero. The held-out patients carry more parasites
-per image (48 against 40), and a denser field is where the candidate step and
-the classifier both lose recall: parasites sit closer together, and a peak
-with neighbours looks less like the training median. The MLP's -2% is not
-better calibration, it is false alarms and misses cancelling, as its MAE of
-20 shows.
+bias on the fit set was near zero. The first guess was crowding, and it was
+wrong. Split by how many parasites the image holds:
 
-The threshold sensitivity table (`parasite_eval_holdout_cnn.json`, `sweep`)
-is recorded for information. It is not used to pick the threshold, because
-choosing on the held-out set would make it a fit set.
+| parasites in truth | images | recall | precision | count bias |
+|---|---|---|---|---|
+| 0 to 9 | 33 | 0.588 | 0.495 | +18.7% |
+| 10 to 29 | 28 | 0.572 | 0.691 | -17.3% |
+| 30 to 79 | 17 | 0.554 | 0.771 | -28.1% |
+| 80 and more | 21 | 0.697 | 0.889 | -21.6% |
+
+Recall is flat to slightly *better* on dense fields. What changes with density
+is precision: on a nearly clean field half of what the network calls a
+parasite is not one, and on a heavy field nine in ten are. The under-count
+comes from a threshold that is too high everywhere (recall 0.55 to 0.70
+against a candidate ceiling of 0.88), and the dense images hold most of the
+parasites so they dominate the total. The over-count on sparse fields is the
+harder problem: a screening tool must not invent parasites on a negative
+slide. The MLP's -2% is not better calibration, it is false alarms and misses
+cancelling, as its MAE of 20 shows.
+
+The threshold sensitivity on the held-out set, recorded for information only.
+It is not used to pick the threshold, because choosing on the held-out set
+would make it a fit set:
+
+| threshold | precision | recall | F1 | count bias |
+|---|---|---|---|---|
+| 0.60 | 0.680 | 0.773 | 0.724 | +13.7% |
+| 0.65 | 0.722 | 0.752 | 0.737 | +4.2% |
+| 0.70 | 0.764 | 0.725 | 0.744 | -5.2% |
+| 0.75 | 0.804 | 0.684 | 0.739 | -14.9% |
+| 0.80 | 0.847 | 0.631 | 0.724 | -25.5% |
+
+So the network itself is fine across a wide band (F1 0.72 to 0.74 from 0.60
+to 0.80); what moved between fit and held-out is where the bias crosses zero,
+from about 0.78 to about 0.67. One image per patient is too few to calibrate a
+threshold on, which is the first reason to train on more.
 
 What comes next, in order: more training images (one per patient so far, the
-fit set has twelve), then the crowded-field recall, which is the same
-problem that limited the white cell count.
+fit set has twelve), then the false alarms on sparse fields, which is where a
+negative slide would be called positive.
