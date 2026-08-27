@@ -259,3 +259,32 @@ slide would be called positive. The candidate features that describe context
 (neighbours within 20 px, distance to the nearest white cell, local field
 level) are not visible in a 32 px patch, so the next experiment feeds them to
 the network alongside the patch (`--hybrid`).
+
+## 8. The hybrid model: a negative result
+
+Same patch network, with the 19 candidate features (neighbours within 20 px,
+distance to the nearest white cell, local field level, ring statistics)
+concatenated to the conv embedding before the head. Trained on the one image
+per patient set so it compares with the first patch network.
+
+| | patch CNN (1 img/patient) | hybrid (1 img/patient) |
+|---|---|---|
+| cross-validated F1, best threshold | 0.713 | 0.717 |
+| held-out F1 | 0.732 | **0.707** |
+| held-out precision | 0.827 | 0.771 |
+| precision on fields with < 10 parasites | 0.495 | 0.495 |
+| precision on fields with 30 to 79 | 0.771 | 0.543 |
+
+Cross-validation said "no difference"; the held-out set said "worse". The
+features that describe context also describe the patient (how crowded the
+slide is, how stained), and a network that reads them learns the fit patients
+rather than the parasite. The sparse-field precision, the thing this was built
+for, did not move at all.
+
+Kept as `--model hybrid` for the record, not shipped. The 3-image training of
+it was stopped after the held-out result came in.
+
+Lesson, same as the stain normalisation one in reverse: the cross-validated
+candidate-level score is not sensitive enough to rank models that are within a
+point of each other. The held-out, end-to-end number is the one to decide on,
+and it costs ten minutes.
