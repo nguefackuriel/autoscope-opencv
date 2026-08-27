@@ -288,3 +288,40 @@ Lesson, same as the stain normalisation one in reverse: the cross-validated
 candidate-level score is not sensitive enough to rank models that are within a
 point of each other. The held-out, end-to-end number is the one to decide on,
 and it costs ten minutes.
+
+## 9. What the sparse-field false alarms actually are
+
+Before building anything else for the sparse-field precision, we looked. On
+26 fit images with fewer than 10 annotated parasites, the shipped network at
+threshold 0.80 made 66 true and 98 false detections. The 40 highest-scoring
+false ones, 64 px around each, with the score:
+
+![false positives on sparse fields](figures/parasite-false-positives-sparse-fields.png)
+
+and true positives from the same images for comparison:
+
+![true positives on sparse fields](figures/parasite-true-positives-sparse-fields.png)
+
+Three groups in the false ones.
+
+**Objects that look exactly like the true positives.** A compact dark dot with
+a faint halo, scored 0.9 and above (top left, bottom row). We cannot tell
+them from parasites, and we suspect the annotators did not mark every parasite
+on fields where there were few. If so, the measured precision on sparse
+fields is a **lower bound**, and the "over-count" on negative-looking fields
+is partly the ground truth's under-count. This cannot be settled without a
+microscopist; it goes in the report as a caveat, stated exactly like this.
+
+**Rods and streaks.** Elongated purple marks, several times longer than wide
+(third row). These are debris and stain artefacts, and a parasite is never
+that shape. The network scores them 0.83 to 0.91, so it has not learned the
+shape from 32 px patches with 10 epochs. This group is recoverable.
+
+**Diffuse blobs and doubles.** Soft purple smudges without a dense core, and
+pairs of small dots (platelets often come in twos). Harder; some may be
+parasites out of focus.
+
+So the honest position on sparse fields: part of the gap is not ours to close,
+part of it is shape, and shape is what a longer-trained or slightly larger
+patch network should get. That is the next experiment, and it is cheap
+because it needs no new data.
