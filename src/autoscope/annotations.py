@@ -26,7 +26,16 @@ plot is measured against noise, while looking perfectly reasonable.
 TWO SHAPES
 
     White_Blood_Cell  Point   one click, no size
-    Parasite          Circle  two points, a drag across the parasite
+    Parasite          Circle  two points: the CENTRE, then a point on the rim
+
+The Circle is not a drag across the parasite. We first read it that way and
+took the midpoint as the centre, which put every parasite about 13 px off, to
+one side, on an object 10 px across. Measured on 834 parasites in 25 images:
+the most purple pixel near the annotation sits a median 0.8 px from point 1
+and 18 px from point 2. Point 1 is the centre. The distance to point 2 is the
+annotator's radius, median 22 px, which is loose: the chromatin dot itself is
+about 10 px across. Treat `radius` as an upper bound on the object, not its
+size.
 
 So white cells can be scored for counting and for position, never for area. A
 detector that finds the right number of cells in the right places is right, even
@@ -94,12 +103,12 @@ def read(path: str | Path, width: int, height: int) -> GroundTruth:
 
         elif label == PARASITE and shape == "Circle" and len(parts) >= 9:
             a1, b1, a2, b2 = (float(v) for v in parts[5:9])
-            x1, y1 = to_image_frame(a1, b1, width)
-            x2, y2 = to_image_frame(a2, b2, width)
-            # The two points are a drag across the parasite, so the distance
-            # between them is a diameter.
-            radius = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5 / 2
-            items.append(Annotation(label, (x1 + x2) / 2, (y1 + y2) / 2, radius))
+            cx, cy = to_image_frame(a1, b1, width)
+            rx, ry = to_image_frame(a2, b2, width)
+            # First point is the centre, second is on the rim. Not a diameter:
+            # see the module docstring for the measurement behind this.
+            radius = ((rx - cx) ** 2 + (ry - cy) ** 2) ** 0.5
+            items.append(Annotation(label, cx, cy, radius))
 
     return GroundTruth(path=path, width=width, height=height, items=items)
 

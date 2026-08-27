@@ -110,3 +110,36 @@ distribution.
 
 A handful of JPEGs emit `Invalid SOS parameters for sequential JPEG` on read.
 They still decode. No action needed, but do not treat the warning as a failure.
+
+## The Tanzania set, downloaded 26 August 2026
+
+`data/download_tanzania.py`, Harvard Dataverse `doi:10.7910/DVN/O2WVWA`, CC0.
+Four archives, 2.98 GB, extracted under `data/raw/tanzania/`:
+
+```
+Thick_Infected/Thick_Infected/       1139 images   Image01.jpg ...
+Thick_Uninfected/Thick_Uninfected/   1071 images
+Thin_Infected/Thin_Infected/         1064 images
+Thin_Uninfected/Thin_Uninfected/      270 images
+```
+
+All 3840 x 2160 JPEGs from a 4K Sony IMX334 on a compound microscope.
+
+Three things that decide how it can be used.
+
+**No per-parasite annotation.** The only label is the folder: infected or not.
+So there is no precision or recall to measure here. What can be measured is
+whether the parasite count separates infected from uninfected images
+(an ROC over images), and whether the density ranking is sensible. Per-object
+validation stays on NLM.
+
+**No eyepiece disc.** These are full-frame camera captures. `fov.detect()`
+correctly returns None and the whole frame is the field. Every mask-based
+statistic falls back to the full frame, which is right here.
+
+**Different scale and stain.** Looking at the pictures, white cells are about
+600 px across against 100 px on NLM, so the magnification is roughly four to
+six times higher in pixels per micron, and the Giemsa is much bluer. Nothing
+in the pipeline transfers without (a) a pixel scale factor and (b) stain
+normalisation onto the NLM reference. Measure the white cell diameter here
+before setting either; do not eyeball it.

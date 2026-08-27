@@ -1,0 +1,8 @@
+# Training-time only, in its own venv (.venv-train, `make setup-train`).
+# The runtime venv never imports these. Kept apart because the last torch
+# wheel for macOS x86_64 (2.2.2) is built against NumPy 1 and will not load
+# next to the NumPy 2 the pipeline pins. The feature MLP (parasite_train.py)
+# needs only `onnx`, which also works in the runtime venv.
+torch==2.2.2
+numpy<2
+onnx>=1.16,<1.19

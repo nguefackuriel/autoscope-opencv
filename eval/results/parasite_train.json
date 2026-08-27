@@ -1,0 +1,127 @@
+{
+  "candidates": 42237,
+  "positives": 3989,
+  "patients": 100,
+  "epochs": 60,
+  "folds": 5,
+  "width": [
+    64,
+    32
+  ],
+  "features": [
+    "peak_tophat",
+    "peak_stain",
+    "core_stain",
+    "core_L_min",
+    "core_L",
+    "core_a",
+    "core_b",
+    "ring_L",
+    "ring_a",
+    "ring_b",
+    "ring_stain",
+    "contrast_L",
+    "contrast_stain",
+    "size_half",
+    "elongation",
+    "solidity",
+    "dist_wbc",
+    "neighbours_20",
+    "local_field_L"
+  ],
+  "cv_by_patient": [
+    {
+      "threshold": 0.2,
+      "precision": 0.3685,
+      "recall": 0.92,
+      "f1": 0.5262,
+      "count_bias_pct": 149.69
+    },
+    {
+      "threshold": 0.25,
+      "precision": 0.3988,
+      "recall": 0.9022,
+      "f1": 0.5531,
+      "count_bias_pct": 126.25
+    },
+    {
+      "threshold": 0.3,
+      "precision": 0.4248,
+      "recall": 0.8859,
+      "f1": 0.5743,
+      "count_bias_pct": 108.55
+    },
+    {
+      "threshold": 0.35,
+      "precision": 0.4499,
+      "recall": 0.8689,
+      "f1": 0.5928,
+      "count_bias_pct": 93.13
+    },
+    {
+      "threshold": 0.4,
+      "precision": 0.4726,
+      "recall": 0.8508,
+      "f1": 0.6076,
+      "count_bias_pct": 80.05
+    },
+    {
+      "threshold": 0.45,
+      "precision": 0.4964,
+      "recall": 0.8288,
+      "f1": 0.6209,
+      "count_bias_pct": 66.96
+    },
+    {
+      "threshold": 0.5,
+      "precision": 0.5196,
+      "recall": 0.8072,
+      "f1": 0.6322,
+      "count_bias_pct": 55.35
+    },
+    {
+      "threshold": 0.55,
+      "precision": 0.5417,
+      "recall": 0.7839,
+      "f1": 0.6406,
+      "count_bias_pct": 44.72
+    },
+    {
+      "threshold": 0.6,
+      "precision": 0.5682,
+      "recall": 0.7588,
+      "f1": 0.6498,
+      "count_bias_pct": 33.54
+    },
+    {
+      "threshold": 0.65,
+      "precision": 0.5984,
+      "recall": 0.7283,
+      "f1": 0.6569,
+      "count_bias_pct": 21.71
+    },
+    {
+      "threshold": 0.7,
+      "precision": 0.6236,
+      "recall": 0.6932,
+      "f1": 0.6565,
+      "count_bias_pct": 11.16
+    },
+    {
+      "threshold": 0.75,
+      "precision": 0.6572,
+      "recall": 0.653,
+      "f1": 0.6551,
+      "count_bias_pct": -0.63
+    },
+    {
+      "threshold": 0.8,
+      "precision": 0.6936,
+      "recall": 0.5976,
+      "f1": 0.6421,
+      "count_bias_pct": -13.84
+    }
+  ],
+  "candidate_recall": 0.8814,
+  "export_max_abs_diff": 2.652406692504883e-06
+}

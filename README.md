@@ -42,6 +42,10 @@ different camera. Use `--thick-only` to skip 1.2 GB of thin smears.
 
 Nothing in `data/` is committed. Both scripts print the real folder layout after
 extracting; read that output before writing anything that touches the files.
+What each set actually contains, and what that allows us to claim, is in
+`docs/data-notes.md`. Short version: NLM has per-object annotations, Tanzania
+has only an infected/uninfected label per image, so per-parasite precision and
+recall are measured on NLM and Tanzania answers a different question.
 
 The Tanzania set is the held-out test and we keep it that way. No threshold gets
 fitted on it, no model gets trained on it, and nobody looks at its numbers until
@@ -64,13 +68,17 @@ src/autoscope/
   photometry.py      stage 2  even out lighting and stain
   registration.py    stage 3  line up views, measure overlap    (to write)
   annotations.py              read the ground truth, in the image's own frame
-  segmentation.py    stage 4  find the cells
-  classify.py        stage 5  ONNX model through cv.dnn         (to write)
+  segmentation.py    stage 4  find the white cells (the denominator)
+  parasites.py       stage 5  find the parasites (the numerator): top-hat
+                              peaks, then an ONNX classifier through cv.dnn
   density.py         stage 6  count to parasites/uL with an error bar
   virtual_stage.py            the stage the agent moves around
 src/autoscope/agent/          the seven tools, three policies, the loop
+models/                       the ONNX classifiers cv.dnn loads (committed;
+                              `make train-mlp` / `make train-cnn` rebuild them)
 bench/cool_bench.py           COOL against stock, medians and IQR
-eval/                         metrics and failure cases         (to write)
+eval/                         surveys, sweeps, and held-out scoring. Every
+                              number in docs/results-*.md comes from here.
 infra/                        Terraform for AWS                 (to write)
 ```
 

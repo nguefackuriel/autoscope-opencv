@@ -11,3 +11,6 @@ bench/results/*.json
 .DS_Store
 
 src/*.egg-info/
+.venv-train/
+eval/results/*_patches.npz
+eval/results/*.log
