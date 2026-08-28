@@ -1,0 +1,382 @@
+[
+  {
+    "target_ci": 0.15,
+    "min_fields": 3,
+    "arm": "who-200/truth",
+    "patients": 50,
+    "fields_read_total": 556,
+    "fields_read_median": 11.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2697,
+    "reached_target": 12,
+    "density_bias_pct": -1.1,
+    "density_loa_pct": [
+      -12.9,
+      12.3
+    ],
+    "density_mape_pct": 4.0,
+    "escalated": 11,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.15,
+    "min_fields": 3,
+    "arm": "rule-based/truth",
+    "patients": 50,
+    "fields_read_total": 492,
+    "fields_read_median": 9.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2639,
+    "reached_target": 12,
+    "density_bias_pct": -0.08,
+    "density_loa_pct": [
+      -11.3,
+      12.6
+    ],
+    "density_mape_pct": 3.4,
+    "escalated": 38,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.15,
+    "min_fields": 3,
+    "arm": "who-200/found",
+    "patients": 50,
+    "fields_read_total": 492,
+    "fields_read_median": 9.5,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2778,
+    "reached_target": 10,
+    "density_bias_pct": -16.25,
+    "density_loa_pct": [
+      -63.2,
+      90.6
+    ],
+    "density_mape_pct": 48.6,
+    "escalated": 14,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.15,
+    "min_fields": 3,
+    "arm": "rule-based/found",
+    "patients": 50,
+    "fields_read_total": 498,
+    "fields_read_median": 9.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2908,
+    "reached_target": 11,
+    "density_bias_pct": -14.17,
+    "density_loa_pct": [
+      -63.1,
+      99.7
+    ],
+    "density_mape_pct": 48.5,
+    "escalated": 39,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.15,
+    "min_fields": 5,
+    "arm": "rule-based/truth",
+    "patients": 50,
+    "fields_read_total": 494,
+    "fields_read_median": 9.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2639,
+    "reached_target": 12,
+    "density_bias_pct": -0.12,
+    "density_loa_pct": [
+      -11.2,
+      12.3
+    ],
+    "density_mape_pct": 3.4,
+    "escalated": 38,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.15,
+    "min_fields": 5,
+    "arm": "rule-based/found",
+    "patients": 50,
+    "fields_read_total": 498,
+    "fields_read_median": 9.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2908,
+    "reached_target": 11,
+    "density_bias_pct": -14.17,
+    "density_loa_pct": [
+      -63.1,
+      99.7
+    ],
+    "density_mape_pct": 48.5,
+    "escalated": 39,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.15,
+    "min_fields": 8,
+    "arm": "rule-based/truth",
+    "patients": 50,
+    "fields_read_total": 514,
+    "fields_read_median": 9.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2639,
+    "reached_target": 12,
+    "density_bias_pct": 0.47,
+    "density_loa_pct": [
+      -9.1,
+      11.0
+    ],
+    "density_mape_pct": 2.5,
+    "escalated": 40,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.15,
+    "min_fields": 8,
+    "arm": "rule-based/found",
+    "patients": 50,
+    "fields_read_total": 513,
+    "fields_read_median": 9.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2908,
+    "reached_target": 11,
+    "density_bias_pct": -13.96,
+    "density_loa_pct": [
+      -63.1,
+      100.6
+    ],
+    "density_mape_pct": 48.5,
+    "escalated": 40,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.2,
+    "min_fields": 3,
+    "arm": "rule-based/truth",
+    "patients": 50,
+    "fields_read_total": 455,
+    "fields_read_median": 8.5,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2639,
+    "reached_target": 14,
+    "density_bias_pct": -0.12,
+    "density_loa_pct": [
+      -13.6,
+      15.5
+    ],
+    "density_mape_pct": 4.3,
+    "escalated": 37,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.2,
+    "min_fields": 3,
+    "arm": "rule-based/found",
+    "patients": 50,
+    "fields_read_total": 460,
+    "fields_read_median": 8.5,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2908,
+    "reached_target": 15,
+    "density_bias_pct": -13.98,
+    "density_loa_pct": [
+      -63.1,
+      100.4
+    ],
+    "density_mape_pct": 47.9,
+    "escalated": 36,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.2,
+    "min_fields": 5,
+    "arm": "rule-based/truth",
+    "patients": 50,
+    "fields_read_total": 470,
+    "fields_read_median": 8.5,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2639,
+    "reached_target": 14,
+    "density_bias_pct": -0.08,
+    "density_loa_pct": [
+      -11.9,
+      13.3
+    ],
+    "density_mape_pct": 3.7,
+    "escalated": 37,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.2,
+    "min_fields": 5,
+    "arm": "rule-based/found",
+    "patients": 50,
+    "fields_read_total": 469,
+    "fields_read_median": 8.5,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2908,
+    "reached_target": 15,
+    "density_bias_pct": -14.14,
+    "density_loa_pct": [
+      -63.2,
+      100.2
+    ],
+    "density_mape_pct": 48.1,
+    "escalated": 36,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.2,
+    "min_fields": 8,
+    "arm": "rule-based/truth",
+    "patients": 50,
+    "fields_read_total": 500,
+    "fields_read_median": 8.5,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2639,
+    "reached_target": 14,
+    "density_bias_pct": 0.65,
+    "density_loa_pct": [
+      -9.1,
+      11.4
+    ],
+    "density_mape_pct": 2.7,
+    "escalated": 39,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.2,
+    "min_fields": 8,
+    "arm": "rule-based/found",
+    "patients": 50,
+    "fields_read_total": 499,
+    "fields_read_median": 8.5,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2908,
+    "reached_target": 15,
+    "density_bias_pct": -13.62,
+    "density_loa_pct": [
+      -63.0,
+      101.5
+    ],
+    "density_mape_pct": 48.0,
+    "escalated": 38,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.3,
+    "min_fields": 3,
+    "arm": "rule-based/truth",
+    "patients": 50,
+    "fields_read_total": 393,
+    "fields_read_median": 7.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.298,
+    "reached_target": 29,
+    "density_bias_pct": -0.84,
+    "density_loa_pct": [
+      -19.2,
+      21.6
+    ],
+    "density_mape_pct": 7.3,
+    "escalated": 21,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.3,
+    "min_fields": 3,
+    "arm": "rule-based/found",
+    "patients": 50,
+    "fields_read_total": 398,
+    "fields_read_median": 7.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2968,
+    "reached_target": 27,
+    "density_bias_pct": -14.13,
+    "density_loa_pct": [
+      -62.3,
+      95.8
+    ],
+    "density_mape_pct": 46.2,
+    "escalated": 27,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.3,
+    "min_fields": 5,
+    "arm": "rule-based/truth",
+    "patients": 50,
+    "fields_read_total": 421,
+    "fields_read_median": 7.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2972,
+    "reached_target": 29,
+    "density_bias_pct": -0.67,
+    "density_loa_pct": [
+      -15.6,
+      16.9
+    ],
+    "density_mape_pct": 5.7,
+    "escalated": 21,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.3,
+    "min_fields": 5,
+    "arm": "rule-based/found",
+    "patients": 50,
+    "fields_read_total": 422,
+    "fields_read_median": 7.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2968,
+    "reached_target": 27,
+    "density_bias_pct": -14.32,
+    "density_loa_pct": [
+      -62.8,
+      97.3
+    ],
+    "density_mape_pct": 46.6,
+    "escalated": 27,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.3,
+    "min_fields": 8,
+    "arm": "rule-based/truth",
+    "patients": 50,
+    "fields_read_total": 472,
+    "fields_read_median": 8.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2959,
+    "reached_target": 29,
+    "density_bias_pct": -0.24,
+    "density_loa_pct": [
+      -11.1,
+      12.0
+    ],
+    "density_mape_pct": 3.5,
+    "escalated": 32,
+    "compared_on": 50
+  },
+  {
+    "target_ci": 0.3,
+    "min_fields": 8,
+    "arm": "rule-based/found",
+    "patients": 50,
+    "fields_read_total": 467,
+    "fields_read_median": 8.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.296,
+    "reached_target": 27,
+    "density_bias_pct": -14.53,
+    "density_loa_pct": [
+      -62.8,
+      96.4
+    ],
+    "density_mape_pct": 47.2,
+    "escalated": 32,
+    "compared_on": 50
+  }
+]

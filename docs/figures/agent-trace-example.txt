@@ -1,0 +1,76 @@
+A heavy slide: the agent stops at 5 fields where the WHO protocol reads 18.
+==============================================================================
+slide: TF15_C87P48
+  1  (0,0) z=0              count_field()              focus=28  even=0.96  debris=0.71  parasites=79  wbc=18
+     counted, running total 79 in 18 white cells
+  2  (1,0) z=0              count_field()              focus=26  even=0.96  debris=0.67  parasites=88  wbc=17
+     counted, running total 167 in 35 white cells
+  3  (2,0) z=0              count_field()              focus=25  even=0.97  debris=0.71  parasites=87  wbc=14
+     counted, running total 254 in 49 white cells
+  4  (3,0) z=0              count_field()              focus=22  even=0.96  debris=0.67  parasites=88  wbc=16
+     counted, running total 342 in 65 white cells
+  5  (4,0) z=0              count_field()              focus=23  even=0.94  debris=0.67  parasites=71  wbc=20
+     counted, running total 413 in 85 white cells
+  6  (5,0) z=0              stop                       focus=23  even=0.96  debris=0.68
+     38,871/uL, error bar 20% is within the 20% target
+read 5 fields, 413 parasites in 85 white cells
+stopped: 38,871/uL, error bar 20% is within the 20% target
+
+
+A slide with soft fields: sharpness forces a refocus, then a skip.
+==============================================================================
+slide: TF132_S527
+  1  (0,0) z=0              count_field()              focus=13  even=0.97  debris=0.69  parasites=17  wbc=12
+     counted, running total 17 in 12 white cells
+  2  (1,0) z=0              count_field()              focus=15  even=0.97  debris=0.69  parasites=23  wbc=14
+     counted, running total 40 in 26 white cells
+  3  (2,0) z=0              count_field()              focus=14  even=0.97  debris=0.69  parasites=19  wbc=14
+     counted, running total 59 in 40 white cells
+  4  (3,0) z=0              count_field()              focus=14  even=0.96  debris=0.68  parasites=24  wbc=13
+     counted, running total 83 in 53 white cells
+  5  (4,0) z=0              refocus(+2)                focus=10  even=0.97  debris=0.68
+     out of focus, sharpness 10.40 needs 11.00
+  6  (4,0) z=2              move_stage()               focus=10  even=0.97  debris=0.68
+     out of focus, sharpness 10.40 needs 11.00, and refocusing did not change it, field skipped and not counted
+  7  (5,0) z=2              refocus(+2)                focus=11  even=0.97  debris=0.68
+     out of focus, sharpness 10.99 needs 11.00
+  8  (5,0) z=4              move_stage()               focus=11  even=0.97  debris=0.68
+     out of focus, sharpness 10.99 needs 11.00, and refocusing did not change it, field skipped and not counted
+  9  (6,0) z=4              count_field()              focus=12  even=0.96  debris=0.65  parasites=9  wbc=19
+     counted, running total 92 in 72 white cells
+ 10  (7,0) z=4              refocus(+2)                focus=9  even=0.98  debris=0.69
+     out of focus, sharpness 9.07 needs 11.00
+ 11  (7,0) z=6              move_stage()               focus=9  even=0.98  debris=0.69
+     out of focus, sharpness 9.07 needs 11.00, and refocusing did not change it, field skipped and not counted
+ 12  (8,0) z=6              refocus(+2)                focus=10  even=0.97  debris=0.68
+     out of focus, sharpness 10.37 needs 11.00
+ 13  (8,0) z=8              move_stage()               focus=10  even=0.97  debris=0.68
+     out of focus, sharpness 10.37 needs 11.00, and refocusing did not change it, field skipped and not counted
+ 14  (9,0) z=8              refocus(+2)                focus=11  even=0.97  debris=0.71
+     out of focus, sharpness 10.79 needs 11.00
+ 15  (9,0) z=10             move_stage()               focus=11  even=0.97  debris=0.71
+     out of focus, sharpness 10.79 needs 11.00, and refocusing did not change it, field skipped and not counted
+ 16  (10,0) z=10            refocus(+2)                focus=10  even=0.98  debris=0.72
+     out of focus, sharpness 10.06 needs 11.00
+ 17  (10,0) z=12            move_stage()               focus=10  even=0.98  debris=0.72
+     out of focus, sharpness 10.06 needs 11.00, and refocusing did not change it, field skipped and not counted
+ 18  (11,0) z=12            refocus(+2)                focus=11  even=0.96  debris=0.71
+     out of focus, sharpness 10.82 needs 11.00
+ 19  (11,0) z=14            move_stage()               focus=11  even=0.96  debris=0.71
+     out of focus, sharpness 10.82 needs 11.00, and refocusing did not change it, field skipped and not counted
+ 20  (12,0) z=14            refocus(+2)                focus=9  even=0.97  debris=0.65
+     out of focus, sharpness 9.09 needs 11.00
+ 21  (12,0) z=16            move_stage()               focus=9  even=0.97  debris=0.65
+     out of focus, sharpness 9.09 needs 11.00, and refocusing did not change it, field skipped and not counted
+ 22  (13,0) z=16            refocus(+2)                focus=10  even=0.97  debris=0.66
+     out of focus, sharpness 10.36 needs 11.00
+ 23  (13,0) z=18            move_stage()               focus=10  even=0.97  debris=0.66
+     out of focus, sharpness 10.36 needs 11.00, and refocusing did not change it, field skipped and not counted
+ 24  (14,0) z=18            count_field()              focus=14  even=0.96  debris=0.74  parasites=14  wbc=15
+     counted, running total 106 in 87 white cells
+ 25  (15,0) z=18            count_field()              focus=16  even=0.97  debris=0.75  parasites=26  wbc=14
+     counted, running total 132 in 101 white cells
+ 26  (15,0) z=18            flag_for_human()           focus=16  even=0.97  debris=0.75
+     ran out of slide before the error bar was tight enough
+read 7 fields, 132 parasites in 101 white cells
+stopped: ran out of slide before the error bar was tight enough
