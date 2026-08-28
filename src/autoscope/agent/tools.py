@@ -55,11 +55,21 @@ class Tools:
     def estimate_parasitaemia(self) -> Density:
         return density(self.parasites, max(self.wbc, 1), self.wbc_per_ul)
 
-    def decide_stop(self, target_ci_width: float = 0.20) -> tuple[bool, str]:
+    def decide_stop(self, target_ci_width: float = 0.20,
+                    min_fields: int = 10) -> tuple[bool, str]:
+        """`min_fields` is a policy choice, not a constant of nature.
+
+        It guards against slide heterogeneity: parasites are not spread evenly,
+        so a tight error bar after two fields is still a bad estimate. It is
+        not a proxy for the WHO count, and setting it near ten on this data
+        would make the agent stop exactly where the WHO protocol does and the
+        comparison vacuous. Swept in eval/agent_eval.py.
+        """
         return should_stop(
             self.estimate_parasitaemia(),
             self.fields_read,
             target_ci_width=target_ci_width,
+            min_fields=min_fields,
         )
 
     # --- the two that act ---

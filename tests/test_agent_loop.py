@@ -100,3 +100,18 @@ def test_unknown_action_is_a_loud_failure():
     tools, _ = build(RuleBased(), heavy_truth())
     with pytest.raises(ValueError, match="unknown action"):
         read_slide(tools, Broken())
+
+
+def test_who_protocol_stops_at_two_hundred_white_cells():
+    """The baseline is a white cell count, not a field count. It must stop as
+    soon as the target is met, and not one field later."""
+    from autoscope.agent.policy import WhoProtocol
+
+    stage = VirtualStage(synthetic_slide(), tile=TILE)
+    tools = Tools(stage, counter=lambda image: (2, 30))
+    trace = read_slide(tools, WhoProtocol(200), max_fields=40)
+
+    assert tools.wbc >= 200
+    assert tools.wbc - 30 < 200, "read a field it did not need"
+    assert tools.fields_read == 7               # ceil(200 / 30)
+    assert "200" in trace.stopped_because

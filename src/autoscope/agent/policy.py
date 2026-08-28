@@ -2,8 +2,11 @@
 
 Three policies, same tools, so we can measure what the agent is worth:
 
-  FixedProtocol  walk the slide and read every field. The WHO baseline.
-  RuleBased      thresholds and a search. No model, no cost. The honest control.
+  FixedProtocol  walk the slide and read a set number of fields.
+  WhoProtocol    read until 200 white cells have gone by. The real baseline:
+                 this is what the WHO manual actually asks a technician to do.
+  RuleBased      thresholds and a stopping rule. No model, no cost. The honest
+                 control, and what the agent has to beat to be worth anything.
   Bedrock        the real agent.                                    (to write)
 
 If the model policy cannot beat RuleBased, the agent is decoration, and the
@@ -49,6 +52,30 @@ class FixedProtocol:
         return ("count_then_move", {})
 
 
+class WhoProtocol:
+    """The WHO thick film method: count parasites against 200 white cells.
+
+    This, not a fixed number of fields, is the baseline the proposal argues
+    with. How many fields it takes depends on the slide, so it is not a
+    constant we can quote: on this data the median field carries 19 white
+    cells, so about ten fields, but a thin patch of the smear takes many more.
+
+    No quality gate. A technician refocuses without thinking about it, and
+    pretending otherwise would make the baseline a strawman.
+    """
+
+    name = "who-200"
+
+    def __init__(self, wbc_target: int = 200) -> None:
+        self.wbc_target = wbc_target
+
+    def next_move(self, quality: FieldQuality, tools: Tools) -> Move:  # noqa: ARG002
+        if tools.wbc >= self.wbc_target:
+            return ("stop", {"reason": f"counted {tools.wbc} white cells, "
+                                       f"target was {self.wbc_target}"})
+        return ("count_then_move", {})
+
+
 class RuleBased:
     """Thresholds plus a small focus search. No model involved.
 
@@ -60,14 +87,16 @@ class RuleBased:
 
     name = "rule-based"
 
-    def __init__(self, target_ci_width: float = 0.20, step: int = 2) -> None:
+    def __init__(self, target_ci_width: float = 0.20, step: int = 2,
+                 min_fields: int = 5) -> None:
         self.target_ci_width = target_ci_width
         self.step = step
+        self.min_fields = min_fields
         self._tries = 0
         self._best_seen = 0.0
 
     def next_move(self, quality: FieldQuality, tools: Tools) -> Move:
-        stop, why = tools.decide_stop(self.target_ci_width)
+        stop, why = tools.decide_stop(self.target_ci_width, self.min_fields)
         if stop:
             return ("stop", {"reason": why})
 
