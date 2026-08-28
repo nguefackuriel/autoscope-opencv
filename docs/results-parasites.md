@@ -359,3 +359,84 @@ That is a property of the patients, not of the epochs. The honest way to
 report the count is with this gap stated, and the practical way to narrow it
 is a threshold set per slide from the white cell density rather than one
 global number. That is a later experiment.
+
+## 11. The threshold was calibrated against the wrong reference
+
+The plan was a per-slide threshold, since one cut-off clearly did not suit both
+a nearly clean field and a heavy one. Measuring it first turned the task into a
+different, simpler one.
+
+### Where the bias comes from
+
+On the twenty fit patients the shipped network never trained on (it kept them
+back for its own threshold table, so its scores there are honest), the -12%
+count bias splits in two:
+
+| | |
+|---|---|
+| summed calibrated scores vs candidates that really are parasites | **-0.4%** |
+| those candidates vs every annotated parasite | **-11.4%** |
+
+The scoring is right. The candidate step loses the parasites, and no
+threshold can find an object that never became a candidate.
+
+### How 0.80 came to be wrong
+
+The threshold table printed during training scores the classifier against **the
+candidates it was trained on**. A parasite that never became a candidate is
+absent from both sides of that ratio, so the bias it reports is not the bias a
+user sees:
+
+| threshold | count | bias vs candidates | bias vs every annotated parasite |
+|---|---|---|---|
+| 0.70 | 6 602 | +27.2% | +12.8% |
+| **0.75** | 5 878 | +13.3% | **+0.4%** |
+| 0.78 | 5 443 | +4.9% | -7.0% |
+| **0.80** | 5 138 | **-1.0%** | **-12.2%** |
+
+0.80 looked unbiased and under-counted by 12%. It is a wrong-denominator
+mistake, and it is worth a sentence in the report because it is the kind of
+error that survives review: every number on the row is real, and the column is
+the wrong one.
+
+`prf()` in `eval/parasite_cnn_train.py` now takes the measured candidate recall
+and reports the bias against every annotated parasite, so the next threshold
+cannot be chosen this way.
+
+### Four methods, held-out, 609 images and 50 slides
+
+Nothing here is fitted on these patients: the calibration and the threshold
+both come from the twenty calibration patients.
+
+| method | count bias | count MAE | slide density bias | mean abs. density error |
+|---|---|---|---|---|
+| fixed 0.80, what shipped | -14.4% | 10.26 | -15.3% | 48.6% |
+| expected count (sum of calibrated scores) | -15.4% | 12.98 | -4.3% | 54.4% |
+| expected count / candidate recall | -4.6% | 11.31 | +8.0% | 53.4% |
+| per-slide threshold from a lookup | -7.3% | 9.65 | -6.7% | 44.0% |
+| **fixed 0.75, chosen on the calibration patients** | **-2.1%** | **9.83** | **-1.5%** | **43.9%** |
+
+**The per-slide threshold is not needed, and the honest reason is that it never
+worked.** The lookup it fitted returned 0.74 to 0.78 for every kind of slide,
+so it was a global threshold wearing a costume, and its whole gain came from
+being lower than 0.80. The best threshold per calibration slide does vary a
+lot, from 0.60 to 0.86, but it correlates with the provisional parasite
+density at **-0.010**: there is nothing observable to look it up by. Fitting a
+table on that would have been fitting noise, and it would have looked like it
+worked, because lowering the threshold helps for an unrelated reason.
+
+The scores are also **already calibrated**, which was worth checking rather
+than assuming: candidates scoring 0.50 to 0.80 are parasites 30.6% of the time
+and the fitted map says 31.4%. So summing probabilities adds nothing over a
+threshold here, and dividing by the candidate recall fixes the count total but
+widens the per-slide error, because recall varies from slide to slide much
+more than the count does.
+
+### What shipped
+
+`parasites.DEFAULT_THRESHOLD = 0.75`, and the pipeline default follows it.
+Held-out, against 0.80: count bias -14.4% to **-2.1%**, slide density bias
+-15.3% to **-1.5%**, mean absolute density error 48.6% to **43.9%**.
+
+The remaining ten points of candidate loss are the next piece of work, and this
+measurement is what says so.

@@ -42,8 +42,13 @@ its fields.
 |---|---|---|---|---|---|---|
 | who-200 / truth | 556 | 11 | 27% | -1.1% | 4.0% | 11 |
 | **rule-based / truth** | **470** | **8** | 26% | **-0.1%** | **3.7%** | 37 |
-| who-200 / found | 492 | 10 | 28% | -16.2% | 48.6% | 14 |
-| rule-based / found | 469 | 8 | 29% | -14.1% | 48.1% | 36 |
+| who-200 / found | 492 | 10 | 26% | -3.0% | 44.4% | 14 |
+| rule-based / found | 461 | 8 | 27% | -0.6% | 43.5% | 34 |
+
+(The two `found` rows are at the corrected classifier threshold of 0.75. At
+the 0.80 this experiment first ran with, they read 492 and 469 fields with
+density bias -16.2% and -14.1%: the policy barely moved, the answer did. See
+`results-parasites.md` section 11.)
 
 **The agent reads 15% fewer fields and is no less accurate.** With the expert
 counter, 470 fields against 556, mean absolute density error 3.7% against
@@ -130,6 +135,13 @@ counter: **the agent's decisions barely move.** What moves is the answer, from
 So: the agent works, and the number a user would get is limited by the vision,
 not by the policy. That is the split the injected counter was built to expose,
 and it says where the next week of work goes.
+
+It also proved its worth immediately. Run first at the old threshold, this
+table showed a -14.1% density bias with the real counter against -0.1% with
+the expert one. The policy was identical in both, which pointed at the
+counting rather than the deciding, and the threshold error in
+`results-parasites.md` section 11 came out of following that. With the
+threshold corrected the same table reads -0.6%.
 
 ## Parameters
 

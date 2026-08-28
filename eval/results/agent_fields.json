@@ -1,13 +1,14 @@
 {
-  "threshold": 0.8,
+  "threshold": 0.75,
   "patients": 50,
   "fields": 609,
-  "seconds_per_field": 2.65,
+  "rebuilt_from": "parasite_scores_holdout.npz",
+  "quality_from": "agent_fields_t080.json",
   "rows": [
     {
       "patient": "TF101_233",
       "image": "20170830_103930.jpg",
-      "found_parasites": 28,
+      "found_parasites": 33,
       "found_wbc": 15,
       "truth_parasites": 25,
       "truth_wbc": 18,
@@ -20,7 +21,7 @@
     {
       "patient": "TF101_233",
       "image": "20170830_104154.jpg",
-      "found_parasites": 20,
+      "found_parasites": 22,
       "found_wbc": 10,
       "truth_parasites": 16,
       "truth_wbc": 14,
@@ -33,7 +34,7 @@
     {
       "patient": "TF101_233",
       "image": "20170830_104309.jpg",
-      "found_parasites": 35,
+      "found_parasites": 42,
       "found_wbc": 18,
       "truth_parasites": 9,
       "truth_wbc": 23,
@@ -46,7 +47,7 @@
     {
       "patient": "TF101_233",
       "image": "20170830_104418.jpg",
-      "found_parasites": 30,
+      "found_parasites": 32,
       "found_wbc": 12,
       "truth_parasites": 18,
       "truth_wbc": 19,
@@ -59,7 +60,7 @@
     {
       "patient": "TF101_233",
       "image": "20170830_104521.jpg",
-      "found_parasites": 25,
+      "found_parasites": 26,
       "found_wbc": 27,
       "truth_parasites": 24,
       "truth_wbc": 29,
@@ -72,7 +73,7 @@
     {
       "patient": "TF101_233",
       "image": "20170830_104641.jpg",
-      "found_parasites": 20,
+      "found_parasites": 22,
       "found_wbc": 18,
       "truth_parasites": 15,
       "truth_wbc": 18,
@@ -85,7 +86,7 @@
     {
       "patient": "TF101_233",
       "image": "20170830_104736.jpg",
-      "found_parasites": 28,
+      "found_parasites": 32,
       "found_wbc": 13,
       "truth_parasites": 21,
       "truth_wbc": 14,
@@ -98,7 +99,7 @@
     {
       "patient": "TF101_233",
       "image": "20170830_104901.jpg",
-      "found_parasites": 17,
+      "found_parasites": 21,
       "found_wbc": 15,
       "truth_parasites": 15,
       "truth_wbc": 13,
@@ -111,7 +112,7 @@
     {
       "patient": "TF101_233",
       "image": "20170830_104957.jpg",
-      "found_parasites": 29,
+      "found_parasites": 36,
       "found_wbc": 16,
       "truth_parasites": 14,
       "truth_wbc": 16,
@@ -124,7 +125,7 @@
     {
       "patient": "TF101_233",
       "image": "20170830_105037.jpg",
-      "found_parasites": 53,
+      "found_parasites": 68,
       "found_wbc": 15,
       "truth_parasites": 22,
       "truth_wbc": 13,
@@ -137,7 +138,7 @@
     {
       "patient": "TF101_233",
       "image": "20170830_105127.jpg",
-      "found_parasites": 20,
+      "found_parasites": 25,
       "found_wbc": 12,
       "truth_parasites": 11,
       "truth_wbc": 12,
@@ -150,7 +151,7 @@
     {
       "patient": "TF101_233",
       "image": "20170830_105211.jpg",
-      "found_parasites": 33,
+      "found_parasites": 41,
       "found_wbc": 12,
       "truth_parasites": 26,
       "truth_wbc": 13,
@@ -163,7 +164,7 @@
     {
       "patient": "TF101_233",
       "image": "20170830_105253.jpg",
-      "found_parasites": 31,
+      "found_parasites": 35,
       "found_wbc": 12,
       "truth_parasites": 24,
       "truth_wbc": 11,
@@ -176,7 +177,7 @@
     {
       "patient": "TF101_233",
       "image": "20170830_105334.jpg",
-      "found_parasites": 34,
+      "found_parasites": 40,
       "found_wbc": 12,
       "truth_parasites": 19,
       "truth_wbc": 13,
@@ -202,7 +203,7 @@
     {
       "patient": "TF107_249",
       "image": "20170830_145411.jpg",
-      "found_parasites": 2,
+      "found_parasites": 4,
       "found_wbc": 11,
       "truth_parasites": 2,
       "truth_wbc": 10,
@@ -215,7 +216,7 @@
     {
       "patient": "TF107_249",
       "image": "20170830_145524.jpg",
-      "found_parasites": 6,
+      "found_parasites": 7,
       "found_wbc": 18,
       "truth_parasites": 4,
       "truth_wbc": 15,
@@ -228,7 +229,7 @@
     {
       "patient": "TF107_249",
       "image": "20170830_145648.jpg",
-      "found_parasites": 7,
+      "found_parasites": 8,
       "found_wbc": 23,
       "truth_parasites": 5,
       "truth_wbc": 14,
@@ -241,7 +242,7 @@
     {
       "patient": "TF107_249",
       "image": "20170830_145738.jpg",
-      "found_parasites": 6,
+      "found_parasites": 11,
       "found_wbc": 21,
       "truth_parasites": 2,
       "truth_wbc": 22,
@@ -254,7 +255,7 @@
     {
       "patient": "TF107_249",
       "image": "20170830_145936.jpg",
-      "found_parasites": 11,
+      "found_parasites": 12,
       "found_wbc": 21,
       "truth_parasites": 5,
       "truth_wbc": 23,
@@ -267,7 +268,7 @@
     {
       "patient": "TF107_249",
       "image": "20170830_150548.jpg",
-      "found_parasites": 7,
+      "found_parasites": 10,
       "found_wbc": 21,
       "truth_parasites": 4,
       "truth_wbc": 21,
@@ -280,7 +281,7 @@
     {
       "patient": "TF107_249",
       "image": "20170830_150701.jpg",
-      "found_parasites": 6,
+      "found_parasites": 9,
       "found_wbc": 14,
       "truth_parasites": 1,
       "truth_wbc": 15,
@@ -293,7 +294,7 @@
     {
       "patient": "TF107_249",
       "image": "20170830_150937.jpg",
-      "found_parasites": 6,
+      "found_parasites": 7,
       "found_wbc": 13,
       "truth_parasites": 6,
       "truth_wbc": 18,
@@ -319,7 +320,7 @@
     {
       "patient": "TF107_249",
       "image": "20170830_151333.jpg",
-      "found_parasites": 8,
+      "found_parasites": 13,
       "found_wbc": 11,
       "truth_parasites": 2,
       "truth_wbc": 13,
@@ -332,7 +333,7 @@
     {
       "patient": "TF107_249",
       "image": "20170830_151428.jpg",
-      "found_parasites": 4,
+      "found_parasites": 6,
       "found_wbc": 15,
       "truth_parasites": 3,
       "truth_wbc": 14,
@@ -345,7 +346,7 @@
     {
       "patient": "TF107_249",
       "image": "20170830_151751.jpg",
-      "found_parasites": 5,
+      "found_parasites": 6,
       "found_wbc": 15,
       "truth_parasites": 7,
       "truth_wbc": 23,
@@ -358,7 +359,7 @@
     {
       "patient": "TF107_249",
       "image": "20170830_152020.jpg",
-      "found_parasites": 14,
+      "found_parasites": 16,
       "found_wbc": 11,
       "truth_parasites": 6,
       "truth_wbc": 17,
@@ -371,7 +372,7 @@
     {
       "patient": "TF10_C65P26",
       "image": "20170612_143853.jpg",
-      "found_parasites": 89,
+      "found_parasites": 111,
       "found_wbc": 16,
       "truth_parasites": 147,
       "truth_wbc": 20,
@@ -384,7 +385,7 @@
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144112.jpg",
-      "found_parasites": 118,
+      "found_parasites": 149,
       "found_wbc": 15,
       "truth_parasites": 191,
       "truth_wbc": 15,
@@ -397,7 +398,7 @@
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144255.jpg",
-      "found_parasites": 195,
+      "found_parasites": 239,
       "found_wbc": 19,
       "truth_parasites": 264,
       "truth_wbc": 19,
@@ -410,7 +411,7 @@
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144401.jpg",
-      "found_parasites": 123,
+      "found_parasites": 149,
       "found_wbc": 18,
       "truth_parasites": 240,
       "truth_wbc": 22,
@@ -423,7 +424,7 @@
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144514.jpg",
-      "found_parasites": 97,
+      "found_parasites": 119,
       "found_wbc": 17,
       "truth_parasites": 163,
       "truth_wbc": 17,
@@ -436,7 +437,7 @@
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144647.jpg",
-      "found_parasites": 91,
+      "found_parasites": 124,
       "found_wbc": 21,
       "truth_parasites": 184,
       "truth_wbc": 24,
@@ -449,7 +450,7 @@
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144808.jpg",
-      "found_parasites": 63,
+      "found_parasites": 86,
       "found_wbc": 17,
       "truth_parasites": 148,
       "truth_wbc": 21,
@@ -462,7 +463,7 @@
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144935.jpg",
-      "found_parasites": 152,
+      "found_parasites": 187,
       "found_wbc": 18,
       "truth_parasites": 250,
       "truth_wbc": 22,
@@ -475,7 +476,7 @@
     {
       "patient": "TF10_C65P26",
       "image": "20170612_145110.jpg",
-      "found_parasites": 100,
+      "found_parasites": 119,
       "found_wbc": 26,
       "truth_parasites": 211,
       "truth_wbc": 28,
@@ -488,7 +489,7 @@
     {
       "patient": "TF10_C65P26",
       "image": "20170612_145239.jpg",
-      "found_parasites": 103,
+      "found_parasites": 126,
       "found_wbc": 20,
       "truth_parasites": 183,
       "truth_wbc": 18,
@@ -501,7 +502,7 @@
     {
       "patient": "TF10_C65P26",
       "image": "20170612_145409.jpg",
-      "found_parasites": 169,
+      "found_parasites": 204,
       "found_wbc": 27,
       "truth_parasites": 242,
       "truth_wbc": 25,
@@ -514,7 +515,7 @@
     {
       "patient": "TF110_270",
       "image": "20170830_165753.jpg",
-      "found_parasites": 39,
+      "found_parasites": 49,
       "found_wbc": 30,
       "truth_parasites": 75,
       "truth_wbc": 42,
@@ -527,7 +528,7 @@
     {
       "patient": "TF110_270",
       "image": "20170830_165908.jpg",
-      "found_parasites": 25,
+      "found_parasites": 27,
       "found_wbc": 31,
       "truth_parasites": 40,
       "truth_wbc": 42,
@@ -540,7 +541,7 @@
     {
       "patient": "TF110_270",
       "image": "20170830_170110.jpg",
-      "found_parasites": 77,
+      "found_parasites": 83,
       "found_wbc": 26,
       "truth_parasites": 88,
       "truth_wbc": 32,
@@ -553,7 +554,7 @@
     {
       "patient": "TF110_270",
       "image": "20170830_170322.jpg",
-      "found_parasites": 57,
+      "found_parasites": 59,
       "found_wbc": 45,
       "truth_parasites": 68,
       "truth_wbc": 54,
@@ -566,7 +567,7 @@
     {
       "patient": "TF110_270",
       "image": "20170830_170535.jpg",
-      "found_parasites": 80,
+      "found_parasites": 82,
       "found_wbc": 33,
       "truth_parasites": 98,
       "truth_wbc": 40,
@@ -579,7 +580,7 @@
     {
       "patient": "TF110_270",
       "image": "20170830_170700.jpg",
-      "found_parasites": 46,
+      "found_parasites": 52,
       "found_wbc": 44,
       "truth_parasites": 69,
       "truth_wbc": 54,
@@ -592,7 +593,7 @@
     {
       "patient": "TF111_238",
       "image": "20170830_171214.jpg",
-      "found_parasites": 132,
+      "found_parasites": 141,
       "found_wbc": 15,
       "truth_parasites": 132,
       "truth_wbc": 12,
@@ -605,7 +606,7 @@
     {
       "patient": "TF111_238",
       "image": "20170830_171341.jpg",
-      "found_parasites": 140,
+      "found_parasites": 158,
       "found_wbc": 26,
       "truth_parasites": 114,
       "truth_wbc": 22,
@@ -618,7 +619,7 @@
     {
       "patient": "TF111_238",
       "image": "20170830_171528.jpg",
-      "found_parasites": 120,
+      "found_parasites": 136,
       "found_wbc": 22,
       "truth_parasites": 105,
       "truth_wbc": 25,
@@ -631,7 +632,7 @@
     {
       "patient": "TF111_238",
       "image": "20170830_171706.jpg",
-      "found_parasites": 154,
+      "found_parasites": 171,
       "found_wbc": 18,
       "truth_parasites": 133,
       "truth_wbc": 19,
@@ -644,7 +645,7 @@
     {
       "patient": "TF111_238",
       "image": "20170830_171824.jpg",
-      "found_parasites": 110,
+      "found_parasites": 120,
       "found_wbc": 16,
       "truth_parasites": 108,
       "truth_wbc": 16,
@@ -657,7 +658,7 @@
     {
       "patient": "TF111_238",
       "image": "20170830_172031.jpg",
-      "found_parasites": 124,
+      "found_parasites": 132,
       "found_wbc": 19,
       "truth_parasites": 98,
       "truth_wbc": 14,
@@ -670,7 +671,7 @@
     {
       "patient": "TF111_238",
       "image": "20170830_172327.jpg",
-      "found_parasites": 112,
+      "found_parasites": 123,
       "found_wbc": 27,
       "truth_parasites": 128,
       "truth_wbc": 25,
@@ -683,7 +684,7 @@
     {
       "patient": "TF111_238",
       "image": "20170830_172447.jpg",
-      "found_parasites": 141,
+      "found_parasites": 150,
       "found_wbc": 27,
       "truth_parasites": 142,
       "truth_wbc": 25,
@@ -696,7 +697,7 @@
     {
       "patient": "TF111_238",
       "image": "20170830_172609.jpg",
-      "found_parasites": 133,
+      "found_parasites": 145,
       "found_wbc": 32,
       "truth_parasites": 164,
       "truth_wbc": 19,
@@ -709,7 +710,7 @@
     {
       "patient": "TF111_238",
       "image": "20170830_173058.jpg",
-      "found_parasites": 148,
+      "found_parasites": 168,
       "found_wbc": 26,
       "truth_parasites": 189,
       "truth_wbc": 18,
@@ -722,7 +723,7 @@
     {
       "patient": "TF111_238",
       "image": "20170830_173144.jpg",
-      "found_parasites": 144,
+      "found_parasites": 155,
       "found_wbc": 27,
       "truth_parasites": 191,
       "truth_wbc": 19,
@@ -735,7 +736,7 @@
     {
       "patient": "TF111_238",
       "image": "20170830_173445.jpg",
-      "found_parasites": 153,
+      "found_parasites": 163,
       "found_wbc": 25,
       "truth_parasites": 191,
       "truth_wbc": 27,
@@ -748,7 +749,7 @@
     {
       "patient": "TF117_R1",
       "image": "20170830_235824.jpg",
-      "found_parasites": 34,
+      "found_parasites": 40,
       "found_wbc": 31,
       "truth_parasites": 27,
       "truth_wbc": 33,
@@ -761,7 +762,7 @@
     {
       "patient": "TF117_R1",
       "image": "20170831_000500.jpg",
-      "found_parasites": 16,
+      "found_parasites": 18,
       "found_wbc": 18,
       "truth_parasites": 25,
       "truth_wbc": 33,
@@ -774,7 +775,7 @@
     {
       "patient": "TF117_R1",
       "image": "20170831_000642.jpg",
-      "found_parasites": 16,
+      "found_parasites": 18,
       "found_wbc": 10,
       "truth_parasites": 24,
       "truth_wbc": 33,
@@ -787,7 +788,7 @@
     {
       "patient": "TF117_R1",
       "image": "20170831_000755.jpg",
-      "found_parasites": 22,
+      "found_parasites": 28,
       "found_wbc": 27,
       "truth_parasites": 26,
       "truth_wbc": 33,
@@ -800,7 +801,7 @@
     {
       "patient": "TF117_R1",
       "image": "20170831_000849.jpg",
-      "found_parasites": 27,
+      "found_parasites": 31,
       "found_wbc": 24,
       "truth_parasites": 36,
       "truth_wbc": 34,
@@ -813,7 +814,7 @@
     {
       "patient": "TF117_R1",
       "image": "20170831_000954.jpg",
-      "found_parasites": 25,
+      "found_parasites": 26,
       "found_wbc": 26,
       "truth_parasites": 31,
       "truth_wbc": 27,
@@ -826,7 +827,7 @@
     {
       "patient": "TF117_R1",
       "image": "20170831_001051.jpg",
-      "found_parasites": 22,
+      "found_parasites": 26,
       "found_wbc": 21,
       "truth_parasites": 29,
       "truth_wbc": 32,
@@ -839,7 +840,7 @@
     {
       "patient": "TF117_R1",
       "image": "20170831_001143.jpg",
-      "found_parasites": 34,
+      "found_parasites": 41,
       "found_wbc": 35,
       "truth_parasites": 36,
       "truth_wbc": 29,
@@ -852,7 +853,7 @@
     {
       "patient": "TF122_1533R",
       "image": "20170831_115242.jpg",
-      "found_parasites": 6,
+      "found_parasites": 7,
       "found_wbc": 15,
       "truth_parasites": 7,
       "truth_wbc": 18,
@@ -878,7 +879,7 @@
     {
       "patient": "TF122_1533R",
       "image": "20170831_115514.jpg",
-      "found_parasites": 5,
+      "found_parasites": 6,
       "found_wbc": 18,
       "truth_parasites": 4,
       "truth_wbc": 17,
@@ -917,7 +918,7 @@
     {
       "patient": "TF122_1533R",
       "image": "20170831_115827.jpg",
-      "found_parasites": 3,
+      "found_parasites": 4,
       "found_wbc": 18,
       "truth_parasites": 5,
       "truth_wbc": 16,
@@ -969,7 +970,7 @@
     {
       "patient": "TF122_1533R",
       "image": "20170831_120312.jpg",
-      "found_parasites": 7,
+      "found_parasites": 8,
       "found_wbc": 13,
       "truth_parasites": 7,
       "truth_wbc": 12,
@@ -1021,7 +1022,7 @@
     {
       "patient": "TF122_1533R",
       "image": "20170831_120726.jpg",
-      "found_parasites": 3,
+      "found_parasites": 4,
       "found_wbc": 14,
       "truth_parasites": 4,
       "truth_wbc": 14,
@@ -1034,7 +1035,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_110548.jpg",
-      "found_parasites": 64,
+      "found_parasites": 66,
       "found_wbc": 25,
       "truth_parasites": 76,
       "truth_wbc": 13,
@@ -1047,7 +1048,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_110701.jpg",
-      "found_parasites": 87,
+      "found_parasites": 97,
       "found_wbc": 21,
       "truth_parasites": 112,
       "truth_wbc": 13,
@@ -1060,7 +1061,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_110740.jpg",
-      "found_parasites": 93,
+      "found_parasites": 104,
       "found_wbc": 21,
       "truth_parasites": 109,
       "truth_wbc": 19,
@@ -1073,7 +1074,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_111014.jpg",
-      "found_parasites": 84,
+      "found_parasites": 86,
       "found_wbc": 25,
       "truth_parasites": 92,
       "truth_wbc": 18,
@@ -1086,7 +1087,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_111153.jpg",
-      "found_parasites": 87,
+      "found_parasites": 89,
       "found_wbc": 27,
       "truth_parasites": 99,
       "truth_wbc": 18,
@@ -1099,7 +1100,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_111250.jpg",
-      "found_parasites": 88,
+      "found_parasites": 93,
       "found_wbc": 23,
       "truth_parasites": 101,
       "truth_wbc": 12,
@@ -1112,7 +1113,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_111417.jpg",
-      "found_parasites": 82,
+      "found_parasites": 88,
       "found_wbc": 24,
       "truth_parasites": 99,
       "truth_wbc": 17,
@@ -1125,7 +1126,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_111524.jpg",
-      "found_parasites": 82,
+      "found_parasites": 84,
       "found_wbc": 26,
       "truth_parasites": 105,
       "truth_wbc": 15,
@@ -1138,7 +1139,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_111656.jpg",
-      "found_parasites": 125,
+      "found_parasites": 136,
       "found_wbc": 16,
       "truth_parasites": 137,
       "truth_wbc": 13,
@@ -1151,7 +1152,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_111741.jpg",
-      "found_parasites": 127,
+      "found_parasites": 132,
       "found_wbc": 23,
       "truth_parasites": 141,
       "truth_wbc": 12,
@@ -1164,7 +1165,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_112423.jpg",
-      "found_parasites": 126,
+      "found_parasites": 137,
       "found_wbc": 24,
       "truth_parasites": 135,
       "truth_wbc": 9,
@@ -1177,7 +1178,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_112619.jpg",
-      "found_parasites": 83,
+      "found_parasites": 89,
       "found_wbc": 26,
       "truth_parasites": 96,
       "truth_wbc": 15,
@@ -1190,7 +1191,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_112743.jpg",
-      "found_parasites": 75,
+      "found_parasites": 80,
       "found_wbc": 40,
       "truth_parasites": 89,
       "truth_wbc": 12,
@@ -1203,7 +1204,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_113046.jpg",
-      "found_parasites": 70,
+      "found_parasites": 75,
       "found_wbc": 20,
       "truth_parasites": 86,
       "truth_wbc": 14,
@@ -1216,7 +1217,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_113239.jpg",
-      "found_parasites": 116,
+      "found_parasites": 127,
       "found_wbc": 14,
       "truth_parasites": 143,
       "truth_wbc": 17,
@@ -1229,7 +1230,7 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_113331.jpg",
-      "found_parasites": 108,
+      "found_parasites": 114,
       "found_wbc": 18,
       "truth_parasites": 129,
       "truth_wbc": 13,
@@ -1242,7 +1243,7 @@
     {
       "patient": "TF124_S540",
       "image": "20170831_122241.jpg",
-      "found_parasites": 45,
+      "found_parasites": 49,
       "found_wbc": 17,
       "truth_parasites": 62,
       "truth_wbc": 16,
@@ -1255,7 +1256,7 @@
     {
       "patient": "TF124_S540",
       "image": "20170831_133833.jpg",
-      "found_parasites": 20,
+      "found_parasites": 23,
       "found_wbc": 21,
       "truth_parasites": 59,
       "truth_wbc": 24,
@@ -1268,7 +1269,7 @@
     {
       "patient": "TF124_S540",
       "image": "20170831_134005.jpg",
-      "found_parasites": 18,
+      "found_parasites": 20,
       "found_wbc": 23,
       "truth_parasites": 39,
       "truth_wbc": 25,
@@ -1281,7 +1282,7 @@
     {
       "patient": "TF124_S540",
       "image": "20170831_134119.jpg",
-      "found_parasites": 9,
+      "found_parasites": 12,
       "found_wbc": 24,
       "truth_parasites": 32,
       "truth_wbc": 25,
@@ -1320,7 +1321,7 @@
     {
       "patient": "TF124_S540",
       "image": "20170831_134843.jpg",
-      "found_parasites": 1,
+      "found_parasites": 2,
       "found_wbc": 21,
       "truth_parasites": 29,
       "truth_wbc": 21,
@@ -1333,7 +1334,7 @@
     {
       "patient": "TF124_S540",
       "image": "20170831_135016.jpg",
-      "found_parasites": 19,
+      "found_parasites": 20,
       "found_wbc": 25,
       "truth_parasites": 28,
       "truth_wbc": 25,
@@ -1359,7 +1360,7 @@
     {
       "patient": "TF124_S540",
       "image": "20170831_135434.jpg",
-      "found_parasites": 1,
+      "found_parasites": 2,
       "found_wbc": 21,
       "truth_parasites": 16,
       "truth_wbc": 21,
@@ -1372,7 +1373,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_165712.jpg",
-      "found_parasites": 117,
+      "found_parasites": 140,
       "found_wbc": 18,
       "truth_parasites": 181,
       "truth_wbc": 16,
@@ -1385,7 +1386,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_165752.jpg",
-      "found_parasites": 133,
+      "found_parasites": 158,
       "found_wbc": 21,
       "truth_parasites": 171,
       "truth_wbc": 19,
@@ -1398,7 +1399,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_165848.jpg",
-      "found_parasites": 74,
+      "found_parasites": 93,
       "found_wbc": 18,
       "truth_parasites": 113,
       "truth_wbc": 13,
@@ -1411,7 +1412,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_165927.jpg",
-      "found_parasites": 63,
+      "found_parasites": 80,
       "found_wbc": 22,
       "truth_parasites": 132,
       "truth_wbc": 22,
@@ -1424,7 +1425,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_170020.jpg",
-      "found_parasites": 105,
+      "found_parasites": 131,
       "found_wbc": 15,
       "truth_parasites": 153,
       "truth_wbc": 14,
@@ -1437,7 +1438,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_170111.jpg",
-      "found_parasites": 119,
+      "found_parasites": 159,
       "found_wbc": 12,
       "truth_parasites": 196,
       "truth_wbc": 12,
@@ -1450,7 +1451,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_170216.jpg",
-      "found_parasites": 121,
+      "found_parasites": 143,
       "found_wbc": 17,
       "truth_parasites": 191,
       "truth_wbc": 16,
@@ -1463,7 +1464,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_170304.jpg",
-      "found_parasites": 94,
+      "found_parasites": 118,
       "found_wbc": 14,
       "truth_parasites": 157,
       "truth_wbc": 15,
@@ -1476,7 +1477,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_170352.jpg",
-      "found_parasites": 106,
+      "found_parasites": 134,
       "found_wbc": 15,
       "truth_parasites": 137,
       "truth_wbc": 12,
@@ -1489,7 +1490,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_170434.jpg",
-      "found_parasites": 144,
+      "found_parasites": 159,
       "found_wbc": 16,
       "truth_parasites": 189,
       "truth_wbc": 15,
@@ -1502,7 +1503,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_170549.jpg",
-      "found_parasites": 105,
+      "found_parasites": 122,
       "found_wbc": 20,
       "truth_parasites": 132,
       "truth_wbc": 17,
@@ -1515,7 +1516,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_170635.jpg",
-      "found_parasites": 90,
+      "found_parasites": 109,
       "found_wbc": 15,
       "truth_parasites": 109,
       "truth_wbc": 10,
@@ -1528,7 +1529,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_170744.jpg",
-      "found_parasites": 120,
+      "found_parasites": 149,
       "found_wbc": 14,
       "truth_parasites": 160,
       "truth_wbc": 12,
@@ -1541,7 +1542,7 @@
     {
       "patient": "TF130_S521",
       "image": "20170831_170902.jpg",
-      "found_parasites": 136,
+      "found_parasites": 161,
       "found_wbc": 16,
       "truth_parasites": 151,
       "truth_wbc": 14,
@@ -1554,7 +1555,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_174732.jpg",
-      "found_parasites": 17,
+      "found_parasites": 20,
       "found_wbc": 12,
       "truth_parasites": 22,
       "truth_wbc": 14,
@@ -1567,7 +1568,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_174841.jpg",
-      "found_parasites": 23,
+      "found_parasites": 27,
       "found_wbc": 14,
       "truth_parasites": 25,
       "truth_wbc": 16,
@@ -1580,7 +1581,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_175225.jpg",
-      "found_parasites": 19,
+      "found_parasites": 21,
       "found_wbc": 14,
       "truth_parasites": 20,
       "truth_wbc": 12,
@@ -1593,7 +1594,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_175310.jpg",
-      "found_parasites": 24,
+      "found_parasites": 28,
       "found_wbc": 13,
       "truth_parasites": 26,
       "truth_wbc": 13,
@@ -1606,7 +1607,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_175426.jpg",
-      "found_parasites": 14,
+      "found_parasites": 19,
       "found_wbc": 15,
       "truth_parasites": 16,
       "truth_wbc": 13,
@@ -1619,7 +1620,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_175525.jpg",
-      "found_parasites": 14,
+      "found_parasites": 19,
       "found_wbc": 12,
       "truth_parasites": 19,
       "truth_wbc": 13,
@@ -1632,7 +1633,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_175830.jpg",
-      "found_parasites": 9,
+      "found_parasites": 12,
       "found_wbc": 19,
       "truth_parasites": 23,
       "truth_wbc": 18,
@@ -1645,7 +1646,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_175937.jpg",
-      "found_parasites": 9,
+      "found_parasites": 10,
       "found_wbc": 13,
       "truth_parasites": 16,
       "truth_wbc": 12,
@@ -1658,7 +1659,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_180224.jpg",
-      "found_parasites": 8,
+      "found_parasites": 13,
       "found_wbc": 16,
       "truth_parasites": 24,
       "truth_wbc": 17,
@@ -1671,7 +1672,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_180510.jpg",
-      "found_parasites": 15,
+      "found_parasites": 16,
       "found_wbc": 17,
       "truth_parasites": 22,
       "truth_wbc": 16,
@@ -1684,7 +1685,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_180613.jpg",
-      "found_parasites": 12,
+      "found_parasites": 15,
       "found_wbc": 14,
       "truth_parasites": 23,
       "truth_wbc": 13,
@@ -1697,7 +1698,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_180653.jpg",
-      "found_parasites": 10,
+      "found_parasites": 11,
       "found_wbc": 20,
       "truth_parasites": 15,
       "truth_wbc": 16,
@@ -1710,7 +1711,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_180949.jpg",
-      "found_parasites": 14,
+      "found_parasites": 16,
       "found_wbc": 13,
       "truth_parasites": 15,
       "truth_wbc": 11,
@@ -1723,7 +1724,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_181112.jpg",
-      "found_parasites": 28,
+      "found_parasites": 32,
       "found_wbc": 12,
       "truth_parasites": 32,
       "truth_wbc": 11,
@@ -1736,7 +1737,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_181212.jpg",
-      "found_parasites": 14,
+      "found_parasites": 17,
       "found_wbc": 15,
       "truth_parasites": 15,
       "truth_wbc": 14,
@@ -1749,7 +1750,7 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_181256.jpg",
-      "found_parasites": 26,
+      "found_parasites": 28,
       "found_wbc": 14,
       "truth_parasites": 24,
       "truth_wbc": 11,
@@ -1762,7 +1763,7 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_202026.jpg",
-      "found_parasites": 15,
+      "found_parasites": 16,
       "found_wbc": 15,
       "truth_parasites": 57,
       "truth_wbc": 13,
@@ -1775,7 +1776,7 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_202109.jpg",
-      "found_parasites": 12,
+      "found_parasites": 14,
       "found_wbc": 16,
       "truth_parasites": 19,
       "truth_wbc": 10,
@@ -1801,7 +1802,7 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_202251.jpg",
-      "found_parasites": 11,
+      "found_parasites": 16,
       "found_wbc": 16,
       "truth_parasites": 12,
       "truth_wbc": 13,
@@ -1814,7 +1815,7 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_202541.jpg",
-      "found_parasites": 6,
+      "found_parasites": 8,
       "found_wbc": 15,
       "truth_parasites": 11,
       "truth_wbc": 16,
@@ -1840,7 +1841,7 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_202825.jpg",
-      "found_parasites": 14,
+      "found_parasites": 15,
       "found_wbc": 15,
       "truth_parasites": 14,
       "truth_wbc": 16,
@@ -1853,7 +1854,7 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_202932.jpg",
-      "found_parasites": 13,
+      "found_parasites": 14,
       "found_wbc": 14,
       "truth_parasites": 14,
       "truth_wbc": 11,
@@ -1879,7 +1880,7 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_203057.jpg",
-      "found_parasites": 10,
+      "found_parasites": 11,
       "found_wbc": 15,
       "truth_parasites": 20,
       "truth_wbc": 12,
@@ -1892,7 +1893,7 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_203231.jpg",
-      "found_parasites": 10,
+      "found_parasites": 13,
       "found_wbc": 10,
       "truth_parasites": 20,
       "truth_wbc": 14,
@@ -1905,7 +1906,7 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_203322.jpg",
-      "found_parasites": 17,
+      "found_parasites": 23,
       "found_wbc": 18,
       "truth_parasites": 39,
       "truth_wbc": 18,
@@ -1918,7 +1919,7 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_203415.jpg",
-      "found_parasites": 20,
+      "found_parasites": 22,
       "found_wbc": 15,
       "truth_parasites": 36,
       "truth_wbc": 15,
@@ -1931,7 +1932,7 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_203538.jpg",
-      "found_parasites": 12,
+      "found_parasites": 16,
       "found_wbc": 15,
       "truth_parasites": 25,
       "truth_wbc": 16,
@@ -1944,7 +1945,7 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_203711.jpg",
-      "found_parasites": 17,
+      "found_parasites": 19,
       "found_wbc": 14,
       "truth_parasites": 41,
       "truth_wbc": 14,
@@ -1957,7 +1958,7 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_203803.jpg",
-      "found_parasites": 8,
+      "found_parasites": 10,
       "found_wbc": 11,
       "truth_parasites": 23,
       "truth_wbc": 15,
@@ -1970,7 +1971,7 @@
     {
       "patient": "TF137_US8",
       "image": "20170831_213511.jpg",
-      "found_parasites": 13,
+      "found_parasites": 14,
       "found_wbc": 13,
       "truth_parasites": 9,
       "truth_wbc": 11,
@@ -1983,7 +1984,7 @@
     {
       "patient": "TF137_US8",
       "image": "20170831_213711.jpg",
-      "found_parasites": 10,
+      "found_parasites": 11,
       "found_wbc": 23,
       "truth_parasites": 8,
       "truth_wbc": 25,
@@ -1996,7 +1997,7 @@
     {
       "patient": "TF137_US8",
       "image": "20170831_213901.jpg",
-      "found_parasites": 12,
+      "found_parasites": 15,
       "found_wbc": 19,
       "truth_parasites": 8,
       "truth_wbc": 14,
@@ -2009,7 +2010,7 @@
     {
       "patient": "TF137_US8",
       "image": "20170831_213948.jpg",
-      "found_parasites": 9,
+      "found_parasites": 11,
       "found_wbc": 25,
       "truth_parasites": 7,
       "truth_wbc": 19,
@@ -2022,7 +2023,7 @@
     {
       "patient": "TF137_US8",
       "image": "20170831_214044.jpg",
-      "found_parasites": 6,
+      "found_parasites": 7,
       "found_wbc": 30,
       "truth_parasites": 7,
       "truth_wbc": 36,
@@ -2035,7 +2036,7 @@
     {
       "patient": "TF137_US8",
       "image": "20170831_214207.jpg",
-      "found_parasites": 12,
+      "found_parasites": 14,
       "found_wbc": 24,
       "truth_parasites": 9,
       "truth_wbc": 16,
@@ -2074,7 +2075,7 @@
     {
       "patient": "TF137_US8",
       "image": "20170831_214542.jpg",
-      "found_parasites": 12,
+      "found_parasites": 13,
       "found_wbc": 24,
       "truth_parasites": 14,
       "truth_wbc": 23,
@@ -2087,7 +2088,7 @@
     {
       "patient": "TF137_US8",
       "image": "20170831_214652.jpg",
-      "found_parasites": 12,
+      "found_parasites": 16,
       "found_wbc": 19,
       "truth_parasites": 10,
       "truth_wbc": 20,
@@ -2100,7 +2101,7 @@
     {
       "patient": "TF137_US8",
       "image": "20170831_214737.jpg",
-      "found_parasites": 0,
+      "found_parasites": 1,
       "found_wbc": 18,
       "truth_parasites": 2,
       "truth_wbc": 18,
@@ -2113,7 +2114,7 @@
     {
       "patient": "TF141_CT12",
       "image": "20170901_000307.jpg",
-      "found_parasites": 136,
+      "found_parasites": 142,
       "found_wbc": 18,
       "truth_parasites": 123,
       "truth_wbc": 16,
@@ -2126,7 +2127,7 @@
     {
       "patient": "TF141_CT12",
       "image": "20170901_000349.jpg",
-      "found_parasites": 142,
+      "found_parasites": 152,
       "found_wbc": 20,
       "truth_parasites": 133,
       "truth_wbc": 21,
@@ -2139,7 +2140,7 @@
     {
       "patient": "TF141_CT12",
       "image": "20170901_000442.jpg",
-      "found_parasites": 114,
+      "found_parasites": 125,
       "found_wbc": 22,
       "truth_parasites": 114,
       "truth_wbc": 23,
@@ -2152,7 +2153,7 @@
     {
       "patient": "TF141_CT12",
       "image": "20170901_000540.jpg",
-      "found_parasites": 164,
+      "found_parasites": 170,
       "found_wbc": 23,
       "truth_parasites": 157,
       "truth_wbc": 20,
@@ -2165,7 +2166,7 @@
     {
       "patient": "TF141_CT12",
       "image": "20170901_000630.jpg",
-      "found_parasites": 148,
+      "found_parasites": 161,
       "found_wbc": 19,
       "truth_parasites": 146,
       "truth_wbc": 20,
@@ -2178,7 +2179,7 @@
     {
       "patient": "TF141_CT12",
       "image": "20170901_000716.jpg",
-      "found_parasites": 184,
+      "found_parasites": 197,
       "found_wbc": 15,
       "truth_parasites": 189,
       "truth_wbc": 15,
@@ -2191,7 +2192,7 @@
     {
       "patient": "TF141_CT12",
       "image": "20170901_000759.jpg",
-      "found_parasites": 177,
+      "found_parasites": 194,
       "found_wbc": 20,
       "truth_parasites": 181,
       "truth_wbc": 22,
@@ -2204,7 +2205,7 @@
     {
       "patient": "TF141_CT12",
       "image": "20170901_000845.jpg",
-      "found_parasites": 178,
+      "found_parasites": 187,
       "found_wbc": 25,
       "truth_parasites": 195,
       "truth_wbc": 23,
@@ -2217,7 +2218,7 @@
     {
       "patient": "TF141_CT12",
       "image": "20170901_000932.jpg",
-      "found_parasites": 148,
+      "found_parasites": 163,
       "found_wbc": 21,
       "truth_parasites": 160,
       "truth_wbc": 30,
@@ -2230,7 +2231,7 @@
     {
       "patient": "TF141_CT12",
       "image": "20170901_001029.jpg",
-      "found_parasites": 164,
+      "found_parasites": 172,
       "found_wbc": 24,
       "truth_parasites": 167,
       "truth_wbc": 24,
@@ -2243,7 +2244,7 @@
     {
       "patient": "TF147_R3",
       "image": "20170901_015654.jpg",
-      "found_parasites": 158,
+      "found_parasites": 159,
       "found_wbc": 19,
       "truth_parasites": 158,
       "truth_wbc": 20,
@@ -2256,7 +2257,7 @@
     {
       "patient": "TF147_R3",
       "image": "20170901_015748.jpg",
-      "found_parasites": 144,
+      "found_parasites": 159,
       "found_wbc": 18,
       "truth_parasites": 146,
       "truth_wbc": 17,
@@ -2269,7 +2270,7 @@
     {
       "patient": "TF147_R3",
       "image": "20170901_015827.jpg",
-      "found_parasites": 146,
+      "found_parasites": 159,
       "found_wbc": 22,
       "truth_parasites": 144,
       "truth_wbc": 23,
@@ -2282,7 +2283,7 @@
     {
       "patient": "TF147_R3",
       "image": "20170901_020015.jpg",
-      "found_parasites": 128,
+      "found_parasites": 138,
       "found_wbc": 17,
       "truth_parasites": 134,
       "truth_wbc": 17,
@@ -2295,7 +2296,7 @@
     {
       "patient": "TF147_R3",
       "image": "20170901_020120.jpg",
-      "found_parasites": 153,
+      "found_parasites": 161,
       "found_wbc": 15,
       "truth_parasites": 157,
       "truth_wbc": 13,
@@ -2308,7 +2309,7 @@
     {
       "patient": "TF147_R3",
       "image": "20170901_020221.jpg",
-      "found_parasites": 159,
+      "found_parasites": 176,
       "found_wbc": 15,
       "truth_parasites": 161,
       "truth_wbc": 16,
@@ -2321,7 +2322,7 @@
     {
       "patient": "TF147_R3",
       "image": "20170901_020310.jpg",
-      "found_parasites": 142,
+      "found_parasites": 155,
       "found_wbc": 16,
       "truth_parasites": 143,
       "truth_wbc": 16,
@@ -2334,7 +2335,7 @@
     {
       "patient": "TF147_R3",
       "image": "20170901_020357.jpg",
-      "found_parasites": 118,
+      "found_parasites": 125,
       "found_wbc": 13,
       "truth_parasites": 109,
       "truth_wbc": 14,
@@ -2347,7 +2348,7 @@
     {
       "patient": "TF147_R3",
       "image": "20170901_020443.jpg",
-      "found_parasites": 175,
+      "found_parasites": 191,
       "found_wbc": 13,
       "truth_parasites": 177,
       "truth_wbc": 14,
@@ -2360,7 +2361,7 @@
     {
       "patient": "TF147_R3",
       "image": "20170901_020551.jpg",
-      "found_parasites": 104,
+      "found_parasites": 113,
       "found_wbc": 25,
       "truth_parasites": 100,
       "truth_wbc": 25,
@@ -2373,7 +2374,7 @@
     {
       "patient": "TF147_R3",
       "image": "20170901_020635.jpg",
-      "found_parasites": 140,
+      "found_parasites": 150,
       "found_wbc": 13,
       "truth_parasites": 146,
       "truth_wbc": 14,
@@ -2386,7 +2387,7 @@
     {
       "patient": "TF147_R3",
       "image": "20170901_020716.jpg",
-      "found_parasites": 156,
+      "found_parasites": 168,
       "found_wbc": 16,
       "truth_parasites": 165,
       "truth_wbc": 15,
@@ -2399,7 +2400,7 @@
     {
       "patient": "TF150_R5",
       "image": "20170901_031213.jpg",
-      "found_parasites": 4,
+      "found_parasites": 5,
       "found_wbc": 55,
       "truth_parasites": 3,
       "truth_wbc": 53,
@@ -2412,7 +2413,7 @@
     {
       "patient": "TF150_R5",
       "image": "20170901_031525.jpg",
-      "found_parasites": 1,
+      "found_parasites": 2,
       "found_wbc": 61,
       "truth_parasites": 1,
       "truth_wbc": 80,
@@ -2425,7 +2426,7 @@
     {
       "patient": "TF150_R5",
       "image": "20170901_031822.jpg",
-      "found_parasites": 2,
+      "found_parasites": 3,
       "found_wbc": 55,
       "truth_parasites": 4,
       "truth_wbc": 50,
@@ -2451,7 +2452,7 @@
     {
       "patient": "TF150_R5",
       "image": "20170901_032308.jpg",
-      "found_parasites": 0,
+      "found_parasites": 1,
       "found_wbc": 73,
       "truth_parasites": 1,
       "truth_wbc": 77,
@@ -2464,7 +2465,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_172423.jpg",
-      "found_parasites": 79,
+      "found_parasites": 91,
       "found_wbc": 18,
       "truth_parasites": 80,
       "truth_wbc": 11,
@@ -2477,7 +2478,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_173121.jpg",
-      "found_parasites": 88,
+      "found_parasites": 115,
       "found_wbc": 17,
       "truth_parasites": 78,
       "truth_wbc": 12,
@@ -2490,7 +2491,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_173247.jpg",
-      "found_parasites": 87,
+      "found_parasites": 111,
       "found_wbc": 14,
       "truth_parasites": 89,
       "truth_wbc": 12,
@@ -2503,7 +2504,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_173415.jpg",
-      "found_parasites": 88,
+      "found_parasites": 111,
       "found_wbc": 16,
       "truth_parasites": 82,
       "truth_wbc": 10,
@@ -2516,7 +2517,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_173631.jpg",
-      "found_parasites": 71,
+      "found_parasites": 93,
       "found_wbc": 20,
       "truth_parasites": 74,
       "truth_wbc": 14,
@@ -2529,7 +2530,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_173821.jpg",
-      "found_parasites": 109,
+      "found_parasites": 139,
       "found_wbc": 14,
       "truth_parasites": 86,
       "truth_wbc": 15,
@@ -2542,7 +2543,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_174016.jpg",
-      "found_parasites": 70,
+      "found_parasites": 95,
       "found_wbc": 16,
       "truth_parasites": 78,
       "truth_wbc": 11,
@@ -2555,7 +2556,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_174205.jpg",
-      "found_parasites": 68,
+      "found_parasites": 87,
       "found_wbc": 23,
       "truth_parasites": 66,
       "truth_wbc": 8,
@@ -2568,7 +2569,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_174434.jpg",
-      "found_parasites": 41,
+      "found_parasites": 57,
       "found_wbc": 28,
       "truth_parasites": 50,
       "truth_wbc": 9,
@@ -2581,7 +2582,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_174547.jpg",
-      "found_parasites": 58,
+      "found_parasites": 67,
       "found_wbc": 24,
       "truth_parasites": 58,
       "truth_wbc": 10,
@@ -2594,7 +2595,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_174737.jpg",
-      "found_parasites": 48,
+      "found_parasites": 57,
       "found_wbc": 22,
       "truth_parasites": 48,
       "truth_wbc": 10,
@@ -2607,7 +2608,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_174927.jpg",
-      "found_parasites": 55,
+      "found_parasites": 67,
       "found_wbc": 20,
       "truth_parasites": 54,
       "truth_wbc": 8,
@@ -2620,7 +2621,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_175036.jpg",
-      "found_parasites": 69,
+      "found_parasites": 93,
       "found_wbc": 15,
       "truth_parasites": 74,
       "truth_wbc": 10,
@@ -2633,7 +2634,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_175232.jpg",
-      "found_parasites": 66,
+      "found_parasites": 79,
       "found_wbc": 16,
       "truth_parasites": 61,
       "truth_wbc": 11,
@@ -2646,7 +2647,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_175518.jpg",
-      "found_parasites": 104,
+      "found_parasites": 124,
       "found_wbc": 16,
       "truth_parasites": 99,
       "truth_wbc": 10,
@@ -2659,7 +2660,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_175637.jpg",
-      "found_parasites": 63,
+      "found_parasites": 83,
       "found_wbc": 16,
       "truth_parasites": 77,
       "truth_wbc": 16,
@@ -2672,7 +2673,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_175754.jpg",
-      "found_parasites": 68,
+      "found_parasites": 84,
       "found_wbc": 16,
       "truth_parasites": 62,
       "truth_wbc": 11,
@@ -2685,7 +2686,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_175916.jpg",
-      "found_parasites": 95,
+      "found_parasites": 117,
       "found_wbc": 23,
       "truth_parasites": 87,
       "truth_wbc": 12,
@@ -2698,7 +2699,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_180044.jpg",
-      "found_parasites": 85,
+      "found_parasites": 103,
       "found_wbc": 22,
       "truth_parasites": 85,
       "truth_wbc": 12,
@@ -2711,7 +2712,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_180208.jpg",
-      "found_parasites": 61,
+      "found_parasites": 81,
       "found_wbc": 21,
       "truth_parasites": 61,
       "truth_wbc": 12,
@@ -2724,7 +2725,7 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_180326.jpg",
-      "found_parasites": 93,
+      "found_parasites": 119,
       "found_wbc": 23,
       "truth_parasites": 91,
       "truth_wbc": 19,
@@ -2750,7 +2751,7 @@
     {
       "patient": "TF1N_1522",
       "image": "20171023_111022.jpg",
-      "found_parasites": 8,
+      "found_parasites": 9,
       "found_wbc": 31,
       "truth_parasites": 10,
       "truth_wbc": 19,
@@ -2802,7 +2803,7 @@
     {
       "patient": "TF1N_1522",
       "image": "20171023_111948.jpg",
-      "found_parasites": 3,
+      "found_parasites": 4,
       "found_wbc": 25,
       "truth_parasites": 8,
       "truth_wbc": 18,
@@ -2841,7 +2842,7 @@
     {
       "patient": "TF1N_1522",
       "image": "20171023_113206.jpg",
-      "found_parasites": 2,
+      "found_parasites": 3,
       "found_wbc": 32,
       "truth_parasites": 4,
       "truth_wbc": 25,
@@ -2854,7 +2855,7 @@
     {
       "patient": "TF1N_1522",
       "image": "20171023_113655.jpg",
-      "found_parasites": 3,
+      "found_parasites": 5,
       "found_wbc": 34,
       "truth_parasites": 2,
       "truth_wbc": 14,
@@ -2867,7 +2868,7 @@
     {
       "patient": "TF1N_1522",
       "image": "20171023_113955.jpg",
-      "found_parasites": 1,
+      "found_parasites": 3,
       "found_wbc": 40,
       "truth_parasites": 4,
       "truth_wbc": 24,
@@ -2880,7 +2881,7 @@
     {
       "patient": "TF1N_1522",
       "image": "20171023_114235.jpg",
-      "found_parasites": 4,
+      "found_parasites": 5,
       "found_wbc": 25,
       "truth_parasites": 9,
       "truth_wbc": 16,
@@ -2906,7 +2907,7 @@
     {
       "patient": "TF22_C104P65",
       "image": "20170708_160546.jpg",
-      "found_parasites": 2,
+      "found_parasites": 5,
       "found_wbc": 24,
       "truth_parasites": 4,
       "truth_wbc": 16,
@@ -2971,7 +2972,7 @@
     {
       "patient": "TF22_C104P65",
       "image": "20170708_162827.jpg",
-      "found_parasites": 2,
+      "found_parasites": 4,
       "found_wbc": 31,
       "truth_parasites": 1,
       "truth_wbc": 21,
@@ -3036,7 +3037,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_155209.jpg",
-      "found_parasites": 35,
+      "found_parasites": 39,
       "found_wbc": 18,
       "truth_parasites": 31,
       "truth_wbc": 12,
@@ -3049,7 +3050,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_155503.jpg",
-      "found_parasites": 39,
+      "found_parasites": 42,
       "found_wbc": 20,
       "truth_parasites": 36,
       "truth_wbc": 18,
@@ -3062,7 +3063,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_155758.jpg",
-      "found_parasites": 48,
+      "found_parasites": 55,
       "found_wbc": 14,
       "truth_parasites": 43,
       "truth_wbc": 12,
@@ -3075,7 +3076,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_160706.jpg",
-      "found_parasites": 54,
+      "found_parasites": 59,
       "found_wbc": 15,
       "truth_parasites": 43,
       "truth_wbc": 14,
@@ -3088,7 +3089,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_160954.jpg",
-      "found_parasites": 30,
+      "found_parasites": 38,
       "found_wbc": 16,
       "truth_parasites": 34,
       "truth_wbc": 16,
@@ -3101,7 +3102,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_161148.jpg",
-      "found_parasites": 42,
+      "found_parasites": 51,
       "found_wbc": 16,
       "truth_parasites": 45,
       "truth_wbc": 11,
@@ -3114,7 +3115,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_161357.jpg",
-      "found_parasites": 27,
+      "found_parasites": 40,
       "found_wbc": 18,
       "truth_parasites": 26,
       "truth_wbc": 15,
@@ -3127,7 +3128,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_161553.jpg",
-      "found_parasites": 45,
+      "found_parasites": 63,
       "found_wbc": 17,
       "truth_parasites": 47,
       "truth_wbc": 16,
@@ -3140,7 +3141,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_161713.jpg",
-      "found_parasites": 36,
+      "found_parasites": 46,
       "found_wbc": 14,
       "truth_parasites": 40,
       "truth_wbc": 14,
@@ -3153,7 +3154,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_161856.jpg",
-      "found_parasites": 49,
+      "found_parasites": 60,
       "found_wbc": 16,
       "truth_parasites": 50,
       "truth_wbc": 18,
@@ -3166,7 +3167,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_162049.jpg",
-      "found_parasites": 37,
+      "found_parasites": 49,
       "found_wbc": 14,
       "truth_parasites": 50,
       "truth_wbc": 14,
@@ -3179,7 +3180,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_162401.jpg",
-      "found_parasites": 36,
+      "found_parasites": 44,
       "found_wbc": 18,
       "truth_parasites": 35,
       "truth_wbc": 12,
@@ -3192,7 +3193,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_162527.jpg",
-      "found_parasites": 27,
+      "found_parasites": 34,
       "found_wbc": 11,
       "truth_parasites": 33,
       "truth_wbc": 11,
@@ -3205,7 +3206,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_162728.jpg",
-      "found_parasites": 13,
+      "found_parasites": 31,
       "found_wbc": 17,
       "truth_parasites": 33,
       "truth_wbc": 15,
@@ -3218,7 +3219,7 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_163622.jpg",
-      "found_parasites": 18,
+      "found_parasites": 22,
       "found_wbc": 13,
       "truth_parasites": 21,
       "truth_wbc": 10,
@@ -3231,7 +3232,7 @@
     {
       "patient": "TF28W13B15A",
       "image": "20170724_121402.jpg",
-      "found_parasites": 6,
+      "found_parasites": 7,
       "found_wbc": 29,
       "truth_parasites": 10,
       "truth_wbc": 25,
@@ -3244,7 +3245,7 @@
     {
       "patient": "TF28W13B15A",
       "image": "20170724_121612.jpg",
-      "found_parasites": 7,
+      "found_parasites": 8,
       "found_wbc": 34,
       "truth_parasites": 18,
       "truth_wbc": 25,
@@ -3270,7 +3271,7 @@
     {
       "patient": "TF28W13B15A",
       "image": "20170724_121944.jpg",
-      "found_parasites": 2,
+      "found_parasites": 3,
       "found_wbc": 34,
       "truth_parasites": 5,
       "truth_wbc": 35,
@@ -3283,7 +3284,7 @@
     {
       "patient": "TF28W13B15A",
       "image": "20170724_122144.jpg",
-      "found_parasites": 3,
+      "found_parasites": 4,
       "found_wbc": 26,
       "truth_parasites": 13,
       "truth_wbc": 16,
@@ -3296,7 +3297,7 @@
     {
       "patient": "TF28W13B15A",
       "image": "20170724_122336.jpg",
-      "found_parasites": 3,
+      "found_parasites": 5,
       "found_wbc": 39,
       "truth_parasites": 9,
       "truth_wbc": 33,
@@ -3309,7 +3310,7 @@
     {
       "patient": "TF28W13B15A",
       "image": "20170724_122519.jpg",
-      "found_parasites": 5,
+      "found_parasites": 7,
       "found_wbc": 22,
       "truth_parasites": 7,
       "truth_wbc": 15,
@@ -3335,7 +3336,7 @@
     {
       "patient": "TF28W13B15A",
       "image": "20170724_122901.jpg",
-      "found_parasites": 7,
+      "found_parasites": 8,
       "found_wbc": 33,
       "truth_parasites": 7,
       "truth_wbc": 18,
@@ -3348,7 +3349,7 @@
     {
       "patient": "TF28W13B15A",
       "image": "20170724_123054.jpg",
-      "found_parasites": 8,
+      "found_parasites": 10,
       "found_wbc": 25,
       "truth_parasites": 9,
       "truth_wbc": 20,
@@ -3361,7 +3362,7 @@
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_141308.jpg",
-      "found_parasites": 4,
+      "found_parasites": 5,
       "found_wbc": 53,
       "truth_parasites": 8,
       "truth_wbc": 64,
@@ -3374,7 +3375,7 @@
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_141429.jpg",
-      "found_parasites": 8,
+      "found_parasites": 10,
       "found_wbc": 24,
       "truth_parasites": 11,
       "truth_wbc": 27,
@@ -3387,7 +3388,7 @@
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_141555.jpg",
-      "found_parasites": 4,
+      "found_parasites": 5,
       "found_wbc": 43,
       "truth_parasites": 7,
       "truth_wbc": 49,
@@ -3400,7 +3401,7 @@
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_141719.jpg",
-      "found_parasites": 5,
+      "found_parasites": 6,
       "found_wbc": 47,
       "truth_parasites": 11,
       "truth_wbc": 54,
@@ -3413,7 +3414,7 @@
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_141845.jpg",
-      "found_parasites": 5,
+      "found_parasites": 6,
       "found_wbc": 35,
       "truth_parasites": 8,
       "truth_wbc": 36,
@@ -3426,7 +3427,7 @@
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_141956.jpg",
-      "found_parasites": 7,
+      "found_parasites": 8,
       "found_wbc": 60,
       "truth_parasites": 11,
       "truth_wbc": 68,
@@ -3439,7 +3440,7 @@
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_142131.jpg",
-      "found_parasites": 20,
+      "found_parasites": 24,
       "found_wbc": 50,
       "truth_parasites": 32,
       "truth_wbc": 55,
@@ -3465,7 +3466,7 @@
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_142505.jpg",
-      "found_parasites": 8,
+      "found_parasites": 9,
       "found_wbc": 57,
       "truth_parasites": 11,
       "truth_wbc": 61,
@@ -3478,7 +3479,7 @@
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_142701.jpg",
-      "found_parasites": 20,
+      "found_parasites": 22,
       "found_wbc": 49,
       "truth_parasites": 27,
       "truth_wbc": 49,
@@ -3491,7 +3492,7 @@
     {
       "patient": "TF2N_159R",
       "image": "20171023_123059.jpg",
-      "found_parasites": 12,
+      "found_parasites": 13,
       "found_wbc": 0,
       "truth_parasites": 48,
       "truth_wbc": 18,
@@ -3543,7 +3544,7 @@
     {
       "patient": "TF2N_159R",
       "image": "20171023_125255.jpg",
-      "found_parasites": 28,
+      "found_parasites": 30,
       "found_wbc": 15,
       "truth_parasites": 39,
       "truth_wbc": 19,
@@ -3556,7 +3557,7 @@
     {
       "patient": "TF2N_159R",
       "image": "20171023_125459.jpg",
-      "found_parasites": 9,
+      "found_parasites": 10,
       "found_wbc": 14,
       "truth_parasites": 16,
       "truth_wbc": 15,
@@ -3582,7 +3583,7 @@
     {
       "patient": "TF2N_159R",
       "image": "20171023_125641.jpg",
-      "found_parasites": 7,
+      "found_parasites": 9,
       "found_wbc": 20,
       "truth_parasites": 20,
       "truth_wbc": 19,
@@ -3608,7 +3609,7 @@
     {
       "patient": "TF2N_159R",
       "image": "20171023_125951.jpg",
-      "found_parasites": 16,
+      "found_parasites": 18,
       "found_wbc": 14,
       "truth_parasites": 25,
       "truth_wbc": 15,
@@ -3621,7 +3622,7 @@
     {
       "patient": "TF2N_159R",
       "image": "20171023_130104.jpg",
-      "found_parasites": 20,
+      "found_parasites": 21,
       "found_wbc": 4,
       "truth_parasites": 44,
       "truth_wbc": 19,
@@ -3634,7 +3635,7 @@
     {
       "patient": "TF2N_159R",
       "image": "20171023_130206.jpg",
-      "found_parasites": 7,
+      "found_parasites": 8,
       "found_wbc": 0,
       "truth_parasites": 35,
       "truth_wbc": 15,
@@ -3686,7 +3687,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_151707.jpg",
-      "found_parasites": 16,
+      "found_parasites": 21,
       "found_wbc": 20,
       "truth_parasites": 8,
       "truth_wbc": 10,
@@ -3699,7 +3700,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_151827.jpg",
-      "found_parasites": 17,
+      "found_parasites": 20,
       "found_wbc": 20,
       "truth_parasites": 16,
       "truth_wbc": 21,
@@ -3712,7 +3713,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_151946.jpg",
-      "found_parasites": 4,
+      "found_parasites": 6,
       "found_wbc": 15,
       "truth_parasites": 3,
       "truth_wbc": 14,
@@ -3725,7 +3726,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152108.jpg",
-      "found_parasites": 34,
+      "found_parasites": 37,
       "found_wbc": 17,
       "truth_parasites": 11,
       "truth_wbc": 11,
@@ -3738,7 +3739,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152222.jpg",
-      "found_parasites": 22,
+      "found_parasites": 31,
       "found_wbc": 18,
       "truth_parasites": 13,
       "truth_wbc": 13,
@@ -3751,7 +3752,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152351.jpg",
-      "found_parasites": 17,
+      "found_parasites": 20,
       "found_wbc": 20,
       "truth_parasites": 12,
       "truth_wbc": 14,
@@ -3764,7 +3765,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152559.jpg",
-      "found_parasites": 27,
+      "found_parasites": 39,
       "found_wbc": 20,
       "truth_parasites": 14,
       "truth_wbc": 12,
@@ -3777,7 +3778,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152727.jpg",
-      "found_parasites": 36,
+      "found_parasites": 41,
       "found_wbc": 29,
       "truth_parasites": 23,
       "truth_wbc": 22,
@@ -3790,7 +3791,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152844.jpg",
-      "found_parasites": 45,
+      "found_parasites": 58,
       "found_wbc": 20,
       "truth_parasites": 22,
       "truth_wbc": 14,
@@ -3803,7 +3804,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152944.jpg",
-      "found_parasites": 47,
+      "found_parasites": 57,
       "found_wbc": 24,
       "truth_parasites": 21,
       "truth_wbc": 11,
@@ -3816,7 +3817,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_153032.jpg",
-      "found_parasites": 25,
+      "found_parasites": 26,
       "found_wbc": 8,
       "truth_parasites": 13,
       "truth_wbc": 13,
@@ -3829,7 +3830,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_153159.jpg",
-      "found_parasites": 13,
+      "found_parasites": 14,
       "found_wbc": 19,
       "truth_parasites": 14,
       "truth_wbc": 12,
@@ -3842,7 +3843,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_153343.jpg",
-      "found_parasites": 10,
+      "found_parasites": 15,
       "found_wbc": 18,
       "truth_parasites": 9,
       "truth_wbc": 13,
@@ -3855,7 +3856,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_153448.jpg",
-      "found_parasites": 19,
+      "found_parasites": 22,
       "found_wbc": 14,
       "truth_parasites": 20,
       "truth_wbc": 8,
@@ -3868,7 +3869,7 @@
     {
       "patient": "TF34_Sc520",
       "image": "20170725_153541.jpg",
-      "found_parasites": 21,
+      "found_parasites": 22,
       "found_wbc": 14,
       "truth_parasites": 15,
       "truth_wbc": 12,
@@ -3881,7 +3882,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_154738.jpg",
-      "found_parasites": 46,
+      "found_parasites": 52,
       "found_wbc": 24,
       "truth_parasites": 56,
       "truth_wbc": 12,
@@ -3894,7 +3895,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_154906.jpg",
-      "found_parasites": 60,
+      "found_parasites": 63,
       "found_wbc": 22,
       "truth_parasites": 61,
       "truth_wbc": 11,
@@ -3907,7 +3908,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_155113.jpg",
-      "found_parasites": 58,
+      "found_parasites": 63,
       "found_wbc": 24,
       "truth_parasites": 58,
       "truth_wbc": 11,
@@ -3920,7 +3921,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_155237.jpg",
-      "found_parasites": 56,
+      "found_parasites": 70,
       "found_wbc": 18,
       "truth_parasites": 51,
       "truth_wbc": 11,
@@ -3933,7 +3934,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_155347.jpg",
-      "found_parasites": 56,
+      "found_parasites": 63,
       "found_wbc": 31,
       "truth_parasites": 62,
       "truth_wbc": 19,
@@ -3946,7 +3947,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_155552.jpg",
-      "found_parasites": 43,
+      "found_parasites": 51,
       "found_wbc": 28,
       "truth_parasites": 37,
       "truth_wbc": 15,
@@ -3959,7 +3960,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_155755.jpg",
-      "found_parasites": 63,
+      "found_parasites": 69,
       "found_wbc": 25,
       "truth_parasites": 57,
       "truth_wbc": 14,
@@ -3972,7 +3973,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_155934.jpg",
-      "found_parasites": 54,
+      "found_parasites": 63,
       "found_wbc": 22,
       "truth_parasites": 52,
       "truth_wbc": 11,
@@ -3985,7 +3986,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_160136.jpg",
-      "found_parasites": 35,
+      "found_parasites": 37,
       "found_wbc": 29,
       "truth_parasites": 30,
       "truth_wbc": 12,
@@ -3998,7 +3999,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_160453.jpg",
-      "found_parasites": 41,
+      "found_parasites": 45,
       "found_wbc": 24,
       "truth_parasites": 40,
       "truth_wbc": 17,
@@ -4011,7 +4012,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_160548.jpg",
-      "found_parasites": 52,
+      "found_parasites": 62,
       "found_wbc": 17,
       "truth_parasites": 44,
       "truth_wbc": 9,
@@ -4024,7 +4025,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_160658.jpg",
-      "found_parasites": 44,
+      "found_parasites": 51,
       "found_wbc": 24,
       "truth_parasites": 45,
       "truth_wbc": 11,
@@ -4037,7 +4038,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_160813.jpg",
-      "found_parasites": 45,
+      "found_parasites": 50,
       "found_wbc": 28,
       "truth_parasites": 48,
       "truth_wbc": 19,
@@ -4050,7 +4051,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_160931.jpg",
-      "found_parasites": 51,
+      "found_parasites": 60,
       "found_wbc": 18,
       "truth_parasites": 48,
       "truth_wbc": 9,
@@ -4063,7 +4064,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_161049.jpg",
-      "found_parasites": 44,
+      "found_parasites": 50,
       "found_wbc": 28,
       "truth_parasites": 53,
       "truth_wbc": 10,
@@ -4076,7 +4077,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_161146.jpg",
-      "found_parasites": 51,
+      "found_parasites": 60,
       "found_wbc": 25,
       "truth_parasites": 48,
       "truth_wbc": 8,
@@ -4089,7 +4090,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_161315.jpg",
-      "found_parasites": 81,
+      "found_parasites": 93,
       "found_wbc": 36,
       "truth_parasites": 77,
       "truth_wbc": 14,
@@ -4102,7 +4103,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_161445.jpg",
-      "found_parasites": 52,
+      "found_parasites": 57,
       "found_wbc": 26,
       "truth_parasites": 50,
       "truth_wbc": 17,
@@ -4115,7 +4116,7 @@
     {
       "patient": "TF35_Sc521",
       "image": "20170725_161604.jpg",
-      "found_parasites": 54,
+      "found_parasites": 59,
       "found_wbc": 19,
       "truth_parasites": 44,
       "truth_wbc": 14,
@@ -4128,7 +4129,7 @@
     {
       "patient": "TF36_Sc542",
       "image": "20170725_210912.jpg",
-      "found_parasites": 9,
+      "found_parasites": 10,
       "found_wbc": 19,
       "truth_parasites": 20,
       "truth_wbc": 21,
@@ -4141,7 +4142,7 @@
     {
       "patient": "TF36_Sc542",
       "image": "20170725_211143.jpg",
-      "found_parasites": 4,
+      "found_parasites": 6,
       "found_wbc": 14,
       "truth_parasites": 9,
       "truth_wbc": 16,
@@ -4167,7 +4168,7 @@
     {
       "patient": "TF36_Sc542",
       "image": "20170725_211833.jpg",
-      "found_parasites": 3,
+      "found_parasites": 4,
       "found_wbc": 20,
       "truth_parasites": 7,
       "truth_wbc": 19,
@@ -4180,7 +4181,7 @@
     {
       "patient": "TF36_Sc542",
       "image": "20170725_212052.jpg",
-      "found_parasites": 15,
+      "found_parasites": 18,
       "found_wbc": 18,
       "truth_parasites": 23,
       "truth_wbc": 18,
@@ -4206,7 +4207,7 @@
     {
       "patient": "TF36_Sc542",
       "image": "20170725_212759.jpg",
-      "found_parasites": 6,
+      "found_parasites": 9,
       "found_wbc": 14,
       "truth_parasites": 13,
       "truth_wbc": 12,
@@ -4219,7 +4220,7 @@
     {
       "patient": "TF36_Sc542",
       "image": "20170725_213218.jpg",
-      "found_parasites": 9,
+      "found_parasites": 13,
       "found_wbc": 20,
       "truth_parasites": 13,
       "truth_wbc": 20,
@@ -4232,7 +4233,7 @@
     {
       "patient": "TF36_Sc542",
       "image": "20170725_213456.jpg",
-      "found_parasites": 7,
+      "found_parasites": 9,
       "found_wbc": 16,
       "truth_parasites": 8,
       "truth_wbc": 14,
@@ -4245,7 +4246,7 @@
     {
       "patient": "TF36_Sc542",
       "image": "20170725_213848.jpg",
-      "found_parasites": 6,
+      "found_parasites": 7,
       "found_wbc": 19,
       "truth_parasites": 8,
       "truth_wbc": 20,
@@ -4258,7 +4259,7 @@
     {
       "patient": "TF36_Sc542",
       "image": "20170725_214104.jpg",
-      "found_parasites": 5,
+      "found_parasites": 7,
       "found_wbc": 16,
       "truth_parasites": 10,
       "truth_wbc": 18,
@@ -4271,7 +4272,7 @@
     {
       "patient": "TF36_Sc542",
       "image": "20170725_214324.jpg",
-      "found_parasites": 9,
+      "found_parasites": 10,
       "found_wbc": 16,
       "truth_parasites": 12,
       "truth_wbc": 16,
@@ -4284,7 +4285,7 @@
     {
       "patient": "TF36_Sc542",
       "image": "20170725_214452.jpg",
-      "found_parasites": 9,
+      "found_parasites": 13,
       "found_wbc": 24,
       "truth_parasites": 14,
       "truth_wbc": 23,
@@ -4297,7 +4298,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_113312.jpg",
-      "found_parasites": 15,
+      "found_parasites": 20,
       "found_wbc": 23,
       "truth_parasites": 10,
       "truth_wbc": 13,
@@ -4310,7 +4311,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_113512.jpg",
-      "found_parasites": 4,
+      "found_parasites": 8,
       "found_wbc": 21,
       "truth_parasites": 7,
       "truth_wbc": 21,
@@ -4323,7 +4324,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_115340.jpg",
-      "found_parasites": 12,
+      "found_parasites": 15,
       "found_wbc": 15,
       "truth_parasites": 8,
       "truth_wbc": 15,
@@ -4336,7 +4337,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_115616.jpg",
-      "found_parasites": 16,
+      "found_parasites": 22,
       "found_wbc": 17,
       "truth_parasites": 17,
       "truth_wbc": 14,
@@ -4349,7 +4350,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_115749.jpg",
-      "found_parasites": 12,
+      "found_parasites": 16,
       "found_wbc": 18,
       "truth_parasites": 10,
       "truth_wbc": 15,
@@ -4362,7 +4363,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_115923.jpg",
-      "found_parasites": 22,
+      "found_parasites": 23,
       "found_wbc": 14,
       "truth_parasites": 8,
       "truth_wbc": 18,
@@ -4375,7 +4376,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_120159.jpg",
-      "found_parasites": 14,
+      "found_parasites": 19,
       "found_wbc": 22,
       "truth_parasites": 10,
       "truth_wbc": 10,
@@ -4388,7 +4389,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_120431.jpg",
-      "found_parasites": 11,
+      "found_parasites": 16,
       "found_wbc": 23,
       "truth_parasites": 7,
       "truth_wbc": 11,
@@ -4401,7 +4402,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_120624.jpg",
-      "found_parasites": 11,
+      "found_parasites": 15,
       "found_wbc": 24,
       "truth_parasites": 6,
       "truth_wbc": 18,
@@ -4414,7 +4415,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_120906.jpg",
-      "found_parasites": 14,
+      "found_parasites": 18,
       "found_wbc": 30,
       "truth_parasites": 8,
       "truth_wbc": 25,
@@ -4427,7 +4428,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_121141.jpg",
-      "found_parasites": 26,
+      "found_parasites": 33,
       "found_wbc": 19,
       "truth_parasites": 12,
       "truth_wbc": 15,
@@ -4440,7 +4441,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_121303.jpg",
-      "found_parasites": 9,
+      "found_parasites": 10,
       "found_wbc": 24,
       "truth_parasites": 5,
       "truth_wbc": 20,
@@ -4453,7 +4454,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_121540.jpg",
-      "found_parasites": 11,
+      "found_parasites": 17,
       "found_wbc": 27,
       "truth_parasites": 11,
       "truth_wbc": 22,
@@ -4466,7 +4467,7 @@
     {
       "patient": "TF37_Sc563",
       "image": "20170727_121814.jpg",
-      "found_parasites": 16,
+      "found_parasites": 25,
       "found_wbc": 23,
       "truth_parasites": 16,
       "truth_wbc": 23,
@@ -4479,7 +4480,7 @@
     {
       "patient": "TF38_CT1",
       "image": "20170727_144944.jpg",
-      "found_parasites": 7,
+      "found_parasites": 8,
       "found_wbc": 25,
       "truth_parasites": 6,
       "truth_wbc": 24,
@@ -4531,7 +4532,7 @@
     {
       "patient": "TF38_CT1",
       "image": "20170727_145829.jpg",
-      "found_parasites": 5,
+      "found_parasites": 7,
       "found_wbc": 25,
       "truth_parasites": 6,
       "truth_wbc": 23,
@@ -4570,7 +4571,7 @@
     {
       "patient": "TF38_CT1",
       "image": "20170727_150459.jpg",
-      "found_parasites": 6,
+      "found_parasites": 7,
       "found_wbc": 33,
       "truth_parasites": 6,
       "truth_wbc": 24,
@@ -4583,7 +4584,7 @@
     {
       "patient": "TF38_CT1",
       "image": "20170727_150955.jpg",
-      "found_parasites": 6,
+      "found_parasites": 7,
       "found_wbc": 31,
       "truth_parasites": 7,
       "truth_wbc": 18,
@@ -4596,7 +4597,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_173337.jpg",
-      "found_parasites": 11,
+      "found_parasites": 14,
       "found_wbc": 16,
       "truth_parasites": 15,
       "truth_wbc": 17,
@@ -4609,7 +4610,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_173655.jpg",
-      "found_parasites": 14,
+      "found_parasites": 18,
       "found_wbc": 13,
       "truth_parasites": 13,
       "truth_wbc": 14,
@@ -4622,7 +4623,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_173841.jpg",
-      "found_parasites": 19,
+      "found_parasites": 21,
       "found_wbc": 16,
       "truth_parasites": 19,
       "truth_wbc": 17,
@@ -4635,7 +4636,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_174211.jpg",
-      "found_parasites": 11,
+      "found_parasites": 12,
       "found_wbc": 8,
       "truth_parasites": 13,
       "truth_wbc": 10,
@@ -4648,7 +4649,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_174900.jpg",
-      "found_parasites": 19,
+      "found_parasites": 21,
       "found_wbc": 11,
       "truth_parasites": 15,
       "truth_wbc": 10,
@@ -4661,7 +4662,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_175209.jpg",
-      "found_parasites": 12,
+      "found_parasites": 15,
       "found_wbc": 13,
       "truth_parasites": 5,
       "truth_wbc": 13,
@@ -4674,7 +4675,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_175514.jpg",
-      "found_parasites": 16,
+      "found_parasites": 18,
       "found_wbc": 14,
       "truth_parasites": 19,
       "truth_wbc": 13,
@@ -4687,7 +4688,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_175851.jpg",
-      "found_parasites": 24,
+      "found_parasites": 31,
       "found_wbc": 11,
       "truth_parasites": 11,
       "truth_wbc": 11,
@@ -4700,7 +4701,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_180206.jpg",
-      "found_parasites": 8,
+      "found_parasites": 10,
       "found_wbc": 11,
       "truth_parasites": 11,
       "truth_wbc": 14,
@@ -4713,7 +4714,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_180719.jpg",
-      "found_parasites": 10,
+      "found_parasites": 12,
       "found_wbc": 13,
       "truth_parasites": 9,
       "truth_wbc": 12,
@@ -4726,7 +4727,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_181719.jpg",
-      "found_parasites": 16,
+      "found_parasites": 17,
       "found_wbc": 10,
       "truth_parasites": 15,
       "truth_wbc": 10,
@@ -4739,7 +4740,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_182222.jpg",
-      "found_parasites": 11,
+      "found_parasites": 12,
       "found_wbc": 18,
       "truth_parasites": 15,
       "truth_wbc": 13,
@@ -4752,7 +4753,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_182416.jpg",
-      "found_parasites": 19,
+      "found_parasites": 21,
       "found_wbc": 13,
       "truth_parasites": 19,
       "truth_wbc": 13,
@@ -4765,7 +4766,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_182921.jpg",
-      "found_parasites": 13,
+      "found_parasites": 15,
       "found_wbc": 14,
       "truth_parasites": 12,
       "truth_wbc": 12,
@@ -4778,7 +4779,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_183238.jpg",
-      "found_parasites": 17,
+      "found_parasites": 22,
       "found_wbc": 16,
       "truth_parasites": 17,
       "truth_wbc": 11,
@@ -4804,7 +4805,7 @@
     {
       "patient": "TF40_UT3",
       "image": "20170727_184226.jpg",
-      "found_parasites": 16,
+      "found_parasites": 19,
       "found_wbc": 10,
       "truth_parasites": 17,
       "truth_wbc": 10,
@@ -4817,7 +4818,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_164610.jpg",
-      "found_parasites": 163,
+      "found_parasites": 179,
       "found_wbc": 23,
       "truth_parasites": 166,
       "truth_wbc": 16,
@@ -4830,7 +4831,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_165143.jpg",
-      "found_parasites": 166,
+      "found_parasites": 186,
       "found_wbc": 14,
       "truth_parasites": 161,
       "truth_wbc": 10,
@@ -4843,7 +4844,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_165317.jpg",
-      "found_parasites": 174,
+      "found_parasites": 200,
       "found_wbc": 27,
       "truth_parasites": 196,
       "truth_wbc": 16,
@@ -4856,7 +4857,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_170053.jpg",
-      "found_parasites": 180,
+      "found_parasites": 196,
       "found_wbc": 22,
       "truth_parasites": 196,
       "truth_wbc": 15,
@@ -4869,7 +4870,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_170237.jpg",
-      "found_parasites": 167,
+      "found_parasites": 194,
       "found_wbc": 20,
       "truth_parasites": 178,
       "truth_wbc": 14,
@@ -4882,7 +4883,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_170423.jpg",
-      "found_parasites": 166,
+      "found_parasites": 188,
       "found_wbc": 25,
       "truth_parasites": 216,
       "truth_wbc": 17,
@@ -4895,7 +4896,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_170602.jpg",
-      "found_parasites": 181,
+      "found_parasites": 211,
       "found_wbc": 21,
       "truth_parasites": 193,
       "truth_wbc": 16,
@@ -4908,7 +4909,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_170746.jpg",
-      "found_parasites": 153,
+      "found_parasites": 172,
       "found_wbc": 20,
       "truth_parasites": 175,
       "truth_wbc": 16,
@@ -4921,7 +4922,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_171012.jpg",
-      "found_parasites": 194,
+      "found_parasites": 218,
       "found_wbc": 15,
       "truth_parasites": 201,
       "truth_wbc": 14,
@@ -4934,7 +4935,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_171127.jpg",
-      "found_parasites": 160,
+      "found_parasites": 182,
       "found_wbc": 23,
       "truth_parasites": 196,
       "truth_wbc": 12,
@@ -4947,7 +4948,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_171350.jpg",
-      "found_parasites": 166,
+      "found_parasites": 193,
       "found_wbc": 29,
       "truth_parasites": 194,
       "truth_wbc": 18,
@@ -4960,7 +4961,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_171910.jpg",
-      "found_parasites": 216,
+      "found_parasites": 241,
       "found_wbc": 24,
       "truth_parasites": 225,
       "truth_wbc": 16,
@@ -4973,7 +4974,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_172025.jpg",
-      "found_parasites": 131,
+      "found_parasites": 147,
       "found_wbc": 27,
       "truth_parasites": 157,
       "truth_wbc": 18,
@@ -4986,7 +4987,7 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_172303.jpg",
-      "found_parasites": 184,
+      "found_parasites": 205,
       "found_wbc": 14,
       "truth_parasites": 210,
       "truth_wbc": 14,
@@ -4999,7 +5000,7 @@
     {
       "patient": "TF46_UW23",
       "image": "20170807_164114.jpg",
-      "found_parasites": 6,
+      "found_parasites": 8,
       "found_wbc": 19,
       "truth_parasites": 3,
       "truth_wbc": 18,
@@ -5025,7 +5026,7 @@
     {
       "patient": "TF46_UW23",
       "image": "20170807_164644.jpg",
-      "found_parasites": 8,
+      "found_parasites": 9,
       "found_wbc": 28,
       "truth_parasites": 4,
       "truth_wbc": 14,
@@ -5064,7 +5065,7 @@
     {
       "patient": "TF46_UW23",
       "image": "20170807_165530.jpg",
-      "found_parasites": 1,
+      "found_parasites": 2,
       "found_wbc": 23,
       "truth_parasites": 3,
       "truth_wbc": 17,
@@ -5116,7 +5117,7 @@
     {
       "patient": "TF46_UW23",
       "image": "20170807_170527.jpg",
-      "found_parasites": 3,
+      "found_parasites": 4,
       "found_wbc": 28,
       "truth_parasites": 3,
       "truth_wbc": 21,
@@ -5129,7 +5130,7 @@
     {
       "patient": "TF46_UW23",
       "image": "20170807_171125.jpg",
-      "found_parasites": 4,
+      "found_parasites": 5,
       "found_wbc": 24,
       "truth_parasites": 3,
       "truth_wbc": 15,
@@ -5142,7 +5143,7 @@
     {
       "patient": "TF46_UW23",
       "image": "20170807_171351.jpg",
-      "found_parasites": 2,
+      "found_parasites": 3,
       "found_wbc": 21,
       "truth_parasites": 2,
       "truth_wbc": 13,
@@ -5155,7 +5156,7 @@
     {
       "patient": "TF46_UW23",
       "image": "20170807_171647.jpg",
-      "found_parasites": 5,
+      "found_parasites": 6,
       "found_wbc": 17,
       "truth_parasites": 5,
       "truth_wbc": 9,
@@ -5181,7 +5182,7 @@
     {
       "patient": "TF47_UW29",
       "image": "20170807_173703.jpg",
-      "found_parasites": 6,
+      "found_parasites": 7,
       "found_wbc": 10,
       "truth_parasites": 7,
       "truth_wbc": 25,
@@ -5194,7 +5195,7 @@
     {
       "patient": "TF47_UW29",
       "image": "20170807_173838.jpg",
-      "found_parasites": 5,
+      "found_parasites": 6,
       "found_wbc": 13,
       "truth_parasites": 8,
       "truth_wbc": 22,
@@ -5259,7 +5260,7 @@
     {
       "patient": "TF47_UW29",
       "image": "20170807_174613.jpg",
-      "found_parasites": 4,
+      "found_parasites": 5,
       "found_wbc": 19,
       "truth_parasites": 5,
       "truth_wbc": 18,
@@ -5298,7 +5299,7 @@
     {
       "patient": "TF47_UW29",
       "image": "20170807_175008.jpg",
-      "found_parasites": 8,
+      "found_parasites": 11,
       "found_wbc": 11,
       "truth_parasites": 7,
       "truth_wbc": 15,
@@ -5337,7 +5338,7 @@
     {
       "patient": "TF48_UW31",
       "image": "20170811_153442.jpg",
-      "found_parasites": 97,
+      "found_parasites": 105,
       "found_wbc": 27,
       "truth_parasites": 188,
       "truth_wbc": 45,
@@ -5350,7 +5351,7 @@
     {
       "patient": "TF48_UW31",
       "image": "20170811_153539.jpg",
-      "found_parasites": 86,
+      "found_parasites": 94,
       "found_wbc": 11,
       "truth_parasites": 174,
       "truth_wbc": 39,
@@ -5363,7 +5364,7 @@
     {
       "patient": "TF48_UW31",
       "image": "20170811_153810.jpg",
-      "found_parasites": 97,
+      "found_parasites": 106,
       "found_wbc": 20,
       "truth_parasites": 178,
       "truth_wbc": 43,
@@ -5376,7 +5377,7 @@
     {
       "patient": "TF48_UW31",
       "image": "20170811_154515.jpg",
-      "found_parasites": 113,
+      "found_parasites": 126,
       "found_wbc": 21,
       "truth_parasites": 156,
       "truth_wbc": 28,
@@ -5389,7 +5390,7 @@
     {
       "patient": "TF48_UW31",
       "image": "20170811_154915.jpg",
-      "found_parasites": 130,
+      "found_parasites": 139,
       "found_wbc": 14,
       "truth_parasites": 179,
       "truth_wbc": 21,
@@ -5402,7 +5403,7 @@
     {
       "patient": "TF48_UW31",
       "image": "20170811_155234.jpg",
-      "found_parasites": 147,
+      "found_parasites": 159,
       "found_wbc": 13,
       "truth_parasites": 231,
       "truth_wbc": 27,
@@ -5415,7 +5416,7 @@
     {
       "patient": "TF53_CW41",
       "image": "20170812_163436.jpg",
-      "found_parasites": 28,
+      "found_parasites": 36,
       "found_wbc": 31,
       "truth_parasites": 40,
       "truth_wbc": 32,
@@ -5428,7 +5429,7 @@
     {
       "patient": "TF53_CW41",
       "image": "20170812_163628.jpg",
-      "found_parasites": 36,
+      "found_parasites": 38,
       "found_wbc": 33,
       "truth_parasites": 55,
       "truth_wbc": 22,
@@ -5441,7 +5442,7 @@
     {
       "patient": "TF53_CW41",
       "image": "20170812_164716.jpg",
-      "found_parasites": 23,
+      "found_parasites": 24,
       "found_wbc": 30,
       "truth_parasites": 42,
       "truth_wbc": 38,
@@ -5467,7 +5468,7 @@
     {
       "patient": "TF53_CW41",
       "image": "20170812_170033.jpg",
-      "found_parasites": 45,
+      "found_parasites": 49,
       "found_wbc": 32,
       "truth_parasites": 58,
       "truth_wbc": 36,
@@ -5493,7 +5494,7 @@
     {
       "patient": "TF53_CW41",
       "image": "20170812_171051.jpg",
-      "found_parasites": 42,
+      "found_parasites": 45,
       "found_wbc": 32,
       "truth_parasites": 44,
       "truth_wbc": 25,
@@ -5506,7 +5507,7 @@
     {
       "patient": "TF53_CW41",
       "image": "20170812_171245.jpg",
-      "found_parasites": 32,
+      "found_parasites": 34,
       "found_wbc": 34,
       "truth_parasites": 41,
       "truth_wbc": 34,
@@ -5519,7 +5520,7 @@
     {
       "patient": "TF55_CV4",
       "image": "20170812_181047.jpg",
-      "found_parasites": 4,
+      "found_parasites": 5,
       "found_wbc": 31,
       "truth_parasites": 9,
       "truth_wbc": 32,
@@ -5532,7 +5533,7 @@
     {
       "patient": "TF55_CV4",
       "image": "20170812_181225.jpg",
-      "found_parasites": 11,
+      "found_parasites": 12,
       "found_wbc": 28,
       "truth_parasites": 8,
       "truth_wbc": 24,
@@ -5558,7 +5559,7 @@
     {
       "patient": "TF55_CV4",
       "image": "20170812_181450.jpg",
-      "found_parasites": 9,
+      "found_parasites": 10,
       "found_wbc": 25,
       "truth_parasites": 7,
       "truth_wbc": 13,
@@ -5571,7 +5572,7 @@
     {
       "patient": "TF55_CV4",
       "image": "20170812_181622.jpg",
-      "found_parasites": 9,
+      "found_parasites": 10,
       "found_wbc": 26,
       "truth_parasites": 8,
       "truth_wbc": 18,
@@ -5584,7 +5585,7 @@
     {
       "patient": "TF55_CV4",
       "image": "20170812_181837.jpg",
-      "found_parasites": 12,
+      "found_parasites": 13,
       "found_wbc": 16,
       "truth_parasites": 9,
       "truth_wbc": 16,
@@ -5610,7 +5611,7 @@
     {
       "patient": "TF55_CV4",
       "image": "20170812_182219.jpg",
-      "found_parasites": 1,
+      "found_parasites": 3,
       "found_wbc": 28,
       "truth_parasites": 3,
       "truth_wbc": 11,
@@ -5636,7 +5637,7 @@
     {
       "patient": "TF55_CV4",
       "image": "20170812_182540.jpg",
-      "found_parasites": 8,
+      "found_parasites": 9,
       "found_wbc": 27,
       "truth_parasites": 6,
       "truth_wbc": 14,
@@ -5662,7 +5663,7 @@
     {
       "patient": "TF55_CV4",
       "image": "20170812_182932.jpg",
-      "found_parasites": 8,
+      "found_parasites": 9,
       "found_wbc": 16,
       "truth_parasites": 7,
       "truth_wbc": 15,
@@ -5688,7 +5689,7 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_213516.jpg",
-      "found_parasites": 16,
+      "found_parasites": 18,
       "found_wbc": 21,
       "truth_parasites": 19,
       "truth_wbc": 15,
@@ -5701,7 +5702,7 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_213647.jpg",
-      "found_parasites": 10,
+      "found_parasites": 13,
       "found_wbc": 27,
       "truth_parasites": 10,
       "truth_wbc": 9,
@@ -5740,7 +5741,7 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_214852.jpg",
-      "found_parasites": 23,
+      "found_parasites": 26,
       "found_wbc": 24,
       "truth_parasites": 17,
       "truth_wbc": 12,
@@ -5779,7 +5780,7 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_215848.jpg",
-      "found_parasites": 5,
+      "found_parasites": 6,
       "found_wbc": 26,
       "truth_parasites": 15,
       "truth_wbc": 8,
@@ -5792,7 +5793,7 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_220032.jpg",
-      "found_parasites": 13,
+      "found_parasites": 16,
       "found_wbc": 22,
       "truth_parasites": 14,
       "truth_wbc": 14,
@@ -5805,7 +5806,7 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_220425.jpg",
-      "found_parasites": 15,
+      "found_parasites": 18,
       "found_wbc": 24,
       "truth_parasites": 13,
       "truth_wbc": 17,
@@ -5818,7 +5819,7 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_220815.jpg",
-      "found_parasites": 9,
+      "found_parasites": 11,
       "found_wbc": 22,
       "truth_parasites": 10,
       "truth_wbc": 11,
@@ -5844,7 +5845,7 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_221144.jpg",
-      "found_parasites": 8,
+      "found_parasites": 9,
       "found_wbc": 24,
       "truth_parasites": 7,
       "truth_wbc": 14,
@@ -5857,7 +5858,7 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_221318.jpg",
-      "found_parasites": 16,
+      "found_parasites": 17,
       "found_wbc": 29,
       "truth_parasites": 15,
       "truth_wbc": 9,
@@ -5870,7 +5871,7 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_221504.jpg",
-      "found_parasites": 10,
+      "found_parasites": 11,
       "found_wbc": 18,
       "truth_parasites": 7,
       "truth_wbc": 13,
@@ -5883,7 +5884,7 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_221745.jpg",
-      "found_parasites": 12,
+      "found_parasites": 16,
       "found_wbc": 17,
       "truth_parasites": 12,
       "truth_wbc": 10,
@@ -5896,7 +5897,7 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_222109.jpg",
-      "found_parasites": 10,
+      "found_parasites": 18,
       "found_wbc": 20,
       "truth_parasites": 7,
       "truth_wbc": 10,
@@ -5909,7 +5910,7 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_222615.jpg",
-      "found_parasites": 15,
+      "found_parasites": 18,
       "found_wbc": 22,
       "truth_parasites": 13,
       "truth_wbc": 10,
@@ -5922,7 +5923,7 @@
     {
       "patient": "TF61_CS20",
       "image": "20170816_222723.jpg",
-      "found_parasites": 38,
+      "found_parasites": 42,
       "found_wbc": 33,
       "truth_parasites": 44,
       "truth_wbc": 39,
@@ -5935,7 +5936,7 @@
     {
       "patient": "TF61_CS20",
       "image": "20170816_222855.jpg",
-      "found_parasites": 32,
+      "found_parasites": 41,
       "found_wbc": 34,
       "truth_parasites": 37,
       "truth_wbc": 46,
@@ -5948,7 +5949,7 @@
     {
       "patient": "TF61_CS20",
       "image": "20170816_223028.jpg",
-      "found_parasites": 55,
+      "found_parasites": 63,
       "found_wbc": 39,
       "truth_parasites": 71,
       "truth_wbc": 43,
@@ -5961,7 +5962,7 @@
     {
       "patient": "TF61_CS20",
       "image": "20170816_223144.jpg",
-      "found_parasites": 41,
+      "found_parasites": 45,
       "found_wbc": 39,
       "truth_parasites": 65,
       "truth_wbc": 52,
@@ -5974,7 +5975,7 @@
     {
       "patient": "TF61_CS20",
       "image": "20170816_223331.jpg",
-      "found_parasites": 47,
+      "found_parasites": 52,
       "found_wbc": 30,
       "truth_parasites": 53,
       "truth_wbc": 30,
@@ -5987,7 +5988,7 @@
     {
       "patient": "TF61_CS20",
       "image": "20170816_223442.jpg",
-      "found_parasites": 38,
+      "found_parasites": 42,
       "found_wbc": 36,
       "truth_parasites": 50,
       "truth_wbc": 31,
@@ -6000,7 +6001,7 @@
     {
       "patient": "TF61_CS20",
       "image": "20170816_223533.jpg",
-      "found_parasites": 39,
+      "found_parasites": 46,
       "found_wbc": 39,
       "truth_parasites": 53,
       "truth_wbc": 33,
@@ -6013,7 +6014,7 @@
     {
       "patient": "TF64_US2",
       "image": "20170817_113036.jpg",
-      "found_parasites": 109,
+      "found_parasites": 127,
       "found_wbc": 16,
       "truth_parasites": 130,
       "truth_wbc": 20,
@@ -6026,7 +6027,7 @@
     {
       "patient": "TF64_US2",
       "image": "20170817_113323.jpg",
-      "found_parasites": 102,
+      "found_parasites": 118,
       "found_wbc": 15,
       "truth_parasites": 140,
       "truth_wbc": 26,
@@ -6039,7 +6040,7 @@
     {
       "patient": "TF64_US2",
       "image": "20170817_113430.jpg",
-      "found_parasites": 96,
+      "found_parasites": 106,
       "found_wbc": 22,
       "truth_parasites": 125,
       "truth_wbc": 22,
@@ -6052,7 +6053,7 @@
     {
       "patient": "TF64_US2",
       "image": "20170817_113557.jpg",
-      "found_parasites": 49,
+      "found_parasites": 66,
       "found_wbc": 29,
       "truth_parasites": 86,
       "truth_wbc": 22,
@@ -6065,7 +6066,7 @@
     {
       "patient": "TF64_US2",
       "image": "20170817_113831.jpg",
-      "found_parasites": 93,
+      "found_parasites": 101,
       "found_wbc": 22,
       "truth_parasites": 111,
       "truth_wbc": 20,
@@ -6078,7 +6079,7 @@
     {
       "patient": "TF64_US2",
       "image": "20170817_113941.jpg",
-      "found_parasites": 84,
+      "found_parasites": 104,
       "found_wbc": 32,
       "truth_parasites": 106,
       "truth_wbc": 28,
@@ -6091,7 +6092,7 @@
     {
       "patient": "TF64_US2",
       "image": "20170817_114037.jpg",
-      "found_parasites": 97,
+      "found_parasites": 115,
       "found_wbc": 12,
       "truth_parasites": 126,
       "truth_wbc": 19,
@@ -6104,7 +6105,7 @@
     {
       "patient": "TF64_US2",
       "image": "20170817_114226.jpg",
-      "found_parasites": 92,
+      "found_parasites": 103,
       "found_wbc": 18,
       "truth_parasites": 95,
       "truth_wbc": 15,
@@ -6117,7 +6118,7 @@
     {
       "patient": "TF64_US2",
       "image": "20170817_114302.jpg",
-      "found_parasites": 96,
+      "found_parasites": 112,
       "found_wbc": 16,
       "truth_parasites": 100,
       "truth_wbc": 19,
@@ -6130,7 +6131,7 @@
     {
       "patient": "TF64_US2",
       "image": "20170817_114411.jpg",
-      "found_parasites": 92,
+      "found_parasites": 107,
       "found_wbc": 28,
       "truth_parasites": 93,
       "truth_wbc": 19,
@@ -6143,7 +6144,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_154053.jpg",
-      "found_parasites": 12,
+      "found_parasites": 13,
       "found_wbc": 14,
       "truth_parasites": 16,
       "truth_wbc": 12,
@@ -6156,7 +6157,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_154250.jpg",
-      "found_parasites": 17,
+      "found_parasites": 18,
       "found_wbc": 12,
       "truth_parasites": 21,
       "truth_wbc": 12,
@@ -6169,7 +6170,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_154413.jpg",
-      "found_parasites": 21,
+      "found_parasites": 25,
       "found_wbc": 14,
       "truth_parasites": 19,
       "truth_wbc": 14,
@@ -6182,7 +6183,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_154528.jpg",
-      "found_parasites": 20,
+      "found_parasites": 21,
       "found_wbc": 14,
       "truth_parasites": 20,
       "truth_wbc": 12,
@@ -6195,7 +6196,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_154703.jpg",
-      "found_parasites": 17,
+      "found_parasites": 21,
       "found_wbc": 12,
       "truth_parasites": 14,
       "truth_wbc": 12,
@@ -6208,7 +6209,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_155542.jpg",
-      "found_parasites": 12,
+      "found_parasites": 14,
       "found_wbc": 17,
       "truth_parasites": 10,
       "truth_wbc": 18,
@@ -6221,7 +6222,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_155657.jpg",
-      "found_parasites": 8,
+      "found_parasites": 10,
       "found_wbc": 14,
       "truth_parasites": 9,
       "truth_wbc": 15,
@@ -6234,7 +6235,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_161700.jpg",
-      "found_parasites": 13,
+      "found_parasites": 15,
       "found_wbc": 9,
       "truth_parasites": 12,
       "truth_wbc": 10,
@@ -6247,7 +6248,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_161821.jpg",
-      "found_parasites": 16,
+      "found_parasites": 17,
       "found_wbc": 13,
       "truth_parasites": 14,
       "truth_wbc": 13,
@@ -6260,7 +6261,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_161921.jpg",
-      "found_parasites": 16,
+      "found_parasites": 17,
       "found_wbc": 13,
       "truth_parasites": 18,
       "truth_wbc": 14,
@@ -6273,7 +6274,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_162008.jpg",
-      "found_parasites": 21,
+      "found_parasites": 23,
       "found_wbc": 16,
       "truth_parasites": 20,
       "truth_wbc": 14,
@@ -6286,7 +6287,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_162202.jpg",
-      "found_parasites": 14,
+      "found_parasites": 16,
       "found_wbc": 15,
       "truth_parasites": 12,
       "truth_wbc": 15,
@@ -6299,7 +6300,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_162259.jpg",
-      "found_parasites": 23,
+      "found_parasites": 28,
       "found_wbc": 15,
       "truth_parasites": 24,
       "truth_wbc": 13,
@@ -6312,7 +6313,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_162348.jpg",
-      "found_parasites": 27,
+      "found_parasites": 29,
       "found_wbc": 18,
       "truth_parasites": 27,
       "truth_wbc": 16,
@@ -6325,7 +6326,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_162513.jpg",
-      "found_parasites": 6,
+      "found_parasites": 9,
       "found_wbc": 18,
       "truth_parasites": 12,
       "truth_wbc": 18,
@@ -6338,7 +6339,7 @@
     {
       "patient": "TF6N_527",
       "image": "20171023_162554.jpg",
-      "found_parasites": 35,
+      "found_parasites": 36,
       "found_wbc": 18,
       "truth_parasites": 29,
       "truth_wbc": 17,
@@ -6351,7 +6352,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_190318.jpg",
-      "found_parasites": 15,
+      "found_parasites": 19,
       "found_wbc": 25,
       "truth_parasites": 10,
       "truth_wbc": 13,
@@ -6364,7 +6365,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_190510.jpg",
-      "found_parasites": 6,
+      "found_parasites": 10,
       "found_wbc": 20,
       "truth_parasites": 4,
       "truth_wbc": 11,
@@ -6377,7 +6378,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_190624.jpg",
-      "found_parasites": 20,
+      "found_parasites": 21,
       "found_wbc": 23,
       "truth_parasites": 9,
       "truth_wbc": 13,
@@ -6390,7 +6391,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_190830.jpg",
-      "found_parasites": 19,
+      "found_parasites": 26,
       "found_wbc": 24,
       "truth_parasites": 6,
       "truth_wbc": 16,
@@ -6403,7 +6404,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_191101.jpg",
-      "found_parasites": 15,
+      "found_parasites": 18,
       "found_wbc": 21,
       "truth_parasites": 4,
       "truth_wbc": 14,
@@ -6416,7 +6417,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_191240.jpg",
-      "found_parasites": 9,
+      "found_parasites": 13,
       "found_wbc": 25,
       "truth_parasites": 4,
       "truth_wbc": 13,
@@ -6429,7 +6430,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_191406.jpg",
-      "found_parasites": 13,
+      "found_parasites": 16,
       "found_wbc": 28,
       "truth_parasites": 5,
       "truth_wbc": 12,
@@ -6442,7 +6443,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_191723.jpg",
-      "found_parasites": 8,
+      "found_parasites": 12,
       "found_wbc": 24,
       "truth_parasites": 5,
       "truth_wbc": 12,
@@ -6455,7 +6456,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192037.jpg",
-      "found_parasites": 11,
+      "found_parasites": 15,
       "found_wbc": 22,
       "truth_parasites": 4,
       "truth_wbc": 11,
@@ -6468,7 +6469,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192242.jpg",
-      "found_parasites": 15,
+      "found_parasites": 20,
       "found_wbc": 26,
       "truth_parasites": 5,
       "truth_wbc": 12,
@@ -6481,7 +6482,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192404.jpg",
-      "found_parasites": 8,
+      "found_parasites": 14,
       "found_wbc": 26,
       "truth_parasites": 4,
       "truth_wbc": 20,
@@ -6494,7 +6495,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192509.jpg",
-      "found_parasites": 13,
+      "found_parasites": 16,
       "found_wbc": 21,
       "truth_parasites": 6,
       "truth_wbc": 12,
@@ -6507,7 +6508,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192556.jpg",
-      "found_parasites": 37,
+      "found_parasites": 49,
       "found_wbc": 30,
       "truth_parasites": 10,
       "truth_wbc": 17,
@@ -6520,7 +6521,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192715.jpg",
-      "found_parasites": 16,
+      "found_parasites": 19,
       "found_wbc": 27,
       "truth_parasites": 7,
       "truth_wbc": 17,
@@ -6533,7 +6534,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192822.jpg",
-      "found_parasites": 20,
+      "found_parasites": 27,
       "found_wbc": 21,
       "truth_parasites": 5,
       "truth_wbc": 15,
@@ -6546,7 +6547,7 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192909.jpg",
-      "found_parasites": 15,
+      "found_parasites": 18,
       "found_wbc": 22,
       "truth_parasites": 11,
       "truth_wbc": 15,
@@ -6572,7 +6573,7 @@
     {
       "patient": "TF73_Scr538",
       "image": "20170818_141048.jpg",
-      "found_parasites": 6,
+      "found_parasites": 8,
       "found_wbc": 13,
       "truth_parasites": 9,
       "truth_wbc": 11,
@@ -6598,7 +6599,7 @@
     {
       "patient": "TF73_Scr538",
       "image": "20170818_141556.jpg",
-      "found_parasites": 7,
+      "found_parasites": 8,
       "found_wbc": 11,
       "truth_parasites": 1,
       "truth_wbc": 11,
@@ -6611,7 +6612,7 @@
     {
       "patient": "TF73_Scr538",
       "image": "20170818_141825.jpg",
-      "found_parasites": 5,
+      "found_parasites": 6,
       "found_wbc": 16,
       "truth_parasites": 3,
       "truth_wbc": 14,
@@ -6624,7 +6625,7 @@
     {
       "patient": "TF73_Scr538",
       "image": "20170818_141927.jpg",
-      "found_parasites": 7,
+      "found_parasites": 8,
       "found_wbc": 16,
       "truth_parasites": 5,
       "truth_wbc": 14,
@@ -6637,7 +6638,7 @@
     {
       "patient": "TF73_Scr538",
       "image": "20170818_142102.jpg",
-      "found_parasites": 6,
+      "found_parasites": 7,
       "found_wbc": 17,
       "truth_parasites": 2,
       "truth_wbc": 14,
@@ -6650,7 +6651,7 @@
     {
       "patient": "TF73_Scr538",
       "image": "20170818_142240.jpg",
-      "found_parasites": 3,
+      "found_parasites": 4,
       "found_wbc": 12,
       "truth_parasites": 5,
       "truth_wbc": 14,
@@ -6663,7 +6664,7 @@
     {
       "patient": "TF73_Scr538",
       "image": "20170818_142413.jpg",
-      "found_parasites": 10,
+      "found_parasites": 12,
       "found_wbc": 13,
       "truth_parasites": 10,
       "truth_wbc": 15,
@@ -6676,7 +6677,7 @@
     {
       "patient": "TF73_Scr538",
       "image": "20170818_142721.jpg",
-      "found_parasites": 4,
+      "found_parasites": 5,
       "found_wbc": 14,
       "truth_parasites": 5,
       "truth_wbc": 17,
@@ -6702,7 +6703,7 @@
     {
       "patient": "TF73_Scr538",
       "image": "20170818_142934.jpg",
-      "found_parasites": 2,
+      "found_parasites": 3,
       "found_wbc": 16,
       "truth_parasites": 5,
       "truth_wbc": 17,
@@ -6715,7 +6716,7 @@
     {
       "patient": "TF73_Scr538",
       "image": "20170818_143619.jpg",
-      "found_parasites": 5,
+      "found_parasites": 6,
       "found_wbc": 18,
       "truth_parasites": 5,
       "truth_wbc": 18,
@@ -6728,7 +6729,7 @@
     {
       "patient": "TF73_Scr538",
       "image": "20170818_143739.jpg",
-      "found_parasites": 1,
+      "found_parasites": 2,
       "found_wbc": 16,
       "truth_parasites": 3,
       "truth_wbc": 13,
@@ -6754,7 +6755,7 @@
     {
       "patient": "TF73_Scr538",
       "image": "20170818_144309.jpg",
-      "found_parasites": 10,
+      "found_parasites": 13,
       "found_wbc": 12,
       "truth_parasites": 10,
       "truth_wbc": 12,
@@ -6767,7 +6768,7 @@
     {
       "patient": "TF75_CO7",
       "image": "20170818_162315.jpg",
-      "found_parasites": 18,
+      "found_parasites": 19,
       "found_wbc": 26,
       "truth_parasites": 21,
       "truth_wbc": 34,
@@ -6780,7 +6781,7 @@
     {
       "patient": "TF75_CO7",
       "image": "20170818_163339.jpg",
-      "found_parasites": 37,
+      "found_parasites": 40,
       "found_wbc": 24,
       "truth_parasites": 34,
       "truth_wbc": 24,
@@ -6793,7 +6794,7 @@
     {
       "patient": "TF75_CO7",
       "image": "20170818_163453.jpg",
-      "found_parasites": 20,
+      "found_parasites": 21,
       "found_wbc": 23,
       "truth_parasites": 24,
       "truth_wbc": 24,
@@ -6806,7 +6807,7 @@
     {
       "patient": "TF75_CO7",
       "image": "20170818_163623.jpg",
-      "found_parasites": 18,
+      "found_parasites": 26,
       "found_wbc": 26,
       "truth_parasites": 22,
       "truth_wbc": 28,
@@ -6819,7 +6820,7 @@
     {
       "patient": "TF75_CO7",
       "image": "20170818_163903.jpg",
-      "found_parasites": 25,
+      "found_parasites": 30,
       "found_wbc": 19,
       "truth_parasites": 36,
       "truth_wbc": 20,
@@ -6832,7 +6833,7 @@
     {
       "patient": "TF75_CO7",
       "image": "20170818_164045.jpg",
-      "found_parasites": 16,
+      "found_parasites": 17,
       "found_wbc": 16,
       "truth_parasites": 14,
       "truth_wbc": 10,
@@ -6845,7 +6846,7 @@
     {
       "patient": "TF75_CO7",
       "image": "20170818_164311.jpg",
-      "found_parasites": 21,
+      "found_parasites": 24,
       "found_wbc": 16,
       "truth_parasites": 24,
       "truth_wbc": 12,
@@ -6858,7 +6859,7 @@
     {
       "patient": "TF75_CO7",
       "image": "20170818_164517.jpg",
-      "found_parasites": 16,
+      "found_parasites": 17,
       "found_wbc": 28,
       "truth_parasites": 20,
       "truth_wbc": 29,
@@ -6871,7 +6872,7 @@
     {
       "patient": "TF75_CO7",
       "image": "20170818_164901.jpg",
-      "found_parasites": 21,
+      "found_parasites": 22,
       "found_wbc": 21,
       "truth_parasites": 23,
       "truth_wbc": 25,
@@ -6884,7 +6885,7 @@
     {
       "patient": "TF75_CO7",
       "image": "20170818_165237.jpg",
-      "found_parasites": 13,
+      "found_parasites": 15,
       "found_wbc": 21,
       "truth_parasites": 11,
       "truth_wbc": 17,
@@ -6897,7 +6898,7 @@
     {
       "patient": "TF77_CO15",
       "image": "20170818_172227.jpg",
-      "found_parasites": 14,
+      "found_parasites": 17,
       "found_wbc": 34,
       "truth_parasites": 26,
       "truth_wbc": 34,
@@ -6910,7 +6911,7 @@
     {
       "patient": "TF77_CO15",
       "image": "20170818_172418.jpg",
-      "found_parasites": 26,
+      "found_parasites": 27,
       "found_wbc": 29,
       "truth_parasites": 30,
       "truth_wbc": 22,
@@ -6923,7 +6924,7 @@
     {
       "patient": "TF77_CO15",
       "image": "20170818_172551.jpg",
-      "found_parasites": 22,
+      "found_parasites": 25,
       "found_wbc": 19,
       "truth_parasites": 28,
       "truth_wbc": 20,
@@ -6936,7 +6937,7 @@
     {
       "patient": "TF77_CO15",
       "image": "20170818_175246.jpg",
-      "found_parasites": 42,
+      "found_parasites": 47,
       "found_wbc": 21,
       "truth_parasites": 48,
       "truth_wbc": 25,
@@ -6949,7 +6950,7 @@
     {
       "patient": "TF77_CO15",
       "image": "20170818_175447.jpg",
-      "found_parasites": 10,
+      "found_parasites": 11,
       "found_wbc": 24,
       "truth_parasites": 20,
       "truth_wbc": 24,
@@ -6962,7 +6963,7 @@
     {
       "patient": "TF77_CO15",
       "image": "20170818_175753.jpg",
-      "found_parasites": 16,
+      "found_parasites": 21,
       "found_wbc": 22,
       "truth_parasites": 32,
       "truth_wbc": 23,
@@ -6975,7 +6976,7 @@
     {
       "patient": "TF77_CO15",
       "image": "20170818_175939.jpg",
-      "found_parasites": 33,
+      "found_parasites": 39,
       "found_wbc": 20,
       "truth_parasites": 54,
       "truth_wbc": 25,
@@ -6988,7 +6989,7 @@
     {
       "patient": "TF77_CO15",
       "image": "20170818_180346.jpg",
-      "found_parasites": 20,
+      "found_parasites": 26,
       "found_wbc": 22,
       "truth_parasites": 29,
       "truth_wbc": 22,
@@ -7001,7 +7002,7 @@
     {
       "patient": "TF77_CO15",
       "image": "20170818_181016.jpg",
-      "found_parasites": 25,
+      "found_parasites": 27,
       "found_wbc": 17,
       "truth_parasites": 41,
       "truth_wbc": 21,
@@ -7014,7 +7015,7 @@
     {
       "patient": "TF77_CO15",
       "image": "20170818_181332.jpg",
-      "found_parasites": 18,
+      "found_parasites": 22,
       "found_wbc": 19,
       "truth_parasites": 21,
       "truth_wbc": 14,
@@ -7027,7 +7028,7 @@
     {
       "patient": "TF77_CO15",
       "image": "20170818_181525.jpg",
-      "found_parasites": 25,
+      "found_parasites": 28,
       "found_wbc": 25,
       "truth_parasites": 35,
       "truth_wbc": 25,
@@ -7040,7 +7041,7 @@
     {
       "patient": "TF81_W8B5",
       "image": "20170819_150804.jpg",
-      "found_parasites": 7,
+      "found_parasites": 9,
       "found_wbc": 24,
       "truth_parasites": 3,
       "truth_wbc": 22,
@@ -7053,7 +7054,7 @@
     {
       "patient": "TF81_W8B5",
       "image": "20170819_153950.jpg",
-      "found_parasites": 7,
+      "found_parasites": 11,
       "found_wbc": 25,
       "truth_parasites": 6,
       "truth_wbc": 24,
@@ -7066,7 +7067,7 @@
     {
       "patient": "TF81_W8B5",
       "image": "20170819_154112.jpg",
-      "found_parasites": 2,
+      "found_parasites": 4,
       "found_wbc": 25,
       "truth_parasites": 2,
       "truth_wbc": 27,
@@ -7079,7 +7080,7 @@
     {
       "patient": "TF81_W8B5",
       "image": "20170819_154309.jpg",
-      "found_parasites": 10,
+      "found_parasites": 11,
       "found_wbc": 22,
       "truth_parasites": 4,
       "truth_wbc": 22,
@@ -7092,7 +7093,7 @@
     {
       "patient": "TF81_W8B5",
       "image": "20170819_154555.jpg",
-      "found_parasites": 10,
+      "found_parasites": 13,
       "found_wbc": 25,
       "truth_parasites": 3,
       "truth_wbc": 27,
@@ -7105,7 +7106,7 @@
     {
       "patient": "TF81_W8B5",
       "image": "20170819_154851.jpg",
-      "found_parasites": 7,
+      "found_parasites": 9,
       "found_wbc": 29,
       "truth_parasites": 6,
       "truth_wbc": 32,
@@ -7118,7 +7119,7 @@
     {
       "patient": "TF81_W8B5",
       "image": "20170819_155210.jpg",
-      "found_parasites": 5,
+      "found_parasites": 7,
       "found_wbc": 25,
       "truth_parasites": 2,
       "truth_wbc": 21,
@@ -7131,7 +7132,7 @@
     {
       "patient": "TF81_W8B5",
       "image": "20170819_155819.jpg",
-      "found_parasites": 9,
+      "found_parasites": 11,
       "found_wbc": 20,
       "truth_parasites": 4,
       "truth_wbc": 21,
@@ -7144,7 +7145,7 @@
     {
       "patient": "TF81_W8B5",
       "image": "20170819_160141.jpg",
-      "found_parasites": 6,
+      "found_parasites": 8,
       "found_wbc": 20,
       "truth_parasites": 4,
       "truth_wbc": 19,
@@ -7157,7 +7158,7 @@
     {
       "patient": "TF81_W8B5",
       "image": "20170819_160546.jpg",
-      "found_parasites": 14,
+      "found_parasites": 19,
       "found_wbc": 18,
       "truth_parasites": 6,
       "truth_wbc": 18,
@@ -7170,7 +7171,7 @@
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_164346.jpg",
-      "found_parasites": 19,
+      "found_parasites": 20,
       "found_wbc": 1,
       "truth_parasites": 41,
       "truth_wbc": 19,
@@ -7196,7 +7197,7 @@
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_164720.jpg",
-      "found_parasites": 9,
+      "found_parasites": 11,
       "found_wbc": 4,
       "truth_parasites": 29,
       "truth_wbc": 16,
@@ -7222,7 +7223,7 @@
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_165147.jpg",
-      "found_parasites": 36,
+      "found_parasites": 38,
       "found_wbc": 8,
       "truth_parasites": 50,
       "truth_wbc": 24,
@@ -7235,7 +7236,7 @@
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_165244.jpg",
-      "found_parasites": 32,
+      "found_parasites": 35,
       "found_wbc": 7,
       "truth_parasites": 42,
       "truth_wbc": 18,
@@ -7261,7 +7262,7 @@
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_165435.jpg",
-      "found_parasites": 15,
+      "found_parasites": 16,
       "found_wbc": 0,
       "truth_parasites": 36,
       "truth_wbc": 19,
@@ -7274,7 +7275,7 @@
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_165554.jpg",
-      "found_parasites": 22,
+      "found_parasites": 23,
       "found_wbc": 0,
       "truth_parasites": 39,
       "truth_wbc": 23,
@@ -7287,7 +7288,7 @@
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_165701.jpg",
-      "found_parasites": 21,
+      "found_parasites": 25,
       "found_wbc": 8,
       "truth_parasites": 36,
       "truth_wbc": 23,
@@ -7300,7 +7301,7 @@
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_165809.jpg",
-      "found_parasites": 20,
+      "found_parasites": 24,
       "found_wbc": 5,
       "truth_parasites": 27,
       "truth_wbc": 29,
@@ -7326,7 +7327,7 @@
     {
       "patient": "TF89_CM5",
       "image": "20170820_164311.jpg",
-      "found_parasites": 107,
+      "found_parasites": 118,
       "found_wbc": 25,
       "truth_parasites": 129,
       "truth_wbc": 27,
@@ -7339,7 +7340,7 @@
     {
       "patient": "TF89_CM5",
       "image": "20170820_164418.jpg",
-      "found_parasites": 68,
+      "found_parasites": 76,
       "found_wbc": 18,
       "truth_parasites": 86,
       "truth_wbc": 14,
@@ -7352,7 +7353,7 @@
     {
       "patient": "TF89_CM5",
       "image": "20170820_164535.jpg",
-      "found_parasites": 141,
+      "found_parasites": 160,
       "found_wbc": 18,
       "truth_parasites": 151,
       "truth_wbc": 20,
@@ -7365,7 +7366,7 @@
     {
       "patient": "TF89_CM5",
       "image": "20170820_164736.jpg",
-      "found_parasites": 168,
+      "found_parasites": 180,
       "found_wbc": 18,
       "truth_parasites": 202,
       "truth_wbc": 19,
@@ -7378,7 +7379,7 @@
     {
       "patient": "TF89_CM5",
       "image": "20170820_165423.jpg",
-      "found_parasites": 136,
+      "found_parasites": 145,
       "found_wbc": 33,
       "truth_parasites": 176,
       "truth_wbc": 35,
@@ -7391,7 +7392,7 @@
     {
       "patient": "TF89_CM5",
       "image": "20170820_165824.jpg",
-      "found_parasites": 220,
+      "found_parasites": 231,
       "found_wbc": 34,
       "truth_parasites": 253,
       "truth_wbc": 39,
@@ -7404,7 +7405,7 @@
     {
       "patient": "TF89_CM5",
       "image": "20170820_170007.jpg",
-      "found_parasites": 251,
+      "found_parasites": 271,
       "found_wbc": 28,
       "truth_parasites": 286,
       "truth_wbc": 30,
@@ -7443,7 +7444,7 @@
     {
       "patient": "TF90_15_60",
       "image": "20170820_182427.jpg",
-      "found_parasites": 2,
+      "found_parasites": 3,
       "found_wbc": 31,
       "truth_parasites": 6,
       "truth_wbc": 30,
@@ -7469,7 +7470,7 @@
     {
       "patient": "TF90_15_60",
       "image": "20170820_183120.jpg",
-      "found_parasites": 5,
+      "found_parasites": 9,
       "found_wbc": 33,
       "truth_parasites": 7,
       "truth_wbc": 35,
@@ -7508,7 +7509,7 @@
     {
       "patient": "TF90_15_60",
       "image": "20170820_184305.jpg",
-      "found_parasites": 6,
+      "found_parasites": 10,
       "found_wbc": 31,
       "truth_parasites": 4,
       "truth_wbc": 21,
@@ -7534,7 +7535,7 @@
     {
       "patient": "TF94_210",
       "image": "20170829_154020.jpg",
-      "found_parasites": 7,
+      "found_parasites": 8,
       "found_wbc": 37,
       "truth_parasites": 10,
       "truth_wbc": 32,
@@ -7547,7 +7548,7 @@
     {
       "patient": "TF94_210",
       "image": "20170829_154341.jpg",
-      "found_parasites": 5,
+      "found_parasites": 7,
       "found_wbc": 35,
       "truth_parasites": 11,
       "truth_wbc": 38,
@@ -7573,7 +7574,7 @@
     {
       "patient": "TF94_210",
       "image": "20170829_155229.jpg",
-      "found_parasites": 6,
+      "found_parasites": 7,
       "found_wbc": 31,
       "truth_parasites": 5,
       "truth_wbc": 25,
@@ -7599,7 +7600,7 @@
     {
       "patient": "TF94_210",
       "image": "20170829_155826.jpg",
-      "found_parasites": 9,
+      "found_parasites": 10,
       "found_wbc": 36,
       "truth_parasites": 10,
       "truth_wbc": 34,
@@ -7612,7 +7613,7 @@
     {
       "patient": "TF94_210",
       "image": "20170829_155959.jpg",
-      "found_parasites": 7,
+      "found_parasites": 8,
       "found_wbc": 29,
       "truth_parasites": 10,
       "truth_wbc": 28,
@@ -7625,7 +7626,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_163412.jpg",
-      "found_parasites": 39,
+      "found_parasites": 44,
       "found_wbc": 24,
       "truth_parasites": 38,
       "truth_wbc": 14,
@@ -7638,7 +7639,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_163557.jpg",
-      "found_parasites": 34,
+      "found_parasites": 38,
       "found_wbc": 17,
       "truth_parasites": 16,
       "truth_wbc": 13,
@@ -7651,7 +7652,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_163656.jpg",
-      "found_parasites": 32,
+      "found_parasites": 40,
       "found_wbc": 24,
       "truth_parasites": 23,
       "truth_wbc": 18,
@@ -7664,7 +7665,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_163909.jpg",
-      "found_parasites": 40,
+      "found_parasites": 45,
       "found_wbc": 20,
       "truth_parasites": 31,
       "truth_wbc": 14,
@@ -7677,7 +7678,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_163958.jpg",
-      "found_parasites": 37,
+      "found_parasites": 41,
       "found_wbc": 22,
       "truth_parasites": 39,
       "truth_wbc": 17,
@@ -7690,7 +7691,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_164055.jpg",
-      "found_parasites": 13,
+      "found_parasites": 19,
       "found_wbc": 23,
       "truth_parasites": 19,
       "truth_wbc": 17,
@@ -7703,7 +7704,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_164205.jpg",
-      "found_parasites": 28,
+      "found_parasites": 32,
       "found_wbc": 18,
       "truth_parasites": 22,
       "truth_wbc": 14,
@@ -7716,7 +7717,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_164307.jpg",
-      "found_parasites": 15,
+      "found_parasites": 17,
       "found_wbc": 19,
       "truth_parasites": 9,
       "truth_wbc": 16,
@@ -7729,7 +7730,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_164432.jpg",
-      "found_parasites": 43,
+      "found_parasites": 46,
       "found_wbc": 22,
       "truth_parasites": 39,
       "truth_wbc": 23,
@@ -7742,7 +7743,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_164619.jpg",
-      "found_parasites": 30,
+      "found_parasites": 36,
       "found_wbc": 29,
       "truth_parasites": 33,
       "truth_wbc": 16,
@@ -7755,7 +7756,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_164715.jpg",
-      "found_parasites": 35,
+      "found_parasites": 44,
       "found_wbc": 19,
       "truth_parasites": 30,
       "truth_wbc": 12,
@@ -7768,7 +7769,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_164819.jpg",
-      "found_parasites": 38,
+      "found_parasites": 39,
       "found_wbc": 25,
       "truth_parasites": 35,
       "truth_wbc": 26,
@@ -7781,7 +7782,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_165310.jpg",
-      "found_parasites": 39,
+      "found_parasites": 49,
       "found_wbc": 19,
       "truth_parasites": 34,
       "truth_wbc": 15,
@@ -7794,7 +7795,7 @@
     {
       "patient": "TF95_223",
       "image": "20170829_165416.jpg",
-      "found_parasites": 24,
+      "found_parasites": 26,
       "found_wbc": 21,
       "truth_parasites": 25,
       "truth_wbc": 15,
@@ -7807,7 +7808,7 @@
     {
       "patient": "TF97_CS31",
       "image": "20170829_172518.jpg",
-      "found_parasites": 19,
+      "found_parasites": 21,
       "found_wbc": 17,
       "truth_parasites": 15,
       "truth_wbc": 18,
@@ -7846,7 +7847,7 @@
     {
       "patient": "TF97_CS31",
       "image": "20170829_173033.jpg",
-      "found_parasites": 20,
+      "found_parasites": 24,
       "found_wbc": 23,
       "truth_parasites": 12,
       "truth_wbc": 24,
@@ -7859,7 +7860,7 @@
     {
       "patient": "TF97_CS31",
       "image": "20170829_173209.jpg",
-      "found_parasites": 30,
+      "found_parasites": 31,
       "found_wbc": 19,
       "truth_parasites": 22,
       "truth_wbc": 25,
@@ -7872,7 +7873,7 @@
     {
       "patient": "TF97_CS31",
       "image": "20170829_173437.jpg",
-      "found_parasites": 22,
+      "found_parasites": 29,
       "found_wbc": 17,
       "truth_parasites": 17,
       "truth_wbc": 19,
@@ -7885,7 +7886,7 @@
     {
       "patient": "TF97_CS31",
       "image": "20170829_174105.jpg",
-      "found_parasites": 14,
+      "found_parasites": 17,
       "found_wbc": 17,
       "truth_parasites": 16,
       "truth_wbc": 18,
@@ -7911,7 +7912,7 @@
     {
       "patient": "TF97_CS31",
       "image": "20170829_174501.jpg",
-      "found_parasites": 12,
+      "found_parasites": 13,
       "found_wbc": 15,
       "truth_parasites": 10,
       "truth_wbc": 12,

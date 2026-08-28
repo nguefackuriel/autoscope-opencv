@@ -78,6 +78,14 @@ FEATURE_NAMES = [
 
 MODEL_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_mlp.onnx"
 CNN_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_cnn.onnx"
+
+# Chosen on the twenty fit patients the shipped network never trained on, by
+# matching the count to every annotated parasite. Not 0.80: that came from a
+# table that scored the count against the candidates only, so the 11.4% of
+# parasites that never become candidates were missing from both sides and the
+# threshold looked unbiased while under-counting by 12%. See
+# docs/results-parasites.md section 11 and eval/parasite_calibrate.py.
+DEFAULT_THRESHOLD = 0.75
 HYBRID_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_hybrid.onnx"
 PATCH_PX = 32             # the patch network's input, centred on the peak
 
@@ -339,7 +347,7 @@ def find_parasites(
     image_bgr: np.ndarray,
     crop_to_fov: bool = True,
     normalise_stain: bool = True,
-    threshold: float = 0.5,
+    threshold: float = DEFAULT_THRESHOLD,
     model: str = "cnn",
     scorer: "Scorer | PatchScorer | None" = None,
 ) -> list[Parasite]:

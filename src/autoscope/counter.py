@@ -34,7 +34,7 @@ class FieldCount:
 def count_field(
     image_bgr: np.ndarray,
     model: str = "cnn",
-    threshold: float = 0.5,
+    threshold: float = par.DEFAULT_THRESHOLD,
     scorer=None,
 ) -> FieldCount:
     """Count one field. Coordinates are reported in the input image's frame."""
@@ -63,7 +63,7 @@ def count_field(
     return FieldCount(len(found), len(cells), found, cells)
 
 
-def vision_counter(model: str = "cnn", threshold: float = 0.5):
+def vision_counter(model: str = "cnn", threshold: float = par.DEFAULT_THRESHOLD):
     """A `Counter` for `agent.tools.Tools`, with the model loaded once."""
     scorer = {"cnn": lambda: par.PatchScorer.load(), "hybrid": lambda: par.PatchScorer.load(par.HYBRID_PATH),
               "mlp": lambda: par.Scorer.load()}[model]()

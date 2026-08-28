@@ -86,13 +86,23 @@ def centre(P: torch.Tensor) -> torch.Tensor:
     return P[:, :, o:o + CROP, o:o + CROP].contiguous()
 
 
-def prf(y, s, thr):
+def prf(y, s, thr, candidate_recall: float = 1.0):
+    """Precision, recall, F1, and the count bias.
+
+    `candidate_recall` matters more than it looks. Without it the bias is
+    measured against the candidates only, and the parasites that never became
+    candidates are missing from both sides of the ratio. That made 0.80 look
+    unbiased while it under-counted real parasites by 12%, and it is how the
+    shipped threshold came to be wrong. Pass the measured recall so the bias
+    is against every annotated parasite.
+    """
     pred = s >= thr
     tp = int((pred & (y == 1)).sum()); fp = int((pred & (y == 0)).sum()); fn = int((~pred & (y == 1)).sum())
     p = tp / (tp + fp) if tp + fp else 0.0
     r = tp / (tp + fn) if tp + fn else 0.0
     f = 2 * p * r / (p + r) if p + r else 0.0
-    return p, r, f, (tp + fp - (tp + fn)) / max(tp + fn, 1) * 100
+    truth = (tp + fn) / max(candidate_recall, 1e-9)
+    return p, r, f, (tp + fp - truth) / max(truth, 1) * 100
 
 
 def train(P, y, epochs, seed, mean, std, lr=2e-3, F=None):
@@ -151,6 +161,9 @@ def main():
 
     d = np.load(OUT / args.patches)
     P, y, patient = d["patches"], d["y"], d["patient"]
+    recall = json.loads((OUT / "parasite_candidates.json").read_text())["candidate_recall"]
+    print(f"candidate recall {recall:.3f}: the count bias below is against every "
+          f"annotated parasite, not just the candidates")
     F = d["X"].astype(np.float32) if args.hybrid else None
     model_path = HYBRID if args.hybrid else MODEL
     print(f"{len(y)} patches {P.shape[1:]}  {int(y.sum())} parasites  {len(set(patient))} patients"
@@ -167,7 +180,7 @@ def main():
         scores = predict(final, P[te], None if F is None else F[te])
         print("\nvalidation patients (candidate level):\n  thr   precision  recall   F1    count bias")
         for thr in np.arange(0.2, 0.91, 0.05):
-            p_, r, f, b = prf(y[te], scores, thr)
+            p_, r, f, b = prf(y[te], scores, thr, recall)
             table.append({"threshold": round(float(thr), 2), "precision": round(p_, 4), "recall": round(r, 4),
                           "f1": round(f, 4), "count_bias_pct": round(b, 2)})
             print(f"  {thr:.2f}   {p_:.3f}      {r:.3f}   {f:.3f}   {b:+.1f}%")
@@ -180,10 +193,11 @@ def main():
             tr, te = folds != k, folds == k
             net = train(P[tr], y[tr], args.epochs, k, mean, std, F=None if F is None else F[tr])
             scores[te] = predict(net, P[te], None if F is None else F[te])
-            print(f"  fold {k}: {int(te.sum())} patches, F1@0.5 {prf(y[te], scores[te], 0.5)[2]:.3f}", flush=True)
+            print(f"  fold {k}: {int(te.sum())} patches, "
+                  f"F1@0.5 {prf(y[te], scores[te], 0.5, recall)[2]:.3f}", flush=True)
         print("\ncross-validated by patient (candidate level):\n  thr   precision  recall   F1    count bias")
         for thr in np.arange(0.2, 0.81, 0.05):
-            p, r, f, b = prf(y, scores, thr)
+            p, r, f, b = prf(y, scores, thr, recall)
             table.append({"threshold": round(float(thr), 2), "precision": round(p, 4), "recall": round(r, 4),
                           "f1": round(f, 4), "count_bias_pct": round(b, 2)})
             print(f"  {thr:.2f}   {p:.3f}      {r:.3f}   {f:.3f}   {b:+.1f}%")
