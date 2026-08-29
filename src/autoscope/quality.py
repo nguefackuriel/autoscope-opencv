@@ -53,12 +53,15 @@ class FieldQuality:
 
     def why_not(self) -> str | None:
         """One short sentence for the agent log, or None when the field is fine."""
+        # Two decimals, not zero. Rounding 10.95 to "11" against a limit of 11
+        # produced log lines reading "sharpness 11 needs 11", which read as a
+        # bug to anyone looking at the trace and cost more than the digits save.
         if self.focus_score < FOCUS_MIN:
-            return f"out of focus, sharpness {self.focus_score:.0f} needs {FOCUS_MIN:.0f}"
+            return f"out of focus, sharpness {self.focus_score:.2f} needs {FOCUS_MIN:.2f}"
         if self.illumination_uniformity < UNIFORMITY_MIN:
-            return f"uneven lighting, {self.illumination_uniformity:.2f} needs {UNIFORMITY_MIN:.2f}"
+            return f"uneven lighting, {self.illumination_uniformity:.3f} needs {UNIFORMITY_MIN:.3f}"
         if self.debris_ratio > DEBRIS_MAX:
-            return f"too much debris, {self.debris_ratio:.2f} over the {DEBRIS_MAX:.2f} limit"
+            return f"too much debris, {self.debris_ratio:.3f} over the {DEBRIS_MAX:.3f} limit"
         return None
 
     def as_dict(self) -> dict:

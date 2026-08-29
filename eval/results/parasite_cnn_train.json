@@ -1,0 +1,128 @@
+{
+  "patches": 128432,
+  "positives": 10651,
+  "patients": 100,
+  "epochs": 20,
+  "folds": 5,
+  "val_patients": 20,
+  "crop": 32,
+  "validation_patients": [
+    {
+      "threshold": 0.2,
+      "precision": 0.4001,
+      "recall": 0.9484,
+      "f1": 0.5628,
+      "count_bias_pct": 137.07
+    },
+    {
+      "threshold": 0.25,
+      "precision": 0.4262,
+      "recall": 0.9444,
+      "f1": 0.5873,
+      "count_bias_pct": 121.6
+    },
+    {
+      "threshold": 0.3,
+      "precision": 0.4512,
+      "recall": 0.9355,
+      "f1": 0.6088,
+      "count_bias_pct": 107.33
+    },
+    {
+      "threshold": 0.35,
+      "precision": 0.4752,
+      "recall": 0.9275,
+      "f1": 0.6284,
+      "count_bias_pct": 95.17
+    },
+    {
+      "threshold": 0.4,
+      "precision": 0.4943,
+      "recall": 0.9154,
+      "f1": 0.642,
+      "count_bias_pct": 85.17
+    },
+    {
+      "threshold": 0.45,
+      "precision": 0.5112,
+      "recall": 0.9049,
+      "f1": 0.6533,
+      "count_bias_pct": 77.03
+    },
+    {
+      "threshold": 0.5,
+      "precision": 0.5332,
+      "recall": 0.892,
+      "f1": 0.6675,
+      "count_bias_pct": 67.28
+    },
+    {
+      "threshold": 0.55,
+      "precision": 0.5557,
+      "recall": 0.8759,
+      "f1": 0.68,
+      "count_bias_pct": 57.61
+    },
+    {
+      "threshold": 0.6,
+      "precision": 0.5764,
+      "recall": 0.8574,
+      "f1": 0.6893,
+      "count_bias_pct": 48.75
+    },
+    {
+      "threshold": 0.65,
+      "precision": 0.6036,
+      "recall": 0.8308,
+      "f1": 0.6992,
+      "count_bias_pct": 37.63
+    },
+    {
+      "threshold": 0.7,
+      "precision": 0.6291,
+      "recall": 0.7969,
+      "f1": 0.7032,
+      "count_bias_pct": 26.67
+    },
+    {
+      "threshold": 0.75,
+      "precision": 0.6589,
+      "recall": 0.7317,
+      "f1": 0.6934,
+      "count_bias_pct": 11.04
+    },
+    {
+      "threshold": 0.8,
+      "precision": 0.6916,
+      "recall": 0.6793,
+      "f1": 0.6854,
+      "count_bias_pct": -1.77
+    },
+    {
+      "threshold": 0.85,
+      "precision": 0.7426,
+      "recall": 0.6044,
+      "f1": 0.6664,
+      "count_bias_pct": -18.61
+    },
+    {
+      "threshold": 0.9,
+      "precision": 0.7863,
+      "recall": 0.5012,
+      "f1": 0.6122,
+      "count_bias_pct": -36.26
+    }
+  ],
+  "input_mean_bgr": [
+    210.03542116645383,
+    172.2972359156986,
+    193.55739734353588
+  ],
+  "input_std_bgr": [
+    12.511801881958638,
+    28.03341898851651,
+    18.474192983080002
+  ],
+  "hybrid": false,
+  "patches_file": "parasite_patches_x3.npz"
+}

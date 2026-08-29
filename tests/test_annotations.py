@@ -73,3 +73,43 @@ def test_white_cells_have_no_radius_and_parasites_do():
     gt = ann.for_image(image_path, w, h)
     assert all(a.radius is None for a in gt.white_cells)
     assert all(a.radius and a.radius > 0 for a in gt.parasites)
+
+
+def test_parasite_centre_is_the_first_point_not_the_midpoint():
+    """The Circle's first point is the centre. Reading the midpoint of the two
+    points instead moves every parasite about 13 px off a 10 px object."""
+    import numpy as np
+
+    image_path, gt_path = _first_pair()
+    img = cv.imread(str(image_path))
+    h, w = img.shape[:2]
+    lab = cv.cvtColor(img, cv.COLOR_BGR2Lab).astype(np.float32)
+    stain = cv.GaussianBlur(lab[:, :, 1] - lab[:, :, 2], (5, 5), 0)
+
+    win = 30
+    on_centre, on_midpoint = [], []
+    for line in gt_path.read_text(errors="ignore").splitlines()[1:]:
+        parts = line.split(",")
+        if len(parts) < 9 or parts[1] != ann.PARASITE:
+            continue
+        a1, b1, a2, b2 = (float(v) for v in parts[5:9])
+        cx, cy = ann.to_image_frame(a1, b1, w)
+        rx, ry = ann.to_image_frame(a2, b2, w)
+        mx, my = (cx + rx) / 2, (cy + ry) / 2
+        if not (win <= mx < w - win and win <= my < h - win):
+            continue
+        patch = stain[int(my) - win : int(my) + win + 1, int(mx) - win : int(mx) + win + 1]
+        iy, ix = np.unravel_index(np.argmax(patch), patch.shape)
+        px, py = int(mx) - win + ix, int(my) - win + iy
+        on_centre.append(float(np.hypot(px - cx, py - cy)))
+        on_midpoint.append(float(np.hypot(px - mx, py - my)))
+
+    if len(on_centre) < 10:
+        pytest.skip("too few parasites in the first annotated image")
+    assert np.median(on_centre) < np.median(on_midpoint)
+    assert np.median(on_centre) < 12
+
+    gt = ann.for_image(image_path, w, h)
+    # and the parser agrees with the raw reading above
+    first = gt.parasites[0]
+    assert first.radius > 5
