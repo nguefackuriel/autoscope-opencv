@@ -438,5 +438,12 @@ more than the count does.
 Held-out, against 0.80: count bias -14.4% to **-2.1%**, slide density bias
 -15.3% to **-1.5%**, mean absolute density error 48.6% to **43.9%**.
 
+Scored the same way as section 10 (99 images, 2 per patient), the detector at
+0.75 reads: precision 0.790, recall 0.739, **F1 0.763**, count bias -6.4%,
+MAE 9.96 per image. Against 0.80 the F1 is unchanged (0.762) and the trade has
+simply moved along the same curve, 5 points of precision for 4 of recall, but
+the count is no longer systematically low. On the full 609-image table the bias
+is -2.0%.
+
 The remaining ten points of candidate loss are the next piece of work, and this
 measurement is what says so.
