@@ -52,6 +52,19 @@ fitted on it, no model gets trained on it, and nobody looks at its numbers until
 the pipeline is frozen. A held-out set you have already peeked at is not a
 held-out set, and the generalisation claim in the report depends on this.
 
+Two more NLM sets, same group, fetched by `data/download_nlm_extra.py`:
+
+```
+make data-uninfected  # thick smears from uninfected patients, 2.5 GB
+make data-vivax       # thick smears from 150 P. vivax patients, 5.0 GB
+```
+
+Every patient in the 150-patient set is infected, so nothing measured so far
+says what the pipeline does on a clean slide. The uninfected set is where
+specificity comes from; the P. vivax set is the other-species failure case.
+Both are frozen test material like Tanzania: run once, at the end, nothing
+fitted on them.
+
 A third option exists if we want more: the Lacuna Malaria datasets from Ghana
 and Uganda, `doi:10.7910/DVN/VEADSE`, CC BY 4.0, 7.2 GB in rar archives.
 
@@ -62,6 +75,7 @@ docs/proposal/                what we submitted, and what the data has since
                               contradicted
 docs/reference/               the WHO reports our numbers come from
 docs/data-notes.md            what the data actually is. Read before coding.
+docs/plan-2026-09-02.md       where we stand, what is wrong, the plan to 26 Oct
 src/autoscope/
   fov.py                      find the round eyepiece view. Runs first.
   quality.py         stage 1  is this field worth counting
