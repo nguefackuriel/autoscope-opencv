@@ -85,7 +85,16 @@ CNN_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_cnn.onnx"
 # parasites that never become candidates were missing from both sides and the
 # threshold looked unbiased while under-counting by 12%. See
 # docs/results-parasites.md section 11 and eval/parasite_calibrate.py.
-DEFAULT_THRESHOLD = 0.75
+# Chosen on the 20 calibration patients, never on held-out ones, as the
+# threshold where the count matches every annotated parasite (candidates
+# missed by the top-hat included). 0.80 was chosen against candidates only and
+# under-counted by 12% (results-parasites.md, section 11). 0.75 was right for
+# the pipeline as it stood in August; with the stain statistics corrected on
+# 2 September 2026 the same rule gives 0.70 (+1.4% on the calibration
+# patients, against -10.1% at 0.75). The patch network still trained on the
+# old normalisation; retraining it is queued and the threshold gets re-chosen
+# the same way afterwards.
+DEFAULT_THRESHOLD = 0.70
 HYBRID_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_hybrid.onnx"
 PATCH_PX = 32             # the patch network's input, centred on the peak
 

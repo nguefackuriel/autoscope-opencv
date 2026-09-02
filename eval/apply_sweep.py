@@ -34,7 +34,8 @@ def main() -> None:
     chosen = pick(sweep["grid"])
     best_f1 = max(sweep["grid"], key=lambda r: r["f1"])
 
-    print(f"chosen: seed_fraction={chosen['seed_fraction']} close_px={chosen['close_px']}")
+    print(f"chosen: stain_min={chosen.get('stain_min', 'unchanged')} "
+          f"seed_fraction={chosen['seed_fraction']} close_px={chosen['close_px']}")
     print(f"  fit-set F1 {chosen['f1']:.3f}, bias {chosen['count_bias_pct']:+.1f}%")
     if best_f1 is not chosen:
         print(f"passed over: F1 {best_f1['f1']:.3f} at bias {best_f1['count_bias_pct']:+.1f}% "
@@ -43,6 +44,8 @@ def main() -> None:
     src = SEG.read_text()
     src = re.sub(r"SEED_FRACTION = [0-9.]+", f"SEED_FRACTION = {chosen['seed_fraction']}", src)
     src = re.sub(r"CLOSE_KERNEL_FULL = \d+", f"CLOSE_KERNEL_FULL = {chosen['close_px']}", src)
+    if "stain_min" in chosen:
+        src = re.sub(r"STAIN_MIN = [0-9.]+", f"STAIN_MIN = {chosen['stain_min']:.1f}", src)
     SEG.write_text(src)
     print(f"\nwrote parameters into {SEG.name}")
 
