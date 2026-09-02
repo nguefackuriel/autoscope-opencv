@@ -108,7 +108,9 @@ python bench/cool_bench.py --runs 100 --label c7i-stock    # x86, stock OpenCV 5
 
 Every result file records `kleidicv_in_build` and the CPU baseline, so a reader
 can tell which build produced the numbers. The COOL claim is worth exactly as
-much as that line.
+much as that line. Mind that the pinned pip wheel on aarch64 already ships KleidiCV
+(CI prints `Custom HAL: KleidiCV (ver 26.03)`), so "stock" on Arm means a
+build with KleidiCV switched off, not the wheel.
 
 Note for local work: both our laptops are x86, so nothing here can time Arm.
 Correctness on Arm can be checked with `docker buildx --platform linux/arm64`,
