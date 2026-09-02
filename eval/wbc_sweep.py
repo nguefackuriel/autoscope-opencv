@@ -61,7 +61,11 @@ def score(pairs, seed_fraction: float, close_px: int, stain_min: float) -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--images", type=int, default=120)
+    # 100, one image per patient, seed 0: that is the fit set every held-out
+    # number in docs/ is measured against. Passing more images pulls held-out
+    # patients into the fit and silently shrinks the held-out set, which is
+    # what happened on 2 September 2026 with 120 before it was caught.
+    ap.add_argument("--images", type=int, default=100)
     ap.add_argument("--raw", action="store_true",
                     help="sweep without stain normalisation, for comparison")
     args = ap.parse_args()
