@@ -1,0 +1,53 @@
+# Every pull request runs the tests on x86 and, under emulation, on arm64.
+#
+# The arm64 job answers one question: does the pinned OpenCV 5 wheel load and
+# behave on the architecture we deploy to. It says nothing about speed; the
+# timings that matter come from a real c8g. When the repo goes public, replace
+# the QEMU steps with `runs-on: ubuntu-24.04-arm` and the job gets ten times
+# faster for free.
+
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [develop, main]
+
+jobs:
+  tests-x86:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libgl1 libglib2.0-0
+      - run: pip install -r requirements.txt && pip install --no-deps -e .
+      - run: pytest -q
+
+  tests-arm64:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/arm64
+          load: true
+          tags: autoscope:arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: tests under arm64 emulation
+        run: docker run --rm --platform linux/arm64 autoscope:arm64 pytest -q
+      - name: prove which build ran
+        run: |
+          docker run --rm --platform linux/arm64 autoscope:arm64 python -c "
+          import cv2, platform
+          print(platform.machine(), cv2.__version__)
+          print([l for l in cv2.getBuildInformation().splitlines() if 'KleidiCV' in l or 'NEON' in l or 'CPU/HW' in l])"

@@ -59,9 +59,12 @@ class StainStats:
 
 # Median statistics over 150 NLM patients, measured by eval/stain_survey.py.
 # This is the frame everything else gets mapped into, including Tanzania.
+# Re-measured on 2 September 2026 with exact statistics (see measure()); the
+# first survey, taken with the float32 accumulation error, read
+# (194.7, 134.6, 118.8) / (24.4, 10.1, 10.0).
 NLM_REFERENCE = StainStats(
-    mean=(194.7, 134.6, 118.8),
-    std=(24.4, 10.1, 10.0),
+    mean=(197.8, 139.3, 115.2),
+    std=(24.3, 9.0, 9.7),
 )
 
 
@@ -84,19 +87,26 @@ def field_mask(image_bgr: np.ndarray) -> np.ndarray:
 
 
 def measure(image_bgr: np.ndarray, mask: np.ndarray | None = None) -> StainStats:
-    """Lab statistics inside the field of view."""
-    lab = cv.cvtColor(image_bgr, cv.COLOR_BGR2Lab).astype(np.float32)
-    if mask is None or mask.shape[:2] != lab.shape[:2]:
+    """Lab statistics inside the field of view.
+
+    Computed by `cv.meanStdDev`, which accumulates in float64. The first
+    version copied the masked pixels into a float32 array and took NumPy's
+    mean along axis 0, which for a strided reduction over 15 million values
+    accumulates naively in float32 and was off by up to 6.5 Lab units, by a
+    different amount on every image (measured on 2 September 2026, ten
+    images: 0.8 to 6.5). The "normalisation" was adding noise. The reference
+    below was re-surveyed with the corrected statistics.
+    """
+    if mask is None or mask.shape[:2] != image_bgr.shape[:2]:
         mask = field_mask(image_bgr)
+    if not mask.any():
+        mask = None
 
-    inside = mask > 0
-    if not inside.any():
-        inside = np.ones(lab.shape[:2], bool)
-
-    pixels = lab[inside]
+    lab = cv.cvtColor(image_bgr, cv.COLOR_BGR2Lab)
+    mean, std = cv.meanStdDev(lab, mask=mask)
     return StainStats(
-        mean=tuple(float(v) for v in pixels.mean(axis=0)),
-        std=tuple(float(max(v, 1e-3)) for v in pixels.std(axis=0)),
+        mean=tuple(float(v) for v in mean.ravel()),
+        std=tuple(float(max(v, 1e-3)) for v in std.ravel()),
     )
 
 
@@ -115,16 +125,23 @@ def normalise(
         mask = field_mask(image_bgr)
 
     source = measure(image_bgr, mask)
-    lab = cv.cvtColor(image_bgr, cv.COLOR_BGR2Lab).astype(np.float32)
+    lab = cv.cvtColor(image_bgr, cv.COLOR_BGR2Lab)
 
+    # The map is affine per channel on an 8-bit value, so a 256-entry table
+    # per channel is the whole computation. Pixel-identical to applying the
+    # float32 expression to every pixel (checked), and about 15 times faster
+    # than doing so on a 2 680 px crop: 1.5 s down to 0.08 s.
+    levels = np.arange(256, dtype=np.float32)
+    table = np.empty((256, 1, 3), np.uint8)
     for c in range(3):
         gain = reference.std[c] / source.std[c]
         # A slide that is nearly uniform in one channel has a tiny spread, and
         # dividing by it would amplify noise into stripes. Cap the correction.
         gain = float(np.clip(gain, 0.5, 2.0))
-        lab[:, :, c] = (lab[:, :, c] - source.mean[c]) * gain + reference.mean[c]
+        mapped = (levels - source.mean[c]) * gain + reference.mean[c]
+        table[:, 0, c] = np.clip(mapped, 0, 255).astype(np.uint8)
 
-    return cv.cvtColor(np.clip(lab, 0, 255).astype(np.uint8), cv.COLOR_Lab2BGR)
+    return cv.cvtColor(cv.LUT(lab, table), cv.COLOR_Lab2BGR)
 
 
 def normalise_cropped(image_bgr: np.ndarray) -> tuple[np.ndarray, np.ndarray]:

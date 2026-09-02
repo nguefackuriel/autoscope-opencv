@@ -100,6 +100,22 @@ are only comparable within this rig: Laplacian variance scales with resolution,
 magnification and stain, so re-run the survey before using these numbers on any
 other dataset.
 
+**The focus row above is on the old scale.** On 2 September 2026 the
+sharpness measure changed to the Laplacian of the image smoothed with a
+sigma 1.0 Gaussian, because the raw version scored noise as sharpness
+(`eval/focus_transfer.py`: rank correlation 0.97 with the residual noise).
+Re-surveyed on the 100 fit patients only, 3 images each
+(`eval/results/focus_survey_smoothed.json`):
+
+| focus, smoothed scale | p5 | median | p95 |
+|---|---|---|---|
+| infected JPEGs, fit patients | 2.4 | 3.1 | 4.4 |
+| uninfected TIFFs, 40 random | 2.25 | 2.97 | 3.75 |
+
+The gate is 2.2. On the raw scale the uninfected set had scored 1.35x lower
+than the infected set and failed the gate on 45 of 46 fields; on this scale
+the two sets are within 8% and 2 of 40 uninfected fields fall below the gate.
+
 `debris_ratio` is the weak one. The median image already scores 0.69, because a
 thick smear is lysed blood and is full of small particles by design. The
 threshold of 0.85 flags only the extreme tail. Before the final report, fit it
@@ -143,3 +159,39 @@ six times higher in pixels per micron, and the Giemsa is much bluer. Nothing
 in the pipeline transfers without (a) a pixel scale factor and (b) stain
 normalisation onto the NLM reference. Measure the white cell diameter here
 before setting either; do not eyeball it.
+
+## The NLM uninfected set, downloaded 2 September 2026
+
+`make data-uninfected`, `NIH-NLM-ThickBloodSmearsU.zip`, 2.45 GB, same group
+and same phone-through-eyepiece rig as the 150 infected patients, collected
+in July 2017 on the folder timestamps. Extracted under
+`data/raw/NIH-NLM-ThickBloodSmearsU/`:
+
+```
+Uninfected Patients/<TFnnn_x>/tiled/<stamp>.tiff    50 patients, 1141 images
+Annotations/<TFnnn_x>/<stamp>.txt                   White_Blood_Cell points only
+```
+
+Three things that differ from the infected set, all measured.
+
+**TIFF pyramids, landscape.** Each file is a 7-page TIFF; `cv.imread` returns
+page 0, the full 4032 x 3024 frame, in 0.24 s. The frame is **landscape**,
+where the infected JPEGs are portrait. Same round eyepiece disc, corners at
+about 1 and centre at about 219, so `fov.detect()` applies unchanged.
+
+**Annotations map directly.** The header is the same `count,4032,3024`, and
+because the image is landscape too, `x = coord1, y = coord2` with no
+rotation. Checked the same way as before: mean L under the points is 66 with
+the direct mapping, 156 with the infected set's rotation, on a lit field at
+197. `annotations.for_image` must not be used on this set;
+`eval/negative_fields.py` reads them itself. There is no Parasite label in
+any of the 1 241 files, which is the point.
+
+**Specificity is what it measures.** Every one of the 150 development
+patients is infected, so until this set nothing had measured what the
+pipeline says about a clean slide. Frozen test material, like Tanzania:
+nothing is fitted on it, and `eval/negative_eval.py` reports what it says.
+
+The companion set, `NIH-NLM-ThickBloodSmearsPV.zip` (4.98 GB, 150 *P. vivax*
+patients, `make data-vivax`), is the other-species failure case and is held
+to the same rule.

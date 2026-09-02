@@ -35,10 +35,15 @@ def ground_truth(txt: Path) -> tuple[int, int]:
     return parasites, wbc
 
 
-def survey(per_patient: int, seed: int = 0) -> list[dict]:
+def survey(per_patient: int, seed: int = 0, fit_only: bool = False) -> list[dict]:
     rng = random.Random(seed)
     rows = []
     patients = sorted(p for p in RAW.iterdir() if p.is_dir() and p.name.startswith("TF"))
+    if fit_only:
+        # Thresholds are fitted, so they come from the fit patients only. The
+        # first survey ran before the split existed and used all 150.
+        fitted = set(json.loads((OUT / "wbc_sweep.json").read_text())["fit_patients"])
+        patients = [p for p in patients if p.name in fitted]
 
     for i, patient in enumerate(patients, 1):
         images = sorted(patient.glob("*.jpg"))
@@ -78,9 +83,11 @@ def percentiles(values: list[float], points=(1, 5, 25, 50, 75, 95, 99)) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--per-patient", type=int, default=3)
+    ap.add_argument("--fit-only", action="store_true", help="only the 100 fit patients")
+    ap.add_argument("--out", default="focus_survey.json")
     args = ap.parse_args()
 
-    rows = survey(args.per_patient)
+    rows = survey(args.per_patient, fit_only=args.fit_only)
     if not rows:
         raise SystemExit(f"no images found under {RAW}, run `make data` first")
 
@@ -98,7 +105,7 @@ def main() -> None:
     }
 
     OUT.mkdir(exist_ok=True)
-    (OUT / "focus_survey.json").write_text(json.dumps({"summary": report, "rows": rows}, indent=2))
+    (OUT / args.out).write_text(json.dumps({"summary": report, "rows": rows}, indent=2))
 
     print(f"\n{report['images']} images from {report['patients']} patients\n")
     print(f"round field of view found in {report['fov_found']:.0%} of images\n")
@@ -112,7 +119,7 @@ def main() -> None:
         mean_wbc = float(np.mean(wbc))
         print(f"\nmean white cells per image: {mean_wbc:.1f}")
         print(f"images needed for the WHO 200-cell count: {200 / mean_wbc:.1f}")
-    print(f"\nwritten to {OUT / 'focus_survey.json'}")
+    print(f"\nwritten to {OUT / args.out}")
 
 
 if __name__ == "__main__":

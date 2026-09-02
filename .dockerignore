@@ -1,0 +1,14 @@
+.git
+.venv
+.venv-train
+.pytest_cache
+__pycache__
+**/__pycache__
+*.egg-info
+data/
+docs/
+eval/results/*.npz
+eval/results/*.npy
+*.zip
+*.pdf
+.DS_Store

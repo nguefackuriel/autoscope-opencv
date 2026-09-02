@@ -1,4 +1,4 @@
-.PHONY: setup setup-train data data-tanzania test bench train-mlp train-cnn clean
+.PHONY: setup setup-train data data-tanzania data-uninfected data-vivax test bench docker docker-arm64 train-mlp train-cnn clean
 
 setup:                     ## create the venv and install pinned deps
 	uv venv --python 3.12
@@ -14,6 +14,12 @@ data:                      ## download the NLM thick smear set (3.9 GB, resumabl
 data-tanzania:             ## download the held-out Tanzania set (3.0 GB, CC0)
 	.venv/bin/python data/download_tanzania.py
 
+data-uninfected:           ## NLM uninfected thick smears (2.5 GB): specificity, frozen test set
+	.venv/bin/python data/download_nlm_extra.py --set uninfected
+
+data-vivax:                ## NLM P. vivax thick smears (5.0 GB): other-species test, frozen
+	.venv/bin/python data/download_nlm_extra.py --set vivax
+
 test:                      ## run the unit tests
 	.venv/bin/pytest -q
 
@@ -28,6 +34,14 @@ train-cnn:                 ## parasite patch classifier: patches -> torch CNN ->
 
 bench:                     ## run the COOL benchmark on this machine
 	.venv/bin/python bench/cool_bench.py --runs 100
+
+docker:                    ## build the stock-OpenCV image for this machine and run the tests in it
+	docker build -t autoscope .
+	docker run --rm autoscope
+
+docker-arm64:              ## same image for linux/arm64 under emulation: correctness only, never timings
+	docker build --platform linux/arm64 -t autoscope:arm64 .
+	docker run --rm --platform linux/arm64 autoscope:arm64
 
 clean:
 	rm -rf .venv .venv-train .pytest_cache **/__pycache__
