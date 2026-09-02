@@ -103,7 +103,7 @@ class Candidate:
     x: float
     y: float
     area: float
-    features: np.ndarray
+    features: np.ndarray | None   # None when candidates() was asked not to compute them
 
 
 def _prepare(image_bgr: np.ndarray, crop_to_fov: bool, normalise_stain: bool):
@@ -157,11 +157,21 @@ def peaks(top: np.ndarray, allowed: np.ndarray) -> np.ndarray:
     return np.stack([xs, ys], axis=1)
 
 
-def candidates(image_bgr: np.ndarray, mask: np.ndarray) -> tuple[list[Candidate], np.ndarray]:
+def candidates(image_bgr: np.ndarray, mask: np.ndarray,
+               features: bool = True) -> tuple[list[Candidate], np.ndarray]:
     """Purple peaks inside the field and outside white cells.
 
     Returns the candidates and the white-cell exclusion mask (for callers that
     want to draw it).
+
+    `features=False` returns the same peaks, at the same positions, without
+    the nineteen hand-crafted features (and with `area` left at 0, since the
+    half-peak region is one of them). The patch network never reads the
+    features, and computing them is a Python loop over 400 to 1 000 peaks
+    with a connected-components pass, a contour and an ellipse fit each: about
+    a second per field, or a third of the whole pipeline, for numbers that
+    were thrown away. Measured on 2 September 2026. The MLP and hybrid paths
+    still ask for them.
     """
     top, stain, lab = tophat(image_bgr)
     L, a, b = lab[:, :, 0], lab[:, :, 1], lab[:, :, 2]
@@ -175,6 +185,8 @@ def candidates(image_bgr: np.ndarray, mask: np.ndarray) -> tuple[list[Candidate]
     pts = peaks(top, allowed)
     if len(pts) == 0:
         return [], wbc
+    if not features:
+        return [Candidate(float(x), float(y), 0.0, None) for x, y in pts], wbc
 
     wbc_dist = cv.distanceTransform(cv.bitwise_not(wbc), cv.DIST_L2, 3)
     field_L = cv.GaussianBlur(L, (0, 0), 25)
@@ -358,7 +370,7 @@ def find_parasites(
     cheaper baseline and for the ablation in the report).
     """
     img, mask, ox, oy = _prepare(image_bgr, crop_to_fov, normalise_stain)
-    cands, _ = candidates(img, mask)
+    cands, _ = candidates(img, mask, features=(model != "cnn"))
     if not cands:
         return []
     if model == "cnn":

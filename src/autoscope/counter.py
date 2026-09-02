@@ -43,7 +43,7 @@ def count_field(
     cells = find_white_cells(prepared, crop_to_fov=False, normalise_stain=False)
     cells = [Cell(c.x + ox, c.y + oy, c.area, c.solidity) for c in cells]
 
-    cands, _ = par.candidates(prepared, mask)
+    cands, _ = par.candidates(prepared, mask, features=(model != "cnn"))
     found: list[par.Parasite] = []
     if cands:
         if model == "cnn":
