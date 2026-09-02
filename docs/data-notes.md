@@ -100,6 +100,22 @@ are only comparable within this rig: Laplacian variance scales with resolution,
 magnification and stain, so re-run the survey before using these numbers on any
 other dataset.
 
+**The focus row above is on the old scale.** On 2 September 2026 the
+sharpness measure changed to the Laplacian of the image smoothed with a
+sigma 1.0 Gaussian, because the raw version scored noise as sharpness
+(`eval/focus_transfer.py`: rank correlation 0.97 with the residual noise).
+Re-surveyed on the 100 fit patients only, 3 images each
+(`eval/results/focus_survey_smoothed.json`):
+
+| focus, smoothed scale | p5 | median | p95 |
+|---|---|---|---|
+| infected JPEGs, fit patients | 2.4 | 3.1 | 4.4 |
+| uninfected TIFFs, 40 random | 2.25 | 2.97 | 3.75 |
+
+The gate is 2.2. On the raw scale the uninfected set had scored 1.35x lower
+than the infected set and failed the gate on 45 of 46 fields; on this scale
+the two sets are within 8% and 2 of 40 uninfected fields fall below the gate.
+
 `debris_ratio` is the weak one. The median image already scores 0.69, because a
 thick smear is lysed blood and is full of small particles by design. The
 threshold of 0.85 flags only the extreme tail. Before the final report, fit it

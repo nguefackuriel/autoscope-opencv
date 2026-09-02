@@ -27,10 +27,12 @@ Move = tuple[str, dict]
 # the stage limits alone will not save it.
 MAX_REFOCUS_TRIES = 4
 
-# Below this, two sharpness readings are the same measurement. Laplacian
-# variance on these tiles sits around 17 and moves by whole units when the
-# focus really changes, so 0.5 is well inside the noise floor.
-FOCUS_NOISE = 0.5
+# Below this, two sharpness readings are the same measurement. The smoothed
+# Laplacian variance sits around 3.1 on a real field (p5 2.4, p95 4.4) and
+# moves by tenths when the focus really changes, so 0.1, about 3% of a
+# typical reading, is inside the noise floor. It was 0.5 on the raw scale,
+# where the median was 17: the same fraction.
+FOCUS_NOISE = 0.1
 
 
 class Policy(Protocol):

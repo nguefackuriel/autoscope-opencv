@@ -20,7 +20,10 @@ from autoscope import fov
 # Measured on 300 images across all 150 patients of the NLM thick smear set,
 # see eval/focus_survey.py and eval/results/focus_survey.json. Each threshold
 # sits just outside the 5th or 95th percentile, so a normal field passes and
-# only the genuinely bad ones get flagged.
+# only the genuinely bad ones get flagged. FOCUS_MIN was re-surveyed on
+# 2 September 2026 on the 100 fit patients only, after the sharpness measure
+# changed (eval/results/focus_survey_smoothed.json: p5 2.4, median 3.1,
+# p95 4.4). On the same scale the uninfected TIFFs read p5 2.25, median 2.97.
 #
 # DEBRIS_MAX especially is a placeholder with a number behind it rather than a
 # validated limit. A thick smear is lysed blood and is full of small particles
@@ -31,7 +34,7 @@ from autoscope import fov
 # Do not carry these to another dataset. Laplacian variance scales with
 # resolution, magnification and stain, so a threshold fitted on 4032x3024 phone
 # captures means nothing on a different rig. Re-run the survey instead.
-FOCUS_MIN = 11.0        # p5 of the real data is 10.1
+FOCUS_MIN = 2.2         # p5 of the fit patients is 2.4 on the smoothed scale (was 11 on the raw one)
 UNIFORMITY_MIN = 0.90   # p5 is 0.915, median 0.965
 DEBRIS_MAX = 0.85       # p95 is 0.80, median 0.685
 
@@ -80,14 +83,27 @@ def _inside(mask: np.ndarray | None, shape: tuple[int, int]) -> np.ndarray:
     return mask
 
 
-def focus_score(image: np.ndarray, mask: np.ndarray | None = None) -> float:
-    """Variance of the Laplacian. Higher is sharper.
+# Smooth before taking the Laplacian. Measured on 2 September 2026
+# (eval/focus_transfer.py): the plain Laplacian variance correlates at 0.97
+# with the image's residual noise, so it scores grain, not focus. The NLM
+# uninfected TIFFs are smoother than the phone JPEGs and scored 1.35x lower
+# without being softer, which made the gate skip 45 of 46 clean fields. A
+# sigma of 1.0 removes pixel noise and JPEG grain while a cell edge, 5 to 10
+# px wide, survives it; the two sets then sit within 8% of each other.
+FOCUS_SMOOTH_SIGMA = 1.0
 
-    Absolute values depend on magnification and stain, so this is only
-    comparable between fields of the same slide. That is all the agent needs,
-    because it only ever compares a field against the same field refocused.
+
+def focus_score(image: np.ndarray, mask: np.ndarray | None = None) -> float:
+    """Variance of the Laplacian of the lightly smoothed image. Higher is sharper.
+
+    Absolute values still depend on magnification and stain, so the threshold
+    below is only valid for this rig, and a different rig needs the survey
+    re-run. What the smoothing buys is that two captures of the same rig with
+    different compression or sensor noise score alike, which the raw
+    Laplacian did not give us.
     """
-    lap = cv.Laplacian(_gray(image), cv.CV_64F)
+    smooth = cv.GaussianBlur(_gray(image), (0, 0), FOCUS_SMOOTH_SIGMA)
+    lap = cv.Laplacian(smooth, cv.CV_32F)
     inside = _inside(mask, lap.shape).astype(bool)
     values = lap[inside]
     return float(values.var()) if values.size else 0.0
