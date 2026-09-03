@@ -162,3 +162,40 @@ argument, defaulting to 5, and swept in `agent_sweep.json`:
 
 The floor buys accuracy at a predictable price in fields, which is the trade a
 lab should be allowed to set rather than one we bury in a constant.
+
+## Re-measured on 3 September with the corrected pipeline
+
+Same 50 patients, same 609 fields, same loop and policies. Three things
+changed underneath: the stain statistics were fixed and the white cell and
+parasite stages refit and retrained on them (`results-parasites.md` §12),
+the sharpness score no longer counts noise (`data-notes.md`), and the
+classifier threshold is 0.76. Fields are now 1.34 s each, from 2.65 s.
+
+| arm | fields read | median | error bar | density bias | mean abs. error | flagged |
+|---|---|---|---|---|---|---|
+| who-200 / truth | 556 | 11 | 27% | -1.1% | 4.0% | 11 |
+| **rule-based / truth** | **494** | **10** | 26% | **-0.6%** | **2.8%** | 37 |
+| who-200 / found | 503 | 10 | 26% | +1.1% | 42.5% | 13 |
+| rule-based / found | 490 | 9 | 24% | +1.9% | 43.5% | 36 |
+
+The agent reads 11% fewer fields than the protocol (494 against 556) with a
+smaller error (2.8% against 4.0%). It reads more than in August (470) for a
+good reason: the old sharpness score was rejecting fields for their JPEG
+grain, and the gate now passes 587 of 609 fields instead of skipping them.
+Refocus calls fell from 25 to 1 for the same reason.
+
+By density band, expert counts:
+
+| slide | patients | WHO fields | agent fields | saving | agent error bar |
+|---|---|---|---|---|---|
+| under 1 000 /µL | 1 | 4 | 5 | -25% | 129% |
+| 1 000 to 10 000 /µL | 26 | 294 | 318 | -8% | 41% |
+| over 10 000 /µL | 23 | 258 | **171** | **+34%** | 19% |
+
+Same shape as before: the saving is on the heavy slides, and on the middling
+ones the agent keeps reading past the 200-cell protocol because the error
+bar is still wide. The two `found` rows say what they said in August, more
+sharply: with the real counter the agent's decisions barely move (490
+against 494 fields) and the answer's error is 43.5% against 2.8%. The
+vision, not the policy, is what stands between this and a useful number.
+
