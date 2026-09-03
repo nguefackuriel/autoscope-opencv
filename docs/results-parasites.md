@@ -447,3 +447,117 @@ is -2.0%.
 
 The remaining ten points of candidate loss are the next piece of work, and this
 measurement is what says so.
+
+## 12. The stain statistics were wrong; fixed, retrained, re-thresholded
+
+3 September 2026. `results-stain.md` has the bug: the Lab statistics behind
+the normalisation were accumulated in float32 over 15 million pixels and were
+off by up to 6.5 units, differently on every image. Every number above was
+measured on images normalised with that error, and the patch network was
+trained on them. So the whole chain was redone, in order, with nothing
+touched by hand in between (`eval/results/chain_2026-09-02.log`):
+
+1. white cell parameters refit with the stain threshold in the grid
+   (`results-wbc.md`: held-out F1 0.793 to 0.851);
+2. the patch network retrained with the same recipe on correctly normalised
+   patches (131 456 patches, 10 840 parasites, 3 images per patient,
+   20 epochs, 20 validation patients). On the validation patients the count
+   bias crosses zero at 0.75 with F1 0.712, where the old network read 0.693
+   and crossed zero at 0.80. `cv.dnn` reproduces torch to 3.6e-7;
+3. every candidate rescored, and the threshold re-chosen on the 20
+   calibration patients by the section 11 rule, count against every
+   annotated parasite: **0.76** (+0.1%). Candidate recall there is 0.898,
+   up from 0.886, because the refit white cell mask excludes less.
+
+Held-out, the same 50 patients, 99 images, 4 731 annotated parasites:
+
+| | August (0.75) | **3 September (0.76)** |
+|---|---|---|
+| precision | 0.790 | **0.799** |
+| recall | 0.739 | **0.768** |
+| F1 | 0.763 | **0.784** |
+| count bias per image | -6.4% | **-3.9%** |
+| count MAE per image | 9.96 | **8.09** |
+| rank correlation of the parasite/white cell ratio | 0.935 | **0.947** |
+| ratio bias / 95% limits (97 images) | | +4.0% / -63% to +191% |
+
+On the full 609-image table, the four methods of section 11 at the new
+threshold:
+
+| method | count bias | count MAE | slide density bias | mean abs. density error | 95% limits |
+|---|---|---|---|---|---|
+| **fixed 0.76, shipped** | **-0.6%** | **9.05** | +2.3% | **43.3%** | -56% to +137% |
+| expected count | -11.8% | 12.16 | +3.2% | 52.2% | |
+| expected / candidate recall | -1.8% | 10.89 | +14.9% | 54.1% | |
+| per-slide threshold | -5.7% | 8.98 | -4.8% | 44.3% | |
+
+Two points of F1 and three of recall from a bug fix, with the network,
+the candidate stage and the recipe unchanged. And the number that matters
+did not move: **mean absolute density error per slide is 43.3%, from
+43.9%.** The average count is right (-0.6%) and the spread between slides
+is not. Through the WHO protocol with the real counter, 54% of slides land
+within 25% of the expert density and 78% within 50%; the worst six are all
+over-counts:
+
+| slide | expert density | our error |
+|---|---|---|
+| TF82_15_1_9 | 14 744/µL | +200% |
+| TF81_W8B5 | 1 373/µL | +142% |
+| TF70_Scr440 | 3 552/µL | +122% |
+| TF107_249 | 1 707/µL | +120% |
+| TF48_UW31 | 43 586/µL | +87% |
+| TF37_Sc563 | 4 500/µL | +80% |
+
+That is the sparse-field false alarm problem of section 9 again, and it is
+the same thing that makes clean slides read positive (`results-negatives.md`).
+Those six slides are the next thing to open, one by one, before any more
+modelling.
+
+Per field, the pipeline now takes 1.34 s on the laptop against 2.65 s in
+August (`bench/field_profile.py`): the stain normalisation went from 1.5 s to
+0.08 s and the candidate stage stopped computing nineteen features the
+network never read.
+
+## 13. The six worst slides, opened one by one
+
+3 September 2026, `eval/parasite_fp_look.py`, diagnosis on held-out slides
+(looked at, nothing fitted on them). The six slides of section 12 split
+into two different failures.
+
+**Two are not parasite errors.** TF82 (+200%) and TF48 (+87%) *under*-count
+parasites (254 found for 446, 836 for 1 106). Their density is wrong
+because the denominator collapsed: the white cell detector found 19% and
+40% of the annotated nuclei. Both are pink, overstained slides (raw Lab
+mean *a* 158 to 164 against 135 to 151 elsewhere) where the nucleus
+`a - b` after normalisation sits at 44 to 46, under the gate of 60, while
+on a normal slide it sits at 95 to 118. Across the 50 held-out patients
+five slides have a white cell count under 80% of the annotation and three
+over 140%: a tenth of slides get a bad denominator, which is a large part
+of the 43% density spread. The fix is in `results-wbc.md`: a nucleus is
+also dark, and darkness survives the overstain.
+
+**Four are false alarms on sparse slides.** TF70 (99 annotated, 361 found,
+315 false), TF37 (135 / 299 / 207), TF107 (51 / 116 / 76), TF81
+(40 / 108 / 80). The montage (`docs/figures/fp-look-worst4-false.png`)
+shows what passes at 0.76: elongated purple rods, round solid platelets,
+clumps of precipitate, a few dark blue fragments. The true positives next
+to them (`fp-look-worst4-true.png`) all have the ring structure, a
+chromatin dot with a cytoplasm crescent. The arithmetic behind the
+over-count is simple and slide-independent: **about 3 of every 100
+candidates pass the classifier as false positives** (2.8 to 3.9 per 100
+across the candidate-count bands), and a field carries 300 to 800
+candidates. That is 10 to 25 false parasites per field, invisible on a
+field with 80 real ones and a disaster on a field with five. Rank
+correlation of false positives per field with the true count is +0.67,
+with candidates +0.38, with debris or focus about zero: it is not a
+quality-gate problem.
+
+On clean fields (`fp-look-clean-false.png`) the false alarms are almost
+all platelets, at 0.8 to 0.98. The training set has never contained a
+clean field: every negative the network saw came from an infected image,
+where a platelet next to a parasite is rare and a platelet on its own is
+the whole population. So the fit half of the uninfected set now supplies
+negative patches (`parasite_patches.py --uninfected-images`), and the
+other half stays frozen for the specificity number. Chain 2 measures both
+fixes; its numbers follow in section 14.
+

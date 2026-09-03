@@ -91,6 +91,7 @@ src/autoscope/agent/          the seven tools, three policies, the loop
 models/                       the ONNX classifiers cv.dnn loads (committed;
                               `make train-mlp` / `make train-cnn` rebuild them)
 bench/cool_bench.py           COOL against stock, medians and IQR
+bench/field_profile.py        the real pipeline, stage by stage, on real fields
 eval/                         surveys, sweeps, and held-out scoring. Every
                               number in docs/results-*.md comes from here.
 infra/                        Terraform for AWS                 (to write)

@@ -61,9 +61,23 @@ def main():
     ap.add_argument("--target-ci", type=float, default=0.20)
     ap.add_argument("--min-fields", type=int, default=5)
     ap.add_argument("--out", default="negative_eval.json")
+    ap.add_argument("--all", action="store_true",
+                    help="score all 50 uninfected patients, not just the frozen test half")
     args = ap.parse_args()
 
     neg_table = json.loads((OUT / args.negatives).read_text())
+    # From 3 September 2026 the fit half of the uninfected set supplies
+    # negative training patches, so it is no longer test material. Only the
+    # frozen half is reported unless --all is asked for, and the output says which.
+    split_path = OUT / "uninfected_split.json"
+    if not args.all and split_path.exists():
+        test = set(json.loads(split_path.read_text())["test"])
+        neg_table["rows"] = [r for r in neg_table["rows"] if r["patient"] in test]
+        neg_table["patients"] = len({r["patient"] for r in neg_table["rows"]})
+        neg_table["which"] = "frozen test half"
+    else:
+        neg_table["which"] = "all 50 patients"
+    print(f"uninfected patients scored: {neg_table['which']}")
     pos_table = json.loads((OUT / args.positives).read_text())
     neg, pos = by_patient(neg_table), by_patient(pos_table)
     neg_rows = neg_table["rows"]
@@ -134,7 +148,7 @@ def main():
           f"min {refs[0]:,.0f}, p10 {np.percentile(refs, 10):,.0f}, median {np.median(refs):,.0f}/uL")
 
     (OUT / args.out).write_text(json.dumps({
-        "threshold": neg_table["threshold"], "uninfected_patients": len(neg),
+        "threshold": neg_table["threshold"], "uninfected_patients": len(neg), "which": neg_table["which"],
         "infected_patients": len(pos), "per_field": per_field, "arms": arms,
         "infected_expert_density_percentiles": {k: float(np.percentile(refs, k)) for k in (0, 10, 25, 50)},
     }, indent=2))

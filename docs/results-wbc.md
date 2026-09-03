@@ -76,3 +76,102 @@ being split. Recall was 0.497. Computing the threshold per blob took it to
 - **Precision at 0.66** means a third of detections are not on an annotated
   cell. Look at those before assuming they are all wrong; some may be real cells
   the annotator skipped.
+
+## 2 September: the stain statistics were wrong, and fixing them is worth six points
+
+`results-stain.md` has the bug: the Lab statistics behind the normalisation
+were accumulated in float32 and off by up to 6.5 units per image. Every
+parameter above was fitted on images normalised with that error. With the
+statistics corrected and the reference re-measured, the old parameters
+over-counted by 9.6% on the held-out patients (F1 0.755), because the
+corrected reference moves the background `a - b` level by about 8 units and
+the nucleus threshold of 55 no longer sat where it was meant to.
+
+So the sweep was redone with `STAIN_MIN` in the grid (55, 60, 65, 70), same
+100 fit patients, same seed, same selection rule (count bias within one
+point, then best F1). Chosen: `STAIN_MIN = 60`, `SEED_FRACTION = 0.75`,
+`CLOSE_KERNEL_FULL = 24`, fit-set F1 0.872 at +0.3%. Passed over: F1 0.879
+at -6.7% bias, for the same reason as before.
+
+Held-out, the same 50 patients and 144 images as every column above:
+
+| | before the fix (24 Aug) | **after (2 Sept)** |
+|---|---|---|
+| precision | 0.783 | **0.844** |
+| recall | 0.803 | **0.859** |
+| F1 | 0.793 | **0.851** |
+| count bias | +2.5% | **+1.7%** |
+| count MAE | 4.7 cells/image | **3.65** |
+
+A first re-sweep was run with 120 images by mistake, which pulled 20
+held-out patients into the fit set and shrank the held-out set to 30. It was
+caught from the patient count in the output, discarded
+(`wbc_sweep_fixedstats_120_contaminated.log`), and the script's default is
+now 100 so it cannot happen silently again. The number above comes from the
+clean run (`wbc_sweep_fixedstats_100.log`, `wbc_eval_holdout_refit.json`).
+
+## 3 September: the pink slides, and why a nucleus has to be dark as well
+
+Five of the 50 held-out patients get fewer than 80% of their annotated white
+cells, two of them catastrophically: TF82 19%, TF48 40%. Both are
+overstained, pink slides (raw Lab mean *a* 164 and 158 against 135 to 151
+on the rest). After normalisation, which clamps its gain at 0.5 and so
+cannot fully pull them in, their nuclei sit at `a - b` 44 to 46 while the
+gate is 60 and a normal slide's nuclei sit at 95 to 118. In the picture
+(`docs/figures/wbc-look-TF82_15_1_9.png`) every annotated nucleus is an
+obvious dark round blob; the detector finds none of them.
+
+Measured on 98 fit patients, one image each
+(`eval/results/nucleus_contrast_fit.json`): the field sits at L 200 on
+every slide (p5 198), nuclei at L 29 to 96 (p5 to p95), so **darkness gives
+a gap of at least 100 on every slide**, while nucleus `a - b` runs from 37
+(TF91) to 140 and falls under the gate on the six pinkest fit slides too.
+
+So a nucleus is now "purple, or dark and at least faintly purple":
+`stain > STAIN_MIN or (L < L_DARK_MAX and stain > STAIN_MIN_DARK)`. The
+`a - b` floor keeps dark dirt out. Prototype, two images per slide:
+
+| slide | kind | purple only | dark or purple |
+|---|---|---|---|
+| TF82_15_1_9 | held-out, pink | 0/19, 0/21 | 17/19, 20/21 |
+| TF48_UW31 | held-out, pink | 28/45, 6/39 | 42/45, 38/39 |
+| TF91_15_9A | fit, weakest a - b | 0/16, 9/17 | 14/16, 23/17 |
+| TF87_15105A | fit | 27/47, 38/49 | 49/47, 47/49 |
+| three normal fit slides | | unchanged | unchanged, to the cell |
+
+(found/annotated.) `L_DARK_MAX` is in the sweep grid with 0 meaning off, so
+the choice stays measured; the held-out number follows from chain 2.
+
+The sweep chose `L_DARK_MAX = 130`, `STAIN_MIN = 65`, `SEED_FRACTION = 0.75`,
+`CLOSE_KERNEL_FULL = 24`: fit-set F1 0.915 at -0.1%, against 0.872 for the
+best purple-only setting in the same grid. Held-out, the same 50 patients
+and 144 images:
+
+| | 24 Aug | 3 Sept, statistics fixed | **3 Sept, dark path** |
+|---|---|---|---|
+| precision | 0.783 | 0.844 | **0.901** |
+| recall | 0.803 | 0.859 | **0.919** |
+| F1 | 0.793 | 0.851 | **0.910** |
+| count bias | +2.5% | +1.7% | +2.0% |
+| count MAE | 4.7 cells/image | 3.65 | **2.29** |
+
+The slides that were failing, found/annotated on the two evaluation images
+per patient:
+
+| slide | before (all fields) | now |
+|---|---|---|
+| TF82_15_1_9 | 0.19 | **0.91** (42/46) |
+| TF48_UW31 | 0.40 | **1.00** (21/21) |
+| TF2N_159R | 0.63 | **1.10** (46/42) |
+| TF117_R1 | 0.71 | **1.07** (105/98) |
+| TF47_UW29 | 0.77 | **0.93** (43/46) |
+| TF70_Scr440 | 1.51 | **1.06** (56/53) |
+| TF35_Sc521 | 1.89 | **1.55** (62/40) |
+| TF1N_1522 | 1.50 | **1.34** (63/47) |
+
+Patients with fewer than 80% of their cells: 0 of 50; with more
+than 140%: 2. The denominator failure of section 13 in
+`results-parasites.md` is closed on this data. What remains is the
+over-count on slides like TF70, where small purple clumps pass the area
+gate, and that is a shape question rather than a colour one.
+

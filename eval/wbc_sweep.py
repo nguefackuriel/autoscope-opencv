@@ -25,9 +25,11 @@ from eval_helpers import load_pairs  # noqa: E402
 OUT = Path(__file__).resolve().parent / "results"
 
 
-def score(pairs, seed_fraction: float, close_px: int) -> dict:
+def score(pairs, seed_fraction: float, close_px: int, stain_min: float, l_dark: float = 0.0) -> dict:
     segmentation.SEED_FRACTION = seed_fraction
     segmentation.CLOSE_KERNEL_FULL = close_px
+    segmentation.STAIN_MIN = stain_min
+    segmentation.L_DARK_MAX = l_dark
 
     hits = fa = miss = 0
     bias = 0
@@ -50,6 +52,8 @@ def score(pairs, seed_fraction: float, close_px: int) -> dict:
     return {
         "seed_fraction": seed_fraction,
         "close_px": close_px,
+        "stain_min": stain_min,
+        "l_dark_max": l_dark,
         "precision": round(precision, 4),
         "recall": round(recall, 4),
         "f1": round(f1, 4),
@@ -59,7 +63,11 @@ def score(pairs, seed_fraction: float, close_px: int) -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--images", type=int, default=120)
+    # 100, one image per patient, seed 0: that is the fit set every held-out
+    # number in docs/ is measured against. Passing more images pulls held-out
+    # patients into the fit and silently shrinks the held-out set, which is
+    # what happened on 2 September 2026 with 120 before it was caught.
+    ap.add_argument("--images", type=int, default=100)
     ap.add_argument("--raw", action="store_true",
                     help="sweep without stain normalisation, for comparison")
     args = ap.parse_args()
@@ -69,21 +77,33 @@ def main() -> None:
     print(f"fitting on {len(pairs)} images from {len(fit_patients)} patients, "
           f"stain normalisation {'off' if args.raw else 'on'}\n")
 
+    # STAIN_MIN joined the grid on 2 September 2026. The stain statistics
+    # behind the normalisation were wrong until then (results-stain.md), and
+    # the corrected reference moves the background a - b level by about 8
+    # units, so a threshold fitted on the old images no longer sits where it
+    # was meant to. Sweeping it here keeps the choice measured.
+    # L_DARK_MAX joined on 3 September 2026: a nucleus is dark as well as
+    # purple, and on the pinkest slides only the darkness survives. 0 is the
+    # purple-only rule, kept in the grid so the choice stays measured.
     results = []
-    print(f"{'seed':>6} {'close':>6} {'prec':>7} {'recall':>7} {'F1':>7} {'bias %':>8}")
-    for seed_fraction in (0.35, 0.45, 0.55, 0.65, 0.75, 0.85):
-        for close_px in (24, 44, 64, 88):
-            r = score(pairs, seed_fraction, close_px)
-            results.append(r)
-            print(f"{r['seed_fraction']:>6.2f} {r['close_px']:>6} {r['precision']:>7.3f} "
-                  f"{r['recall']:>7.3f} {r['f1']:>7.3f} {r['count_bias_pct']:>+8.1f}")
+    print(f"{'Ldark':>6} {'stain':>6} {'seed':>6} {'close':>6} {'prec':>7} {'recall':>7} {'F1':>7} {'bias %':>8}")
+    for l_dark in (0.0, 130.0, 150.0):
+        for stain_min in (60.0, 65.0):
+            for seed_fraction in (0.55, 0.65, 0.75):
+                for close_px in (24, 44):
+                    r = score(pairs, seed_fraction, close_px, stain_min, l_dark)
+                    results.append(r)
+                    print(f"{r['l_dark_max']:>6.0f} {r['stain_min']:>6.0f} {r['seed_fraction']:>6.2f} {r['close_px']:>6} "
+                          f"{r['precision']:>7.3f} {r['recall']:>7.3f} {r['f1']:>7.3f} "
+                          f"{r['count_bias_pct']:>+8.1f}", flush=True)
 
     best = max(results, key=lambda r: r["f1"])
     OUT.mkdir(exist_ok=True)
     (OUT / "wbc_sweep.json").write_text(json.dumps(
         {"best": best, "grid": results, "fit_patients": fit_patients}, indent=2))
-    print(f"\nbest F1 {best['f1']:.3f} at seed_fraction={best['seed_fraction']} "
-          f"close_px={best['close_px']} (bias {best['count_bias_pct']:+.1f}%)")
+    print(f"\nbest F1 {best['f1']:.3f} at l_dark={best['l_dark_max']:.0f} stain_min={best['stain_min']:.0f} "
+          f"seed_fraction={best['seed_fraction']} close_px={best['close_px']} "
+          f"(bias {best['count_bias_pct']:+.1f}%)")
 
     # A detector that is right on average matters more than one with the best F1
     # when the number feeds a density, so report the least biased too.
