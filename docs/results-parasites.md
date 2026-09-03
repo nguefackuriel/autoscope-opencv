@@ -518,3 +518,46 @@ August (`bench/field_profile.py`): the stain normalisation went from 1.5 s to
 0.08 s and the candidate stage stopped computing nineteen features the
 network never read.
 
+## 13. The six worst slides, opened one by one
+
+3 September 2026, `eval/parasite_fp_look.py`, diagnosis on held-out slides
+(looked at, nothing fitted on them). The six slides of section 12 split
+into two different failures.
+
+**Two are not parasite errors.** TF82 (+200%) and TF48 (+87%) *under*-count
+parasites (254 found for 446, 836 for 1 106). Their density is wrong
+because the denominator collapsed: the white cell detector found 19% and
+40% of the annotated nuclei. Both are pink, overstained slides (raw Lab
+mean *a* 158 to 164 against 135 to 151 elsewhere) where the nucleus
+`a - b` after normalisation sits at 44 to 46, under the gate of 60, while
+on a normal slide it sits at 95 to 118. Across the 50 held-out patients
+five slides have a white cell count under 80% of the annotation and three
+over 140%: a tenth of slides get a bad denominator, which is a large part
+of the 43% density spread. The fix is in `results-wbc.md`: a nucleus is
+also dark, and darkness survives the overstain.
+
+**Four are false alarms on sparse slides.** TF70 (99 annotated, 361 found,
+315 false), TF37 (135 / 299 / 207), TF107 (51 / 116 / 76), TF81
+(40 / 108 / 80). The montage (`docs/figures/fp-look-worst4-false.png`)
+shows what passes at 0.76: elongated purple rods, round solid platelets,
+clumps of precipitate, a few dark blue fragments. The true positives next
+to them (`fp-look-worst4-true.png`) all have the ring structure, a
+chromatin dot with a cytoplasm crescent. The arithmetic behind the
+over-count is simple and slide-independent: **about 3 of every 100
+candidates pass the classifier as false positives** (2.8 to 3.9 per 100
+across the candidate-count bands), and a field carries 300 to 800
+candidates. That is 10 to 25 false parasites per field, invisible on a
+field with 80 real ones and a disaster on a field with five. Rank
+correlation of false positives per field with the true count is +0.67,
+with candidates +0.38, with debris or focus about zero: it is not a
+quality-gate problem.
+
+On clean fields (`fp-look-clean-false.png`) the false alarms are almost
+all platelets, at 0.8 to 0.98. The training set has never contained a
+clean field: every negative the network saw came from an infected image,
+where a platelet next to a parasite is rare and a platelet on its own is
+the whole population. So the fit half of the uninfected set now supplies
+negative patches (`parasite_patches.py --uninfected-images`), and the
+other half stays frozen for the specificity number. Chain 2 measures both
+fixes; its numbers follow in section 14.
+

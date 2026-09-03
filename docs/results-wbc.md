@@ -109,3 +109,36 @@ caught from the patient count in the output, discarded
 (`wbc_sweep_fixedstats_120_contaminated.log`), and the script's default is
 now 100 so it cannot happen silently again. The number above comes from the
 clean run (`wbc_sweep_fixedstats_100.log`, `wbc_eval_holdout_refit.json`).
+
+## 3 September: the pink slides, and why a nucleus has to be dark as well
+
+Five of the 50 held-out patients get fewer than 80% of their annotated white
+cells, two of them catastrophically: TF82 19%, TF48 40%. Both are
+overstained, pink slides (raw Lab mean *a* 164 and 158 against 135 to 151
+on the rest). After normalisation, which clamps its gain at 0.5 and so
+cannot fully pull them in, their nuclei sit at `a - b` 44 to 46 while the
+gate is 60 and a normal slide's nuclei sit at 95 to 118. In the picture
+(`docs/figures/wbc-look-TF82_15_1_9.png`) every annotated nucleus is an
+obvious dark round blob; the detector finds none of them.
+
+Measured on 98 fit patients, one image each
+(`eval/results/nucleus_contrast_fit.json`): the field sits at L 200 on
+every slide (p5 198), nuclei at L 29 to 96 (p5 to p95), so **darkness gives
+a gap of at least 100 on every slide**, while nucleus `a - b` runs from 37
+(TF91) to 140 and falls under the gate on the six pinkest fit slides too.
+
+So a nucleus is now "purple, or dark and at least faintly purple":
+`stain > STAIN_MIN or (L < L_DARK_MAX and stain > STAIN_MIN_DARK)`. The
+`a - b` floor keeps dark dirt out. Prototype, two images per slide:
+
+| slide | kind | purple only | dark or purple |
+|---|---|---|---|
+| TF82_15_1_9 | held-out, pink | 0/19, 0/21 | 17/19, 20/21 |
+| TF48_UW31 | held-out, pink | 28/45, 6/39 | 42/45, 38/39 |
+| TF91_15_9A | fit, weakest a - b | 0/16, 9/17 | 14/16, 23/17 |
+| TF87_15105A | fit | 27/47, 38/49 | 49/47, 47/49 |
+| three normal fit slides | | unchanged | unchanged, to the cell |
+
+(found/annotated.) `L_DARK_MAX` is in the sweep grid with 0 meaning off, so
+the choice stays measured; the held-out number follows from chain 2.
+
