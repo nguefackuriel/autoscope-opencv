@@ -56,6 +56,19 @@ SCALE = 0.25
 # Optimise the number that reaches the clinician, not the metric that looks best.
 STAIN_MIN = 60.0        # a - b inside a nucleus, in Lab units
 AREA_MIN_FULL = 1800    # px^2 at full resolution
+
+# A nucleus is also DARK, and that is the criterion that survives an
+# overstained slide. Measured on 3 September 2026 (eval/results/
+# nucleus_contrast_fit.json, 98 fit patients): after normalisation the field
+# sits at L 200 and nuclei at L 29 to 96 (p5 to p95), a gap of at least 100
+# on every slide, while the nucleus a - b ranges from 37 to 140 and on the
+# pinkest slides falls under STAIN_MIN. On two held-out slides of that kind
+# the purple rule alone found 0 of 19 and 6 of 39 annotated nuclei; adding
+# "dark and at least faintly purple" found 17 and 38, and changed nothing on
+# normal slides. The a - b floor keeps dark dirt, which is not purple, out.
+# L_DARK_MAX = 0 switches the dark path off; the sweep chooses.
+L_DARK_MAX = 130.0      # L below this, and
+STAIN_MIN_DARK = 30.0   # a - b above this, counts as nucleus too
 AREA_MAX_FULL = 30000
 CLOSE_KERNEL_FULL = 24  # px at full resolution, to rejoin nucleus lobes
 MIN_SOLIDITY = 0.55
@@ -80,7 +93,11 @@ def stain_map(image_bgr: np.ndarray) -> np.ndarray:
 
 def _nucleus_mask(small_bgr: np.ndarray, mask: np.ndarray | None, close_px: int) -> np.ndarray:
     stain = stain_map(small_bgr)
-    binary = (stain > STAIN_MIN).astype(np.uint8) * 255
+    nucleus = stain > STAIN_MIN
+    if L_DARK_MAX > 0:
+        L = cv.cvtColor(small_bgr, cv.COLOR_BGR2Lab)[:, :, 0]
+        nucleus |= (L < L_DARK_MAX) & (stain > STAIN_MIN_DARK)
+    binary = nucleus.astype(np.uint8) * 255
     if mask is not None:
         binary = cv.bitwise_and(binary, mask)
 
