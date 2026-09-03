@@ -54,12 +54,12 @@ SCALE = 0.25
 # bias on the 50 held-out patients.
 #
 # Optimise the number that reaches the clinician, not the metric that looks best.
-STAIN_MIN = 55.0        # a - b inside a nucleus, in Lab units
+STAIN_MIN = 60.0        # a - b inside a nucleus, in Lab units
 AREA_MIN_FULL = 1800    # px^2 at full resolution
 AREA_MAX_FULL = 30000
 CLOSE_KERNEL_FULL = 24  # px at full resolution, to rejoin nucleus lobes
 MIN_SOLIDITY = 0.55
-SEED_FRACTION = 0.45    # of each blob's own distance maximum, never the image's
+SEED_FRACTION = 0.75    # of each blob's own distance maximum, never the image's
 
 
 @dataclass(frozen=True)

@@ -76,3 +76,36 @@ being split. Recall was 0.497. Computing the threshold per blob took it to
 - **Precision at 0.66** means a third of detections are not on an annotated
   cell. Look at those before assuming they are all wrong; some may be real cells
   the annotator skipped.
+
+## 2 September: the stain statistics were wrong, and fixing them is worth six points
+
+`results-stain.md` has the bug: the Lab statistics behind the normalisation
+were accumulated in float32 and off by up to 6.5 units per image. Every
+parameter above was fitted on images normalised with that error. With the
+statistics corrected and the reference re-measured, the old parameters
+over-counted by 9.6% on the held-out patients (F1 0.755), because the
+corrected reference moves the background `a - b` level by about 8 units and
+the nucleus threshold of 55 no longer sat where it was meant to.
+
+So the sweep was redone with `STAIN_MIN` in the grid (55, 60, 65, 70), same
+100 fit patients, same seed, same selection rule (count bias within one
+point, then best F1). Chosen: `STAIN_MIN = 60`, `SEED_FRACTION = 0.75`,
+`CLOSE_KERNEL_FULL = 24`, fit-set F1 0.872 at +0.3%. Passed over: F1 0.879
+at -6.7% bias, for the same reason as before.
+
+Held-out, the same 50 patients and 144 images as every column above:
+
+| | before the fix (24 Aug) | **after (2 Sept)** |
+|---|---|---|
+| precision | 0.783 | **0.844** |
+| recall | 0.803 | **0.859** |
+| F1 | 0.793 | **0.851** |
+| count bias | +2.5% | **+1.7%** |
+| count MAE | 4.7 cells/image | **3.65** |
+
+A first re-sweep was run with 120 images by mistake, which pulled 20
+held-out patients into the fit set and shrank the held-out set to 30. It was
+caught from the patient count in the output, discarded
+(`wbc_sweep_fixedstats_120_contaminated.log`), and the script's default is
+now 100 so it cannot happen silently again. The number above comes from the
+clean run (`wbc_sweep_fixedstats_100.log`, `wbc_eval_holdout_refit.json`).
