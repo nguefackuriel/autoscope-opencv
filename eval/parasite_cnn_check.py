@@ -1,6 +1,7 @@
 """Runtime-venv check that cv.dnn reproduces the torch predictions of the
 exported patch network. Run after parasite_cnn_train.py."""
 
+import json
 import sys
 from pathlib import Path
 
@@ -12,7 +13,12 @@ OUT = Path(__file__).resolve().parent / "results"
 
 hybrid = "--hybrid" in sys.argv
 args = [a for a in sys.argv[1:] if a != "--hybrid"]
-d = np.load(OUT / (args[0] if args else "parasite_patches.npz"))
+# Compare against the patch file the trainer actually used, recorded in its
+# JSON. Defaulting to parasite_patches.npz failed the check on 2 September
+# 2026 for no reason: the model was trained on the x3 file.
+train_json = OUT / ("parasite_hybrid_train.json" if hybrid else "parasite_cnn_train.json")
+default = json.loads(train_json.read_text()).get("patches_file", "parasite_patches.npz") if train_json.exists() else "parasite_patches.npz"
+d = np.load(OUT / (args[0] if args else default))
 ref = np.load(OUT / ("parasite_hybrid_check.npy" if hybrid else "parasite_cnn_check.npy"))
 P = d["patches"][:len(ref)]
 o = (P.shape[1] - par.PATCH_PX) // 2
