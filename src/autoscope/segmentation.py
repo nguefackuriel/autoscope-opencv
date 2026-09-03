@@ -54,7 +54,7 @@ SCALE = 0.25
 # bias on the 50 held-out patients.
 #
 # Optimise the number that reaches the clinician, not the metric that looks best.
-STAIN_MIN = 60.0        # a - b inside a nucleus, in Lab units
+STAIN_MIN = 65.0        # a - b inside a nucleus, in Lab units
 AREA_MIN_FULL = 1800    # px^2 at full resolution
 
 # A nucleus is also DARK, and that is the criterion that survives an
@@ -66,7 +66,7 @@ AREA_MIN_FULL = 1800    # px^2 at full resolution
 # the purple rule alone found 0 of 19 and 6 of 39 annotated nuclei; adding
 # "dark and at least faintly purple" found 17 and 38, and changed nothing on
 # normal slides. The a - b floor keeps dark dirt, which is not purple, out.
-# L_DARK_MAX = 0 switches the dark path off; the sweep chooses.
+# L_DARK_MAX = 130.0 switches the dark path off; the sweep chooses.
 L_DARK_MAX = 130.0      # L below this, and
 STAIN_MIN_DARK = 30.0   # a - b above this, counts as nucleus too
 AREA_MAX_FULL = 30000

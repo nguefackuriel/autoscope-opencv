@@ -3,304 +3,18 @@
     "seed_fraction": 0.75,
     "close_px": 24,
     "stain_min": 65.0,
-    "precision": 0.9108,
-    "recall": 0.8497,
-    "f1": 0.8792,
-    "count_bias_pct": -6.72
+    "l_dark_max": 130.0,
+    "precision": 0.9154,
+    "recall": 0.9142,
+    "f1": 0.9148,
+    "count_bias_pct": -0.13
   },
   "grid": [
     {
-      "seed_fraction": 0.35,
-      "close_px": 24,
-      "stain_min": 55.0,
-      "precision": 0.7482,
-      "recall": 0.7916,
-      "f1": 0.7693,
-      "count_bias_pct": 5.81
-    },
-    {
-      "seed_fraction": 0.35,
-      "close_px": 44,
-      "stain_min": 55.0,
-      "precision": 0.7006,
-      "recall": 0.727,
-      "f1": 0.7136,
-      "count_bias_pct": 3.77
-    },
-    {
-      "seed_fraction": 0.35,
-      "close_px": 64,
-      "stain_min": 55.0,
-      "precision": 0.649,
-      "recall": 0.6729,
-      "f1": 0.6607,
-      "count_bias_pct": 3.68
-    },
-    {
-      "seed_fraction": 0.35,
-      "close_px": 88,
-      "stain_min": 55.0,
-      "precision": 0.6061,
-      "recall": 0.6174,
-      "f1": 0.6117,
-      "count_bias_pct": 1.86
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 24,
-      "stain_min": 55.0,
-      "precision": 0.7563,
-      "recall": 0.8241,
-      "f1": 0.7887,
-      "count_bias_pct": 8.97
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 44,
-      "stain_min": 55.0,
-      "precision": 0.7045,
-      "recall": 0.7665,
-      "f1": 0.7342,
-      "count_bias_pct": 8.8
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 64,
-      "stain_min": 55.0,
-      "precision": 0.6519,
-      "recall": 0.7019,
-      "f1": 0.676,
-      "count_bias_pct": 7.67
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 88,
-      "stain_min": 55.0,
-      "precision": 0.6041,
-      "recall": 0.6451,
-      "f1": 0.6239,
-      "count_bias_pct": 6.8
-    },
-    {
-      "seed_fraction": 0.55,
-      "close_px": 24,
-      "stain_min": 55.0,
-      "precision": 0.762,
-      "recall": 0.8505,
-      "f1": 0.8038,
-      "count_bias_pct": 11.61
-    },
-    {
-      "seed_fraction": 0.55,
-      "close_px": 44,
-      "stain_min": 55.0,
-      "precision": 0.7165,
-      "recall": 0.805,
-      "f1": 0.7582,
-      "count_bias_pct": 12.35
-    },
-    {
-      "seed_fraction": 0.55,
-      "close_px": 64,
-      "stain_min": 55.0,
-      "precision": 0.6569,
-      "recall": 0.7301,
-      "f1": 0.6916,
-      "count_bias_pct": 11.14
-    },
-    {
-      "seed_fraction": 0.55,
-      "close_px": 88,
-      "stain_min": 55.0,
-      "precision": 0.6148,
-      "recall": 0.6577,
-      "f1": 0.6355,
-      "count_bias_pct": 6.98
-    },
-    {
-      "seed_fraction": 0.65,
-      "close_px": 24,
-      "stain_min": 55.0,
-      "precision": 0.7693,
-      "recall": 0.8769,
-      "f1": 0.8196,
-      "count_bias_pct": 13.99
-    },
-    {
-      "seed_fraction": 0.65,
-      "close_px": 44,
-      "stain_min": 55.0,
-      "precision": 0.7317,
-      "recall": 0.8332,
-      "f1": 0.7792,
-      "count_bias_pct": 13.86
-    },
-    {
-      "seed_fraction": 0.65,
-      "close_px": 64,
-      "stain_min": 55.0,
-      "precision": 0.6711,
-      "recall": 0.7595,
-      "f1": 0.7126,
-      "count_bias_pct": 13.17
-    },
-    {
-      "seed_fraction": 0.65,
-      "close_px": 88,
-      "stain_min": 55.0,
-      "precision": 0.6192,
-      "recall": 0.6707,
-      "f1": 0.6439,
-      "count_bias_pct": 8.32
-    },
-    {
-      "seed_fraction": 0.75,
-      "close_px": 24,
-      "stain_min": 55.0,
-      "precision": 0.7773,
-      "recall": 0.88,
-      "f1": 0.8254,
-      "count_bias_pct": 13.21
-    },
-    {
-      "seed_fraction": 0.75,
-      "close_px": 44,
-      "stain_min": 55.0,
-      "precision": 0.7397,
-      "recall": 0.8423,
-      "f1": 0.7877,
-      "count_bias_pct": 13.86
-    },
-    {
-      "seed_fraction": 0.75,
-      "close_px": 64,
-      "stain_min": 55.0,
-      "precision": 0.6816,
-      "recall": 0.7561,
-      "f1": 0.7169,
-      "count_bias_pct": 10.92
-    },
-    {
-      "seed_fraction": 0.75,
-      "close_px": 88,
-      "stain_min": 55.0,
-      "precision": 0.6397,
-      "recall": 0.6815,
-      "f1": 0.66,
-      "count_bias_pct": 6.54
-    },
-    {
-      "seed_fraction": 0.85,
-      "close_px": 24,
-      "stain_min": 55.0,
-      "precision": 0.7697,
-      "recall": 0.8427,
-      "f1": 0.8046,
-      "count_bias_pct": 9.49
-    },
-    {
-      "seed_fraction": 0.85,
-      "close_px": 44,
-      "stain_min": 55.0,
-      "precision": 0.739,
-      "recall": 0.8133,
-      "f1": 0.7743,
-      "count_bias_pct": 10.05
-    },
-    {
-      "seed_fraction": 0.85,
-      "close_px": 64,
-      "stain_min": 55.0,
-      "precision": 0.6857,
-      "recall": 0.7344,
-      "f1": 0.7092,
-      "count_bias_pct": 7.11
-    },
-    {
-      "seed_fraction": 0.85,
-      "close_px": 88,
-      "stain_min": 55.0,
-      "precision": 0.6529,
-      "recall": 0.6594,
-      "f1": 0.6562,
-      "count_bias_pct": 1.0
-    },
-    {
-      "seed_fraction": 0.35,
-      "close_px": 24,
-      "stain_min": 60.0,
-      "precision": 0.8552,
-      "recall": 0.7907,
-      "f1": 0.8217,
-      "count_bias_pct": -7.54
-    },
-    {
-      "seed_fraction": 0.35,
-      "close_px": 44,
-      "stain_min": 60.0,
-      "precision": 0.8095,
-      "recall": 0.7327,
-      "f1": 0.7692,
-      "count_bias_pct": -9.49
-    },
-    {
-      "seed_fraction": 0.35,
-      "close_px": 64,
-      "stain_min": 60.0,
-      "precision": 0.7554,
-      "recall": 0.6798,
-      "f1": 0.7156,
-      "count_bias_pct": -10.01
-    },
-    {
-      "seed_fraction": 0.35,
-      "close_px": 88,
-      "stain_min": 60.0,
-      "precision": 0.7018,
-      "recall": 0.6343,
-      "f1": 0.6664,
-      "count_bias_pct": -9.62
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 24,
-      "stain_min": 60.0,
-      "precision": 0.8599,
-      "recall": 0.8193,
-      "f1": 0.8391,
-      "count_bias_pct": -4.72
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 44,
-      "stain_min": 60.0,
-      "precision": 0.8081,
-      "recall": 0.7699,
-      "f1": 0.7886,
-      "count_bias_pct": -4.72
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 64,
-      "stain_min": 60.0,
-      "precision": 0.7609,
-      "recall": 0.7114,
-      "f1": 0.7353,
-      "count_bias_pct": -6.5
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 88,
-      "stain_min": 60.0,
-      "precision": 0.6991,
-      "recall": 0.6625,
-      "f1": 0.6803,
-      "count_bias_pct": -5.24
-    },
-    {
       "seed_fraction": 0.55,
       "close_px": 24,
       "stain_min": 60.0,
+      "l_dark_max": 0.0,
       "precision": 0.8611,
       "recall": 0.8544,
       "f1": 0.8578,
@@ -310,33 +24,17 @@
       "seed_fraction": 0.55,
       "close_px": 44,
       "stain_min": 60.0,
+      "l_dark_max": 0.0,
       "precision": 0.8179,
       "recall": 0.8094,
       "f1": 0.8136,
       "count_bias_pct": -1.04
     },
     {
-      "seed_fraction": 0.55,
-      "close_px": 64,
-      "stain_min": 60.0,
-      "precision": 0.7675,
-      "recall": 0.7422,
-      "f1": 0.7546,
-      "count_bias_pct": -3.29
-    },
-    {
-      "seed_fraction": 0.55,
-      "close_px": 88,
-      "stain_min": 60.0,
-      "precision": 0.7029,
-      "recall": 0.6785,
-      "f1": 0.6905,
-      "count_bias_pct": -3.47
-    },
-    {
       "seed_fraction": 0.65,
       "close_px": 24,
       "stain_min": 60.0,
+      "l_dark_max": 0.0,
       "precision": 0.864,
       "recall": 0.8756,
       "f1": 0.8698,
@@ -346,33 +44,17 @@
       "seed_fraction": 0.65,
       "close_px": 44,
       "stain_min": 60.0,
+      "l_dark_max": 0.0,
       "precision": 0.8277,
       "recall": 0.8367,
       "f1": 0.8321,
       "count_bias_pct": 1.08
     },
     {
-      "seed_fraction": 0.65,
-      "close_px": 64,
-      "stain_min": 60.0,
-      "precision": 0.7772,
-      "recall": 0.7678,
-      "f1": 0.7724,
-      "count_bias_pct": -1.21
-    },
-    {
-      "seed_fraction": 0.65,
-      "close_px": 88,
-      "stain_min": 60.0,
-      "precision": 0.705,
-      "recall": 0.6906,
-      "f1": 0.6977,
-      "count_bias_pct": -2.04
-    },
-    {
       "seed_fraction": 0.75,
       "close_px": 24,
       "stain_min": 60.0,
+      "l_dark_max": 0.0,
       "precision": 0.8708,
       "recall": 0.8731,
       "f1": 0.8719,
@@ -382,141 +64,17 @@
       "seed_fraction": 0.75,
       "close_px": 44,
       "stain_min": 60.0,
+      "l_dark_max": 0.0,
       "precision": 0.8306,
       "recall": 0.8479,
       "f1": 0.8392,
       "count_bias_pct": 2.08
     },
     {
-      "seed_fraction": 0.75,
-      "close_px": 64,
-      "stain_min": 60.0,
-      "precision": 0.7791,
-      "recall": 0.7704,
-      "f1": 0.7747,
-      "count_bias_pct": -1.13
-    },
-    {
-      "seed_fraction": 0.75,
-      "close_px": 88,
-      "stain_min": 60.0,
-      "precision": 0.7233,
-      "recall": 0.708,
-      "f1": 0.7156,
-      "count_bias_pct": -2.12
-    },
-    {
-      "seed_fraction": 0.85,
-      "close_px": 24,
-      "stain_min": 60.0,
-      "precision": 0.8635,
-      "recall": 0.8384,
-      "f1": 0.8507,
-      "count_bias_pct": -2.9
-    },
-    {
-      "seed_fraction": 0.85,
-      "close_px": 44,
-      "stain_min": 60.0,
-      "precision": 0.8255,
-      "recall": 0.8094,
-      "f1": 0.8173,
-      "count_bias_pct": -1.95
-    },
-    {
-      "seed_fraction": 0.85,
-      "close_px": 64,
-      "stain_min": 60.0,
-      "precision": 0.7818,
-      "recall": 0.7513,
-      "f1": 0.7662,
-      "count_bias_pct": -3.9
-    },
-    {
-      "seed_fraction": 0.85,
-      "close_px": 88,
-      "stain_min": 60.0,
-      "precision": 0.7247,
-      "recall": 0.6798,
-      "f1": 0.7015,
-      "count_bias_pct": -6.2
-    },
-    {
-      "seed_fraction": 0.35,
-      "close_px": 24,
-      "stain_min": 65.0,
-      "precision": 0.9081,
-      "recall": 0.7834,
-      "f1": 0.8411,
-      "count_bias_pct": -13.73
-    },
-    {
-      "seed_fraction": 0.35,
-      "close_px": 44,
-      "stain_min": 65.0,
-      "precision": 0.8776,
-      "recall": 0.7301,
-      "f1": 0.7971,
-      "count_bias_pct": -16.81
-    },
-    {
-      "seed_fraction": 0.35,
-      "close_px": 64,
-      "stain_min": 65.0,
-      "precision": 0.8406,
-      "recall": 0.6854,
-      "f1": 0.7551,
-      "count_bias_pct": -18.46
-    },
-    {
-      "seed_fraction": 0.35,
-      "close_px": 88,
-      "stain_min": 65.0,
-      "precision": 0.795,
-      "recall": 0.6486,
-      "f1": 0.7144,
-      "count_bias_pct": -18.41
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 24,
-      "stain_min": 65.0,
-      "precision": 0.9092,
-      "recall": 0.8068,
-      "f1": 0.8549,
-      "count_bias_pct": -11.27
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 44,
-      "stain_min": 65.0,
-      "precision": 0.8811,
-      "recall": 0.7673,
-      "f1": 0.8203,
-      "count_bias_pct": -12.91
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 64,
-      "stain_min": 65.0,
-      "precision": 0.8416,
-      "recall": 0.7162,
-      "f1": 0.7739,
-      "count_bias_pct": -14.9
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 88,
-      "stain_min": 65.0,
-      "precision": 0.7941,
-      "recall": 0.6685,
-      "f1": 0.7259,
-      "count_bias_pct": -15.81
-    },
-    {
       "seed_fraction": 0.55,
       "close_px": 24,
       "stain_min": 65.0,
+      "l_dark_max": 0.0,
       "precision": 0.908,
       "recall": 0.8336,
       "f1": 0.8692,
@@ -526,33 +84,17 @@
       "seed_fraction": 0.55,
       "close_px": 44,
       "stain_min": 65.0,
+      "l_dark_max": 0.0,
       "precision": 0.8877,
       "recall": 0.8046,
       "f1": 0.8441,
       "count_bias_pct": -9.36
     },
     {
-      "seed_fraction": 0.55,
-      "close_px": 64,
-      "stain_min": 65.0,
-      "precision": 0.8447,
-      "recall": 0.747,
-      "f1": 0.7928,
-      "count_bias_pct": -11.57
-    },
-    {
-      "seed_fraction": 0.55,
-      "close_px": 88,
-      "stain_min": 65.0,
-      "precision": 0.7998,
-      "recall": 0.6889,
-      "f1": 0.7402,
-      "count_bias_pct": -13.86
-    },
-    {
       "seed_fraction": 0.65,
       "close_px": 24,
       "stain_min": 65.0,
+      "l_dark_max": 0.0,
       "precision": 0.9095,
       "recall": 0.8488,
       "f1": 0.8781,
@@ -562,33 +104,17 @@
       "seed_fraction": 0.65,
       "close_px": 44,
       "stain_min": 65.0,
+      "l_dark_max": 0.0,
       "precision": 0.891,
       "recall": 0.8284,
       "f1": 0.8586,
       "count_bias_pct": -7.02
     },
     {
-      "seed_fraction": 0.65,
-      "close_px": 64,
-      "stain_min": 65.0,
-      "precision": 0.8536,
-      "recall": 0.7704,
-      "f1": 0.8098,
-      "count_bias_pct": -9.75
-    },
-    {
-      "seed_fraction": 0.65,
-      "close_px": 88,
-      "stain_min": 65.0,
-      "precision": 0.8092,
-      "recall": 0.7019,
-      "f1": 0.7517,
-      "count_bias_pct": -13.26
-    },
-    {
       "seed_fraction": 0.75,
       "close_px": 24,
       "stain_min": 65.0,
+      "l_dark_max": 0.0,
       "precision": 0.9108,
       "recall": 0.8497,
       "f1": 0.8792,
@@ -598,280 +124,251 @@
       "seed_fraction": 0.75,
       "close_px": 44,
       "stain_min": 65.0,
+      "l_dark_max": 0.0,
       "precision": 0.8948,
       "recall": 0.8406,
       "f1": 0.8668,
       "count_bias_pct": -6.07
     },
     {
+      "seed_fraction": 0.55,
+      "close_px": 24,
+      "stain_min": 60.0,
+      "l_dark_max": 130.0,
+      "precision": 0.8615,
+      "recall": 0.8895,
+      "f1": 0.8753,
+      "count_bias_pct": 3.25
+    },
+    {
+      "seed_fraction": 0.55,
+      "close_px": 44,
+      "stain_min": 60.0,
+      "l_dark_max": 130.0,
+      "precision": 0.8172,
+      "recall": 0.825,
+      "f1": 0.821,
+      "count_bias_pct": 0.95
+    },
+    {
+      "seed_fraction": 0.65,
+      "close_px": 24,
+      "stain_min": 60.0,
+      "l_dark_max": 130.0,
+      "precision": 0.8653,
+      "recall": 0.9129,
+      "f1": 0.8885,
+      "count_bias_pct": 5.5
+    },
+    {
+      "seed_fraction": 0.65,
+      "close_px": 44,
+      "stain_min": 60.0,
+      "l_dark_max": 130.0,
+      "precision": 0.8268,
+      "recall": 0.8544,
+      "f1": 0.8404,
+      "count_bias_pct": 3.34
+    },
+    {
       "seed_fraction": 0.75,
-      "close_px": 64,
-      "stain_min": 65.0,
-      "precision": 0.8554,
-      "recall": 0.7738,
-      "f1": 0.8126,
-      "count_bias_pct": -9.53
+      "close_px": 24,
+      "stain_min": 60.0,
+      "l_dark_max": 130.0,
+      "precision": 0.8734,
+      "recall": 0.912,
+      "f1": 0.8923,
+      "count_bias_pct": 4.42
     },
     {
       "seed_fraction": 0.75,
-      "close_px": 88,
-      "stain_min": 65.0,
-      "precision": 0.8226,
-      "recall": 0.7192,
-      "f1": 0.7675,
-      "count_bias_pct": -12.56
+      "close_px": 44,
+      "stain_min": 60.0,
+      "l_dark_max": 130.0,
+      "precision": 0.831,
+      "recall": 0.8648,
+      "f1": 0.8476,
+      "count_bias_pct": 4.07
     },
     {
-      "seed_fraction": 0.85,
+      "seed_fraction": 0.55,
       "close_px": 24,
       "stain_min": 65.0,
-      "precision": 0.9082,
-      "recall": 0.8141,
-      "f1": 0.8586,
-      "count_bias_pct": -10.36
+      "l_dark_max": 130.0,
+      "precision": 0.9113,
+      "recall": 0.8943,
+      "f1": 0.9027,
+      "count_bias_pct": -1.86
     },
     {
-      "seed_fraction": 0.85,
+      "seed_fraction": 0.55,
       "close_px": 44,
       "stain_min": 65.0,
-      "precision": 0.8908,
-      "recall": 0.7985,
-      "f1": 0.8421,
-      "count_bias_pct": -10.36
+      "l_dark_max": 130.0,
+      "precision": 0.8866,
+      "recall": 0.8367,
+      "f1": 0.8609,
+      "count_bias_pct": -5.63
     },
     {
-      "seed_fraction": 0.85,
-      "close_px": 64,
-      "stain_min": 65.0,
-      "precision": 0.8562,
-      "recall": 0.7535,
-      "f1": 0.8016,
-      "count_bias_pct": -12.0
-    },
-    {
-      "seed_fraction": 0.85,
-      "close_px": 88,
-      "stain_min": 65.0,
-      "precision": 0.818,
-      "recall": 0.6971,
-      "f1": 0.7527,
-      "count_bias_pct": -14.77
-    },
-    {
-      "seed_fraction": 0.35,
+      "seed_fraction": 0.65,
       "close_px": 24,
-      "stain_min": 70.0,
-      "precision": 0.9365,
-      "recall": 0.7608,
-      "f1": 0.8396,
-      "count_bias_pct": -18.76
+      "stain_min": 65.0,
+      "l_dark_max": 130.0,
+      "precision": 0.9138,
+      "recall": 0.9142,
+      "f1": 0.914,
+      "count_bias_pct": 0.04
     },
     {
-      "seed_fraction": 0.35,
+      "seed_fraction": 0.65,
       "close_px": 44,
-      "stain_min": 70.0,
-      "precision": 0.9177,
-      "recall": 0.7244,
-      "f1": 0.8097,
-      "count_bias_pct": -21.06
+      "stain_min": 65.0,
+      "l_dark_max": 130.0,
+      "precision": 0.8878,
+      "recall": 0.8635,
+      "f1": 0.8755,
+      "count_bias_pct": -2.73
     },
     {
-      "seed_fraction": 0.35,
-      "close_px": 64,
-      "stain_min": 70.0,
-      "precision": 0.8881,
-      "recall": 0.6703,
-      "f1": 0.764,
-      "count_bias_pct": -24.52
-    },
-    {
-      "seed_fraction": 0.35,
-      "close_px": 88,
-      "stain_min": 70.0,
-      "precision": 0.8482,
-      "recall": 0.6369,
-      "f1": 0.7275,
-      "count_bias_pct": -24.91
-    },
-    {
-      "seed_fraction": 0.45,
+      "seed_fraction": 0.75,
       "close_px": 24,
-      "stain_min": 70.0,
-      "precision": 0.9366,
-      "recall": 0.7877,
-      "f1": 0.8557,
-      "count_bias_pct": -15.9
+      "stain_min": 65.0,
+      "l_dark_max": 130.0,
+      "precision": 0.9154,
+      "recall": 0.9142,
+      "f1": 0.9148,
+      "count_bias_pct": -0.13
     },
     {
-      "seed_fraction": 0.45,
+      "seed_fraction": 0.75,
       "close_px": 44,
-      "stain_min": 70.0,
-      "precision": 0.9182,
-      "recall": 0.7587,
+      "stain_min": 65.0,
+      "l_dark_max": 130.0,
+      "precision": 0.8934,
+      "recall": 0.8752,
+      "f1": 0.8842,
+      "count_bias_pct": -2.04
+    },
+    {
+      "seed_fraction": 0.55,
+      "close_px": 24,
+      "stain_min": 60.0,
+      "l_dark_max": 150.0,
+      "precision": 0.8463,
+      "recall": 0.883,
+      "f1": 0.8643,
+      "count_bias_pct": 4.33
+    },
+    {
+      "seed_fraction": 0.55,
+      "close_px": 44,
+      "stain_min": 60.0,
+      "l_dark_max": 150.0,
+      "precision": 0.7995,
+      "recall": 0.8172,
+      "f1": 0.8082,
+      "count_bias_pct": 2.21
+    },
+    {
+      "seed_fraction": 0.65,
+      "close_px": 24,
+      "stain_min": 60.0,
+      "l_dark_max": 150.0,
+      "precision": 0.8544,
+      "recall": 0.9103,
+      "f1": 0.8815,
+      "count_bias_pct": 6.54
+    },
+    {
+      "seed_fraction": 0.65,
+      "close_px": 44,
+      "stain_min": 60.0,
+      "l_dark_max": 150.0,
+      "precision": 0.8116,
+      "recall": 0.851,
       "f1": 0.8308,
-      "count_bias_pct": -17.37
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 64,
-      "stain_min": 70.0,
-      "precision": 0.8895,
-      "recall": 0.7045,
-      "f1": 0.7863,
-      "count_bias_pct": -20.8
-    },
-    {
-      "seed_fraction": 0.45,
-      "close_px": 88,
-      "stain_min": 70.0,
-      "precision": 0.8498,
-      "recall": 0.6568,
-      "f1": 0.741,
-      "count_bias_pct": -22.7
-    },
-    {
-      "seed_fraction": 0.55,
-      "close_px": 24,
-      "stain_min": 70.0,
-      "precision": 0.9351,
-      "recall": 0.812,
-      "f1": 0.8692,
-      "count_bias_pct": -13.17
-    },
-    {
-      "seed_fraction": 0.55,
-      "close_px": 44,
-      "stain_min": 70.0,
-      "precision": 0.9202,
-      "recall": 0.789,
-      "f1": 0.8495,
-      "count_bias_pct": -14.25
-    },
-    {
-      "seed_fraction": 0.55,
-      "close_px": 64,
-      "stain_min": 70.0,
-      "precision": 0.8903,
-      "recall": 0.7348,
-      "f1": 0.8051,
-      "count_bias_pct": -17.46
-    },
-    {
-      "seed_fraction": 0.55,
-      "close_px": 88,
-      "stain_min": 70.0,
-      "precision": 0.8566,
-      "recall": 0.6807,
-      "f1": 0.7586,
-      "count_bias_pct": -20.54
-    },
-    {
-      "seed_fraction": 0.65,
-      "close_px": 24,
-      "stain_min": 70.0,
-      "precision": 0.9383,
-      "recall": 0.8237,
-      "f1": 0.8772,
-      "count_bias_pct": -12.22
-    },
-    {
-      "seed_fraction": 0.65,
-      "close_px": 44,
-      "stain_min": 70.0,
-      "precision": 0.9266,
-      "recall": 0.8146,
-      "f1": 0.867,
-      "count_bias_pct": -12.09
-    },
-    {
-      "seed_fraction": 0.65,
-      "close_px": 64,
-      "stain_min": 70.0,
-      "precision": 0.8981,
-      "recall": 0.7565,
-      "f1": 0.8213,
-      "count_bias_pct": -15.77
-    },
-    {
-      "seed_fraction": 0.65,
-      "close_px": 88,
-      "stain_min": 70.0,
-      "precision": 0.858,
-      "recall": 0.7015,
-      "f1": 0.7719,
-      "count_bias_pct": -18.24
+      "count_bias_pct": 4.85
     },
     {
       "seed_fraction": 0.75,
       "close_px": 24,
-      "stain_min": 70.0,
-      "precision": 0.9353,
-      "recall": 0.8263,
-      "f1": 0.8774,
-      "count_bias_pct": -11.66
+      "stain_min": 60.0,
+      "l_dark_max": 150.0,
+      "precision": 0.8605,
+      "recall": 0.9086,
+      "f1": 0.8839,
+      "count_bias_pct": 5.59
     },
     {
       "seed_fraction": 0.75,
       "close_px": 44,
-      "stain_min": 70.0,
-      "precision": 0.925,
-      "recall": 0.8224,
-      "f1": 0.8706,
-      "count_bias_pct": -11.09
+      "stain_min": 60.0,
+      "l_dark_max": 150.0,
+      "precision": 0.8178,
+      "recall": 0.8635,
+      "f1": 0.84,
+      "count_bias_pct": 5.59
     },
     {
-      "seed_fraction": 0.75,
-      "close_px": 64,
-      "stain_min": 70.0,
-      "precision": 0.9049,
-      "recall": 0.7669,
-      "f1": 0.8302,
-      "count_bias_pct": -15.25
-    },
-    {
-      "seed_fraction": 0.75,
-      "close_px": 88,
-      "stain_min": 70.0,
-      "precision": 0.8654,
-      "recall": 0.7106,
-      "f1": 0.7804,
-      "count_bias_pct": -17.89
-    },
-    {
-      "seed_fraction": 0.85,
+      "seed_fraction": 0.55,
       "close_px": 24,
-      "stain_min": 70.0,
-      "precision": 0.9368,
-      "recall": 0.7834,
-      "f1": 0.8532,
-      "count_bias_pct": -16.38
+      "stain_min": 65.0,
+      "l_dark_max": 150.0,
+      "precision": 0.8864,
+      "recall": 0.886,
+      "f1": 0.8862,
+      "count_bias_pct": -0.04
     },
     {
-      "seed_fraction": 0.85,
+      "seed_fraction": 0.55,
       "close_px": 44,
-      "stain_min": 70.0,
-      "precision": 0.9237,
-      "recall": 0.7868,
-      "f1": 0.8498,
-      "count_bias_pct": -14.82
+      "stain_min": 65.0,
+      "l_dark_max": 150.0,
+      "precision": 0.8516,
+      "recall": 0.8228,
+      "f1": 0.8369,
+      "count_bias_pct": -3.38
     },
     {
-      "seed_fraction": 0.85,
-      "close_px": 64,
-      "stain_min": 70.0,
-      "precision": 0.8978,
-      "recall": 0.7387,
-      "f1": 0.8106,
-      "count_bias_pct": -17.72
+      "seed_fraction": 0.65,
+      "close_px": 24,
+      "stain_min": 65.0,
+      "l_dark_max": 150.0,
+      "precision": 0.8906,
+      "recall": 0.9133,
+      "f1": 0.9018,
+      "count_bias_pct": 2.56
     },
     {
-      "seed_fraction": 0.85,
-      "close_px": 88,
-      "stain_min": 70.0,
-      "precision": 0.8609,
-      "recall": 0.6837,
-      "f1": 0.7621,
-      "count_bias_pct": -20.58
+      "seed_fraction": 0.65,
+      "close_px": 44,
+      "stain_min": 65.0,
+      "l_dark_max": 150.0,
+      "precision": 0.8599,
+      "recall": 0.854,
+      "f1": 0.857,
+      "count_bias_pct": -0.69
+    },
+    {
+      "seed_fraction": 0.75,
+      "close_px": 24,
+      "stain_min": 65.0,
+      "l_dark_max": 150.0,
+      "precision": 0.8961,
+      "recall": 0.9155,
+      "f1": 0.9057,
+      "count_bias_pct": 2.17
+    },
+    {
+      "seed_fraction": 0.75,
+      "close_px": 44,
+      "stain_min": 65.0,
+      "l_dark_max": 150.0,
+      "precision": 0.8671,
+      "recall": 0.8705,
+      "f1": 0.8688,
+      "count_bias_pct": 0.39
     }
   ],
   "fit_patients": [

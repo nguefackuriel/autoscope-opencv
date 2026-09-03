@@ -142,3 +142,36 @@ So a nucleus is now "purple, or dark and at least faintly purple":
 (found/annotated.) `L_DARK_MAX` is in the sweep grid with 0 meaning off, so
 the choice stays measured; the held-out number follows from chain 2.
 
+The sweep chose `L_DARK_MAX = 130`, `STAIN_MIN = 65`, `SEED_FRACTION = 0.75`,
+`CLOSE_KERNEL_FULL = 24`: fit-set F1 0.915 at -0.1%, against 0.872 for the
+best purple-only setting in the same grid. Held-out, the same 50 patients
+and 144 images:
+
+| | 24 Aug | 3 Sept, statistics fixed | **3 Sept, dark path** |
+|---|---|---|---|
+| precision | 0.783 | 0.844 | **0.901** |
+| recall | 0.803 | 0.859 | **0.919** |
+| F1 | 0.793 | 0.851 | **0.910** |
+| count bias | +2.5% | +1.7% | +2.0% |
+| count MAE | 4.7 cells/image | 3.65 | **2.29** |
+
+The slides that were failing, found/annotated on the two evaluation images
+per patient:
+
+| slide | before (all fields) | now |
+|---|---|---|
+| TF82_15_1_9 | 0.19 | **0.91** (42/46) |
+| TF48_UW31 | 0.40 | **1.00** (21/21) |
+| TF2N_159R | 0.63 | **1.10** (46/42) |
+| TF117_R1 | 0.71 | **1.07** (105/98) |
+| TF47_UW29 | 0.77 | **0.93** (43/46) |
+| TF70_Scr440 | 1.51 | **1.06** (56/53) |
+| TF35_Sc521 | 1.89 | **1.55** (62/40) |
+| TF1N_1522 | 1.50 | **1.34** (63/47) |
+
+Patients with fewer than 80% of their cells: 0 of 50; with more
+than 140%: 2. The denominator failure of section 13 in
+`results-parasites.md` is closed on this data. What remains is the
+over-count on slides like TF70, where small purple clumps pass the area
+gate, and that is a shape question rather than a colour one.
+
