@@ -75,3 +75,44 @@ against 1 176 annotated on the first two patients, -1.1%.
   long as it stays split by patient and the test half stays frozen.
 - The **P. vivax set** (`make data-vivax`) and the Tanzania uninfected
   images are the next two measurements of the same kind.
+
+## 4 September: with clean fields in the training set
+
+The fit half of the uninfected set (25 patients, `uninfected_split.json`)
+supplied 75 clean fields of negative patches to the classifier; the other
+25 patients are the frozen test half and are the only ones reported here.
+Threshold 0.80, chosen on the calibration patients as before.
+
+| frozen half, 25 patients, 572 fields | 3 Sept (all 50, 0.76) | **4 Sept (0.80)** |
+|---|---|---|
+| clean fields reporting zero parasites | 22% | **41%** |
+| false parasites per field, mean / p90 / max | 3.3 / 8 / 56 | **1.3 / 3 / 17** |
+| pooled false parasites per 200 white cells | 25.4 | **10.6** |
+| noise floor | 1 014/µL | **425/µL** |
+| clean slides, WHO protocol: median / p90 / max | 544 / 2 451 / 5 698 | **336 / 763 / 1 541** |
+| rank AUC against the 50 held-out infected | 0.935 | **0.982** |
+| at 500/µL: specificity / sensitivity | 0.46 / 0.98 | 0.76 / 0.98 |
+| **at 1 000/µL: specificity / sensitivity** | 0.74 / 0.94 | **0.92 / 0.94** |
+| at 2 000/µL | 0.86 / 0.84 | 1.00 / 0.84 |
+
+(The 3 Sept column is over all 50 patients; on the same frozen half the
+before-fix numbers are not separately available because that run was
+superseded. The all-50 numbers for 4 Sept are in `negative_eval_all50.json`
+for the record, median 347/µL, AUC 0.962, and are not a test number because
+half of those patients trained the classifier.)
+
+So a cut-off at 1 000/µL now gives sensitivity and specificity both above
+0.9 on this data, where yesterday no cut-off did. What has not changed:
+**no clean slide is called negative by the stopping rule**, because the rule
+still asks for zero parasites in 200 white cells and a clean slide reads
+about 10 false ones. The negative call needs a rule built on the measured
+noise floor, and that is agent-side work: stop and call negative when the
+count after N white cells is within what a clean field produces, with the
+floor measured on the fit half and N long enough for the confidence a lab
+wants. It is the next thing to build once the Bedrock agent work starts.
+
+The remaining false alarms are the sparse-field kind: the 17-parasite worst
+field is one field, the median clean field now reports one. Sensitivity is
+still flattered by the held-out cohort's density (three patients under
+1 000/µL); the *P. vivax* set and Tanzania are the next two measurements.
+

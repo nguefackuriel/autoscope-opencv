@@ -1,11 +1,11 @@
 {
   "images": 100,
   "truth": 4526,
-  "candidates": 42976,
-  "candidate_recall": 0.8911,
-  "positives": 4033,
-  "negatives": 38943,
-  "seconds_per_image": 1.435,
+  "candidates": 43914,
+  "candidate_recall": 0.9087,
+  "positives": 4113,
+  "negatives": 39801,
+  "seconds_per_image": 1.124,
   "feature_names": [
     "peak_tophat",
     "peak_stain",

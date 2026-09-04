@@ -561,3 +561,35 @@ negative patches (`parasite_patches.py --uninfected-images`), and the
 other half stays frozen for the specificity number. Chain 2 measures both
 fixes; its numbers follow in section 14.
 
+## 14. Clean fields in the training set: the number that matters moves
+
+4 September 2026, chain 2 (`eval/results/chain2_2026-09-03.log`): white
+cells refit with the dark-nucleus rule (`results-wbc.md`), then the patch
+network retrained with the same recipe plus 75 clean fields from the fit
+half of the uninfected set (171 951 patches, 11 067 parasites, 40 000 of the
+negatives from clean fields), candidates rescored, threshold re-chosen on
+the calibration patients: **0.80** (-1.0%), candidate recall there 0.913.
+
+Held-out, 50 patients:
+
+| | 3 Sept (0.76) | **4 Sept (0.80)** |
+|---|---|---|
+| precision / recall / F1, 99 images | 0.799 / 0.768 / 0.784 | 0.802 / 0.759 / 0.780 |
+| count MAE per image | 8.09 | 8.11 |
+| rank correlation of the ratio | 0.947 | 0.948 |
+| ratio 95% limits, 99 images | -63% to +191% | -61% to **+133%** |
+| **609 images**: count bias / MAE | -0.6% / 9.05 | -1.6% / **8.80** |
+| slide density bias | +2.3% | -4.1% |
+| **mean abs. density error per slide** | 43.3% | **38.0%** |
+| 95% limits of agreement | -56% to +137% | -55% to **+103%** |
+
+Object-level F1 is flat; the clinical numbers move. Five points off the
+per-slide density spread and the upper limit of agreement down from +137%
+to +103%, because the slides that over-counted now over-count less. On
+clean slides the effect is larger still, and it is the reason this was
+done: see `results-negatives.md`.
+
+Through the agent loop (`results-agent.md`), the density error with the
+real counter is 38.3% against 43.5% yesterday, and the agent's decisions are
+unchanged (491 fields against 490).
+
