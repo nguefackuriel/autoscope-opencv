@@ -96,7 +96,13 @@ CNN_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_cnn.onnx"
 # eval/results/threshold_fixedstats.json, chain2_2026-09-03.log).
 DEFAULT_THRESHOLD = 0.80
 HYBRID_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_hybrid.onnx"
-PATCH_PX = 32             # the patch network's input, centred on the peak
+# The patch network's input, centred on the peak. 32 up to chain 2; 48 from
+# chain 3 (5 September 2026): the rods and platelet pairs that passed at 32 px
+# are 30 to 40 px long, and the ring of cytoplasm that says "parasite" sits
+# outside a 32 px window. Must match the exported model; parasite_cnn_check.py
+# fails if it does not. models/parasite_cnn_chain2_32px.onnx is the 32 px
+# control, loadable with PatchScorer.load(path) and patches_at(size=32).
+PATCH_PX = 48
 
 
 @dataclass(frozen=True)

@@ -1,6 +1,6 @@
 {
   "threshold": 0.8,
-  "bias_vs_annotated": -0.009906063193851455,
+  "bias_vs_annotated": -0.009906063193851409,
   "candidate_recall": 0.913065755764304,
   "rule": "closest to zero count bias against every annotated parasite, 20 calibration patients"
 }

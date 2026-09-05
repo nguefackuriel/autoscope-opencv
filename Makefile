@@ -1,4 +1,4 @@
-.PHONY: setup setup-train data data-tanzania data-uninfected data-vivax test bench docker docker-arm64 train-mlp train-cnn clean
+.PHONY: setup setup-train data data-tanzania data-uninfected data-vivax test bench docker docker-arm64 train-mlp train-cnn chain clean
 
 setup:                     ## create the venv and install pinned deps
 	uv venv --python 3.12
@@ -27,10 +27,13 @@ train-mlp:                 ## parasite feature classifier: candidates -> numpy M
 	cd eval && ../.venv/bin/python parasite_candidates.py --images 100
 	cd eval && ../.venv/bin/python parasite_train.py
 
-train-cnn:                 ## parasite patch classifier: patches -> torch CNN -> ONNX -> cv.dnn check
-	cd eval && ../.venv/bin/python parasite_patches.py --images 100
-	cd eval && ../.venv-train/bin/python parasite_cnn_train.py
+train-cnn:                 ## parasite patch classifier: mined patches -> torch CNN (48 px) -> ONNX -> cv.dnn check
+	cd eval && ../.venv/bin/python parasite_patches.py --mine --per-patient 3 --patch 56 --hard-min 0.2 --easy-keep 0.1 --uninfected-images -1 --miner-model ../models/parasite_cnn_chain2_32px.onnx --miner-size 32 --out parasite_patches_mined_56.npz
+	cd eval && ../.venv-train/bin/python parasite_cnn_train.py --patches parasite_patches_mined_56.npz --crop 48 --epochs 20 --val-file calibration_patients.json
 	cd eval && ../.venv/bin/python parasite_cnn_check.py
+
+chain:                     ## train-cnn, then every held-out and specificity number, about seven hours: caffeinate -dims make chain
+	bash eval/chain.sh
 
 bench:                     ## run the COOL benchmark on this machine
 	.venv/bin/python bench/cool_bench.py --runs 100
