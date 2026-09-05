@@ -199,3 +199,17 @@ sharply: with the real counter the agent's decisions barely move (490
 against 494 fields) and the answer's error is 43.5% against 2.8%. The
 vision, not the policy, is what stands between this and a useful number.
 
+## 4 September, chain 2
+
+Same replay after the dark-nucleus white cell rule and the classifier
+retrained with clean fields (threshold 0.80). The expert-count arms are
+unchanged by construction; the real-counter arms:
+
+| arm | fields read | density bias | mean abs. error |
+|---|---|---|---|
+| who-200 / found | 518 | -5.0% | **38.4%** (was 42.5%) |
+| rule-based / found | 491 | -3.9% | **38.3%** (was 43.5%) |
+
+The agent's decisions did not move (491 against 490 fields); the answer got
+better. Fields now take 1.26 s.
+
