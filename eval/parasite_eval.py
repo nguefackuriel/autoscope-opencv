@@ -44,8 +44,8 @@ def evaluate(per_patient: int, seed: int, holdout: bool, threshold: float,
     if max_patients:
         patients = patients[:max_patients]
 
-    scorer = {"cnn": lambda: PatchScorer.load(), "hybrid": lambda: PatchScorer.load(HYBRID_PATH),
-              "mlp": lambda: Scorer.load()}[model]()
+    from autoscope.parasites import load_scorer
+    scorer = load_scorer(model)
     rows = []
     for patient in patients:
         candidates = sorted(patient.glob("*.jpg"))

@@ -25,11 +25,13 @@ from eval_helpers import load_pairs  # noqa: E402
 OUT = Path(__file__).resolve().parent / "results"
 
 
-def score(pairs, seed_fraction: float, close_px: int, stain_min: float, l_dark: float = 0.0) -> dict:
+def score(pairs, seed_fraction: float, close_px: int, stain_min: float, l_dark: float = 0.0,
+          dark_min: float = 0.0) -> dict:
     segmentation.SEED_FRACTION = seed_fraction
     segmentation.CLOSE_KERNEL_FULL = close_px
     segmentation.STAIN_MIN = stain_min
     segmentation.L_DARK_MAX = l_dark
+    segmentation.DARK_FRACTION_MIN = dark_min
 
     hits = fa = miss = 0
     bias = 0
@@ -54,6 +56,7 @@ def score(pairs, seed_fraction: float, close_px: int, stain_min: float, l_dark: 
         "close_px": close_px,
         "stain_min": stain_min,
         "l_dark_max": l_dark,
+        "dark_fraction_min": dark_min,
         "precision": round(precision, 4),
         "recall": round(recall, 4),
         "f1": round(f1, 4),
@@ -85,23 +88,29 @@ def main() -> None:
     # L_DARK_MAX joined on 3 September 2026: a nucleus is dark as well as
     # purple, and on the pinkest slides only the darkness survives. 0 is the
     # purple-only rule, kept in the grid so the choice stays measured.
+    # DARK_FRACTION_MIN joined on 6 September 2026: the false alarms are the
+    # bright purple clumps, and a blob has to be mostly dark to count
+    # (eval/wbc_fp_look.py). L_DARK_MAX stays at the 130 chosen on 3 September;
+    # the gate needs the dark path to mean anything.
     results = []
-    print(f"{'Ldark':>6} {'stain':>6} {'seed':>6} {'close':>6} {'prec':>7} {'recall':>7} {'F1':>7} {'bias %':>8}")
-    for l_dark in (0.0, 130.0, 150.0):
-        for stain_min in (60.0, 65.0):
-            for seed_fraction in (0.55, 0.65, 0.75):
-                for close_px in (24, 44):
-                    r = score(pairs, seed_fraction, close_px, stain_min, l_dark)
-                    results.append(r)
-                    print(f"{r['l_dark_max']:>6.0f} {r['stain_min']:>6.0f} {r['seed_fraction']:>6.2f} {r['close_px']:>6} "
-                          f"{r['precision']:>7.3f} {r['recall']:>7.3f} {r['f1']:>7.3f} "
-                          f"{r['count_bias_pct']:>+8.1f}", flush=True)
+    print(f"{'Ldark':>6} {'dark>=':>6} {'stain':>6} {'seed':>6} {'close':>6} {'prec':>7} {'recall':>7} {'F1':>7} {'bias %':>8}")
+    for l_dark in (130.0,):
+        for dark_min in (0.0, 0.3, 0.5, 0.7):
+            for stain_min in (60.0, 65.0):
+                for seed_fraction in (0.55, 0.65, 0.75):
+                    for close_px in (24, 44):
+                        r = score(pairs, seed_fraction, close_px, stain_min, l_dark, dark_min)
+                        results.append(r)
+                        print(f"{r['l_dark_max']:>6.0f} {r['dark_fraction_min']:>6.1f} {r['stain_min']:>6.0f} "
+                              f"{r['seed_fraction']:>6.2f} {r['close_px']:>6} "
+                              f"{r['precision']:>7.3f} {r['recall']:>7.3f} {r['f1']:>7.3f} "
+                              f"{r['count_bias_pct']:>+8.1f}", flush=True)
 
     best = max(results, key=lambda r: r["f1"])
     OUT.mkdir(exist_ok=True)
     (OUT / "wbc_sweep.json").write_text(json.dumps(
         {"best": best, "grid": results, "fit_patients": fit_patients}, indent=2))
-    print(f"\nbest F1 {best['f1']:.3f} at l_dark={best['l_dark_max']:.0f} stain_min={best['stain_min']:.0f} "
+    print(f"\nbest F1 {best['f1']:.3f} at l_dark={best['l_dark_max']:.0f} dark_min={best['dark_fraction_min']} stain_min={best['stain_min']:.0f} "
           f"seed_fraction={best['seed_fraction']} close_px={best['close_px']} "
           f"(bias {best['count_bias_pct']:+.1f}%)")
 

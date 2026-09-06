@@ -16,11 +16,27 @@ set -euo pipefail
 cd "$(dirname "$0")"
 PY=../.venv/bin/python
 PYT=../.venv-train/bin/python
-LOG=results/chain3_2026-09-05.log
+LOG=results/chain_$(date +%Y-%m-%d)_${MODEL:-cnn}.log
 MINER=../models/parasite_cnn_chain2_32px.onnx
 step() { echo; echo "===== $(date +%H:%M) $*"; }
+# SKIP_TRAIN=1 bash eval/chain.sh re-measures everything with the network as
+# it is: for a change to the white cells, the candidates or the rule.
+# MODEL=heatmap bash eval/chain.sh trains and measures the learned detector
+# (parasite_tiles.py, parasite_heatmap_train.py) instead of the patch network.
+SKIP_TRAIN=${SKIP_TRAIN:-0}
+MODEL=${MODEL:-cnn}
 
 {
+if [ "$SKIP_TRAIN" = "0" ] && [ "$MODEL" = "heatmap" ]; then
+step "tiles: every fit image at half resolution, 6 tiles each, 2 per clean fit-half field"
+$PY parasite_tiles.py --per-image 6 --per-clean 2 --uninfected-images -1 --out parasite_tiles.npz
+
+step "train the heat-map detector: U-Net 12-24-48-96, 16 epochs of 4 000 tiles, validation = calibration_patients.json"
+$PYT parasite_heatmap_train.py --tiles parasite_tiles.npz --epochs 16 --tiles-per-epoch 4000 --val-file calibration_patients.json
+
+step "cv.dnn agrees with torch, and runs a whole field?"
+$PY parasite_heatmap_check.py
+elif [ "$SKIP_TRAIN" = "0" ]; then
 step "patches: every fit image, hard negatives >= 0.2 under the chain-2 network, 10% of the easy ones, 56 px cut; all 569 clean fit-half fields; calibration patients 3 images each, every candidate"
 $PY parasite_patches.py --mine --per-patient 3 --patch 56 --hard-min 0.2 --easy-keep 0.1 \
     --uninfected-images -1 --miner-model "$MINER" --miner-size 32 --out parasite_patches_mined_56.npz
@@ -30,10 +46,13 @@ $PYT parasite_cnn_train.py --patches parasite_patches_mined_56.npz --crop 48 --e
 
 step "cv.dnn agrees with torch?"
 $PY parasite_cnn_check.py
+else
+step "measure only: network unchanged ($(git -C .. log --oneline -1))"
+fi
 
-step "rescore candidates: calibration, then held-out"
-$PY parasite_scores.py --group calibration
-$PY parasite_scores.py --group holdout
+step "rescore candidates: calibration, then held-out ($MODEL)"
+$PY parasite_scores.py --model "$MODEL" --group calibration
+$PY parasite_scores.py --model "$MODEL" --group holdout
 
 step "choose the threshold on the calibration patients"
 $PY choose_threshold.py
@@ -43,22 +62,26 @@ step "parasite_calibrate at $T"
 $PY parasite_calibrate.py --fixed "$T"
 
 step "parasite_eval held-out at $T"
-$PY parasite_eval.py --holdout --threshold "$T" --tag holdout_cnn_mined
+$PY parasite_eval.py --holdout --threshold "$T" --model "$MODEL" --tag "holdout_$MODEL"
 
 step "agent_fields at $T (609 fields)"
-$PY agent_fields.py --threshold "$T"
+$PY agent_fields.py --threshold "$T" --model "$MODEL"
 
 step "agent_eval"
 $PY agent_eval.py
 
 step "negative_fields at $T (1141 fields, all 50 patients; the eval reports the frozen half)"
-$PY negative_fields.py --threshold "$T"
+$PY negative_fields.py --threshold "$T" --model "$MODEL"
 
 step "negative_eval, frozen half"
 $PY negative_eval.py
 
 step "density bands and clean-field false alarms by half"
 $PY density_bands.py
+
+step "decision rule: design sweep on the fit half, dilution"
+$PY negative_eval.py --design --sweep | tail -45
+$PY dilution_eval.py
 
 step "done"
 } 2>&1 | tee -a "$LOG"

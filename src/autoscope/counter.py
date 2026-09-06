@@ -12,7 +12,7 @@ stain) and both detectors run on the prepared image. Calling
 and it is the expensive part of the pipeline.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 import numpy as np
 
@@ -34,17 +34,26 @@ class FieldCount:
 def count_field(
     image_bgr: np.ndarray,
     model: str = "cnn",
-    threshold: float = par.DEFAULT_THRESHOLD,
+    threshold: float | None = None,
     scorer=None,
 ) -> FieldCount:
-    """Count one field. Coordinates are reported in the input image's frame."""
+    """Count one field. Coordinates are reported in the input image's frame.
+    `threshold` defaults to the model's own."""
+    threshold = par.threshold_for(model, threshold)
     prepared, mask, ox, oy = par._prepare(image_bgr, crop_to_fov=True, normalise_stain=True)
 
     cells = find_white_cells(prepared, crop_to_fov=False, normalise_stain=False)
-    cells = [Cell(c.x + ox, c.y + oy, c.area, c.solidity) for c in cells]
+    cells = [replace(c, x=c.x + ox, y=c.y + oy) for c in cells]
+
+    found: list[par.Parasite] = []
+    if model == "heatmap":
+        scorer = scorer or par._heatmap_scorer()
+        pts, scores = scorer.peaks(prepared, mask)
+        found = [par.Parasite(float(x) + ox, float(y) + oy, 0.0, float(s))
+                 for (x, y), s in zip(pts, scores) if s >= threshold]
+        return FieldCount(len(found), len(cells), found, cells)
 
     cands, _ = par.candidates(prepared, mask, features=(model != "cnn"))
-    found: list[par.Parasite] = []
     if cands:
         if model == "cnn":
             scorer = scorer or par._patch_scorer()
@@ -63,10 +72,9 @@ def count_field(
     return FieldCount(len(found), len(cells), found, cells)
 
 
-def vision_counter(model: str = "cnn", threshold: float = par.DEFAULT_THRESHOLD):
+def vision_counter(model: str = "cnn", threshold: float | None = None):
     """A `Counter` for `agent.tools.Tools`, with the model loaded once."""
-    scorer = {"cnn": lambda: par.PatchScorer.load(), "hybrid": lambda: par.PatchScorer.load(par.HYBRID_PATH),
-              "mlp": lambda: par.Scorer.load()}[model]()
+    scorer = par.load_scorer(model)
 
     def count(image_bgr: np.ndarray) -> tuple[int, int]:
         return count_field(image_bgr, model=model, threshold=threshold, scorer=scorer).as_tuple()
