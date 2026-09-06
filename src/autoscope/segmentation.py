@@ -55,7 +55,7 @@ SCALE = 0.25
 #
 # Optimise the number that reaches the clinician, not the metric that looks best.
 STAIN_MIN = 65.0        # a - b inside a nucleus, in Lab units
-AREA_MIN_FULL = 1800    # px^2 at full resolution
+AREA_MIN_FULL = 1200    # px^2 at full resolution
 
 # A nucleus is also DARK, and that is the criterion that survives an
 # overstained slide. Measured on 3 September 2026 (eval/results/
@@ -78,7 +78,7 @@ STAIN_MIN_DARK = 30.0   # a - b above this, counts as nucleus too
 # the area gate, and they are why the held-out count read +6% and three
 # slides +26 to +30%. At 0.3 the gate drops 48% of them and 0.7% of the
 # hits; the sweep chooses. 0 switches it off.
-DARK_FRACTION_MIN = 0.0
+DARK_FRACTION_MIN = 0.3
 AREA_MAX_FULL = 30000
 CLOSE_KERNEL_FULL = 24  # px at full resolution, to rejoin nucleus lobes
 MIN_SOLIDITY = 0.55
