@@ -175,3 +175,17 @@ than 140%: 2. The denominator failure of section 13 in
 over-count on slides like TF70, where small purple clumps pass the area
 gate, and that is a shape question rather than a colour one.
 
+
+## 6 September: the denominator is now the larger error
+
+With the chain-3 parasite network (`results-parasites.md` section 15) the
+parasite count on the 609 held-out fields is within -1.1% and the density
+through the protocol is -8.1%, because the white cell count is **+6.1% on
+the 1 000 to 10 000/µL band and +5.3% above it**, and +26 to +30% on
+TF70_Scr440, TF1N_1522 and TF46_UW23 (`eval/density_bands.py`). Those are
+the slides where the dark-nucleus rule admits small purple clumps through
+the area gate: the 3 September table above already showed TF70 at 1.06,
+TF35 at 1.55 and TF1N at 1.34 of their annotated count. The fix is a shape
+gate on the clump, not a colour one, and it comes after the parasite
+detector because it is now the smaller of the two numerator-denominator
+errors only on the dense band.

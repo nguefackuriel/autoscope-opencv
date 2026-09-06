@@ -14,6 +14,7 @@ Needs Python 3.11 or newer, and [uv](https://docs.astral.sh/uv/).
 make setup     # venv + pinned dependencies
 make test      # unit tests
 make bench     # time the OpenCV calls on this machine
+make chain     # retrain the parasite network and re-measure every number (about 7 h)
 ```
 
 Dependencies are pinned in `requirements.txt`. The competition asks for pinned
@@ -85,11 +86,14 @@ src/autoscope/
   segmentation.py    stage 4  find the white cells (the denominator)
   parasites.py       stage 5  find the parasites (the numerator): top-hat
                               peaks, then an ONNX classifier through cv.dnn
-  density.py         stage 6  count to parasites/uL with an error bar
+  density.py         stage 6  count to parasites/uL with an error bar, and the
+                              decision rule: negative on the noise floor, positive
+                              when the interval clears it, settled in one band
   virtual_stage.py            the stage the agent moves around
-src/autoscope/agent/          the seven tools, three policies, the loop
+src/autoscope/agent/          the seven tools, four policies, the loop
 models/                       the ONNX classifiers cv.dnn loads (committed;
-                              `make train-mlp` / `make train-cnn` rebuild them)
+                              `make train-mlp` / `make train-cnn` rebuild them;
+                              parasite_cnn_chain2_32px.onnx is the 32 px control)
 bench/cool_bench.py           COOL against stock, medians and IQR
 bench/field_profile.py        the real pipeline, stage by stage, on real fields
 eval/                         surveys, sweeps, and held-out scoring. Every

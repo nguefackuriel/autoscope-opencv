@@ -1,0 +1,13 @@
+{
+  "floor_per_ul": 150.19681795712089,
+  "negative_wbc_min": 500,
+  "floor_from": "p95 of the fit half's slides, every field",
+  "threshold": 0.53,
+  "fit_half_slides": 25,
+  "fit_half_per_ul": {
+    "median": 14.8975791433892,
+    "p90": 68.68054876657868,
+    "p95": 150.19681795712089,
+    "max": 222.95081967213116
+  }
+}
