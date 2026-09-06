@@ -139,6 +139,8 @@ def main():
                     help="also compute the 19 hand-made features (hybrid path); a second per image")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--max-images", type=int, default=0, help="smoke tests: stop after this many infected and clean images")
+    ap.add_argument("--candidates", default="tophat", choices=["tophat", "heatmap"],
+                    help="heatmap: the learned detector's peaks propose (chain 4, 6 September 2026), so the judge learns their look-alikes")
     args = ap.parse_args()
 
     fit = set(json.loads((OUT / "wbc_sweep.json").read_text())["fit_patients"])
@@ -146,7 +148,12 @@ def main():
     half = args.patch // 2
     rng = random.Random(args.seed)
     miner = Miner(Path(args.miner_model), args.miner_size) if args.mine else None
-    features = args.features or not args.mine   # the old recipe always computed them
+    features = (args.features or not args.mine) and args.candidates == "tophat"   # the old recipe always computed them
+
+    def propose(prepared, mask):
+        if args.candidates == "heatmap":
+            return par.heatmap_candidates(prepared, mask)
+        return par.candidates(prepared, mask, features=features)[0]
 
     patches, feats, labels, meta, source = [], [], [], [], []
     stats = {"fit": [0, 0, 0, 0], "calibration": [0, 0, 0, 0], "clean": [0, 0, 0, 0]}  # images, candidates, kept, positives
@@ -171,7 +178,7 @@ def main():
     def infected(img, truth, src):
         nonlocal total_truth, total_hit
         prepared, mask, ox, oy = par._prepare(img, True, True)
-        cands, _ = par.candidates(prepared, mask, features=features)
+        cands = propose(prepared, mask)
         pts = (np.array([[p.x - ox, p.y - oy] for p in truth.parasites])
                if truth.parasites else np.zeros((0, 2)))
         y, hits = label_candidates(cands, pts)
@@ -223,7 +230,7 @@ def main():
                     continue
                 n_clean += 1
                 prepared, mask, _, _ = par._prepare(img, True, True)
-                cands, _ = par.candidates(prepared, mask, features=features)
+                cands = propose(prepared, mask)
                 y = np.zeros(len(cands), np.int32)
                 scores = miner(prepared, cands) if miner is not None else None
                 take(prepared, cands, y, scores, "clean", pat)
@@ -235,7 +242,7 @@ def main():
         arrays["X"] = np.stack(feats)
     np.savez_compressed(OUT / args.out, **arrays)
     summary = {
-        "out": args.out, "patch": args.patch, "mine": args.mine,
+        "out": args.out, "patch": args.patch, "mine": args.mine, "candidates": args.candidates,
         "hard_min": args.hard_min if args.mine else None, "easy_keep": args.easy_keep if args.mine else None,
         "miner_model": Path(args.miner_model).name if args.mine else None,
         "candidate_recall_fit_images": round(total_hit / max(total_truth, 1), 4),

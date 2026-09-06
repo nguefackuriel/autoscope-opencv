@@ -229,3 +229,17 @@ it (500/µL at N = 500, 1 000/µL at N = 200), and a slide with fewer than
 500 white cells captured is a limit of this dataset, not of a microscope
 with a stage. Sensitivity 49 of 50, unchanged; dilution unchanged, limit
 of detection 500/µL, level 0 98% negative.
+
+### The learned detector and heat-cnn (6 September, evening)
+
+`results-parasites.md` section 16. The heat map alone reads 1.96 false
+parasites per clean field on the frozen half (27% of fields at zero),
+floor 659/µL, AUC 0.971, no negative call and a limit of detection above
+2 000/µL: not a scorer. heat-cnn (its peaks judged by the patch network,
+0.42): 0.12 per field, 90% at zero, floor 40/µL on the frozen half and
+181/µL p95 on the fit half, AUC 1.000; the decision rule at N = 500 makes
+the same calls as the plain pair (15 of 15 clean slides long enough
+negative, none positive, 49 of 50 infected positive) and the dilution
+gives the same 500/µL. Twice the false alarms of the plain pair on clean
+fields, for the same decisions; the retrained judge of chain 4 is what
+should close it.

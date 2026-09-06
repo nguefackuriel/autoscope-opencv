@@ -435,10 +435,24 @@ def load_scorer(model: str):
     or "heat-cnn" (the heat map proposes, the patch network scores; the
     heat map itself is loaded on first use)."""
     return {"cnn": _patch_scorer, "hybrid": _hybrid_scorer, "mlp": _scorer, "heatmap": _heatmap_scorer,
-            "heat-cnn": _patch_scorer}[model]()
+            "heat-cnn": _heat_cnn_scorer}[model]()
 
 
 HEAT_CNN_THRESHOLD = 0.42   # chosen on the calibration patients, 6 September 2026 (-0.3%): threshold_fixedstats.json
+# The judge for the heat map's candidates. The patch network of chain 3
+# learned the top-hat's look-alikes; the heat map proposes others it never
+# saw, and on the sparse slides it lets them through (results-parasites.md
+# section 16b). Chain 4 trains a judge on the heat map's own candidates and
+# writes it here; until then heat-cnn uses the plain patch network.
+HEAT_CNN_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_cnn_heat.onnx"
+_HEAT_CNN_SCORER: "PatchScorer | None" = None
+
+
+def _heat_cnn_scorer() -> "PatchScorer":
+    global _HEAT_CNN_SCORER
+    if _HEAT_CNN_SCORER is None:
+        _HEAT_CNN_SCORER = PatchScorer.load(HEAT_CNN_PATH if HEAT_CNN_PATH.exists() else CNN_PATH)
+    return _HEAT_CNN_SCORER
 
 
 def threshold_for(model: str, threshold: float | None) -> float:
@@ -498,7 +512,7 @@ def find_parasites(
     if not cands:
         return []
     if model in ("cnn", "heat-cnn"):
-        scorer = scorer or _patch_scorer()
+        scorer = scorer or (_heat_cnn_scorer() if model == "heat-cnn" else _patch_scorer())
         scores = scorer.score(patches_at(img, cands))
     elif model == "hybrid":
         scorer = scorer or _hybrid_scorer()

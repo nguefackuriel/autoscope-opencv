@@ -149,7 +149,7 @@ Report sensitivity per level. It is how a laboratory validates a new
 method, it fits nothing, and it is the only way this data yields a number
 below 1 000/µL.
 
-### 4. A learned detector (two weeks)
+### 4. A learned detector (two weeks) — built 6 Sept: alone a negative result at the slide level; as the proposer under the patch network F1 0.798 → 0.859, dense band 16.0% → 11.9%, sparse band worse; chain 4 retrains the judge on its candidates (`results-parasites.md` §16)
 
 A small fully convolutional network through `cv.dnn` on the normalised
 crop at half resolution, trained from the point annotations as Gaussian

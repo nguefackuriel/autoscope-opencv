@@ -705,3 +705,128 @@ three sparse over-counts (TF70 +85%, TF81 +71%, TF37 +63%) and four dense
 under-counts (TF124 −56%, TF134 −51%, TF1N −42%, TF2N −42%), all
 parasite errors with the white cells within ±10%: the learned detector's
 list.
+
+## 16. The learned detector: alone, a negative result at the slide level; as the proposer, F1 0.859
+
+6 September 2026, plan step 4 (`docs/plan-2026-09-05-hospital-grade.md`).
+`eval/parasite_tiles.py`, `eval/parasite_heatmap_train.py`,
+`parasites.HeatmapScorer`; logs `chain_2026-09-06_heatmap.log` and
+`heat_cnn_scores.log`.
+
+### What was built
+
+A small U-Net (12-24-48-96 channels, 272 000 parameters, ConvTranspose
+upsampling so `cv.dnn` can run it) that turns the half-resolution
+prepared field into a heat map with a peak on every parasite. Trained
+from the point annotations rendered as Gaussians (σ 2.5 px at half
+resolution, the chromatin dot is about 5 px there) with a binary
+cross-entropy that weights the peaks up (1 + 10 × target), on 288 px
+tiles cut from every fit image (6 per image, half of them near a
+parasite) and every clean field of the fit half (2 each): 8 464 tiles,
+25 146 parasites, 7 054 tiles for training, 1 410 from the calibration
+patients for validation. 16 epochs of 4 000 tiles, 3 h 33 on the laptop.
+Exported with dynamic height and width; `cv.dnn` reproduces torch to
+1.5e-6 and reads a whole 1 335 px field in 1.3 s. Its local maxima above
+0.05 are its detections, or its candidates.
+
+### Alone: the candidate ceiling moves, the scores do not separate
+
+On the calibration tiles, peak-level precision 0.813 and recall 0.863 at
+0.5, F1 0.837. Its peaks above the floor recall **0.938** of the annotated
+parasites on the calibration patients' whole images, against 0.913 for
+the top-hat: no 7 px merge, no white cell exclusion zone, no rim margin.
+
+But its peak heights bunch between 0.5 and 0.65: recall 0.863 at 0.5,
+0.685 at 0.6, 0.024 at 0.7. Soft Gaussian targets under a cross-entropy
+make the network predict about 0.6 at a parasite's centre rather than 1,
+and the height then says little about confidence. The count-matching
+threshold on the calibration patients is 0.56 and sits on a cliff
+(0.55 → +3.2%, 0.57 → −3.9%). Held-out, every field counted, threshold
+0.56 (`agent_fields_heatmap.json`, `density_bands_heatmap.json`):
+
+| | patch network on top-hat candidates | **heat map alone** |
+|---|---|---|
+| mean abs. density error, every field | 19.3% | **40.5%** |
+| 1 000 to 10 000/µL band: parasite bias | +9.6% | **+46.7%** (TF107 +274%, TF70 +387%, TF81 +262%) |
+| 10 000 to 100 000/µL band: parasite bias | −3.9% | −9.9% |
+| density error through the WHO protocol | 25.7% | 44.6% |
+| frozen clean half: false parasites per field | 0.06 | **1.96** |
+| noise floor | 19/µL | 659/µL |
+| AUC infected vs clean | 1.000 | 0.971 |
+| limit of detection, 95% sensitivity | 500/µL | above 2 000/µL |
+
+A better proposer and a worse judge. Kept as `model="heatmap"` and the
+`_heatmap` result files, and not shipped.
+
+### As the proposer under the patch network: heat-cnn
+
+`parasites.heatmap_candidates`: the heat map's peaks above 0.05 are the
+candidates, and the 48 px patch network of section 15 scores them,
+unchanged. Threshold chosen on the calibration patients by the section 11
+rule: **0.42** (−0.3%). `choose_threshold.py`'s grid started at 0.50 and
+had first picked 0.50 at −8.1%; it starts at 0.20 now.
+
+Held-out, 50 patients, the same 99 images as every column of this file:
+
+| | section 15b, top-hat + patch network (0.53) | **heat-cnn (0.42)** |
+|---|---|---|
+| precision / recall / F1 | 0.814 / 0.783 / 0.798 | **0.874 / 0.844 / 0.859** |
+| count bias / MAE per image | −3.8% / 6.15 | −3.5% / **5.59** |
+| rank correlation of the ratio | 0.962 | **0.970** |
+| ratio 95% limits | −59% to +106% | −50% to +129% |
+| **609 images**: count bias / MAE | −1.9% / 6.70 | −2.8% / **6.15** |
+| slide density bias, WHO protocol | −7.9% | +2.5% |
+| mean abs. density error per slide, WHO protocol | 25.7% | 25.4% |
+| 95% limits of agreement | −47% to +59% | −43% to +83% |
+| seconds per field, laptop | 1.54 | 1.6 |
+
+The object-level target of the plan, F1 at least 0.85, is met. The
+number a user gets has not moved yet and its upper limit is worse: the
+proposer finds more on every slide, including on the sparse ones the
+judge still lets through. The field tables, the agent, the specificity
+and the dilution for heat-cnn follow in 16b.
+
+### 16b. heat-cnn through the field tables: better where it is dense, worse where it is sparse
+
+`chain_2026-09-06_heat-cnn.log`, threshold 0.42, white cells as in 15b.
+Every held-out field counted (`density_bands.py`):
+
+| | 15b, top-hat + patch network | **heat-cnn** |
+|---|---|---|
+| mean abs. density error, every field | **19.3%** | 22.7% |
+| slides within 25% / within 50% | 70% / 90% | **80%** / 88% |
+| bias, every field | −4.3% | +7.6% |
+| 1 000 to 10 000/µL band: error, within 25%, parasite bias | **23.3%**, 62%, **+9.6%** | 28.4%, 73%, +22.1% |
+| 10 000 to 100 000/µL band: error, within 25%, parasite bias | 16.0%, 77%, −3.9% | **11.9%, 91%**, −5.9% |
+| density error through the WHO protocol | 25.7% | 25.4% |
+| 95% limits of agreement | −47% to **+59%** | −43% to +83% |
+| agent, real counter: WHO / rule-based / decision | 26.5% / 27.2% / 27.4% | 25.7% / 27.1% / 27.3% |
+| agent, real counter: density bias | −8.4% | **+1.6%** |
+| frozen clean half: false parasites per field, fields at zero | **0.06, 95%** | 0.12, 90% |
+| noise floor, frozen half / fit half p95 | **19 / 148/µL** | 40 / 181/µL |
+| AUC infected vs clean | 1.000 | 1.000 |
+| decision rule, N = 500 | 15/15 clean slides long enough negative, 49/50 positive | same, 0 false positives |
+| limit of detection, 95% sensitivity | 500/µL | 500/µL |
+
+The worst slides say where the difference is. heat-cnn: TF70 +159%
+(parasites +213%), TF81 +127%, TF150_R5 +122% (the 283/µL patient),
+TF107 +74%, TF37 +65%, then TF124 −51%, TF134 −43%. The top-hat pair:
+TF70 +85%, TF81 +71%, TF37 +63%, TF124 −56%, TF134 −51%. The heat map
+proposes more on every slide, and the judge, trained on the top-hat's
+look-alikes, has never seen the ones it proposes: on a sparse slide they
+pass at 0.42, and the threshold is 0.42 rather than 0.53 because the
+count-matching rule balances those against the dense slides' gains.
+
+**What ships today: the top-hat pair of 15b.** The object-level number is
+the heat map's (F1 0.859 against 0.798) and so are the dense slides
+(11.9% against 16.0%, 91% within 25%) and the agent's bias (+1.6% against
+−8.4%); the sparse slides, the clean fields and the mean error are the
+top-hat's, and the protocol number is a tie. A split result is not a win,
+and the rule is held-out numbers or nothing.
+
+**Chain 4, queued.** The judge has to learn the proposer's mistakes:
+`parasite_patches.py --candidates heatmap` mines the hard negatives among
+the heat map's own candidates on every fit image and every clean fit-half
+field, scored by the chain-3 network, and trains a second 48 px judge
+(`models/parasite_cnn_heat.onnx`, `MODEL=heat-cnn make chain`). The
+plain pair keeps its judge, so both stay reproducible.

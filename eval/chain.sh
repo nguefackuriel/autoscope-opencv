@@ -23,6 +23,8 @@ step() { echo; echo "===== $(date +%H:%M) $*"; }
 # it is: for a change to the white cells, the candidates or the rule.
 # MODEL=heatmap bash eval/chain.sh trains and measures the learned detector
 # (parasite_tiles.py, parasite_heatmap_train.py) instead of the patch network.
+# MODEL=heat-cnn trains the patch network on the heat map's candidates and
+# measures the pair.
 SKIP_TRAIN=${SKIP_TRAIN:-0}
 MODEL=${MODEL:-cnn}
 
@@ -36,6 +38,17 @@ $PYT parasite_heatmap_train.py --tiles parasite_tiles.npz --epochs 16 --tiles-pe
 
 step "cv.dnn agrees with torch, and runs a whole field?"
 $PY parasite_heatmap_check.py
+elif [ "$SKIP_TRAIN" = "0" ] && [ "$MODEL" = "heat-cnn" ]; then
+step "patches: every fit image, candidates from the heat map, hard negatives >= 0.2 under the chain-3 patch network, 10% of the easy ones, 56 px cut; all 569 clean fit-half fields; calibration patients 3 images each"
+$PY parasite_patches.py --mine --candidates heatmap --per-patient 3 --patch 56 --hard-min 0.2 --easy-keep 0.1 \
+    --uninfected-images -1 --miner-model ../models/parasite_cnn.onnx --miner-size 48 --out parasite_patches_heat_56.npz
+
+step "train the judge for the heat map's candidates: 48 px, 20 epochs, validation = calibration_patients.json -> models/parasite_cnn_heat.onnx"
+$PYT parasite_cnn_train.py --patches parasite_patches_heat_56.npz --crop 48 --epochs 20 --val-file calibration_patients.json \
+    --model-out ../models/parasite_cnn_heat.onnx --out-tag heat
+
+step "cv.dnn agrees with torch?"
+$PY parasite_cnn_check.py --tag heat --model ../models/parasite_cnn_heat.onnx
 elif [ "$SKIP_TRAIN" = "0" ]; then
 step "patches: every fit image, hard negatives >= 0.2 under the chain-2 network, 10% of the easy ones, 56 px cut; all 569 clean fit-half fields; calibration patients 3 images each, every candidate"
 $PY parasite_patches.py --mine --per-patient 3 --patch 56 --hard-min 0.2 --easy-keep 0.1 \

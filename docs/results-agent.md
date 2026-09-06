@@ -264,3 +264,13 @@ unchanged. Expert-count arms identical by construction; real counter:
 who-200 26.5% (from 29.1%), rule-based 27.2% (from 29.6%), decision 27.4%
 (from 29.6%) mean absolute density error, decision arm 450 fields, 49
 positive, 40 banded.
+
+### heat-cnn (6 September, evening)
+
+Same replay with the heat map proposing and the patch network judging
+(`results-parasites.md` 16b), threshold 0.42: WHO 25.7%, rule-based
+27.1%, decision 27.3% mean absolute density error with the real counter,
+against 26.5 / 27.2 / 27.4 for the plain pair; the density bias of the
+real-counter arms goes from −8.4% to +1.6%, and the decision arm reads
+451 fields, 49 positive, 40 banded. The heat map alone: 43.8 / 45.7 /
+45.5%, with +5 to +6.5% bias (`agent_eval_heatmap.json`).

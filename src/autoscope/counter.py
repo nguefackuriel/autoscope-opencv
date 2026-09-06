@@ -59,7 +59,7 @@ def count_field(
         cands, _ = par.candidates(prepared, mask, features=(model != "cnn"))
     if cands:
         if model in ("cnn", "heat-cnn"):
-            scorer = scorer or par._patch_scorer()
+            scorer = scorer or (par._heat_cnn_scorer() if model == "heat-cnn" else par._patch_scorer())
             scores = scorer.score(par.patches_at(prepared, cands))
         elif model == "hybrid":
             scorer = scorer or par._hybrid_scorer()
