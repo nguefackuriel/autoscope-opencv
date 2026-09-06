@@ -31,7 +31,7 @@ OUT = Path(__file__).resolve().parent / "results"
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--threshold", type=float, default=None, help="default: the model's own")
-    ap.add_argument("--model", default="cnn", choices=["cnn", "heatmap"])
+    ap.add_argument("--model", default="cnn", choices=["cnn", "heatmap", "heat-cnn"])
     ap.add_argument("--max-patients", type=int, default=None)
     ap.add_argument("--out", default="agent_fields.json")
     args = ap.parse_args()

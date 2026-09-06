@@ -36,7 +36,7 @@ def main():
                          "so its scores on them are honest and a calibration fitted there is not "
                          "fitted on its own training data")
     ap.add_argument("--per-patient", type=int, default=0, help="0 means every image")
-    ap.add_argument("--model", default="cnn", choices=["cnn", "heatmap"],
+    ap.add_argument("--model", default="cnn", choices=["cnn", "heatmap", "heat-cnn"],
                     help="heatmap: the learned detector's peaks above its floor are the candidates, its heights the scores")
     args = ap.parse_args()
 
@@ -67,6 +67,10 @@ def main():
             if args.model == "heatmap":
                 pts_found, scores = scorer.peaks(prepared, mask)
                 cands = [par.Candidate(float(x), float(y), 0.0, None) for x, y in pts_found]
+            elif args.model == "heat-cnn":
+                cands = par.heatmap_candidates(prepared, mask)
+                scores = (scorer.score(par.patches_at(prepared, cands))
+                          if cands else np.zeros(0, np.float32))
             else:
                 cands, _ = par.candidates(prepared, mask)
                 scores = (scorer.score(par.patches_at(prepared, cands))

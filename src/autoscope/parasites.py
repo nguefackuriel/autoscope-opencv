@@ -107,7 +107,7 @@ HEATMAP_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_heatma
 HEATMAP_SCALE = 0.5
 HEATMAP_NMS_PX = 4        # half-resolution px: two peaks closer than this are one parasite
 HEATMAP_FLOOR = 0.05      # peaks below this are not even reported
-HEATMAP_THRESHOLD = 0.50  # placeholder until choose_threshold.py has run on it
+HEATMAP_THRESHOLD = 0.56  # chosen on the calibration patients, 6 September 2026; the heights bunch at 0.5 to 0.65, see results-parasites.md section 16
 # The patch network's input, centred on the peak. 32 up to chain 2; 48 from
 # chain 3 (5 September 2026): the rods and platelet pairs that passed at 32 px
 # are 30 to 40 px long, and the ring of cytoplasm that says "parasite" sits
@@ -391,6 +391,21 @@ class HeatmapScorer:
         return pts, heat[ys, xs]
 
 
+def heatmap_candidates(image_bgr: np.ndarray, mask: np.ndarray, scorer: "HeatmapScorer | None" = None,
+                       floor: float = HEATMAP_FLOOR) -> list[Candidate]:
+    """The heat map's peaks as candidates for the patch network ("heat-cnn").
+
+    The learned detector proposes better than the top-hat (recall 0.938
+    against 0.913 on the calibration patients, no 7 px merge, no exclusion
+    zone) but its peak heights bunch between 0.5 and 0.65, so a threshold
+    on them sits on a cliff. The patch network's scores do not. So: its
+    peaks, the patch network's judgement. 6 September 2026.
+    """
+    scorer = scorer or _heatmap_scorer()
+    pts, _ = scorer.peaks(image_bgr, mask, floor)
+    return [Candidate(float(x), float(y), 0.0, None) for x, y in pts]
+
+
 def patches_at(image_bgr: np.ndarray, cands: list[Candidate], size: int = PATCH_PX) -> np.ndarray:
     """Cut a size x size patch around each candidate; edge candidates are padded."""
     half = size // 2
@@ -416,12 +431,20 @@ def _heatmap_scorer() -> HeatmapScorer:
 
 
 def load_scorer(model: str):
-    """The scorer for a model name, loaded once: "cnn", "hybrid", "mlp" or "heatmap"."""
-    return {"cnn": _patch_scorer, "hybrid": _hybrid_scorer, "mlp": _scorer, "heatmap": _heatmap_scorer}[model]()
+    """The scorer for a model name, loaded once: "cnn", "hybrid", "mlp", "heatmap"
+    or "heat-cnn" (the heat map proposes, the patch network scores; the
+    heat map itself is loaded on first use)."""
+    return {"cnn": _patch_scorer, "hybrid": _hybrid_scorer, "mlp": _scorer, "heatmap": _heatmap_scorer,
+            "heat-cnn": _patch_scorer}[model]()
+
+
+HEAT_CNN_THRESHOLD = 0.42   # chosen on the calibration patients, 6 September 2026 (-0.3%): threshold_fixedstats.json
 
 
 def threshold_for(model: str, threshold: float | None) -> float:
-    return threshold if threshold is not None else (HEATMAP_THRESHOLD if model == "heatmap" else DEFAULT_THRESHOLD)
+    if threshold is not None:
+        return threshold
+    return {"heatmap": HEATMAP_THRESHOLD, "heat-cnn": HEAT_CNN_THRESHOLD}.get(model, DEFAULT_THRESHOLD)
 
 
 def _hybrid_scorer() -> PatchScorer:
@@ -468,10 +491,13 @@ def find_parasites(
         pts, scores = scorer.peaks(img, mask)
         return [Parasite(float(x) + ox, float(y) + oy, 0.0, float(s))
                 for (x, y), s in zip(pts, scores) if s >= threshold]
-    cands, _ = candidates(img, mask, features=(model != "cnn"))
+    if model == "heat-cnn":
+        cands = heatmap_candidates(img, mask)
+    else:
+        cands, _ = candidates(img, mask, features=(model != "cnn"))
     if not cands:
         return []
-    if model == "cnn":
+    if model in ("cnn", "heat-cnn"):
         scorer = scorer or _patch_scorer()
         scores = scorer.score(patches_at(img, cands))
     elif model == "hybrid":

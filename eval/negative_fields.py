@@ -75,7 +75,7 @@ def truth_wbc(patient: Path, image: Path, w: int, h: int) -> int | None:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--threshold", type=float, default=None, help="default: the model's own")
-    ap.add_argument("--model", default="cnn", choices=["cnn", "heatmap"])
+    ap.add_argument("--model", default="cnn", choices=["cnn", "heatmap", "heat-cnn"])
     ap.add_argument("--max-patients", type=int, default=None)
     ap.add_argument("--max-images", type=int, default=None, help="per patient, for a quick pass")
     ap.add_argument("--out", default="negative_fields.json")

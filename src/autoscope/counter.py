@@ -53,9 +53,12 @@ def count_field(
                  for (x, y), s in zip(pts, scores) if s >= threshold]
         return FieldCount(len(found), len(cells), found, cells)
 
-    cands, _ = par.candidates(prepared, mask, features=(model != "cnn"))
+    if model == "heat-cnn":
+        cands = par.heatmap_candidates(prepared, mask)
+    else:
+        cands, _ = par.candidates(prepared, mask, features=(model != "cnn"))
     if cands:
-        if model == "cnn":
+        if model in ("cnn", "heat-cnn"):
             scorer = scorer or par._patch_scorer()
             scores = scorer.score(par.patches_at(prepared, cands))
         elif model == "hybrid":
