@@ -151,9 +151,11 @@ BAND_EDGES = (1_000.0, 10_000.0, 100_000.0)
 BAND_NAMES = ("under 1 000/uL", "1 000 to 10 000/uL", "10 000 to 100 000/uL", "over 100 000/uL")
 
 # Noise floor: what a clean slide reads at through the pipeline, p95 over the
-# fit half of the uninfected set with the chain-2 network (negative_eval.py,
-# 5 September 2026). Re-measured after every classifier change.
-FLOOR_PER_UL_DEFAULT = 1_000.0
+# fit half of the uninfected set, every field counted (negative_eval.py,
+# eval/results/decision_rule.json). 150/uL with the chain-3 network of
+# 6 September 2026 (the fit half reads median 15, p90 69, max 223/uL); it was
+# 2 610/uL with the chain-2 network. Re-measured after every classifier change.
+FLOOR_PER_UL_DEFAULT = 150.0
 # White cells to see before a negative can be called. The WHO thick film
 # negative is 100 fields, about 0.25 uL of blood (to check against the WHO
 # manual before the report); a phone field here carries about 25 white cells.

@@ -116,3 +116,99 @@ field is one field, the median clean field now reports one. Sensitivity is
 still flattered by the held-out cohort's density (three patients under
 1 000/µL); the *P. vivax* set and Tanzania are the next two measurements.
 
+
+## 6 September: chain 3, the noise floor falls twenty-fold, and the first negative call
+
+Chain 3 (`results-parasites.md` section 15: every clean field of the fit
+half and hard negatives from every fit image in the training set, 48 px
+patches, threshold 0.53). Same frozen half, same 572 fields, same protocols.
+
+| frozen half, 25 patients, 572 fields | 4 Sept (0.80) | **6 Sept (0.53)** |
+|---|---|---|
+| clean fields reporting zero parasites | 41% | **95%** |
+| false parasites per field, mean / p90 / max | 1.3 / 3 / 17 | **0.06 / 0 / 3** |
+| pooled false parasites per 200 white cells | 10.6 | **0.46** |
+| noise floor | 425/µL | **18/µL** |
+| clean slides, WHO protocol: median / p90 / max | 336 / 763 / 1 541 | **0 / 60 / 76** |
+| rank AUC against the 50 held-out infected | 0.982 | **1.000** |
+| at 100/µL: specificity / sensitivity | 0.04 / 1.00 | **1.00 / 1.00** |
+| at 500/µL | 0.76 / 0.98 | 1.00 / 0.98 |
+| at 1 000/µL | 0.92 / 0.94 | 1.00 / 0.92 |
+| clean slides called negative by the old rule (0 in 200 white cells) | 0 / 25 | **15 / 25** |
+
+The fit half, whose fields the classifier trained on, reads 0.12 false
+parasites per field and a 36/µL floor: 863/µL on 4 September. It is no
+longer worse than the frozen half, which says the 4 September gap between
+the halves was the classifier, not the slides.
+
+### The decision rule
+
+`density.decide`, `agent.policy.DecisionRule`, 5 September. The stopping
+rule asked for zero parasites in 200 white cells for a negative and a 20%
+error bar for a positive. This one calls what a technician calls:
+
+- **negative** once at least N white cells have gone by and the estimate
+  sits at or below the **noise floor**, what a clean slide produces;
+- **positive** once the lower end of the interval clears the floor;
+- a positive is **settled** when its interval sits inside one density band
+  (under 1 000, 1 000 to 10 000, 10 000 to 100 000, over 100 000/µL) and is
+  within 30% of the estimate, or within the 20% target regardless;
+- otherwise keep reading, and at the end of the slide **hand it to a
+  person**, saying which of the three could not be settled.
+
+The floor and N are chosen on the **fit half** (`negative_eval.py
+--design --sweep`) and the frozen half is scored once with them. The floor
+is the p95 of what the fit half's slides read at with every field counted:
+**150/µL** (median 15, p90 69, max 223). On the fit half, N = 200 calls 23
+of 25 clean slides negative and N = 500 calls 18, the rest running out of
+slide before N white cells; no floor between 69 and 300/µL changes the
+sensitivity (49 of 50 held-out infected called positive) and 800/µL loses
+it. N = 500 is shipped because it detects lower (next section), and a
+slide that is too short for it is a limit of this dataset, where a clean
+slide has 12 to 33 captured fields, not of the rule: on a microscope the
+stage moves on.
+
+| frozen half and held-out, floor 150/µL | N = 500, shipped | N = 200 |
+|---|---|---|
+| clean slides called negative | **20 of 25**, the 5 others too short for 500 white cells, **0 called positive** | 24 of 25, 1 too short |
+| infected slides called positive | **49 of 50**, 0 called negative | 49 of 50 |
+| the one not called | TF150_R5, 283/µL, the only held-out patient under 1 000/µL: its lower bound never clears the floor and it goes to a person | same |
+| by expert band | 1 000 to 10 000: 26/26; 10 000 to 100 000: 22/22; over: 1/1 | same |
+| fields read, clean + infected | 490 + 448 | 208 + 448 |
+
+So the first negative call: 20 of the 20 clean slides long enough to
+decide, no clean slide called positive, no infected slide called negative,
+two slides of 75 sent to a person. On the chain-2 tables the same rule at
+its own floor (2 610/µL, the fit half was that dirty) read 0.80 / 0.76
+with 12 infected slides sent to a person (`negative_eval_decision_dev.json`).
+
+### Limit of detection by dilution
+
+Six of the 150 NLM patients are under 1 000/µL, so the sensitivity a
+screening tool is for cannot be read off the patients. `dilution_eval.py`
+builds it the way a laboratory would: pseudo-slides of shuffled clean
+fields from the frozen half and a few sparse infected fields from the
+held-out patients (1 to 12 expert parasites each), mixed to a target
+density, 40 per level, replayed through the decision rule. Both pools are
+test material; nothing was fitted on them.
+
+| target /µL | realised | fields | read | positive | negative | to a person |
+|---|---|---|---|---|---|---|
+| 0 | 0 | 26 | 20 | 0% | **100%** | 0% |
+| 50 | 50 | 50 | 21 | 0% | 95% | 5% |
+| 100 | 99 | 35 | 22 | 0% | 80% | 20% |
+| 200 | 197 | 31 | 28 | 32% | 35% | 32% |
+| 500 | 494 | 30 | 29 | **98%** | 2% | 0% |
+| 1 000 | 977 | 28 | 28 | 100% | 0% | 0% |
+| 2 000 | 1 959 | 30 | 28 | 100% | 0% | 0% |
+
+**Limit of detection at 95% sensitivity: 500/µL** (N = 500; 1 000/µL at
+N = 200, because the shorter read calls a 200/µL slide negative before its
+parasites add up). On the chain-2 tables it was above 2 000/µL. A Level 1
+microscopist finds far less than 500/µL; the floor is 18/µL on the frozen
+half and 150 by the p95 rule, so the next factor of three to five is the
+same false alarms, on the fit half's dirtiest slides, and the candidate
+recall on light fields. What the harness does not model: a real light
+slide spreads its parasites over every field, where here they sit in a few
+fields among clean ones; the running total the rule reads is the same, the
+clustering is not.

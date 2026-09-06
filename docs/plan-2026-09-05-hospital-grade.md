@@ -21,6 +21,23 @@ slide, not an F1 per object.
 
 ## Where AutoScope stands on that panel
 
+**Updated 6 September after chain 3 and the decision rule** (steps 1, 2
+and 3 below are done; `results-parasites.md` §15, `results-negatives.md`
+and `results-agent.md`, 6 September):
+
+| ECAMM criterion | Level 1 | 4 Sept | **6 Sept** |
+|---|---|---|---|
+| negatives called negative | ≥ 90% | 0 of 25 | **20 of 20 long enough to decide** (5 of 25 too short for 500 white cells, sent to a person; none called positive) |
+| positives called positive | ≥ 90% | no call existed | **49 of 50**, none called negative (TF150_R5 at 283/µL sent to a person) |
+| limit of detection, 95% sensitivity | | above 2 000/µL | **500/µL** by dilution |
+| counts within 25% | ≥ 50% | 58% | **64%** (every field), 92% within 50% |
+| species | ≥ 90% | nothing | nothing |
+| another microscope, camera, stain | | nothing | nothing |
+
+The table that follows is the 4 September state the plan was written
+against.
+
+
 | ECAMM criterion | Level 1 | AutoScope, 4 Sept | what is missing |
 |---|---|---|---|
 | detection: negatives called negative | ≥ 90% | **0 of 25** clean slides called negative by the stopping rule; every one reads 100 to 1 500/µL | a negative call built on the measured noise floor |
@@ -75,7 +92,7 @@ slides where both the false alarms and the sampling error live.
 
 ## What to build, in order
 
-### 1. Sparse-field false alarms, without new data (this week)
+### 1. Sparse-field false alarms, without new data (this week) — done 6 Sept: false parasites per clean field 1.34 → 0.06, floor 425 → 18/µL, density error 38.0% → 28.3%
 
 Same recipe, four changes, one chain:
 
@@ -99,7 +116,7 @@ Measure: false parasites per field on the frozen half, the 1 000 to
 pay for it. Target: under 0.5 per field, floor under 200/µL, band bias
 under +10%.
 
-### 2. A decision rule in the agent (one to two days, replay in seconds)
+### 2. A decision rule in the agent (one to two days, replay in seconds) — done 5 Sept: `DecisionRule`, floor p95 of the fit half, N = 500
 
 The stopping rule asks for a 20% interval, which 35 of 50 slides can never
 reach, and calls negative only at zero parasites, which no clean slide
@@ -121,7 +138,7 @@ table in a second. Output: for the first time a per-patient sensitivity
 and specificity with an actual decision, fields read per band, and how
 many slides go to a human. That is the ECAMM row.
 
-### 3. Limit of detection by dilution (one day, measurement only)
+### 3. Limit of detection by dilution (one day, measurement only) — done 5 Sept: `dilution_eval.py`, LOD 500/µL on 6 Sept
 
 Six NLM patients under 1 000/µL is not a low-density cohort. Build one:
 pseudo-slides from the frozen clean half's fields plus *k* held-out

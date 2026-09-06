@@ -129,6 +129,8 @@ def main():
     ap.add_argument("--floor-quantile", type=float, default=95)
     ap.add_argument("--negative-wbc", type=int, default=NEGATIVE_WBC_MIN)
     ap.add_argument("--sweep", action="store_true", help="sweep the floor and the white cell minimum")
+    ap.add_argument("--design", action="store_true",
+                    help="score the decision rule on the FIT half instead of the frozen one: where N and the floor get chosen")
     args = ap.parse_args()
 
     neg_table = json.loads((OUT / args.negatives).read_text())
@@ -225,24 +227,28 @@ def main():
     print(f"\nnoise floor, fit half ({len(fit_ul)} slides, every field): median {np.median(fit_ul):,.0f}, "
           f"p90 {np.percentile(fit_ul, 90):,.0f}, p95 {np.percentile(fit_ul, 95):,.0f}, max {fit_ul.max():,.0f}/uL"
           f"  ->  floor {floor:,.0f}/uL" + (" (given)" if args.floor is not None else f" (p{args.floor_quantile:g})"))
-    decision = decision_arm(neg, pos, floor, args.negative_wbc, refs)
-    print(f"\ndecision rule on the {neg_table['which']} and the {len(pos)} infected held-out patients:")
+    design = fit_half if args.design else neg
+    which = "fit half (design)" if args.design else neg_table["which"]
+    decision = decision_arm(design, pos, floor, args.negative_wbc, refs)
+    print(f"\ndecision rule on the {which} and the {len(pos)} infected held-out patients:")
     print_decision("shipped", decision)
     print("  sensitivity by expert band: " + ", ".join(
         f"band {k} {v['called_positive']}/{v['slides']}" for k, v in decision["sensitivity_by_expert_band"].items()))
 
     sweep = []
     if args.sweep:
-        print("\nsweep (design numbers: pick on the fit half, not here):")
+        print(f"\nsweep on the {which}" + ("" if args.design else " (design numbers: pick with --design, on the fit half)") + ":")
         floors = sorted({round(float(np.percentile(fit_ul, q))) for q in (90, 95, 100)} | {300, 500, 800, 1000, 1500})
-        for n_wbc in (200, 500, 1000):
+        for n_wbc in (200, 300, 400, 500, 1000):
             for fl in floors:
-                a = decision_arm(neg, pos, fl, n_wbc, refs)
+                a = decision_arm(design, pos, fl, n_wbc, refs)
                 a.pop("runs_uninfected"); a.pop("runs_infected")
                 sweep.append(a)
                 print_decision("", a)
 
-    (OUT / "decision_rule.json").write_text(json.dumps({
+    if args.design:
+        args.out = args.out.replace(".json", "_design.json")
+    (OUT / ("decision_rule_design.json" if args.design else "decision_rule.json")).write_text(json.dumps({
         "floor_per_ul": floor, "negative_wbc_min": args.negative_wbc,
         "floor_from": "given" if args.floor is not None else f"p{args.floor_quantile:g} of the fit half's slides, every field",
         "threshold": neg_table["threshold"], **floor_stats,
@@ -250,7 +256,7 @@ def main():
     (OUT / args.out).write_text(json.dumps({
         "threshold": neg_table["threshold"], "uninfected_patients": len(neg), "which": neg_table["which"],
         "infected_patients": len(pos), "per_field": per_field, "arms": arms,
-        "decision": decision, "decision_sweep": sweep, "floor": floor_stats,
+        "decision": decision, "decision_sweep": sweep, "floor": floor_stats, "decision_scored_on": which,
         "infected_expert_density_percentiles": {k: float(np.percentile(ref_sorted, k)) for k in (0, 10, 25, 50)},
     }, indent=2))
 

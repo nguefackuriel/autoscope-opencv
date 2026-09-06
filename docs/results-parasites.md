@@ -593,3 +593,88 @@ Through the agent loop (`results-agent.md`), the density error with the
 real counter is 38.3% against 43.5% yesterday, and the agent's decisions are
 unchanged (491 fields against 490).
 
+
+## 15. Chain 3: hard negatives from every fit image, 48 px patches, and a threshold chosen on patients the network never saw
+
+6 September 2026, chain 3 (`eval/chain.sh`, `eval/results/chain3_2026-09-05.log`).
+Same candidate stage, same network architecture, three changes to what it
+is trained on and one bug fixed:
+
+- **every image of every fit patient** (1 247 instead of 280) and **every
+  clean field of the fit half** (569 instead of 75), mined rather than
+  taken whole: every positive, every negative the chain-2 network scored at
+  0.2 or above, and 10% of the rest. Nine in ten candidates were easy
+  negatives the network already scored near zero, and the failures of
+  section 13 were the 3% it scored above 0.2 on clean and sparse fields.
+  200 868 patches, 47 573 parasites; 177 433 for training (26% positive),
+  23 435 from the 20 calibration patients for validation
+  (`parasite_patches.py --mine`, 25 min);
+- **48 px input cut at 56** instead of 32 cut at 40: the rods and platelet
+  pairs that passed at 32 px are 30 to 40 px long, and the ring of
+  cytoplasm that says "parasite" sits outside a 32 px window;
+- **validation is exactly the calibration patients** (`--val-file`). Chain
+  2 shuffled the 125 patient names in its patch file and held out six
+  uninfected patients and only 7 of the 20 calibration patients, so its
+  threshold was chosen on patients the network had partly trained on (3 of
+  their 12 images each). Held-out numbers were never affected; chain 1 was
+  not affected (100 names). The threshold rule of section 11 is now a
+  script, `choose_threshold.py`, which reproduces chain 2's 0.80 at -1.0%;
+- threshold on the calibration patients: **0.53** (-0.2% against every
+  annotated parasite, candidate recall there 0.913). It is lower because
+  the training set is a quarter positive instead of a sixteenth; the
+  scores are calibrated where it matters (candidates scoring 0.5 to 0.8
+  are parasites 55.0% of the time, the fitted map says 54.9%).
+
+Training took 4.6 hours on the laptop (the Mac slept for eight in the
+middle; `caffeinate` does not stop lid sleep). `cv.dnn` reproduces torch to
+7.5e-7. The chain-2 network is kept as `models/parasite_cnn_chain2_32px.onnx`.
+
+Held-out, the same 50 patients:
+
+| | 4 Sept, chain 2 (0.80) | **6 Sept, chain 3 (0.53)** |
+|---|---|---|
+| precision / recall / F1, 99 images | 0.802 / 0.759 / 0.780 | **0.813 / 0.787 / 0.800** |
+| count bias / MAE per image | -3.9% / 8.11 | -3.3% / **6.14** |
+| rank correlation of the ratio | 0.948 | **0.965** |
+| ratio 95% limits, 99 images | -61% to +133% | -60% to **+115%** |
+| **609 images**: count bias / MAE | -1.6% / 8.80 | -1.1% / **6.76** |
+| slide density bias, WHO protocol | -4.1% | -8.1% |
+| **mean abs. density error per slide, WHO protocol** | 38.0% | **28.3%** |
+| 95% limits of agreement | -55% to +103% | **-49% to +65%** |
+| every field: mean abs. error / within 25% / within 50% | 29.7% / 58% / 86% | **20.9% / 64% / 92%** |
+| seconds per field, laptop | 1.26 | 1.54 |
+
+Ten points off the per-slide density spread and the upper limit of agreement
+down from +103% to +65%. By density band, every field counted
+(`eval/density_bands.py`):
+
+| expert density | slides | mean abs. error | within 25% | parasite bias | white cell bias |
+|---|---|---|---|---|---|
+| 1 000 to 10 000/µL | 26 | 40.3% → **24.5%** | 46% → **54%** | +27.1% → **+10.5%** | +6.1% |
+| 10 000 to 100 000/µL | 22 | 18.9% → 17.2% | 68% → 73% | -6.1% → -3.3% | +5.3% |
+
+The sparse band's over-count is what moved, as it was built to. The
+slides of section 13:
+
+| slide | expert /µL | 4 Sept | **6 Sept** | parasites found / annotated | white cells |
+|---|---|---|---|---|---|
+| TF70_Scr440 | 3 552 | +150% | **+75%** | 226 / 99 | +30% |
+| TF107_249 | 1 707 | +121% | out of the worst eight | | -6% |
+| TF81_W8B5 | 1 373 | +120% | **+79%** | 73 / 40 | +2% |
+| TF37_Sc563 | 4 500 | +86% | **+55%** | 240 / 135 | +15% |
+
+**Two things this chain did not fix, and the second is new.** The dense
+slides still under-count parasites with the white cells right: TF124_S540
+-56% (12 203/µL), TF134_US28 -47%, TF2N_159R -44%. That is the candidate
+stage (peaks closer than 7 px merge, section 2) and the classifier on
+crowded patches, and it is what the learned detector of
+`plan-2026-09-05-hospital-grade.md` step 4 is for. And the density bias
+through the protocol is now **-8.1% with the parasite count at -1.1%**: the
+white cell count is +6% on both bands, +26 to +30% on TF70, TF1N_1522 and
+TF46_UW23, so the denominator has become the larger of the two errors.
+That is the dark-nucleus rule letting small purple clumps through the area
+gate (`results-wbc.md`), and it is a shape question, next after the
+detector.
+
+On clean slides the effect of this chain is larger still, and it is the
+reason it was run: `results-negatives.md`, 6 September.

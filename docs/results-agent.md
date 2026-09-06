@@ -213,3 +213,46 @@ unchanged by construction; the real-counter arms:
 The agent's decisions did not move (491 against 490 fields); the answer got
 better. Fields now take 1.26 s.
 
+
+## 6 September: chain 3, and the decision rule as a third policy
+
+Same replay after the chain-3 network (`results-parasites.md` section 15,
+threshold 0.53, 1.54 s per field). The **decision** arm is
+`policy.DecisionRule` (`results-negatives.md`, 6 September): negative on
+the noise floor after 500 white cells, positive when the interval clears
+it, settled when it sits in one band within 30%. With expert counts the
+floor is 0, there being no false alarms to clear.
+
+| arm | fields read | median | error bar | density bias | mean abs. error | flagged | positive | negative | band settled |
+|---|---|---|---|---|---|---|---|---|---|
+| who-200 / truth | 556 | 11 | 27% | -1.1% | 4.0% | 11 | | | |
+| rule-based / truth | 494 | 10 | 26% | -0.6% | 2.8% | 37 | | | |
+| **decision / truth** | **440** | 8 | 29% | -1.0% | 4.7% | 23 | 49 | 0 | 42 |
+| who-200 / found | 518 | 10 | 28% | -8.9% | **29.1%** (was 38.4%) | 11 | | | |
+| rule-based / found | 491 | 9 | 27% | -8.4% | **29.6%** (was 38.3%) | 36 | | | |
+| **decision / found** | **448** | 9 | 29% | -8.6% | 29.6% | 24 | 49 | 0 | 40 |
+
+Nine points off the density error with the real counter, from the vision.
+The decision arm reads 11% fewer fields than the rule-based one with expert
+counts (440 against 494) and 21% fewer than the protocol, for 4.7% error
+against 2.8% and 4.0%; with the real counter, 448 fields for the same
+29.6%. It calls all 49 positives positive and settles a band on 40 of
+them; the 24 flagged are slides that ran out before the band was settled,
+and TF150_R5 at 283/µL, which it will not call either way. The -8.6% bias
+of the real-counter arms is now the white cell count (+6%), not the
+parasites (-1.1%): `results-wbc.md`, 6 September.
+
+How tight a positive has to be before a settled band is enough to stop
+(`--sweep-settle`, expert counts):
+
+| settle width | fields | error bar | mean abs. error | flagged |
+|---|---|---|---|---|
+| band alone | 282 | 37% | 10.9% | 6 |
+| 50% | 361 | 37% | 7.7% | 13 |
+| **30%, shipped** | **440** | 29% | **4.7%** | 23 |
+| 20% | 494 | 26% | 2.8% | 37 |
+
+Band alone stopped every dense slide after five fields with the band right
+and the number wrong; 20% is the old rule again. 30% is the compromise
+shipped: a clinic monitoring a patient on day 0, 2 and 3 needs the number
+as well as the call.
