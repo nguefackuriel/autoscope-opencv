@@ -137,10 +137,11 @@ def make_batch(T, pts, idx, rng: np.random.RandomState, train: bool):
 
 
 def peaks(heat: np.ndarray, floor: float, nms: int = NMS_PX) -> tuple[np.ndarray, np.ndarray]:
-    """Local maxima above the floor: (n, 2) xy and their heights."""
-    import cv2 as cv
-    k = cv.getStructuringElement(cv.MORPH_ELLIPSE, (2 * nms + 1, 2 * nms + 1))
-    dil = cv.dilate(heat, k)
+    """Local maxima above the floor: (n, 2) xy and their heights. A square
+    max filter in torch (this venv has no OpenCV); the pipeline's
+    HeatmapScorer uses a round one in cv.dnn, same radius."""
+    t = torch.from_numpy(heat)[None, None]
+    dil = nn.functional.max_pool2d(t, 2 * nms + 1, stride=1, padding=nms)[0, 0].numpy()
     ys, xs = np.nonzero((heat >= dil) & (heat > floor))
     return np.stack([xs, ys], 1).astype(np.float32), heat[ys, xs]
 
@@ -197,6 +198,7 @@ def main():
     ap.add_argument("--channels", default="12,24,48,96")
     ap.add_argument("--model-out", default=None)
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--resume", action="store_true", help="continue from results/parasite_heatmap_last.pt")
     args = ap.parse_args()
     torch.set_num_threads(max(1, torch.get_num_threads() - 1))
     torch.manual_seed(args.seed); rng = np.random.RandomState(args.seed)
@@ -222,7 +224,15 @@ def main():
     thresholds = np.arange(0.1, 0.91, 0.1)
     history = []
     t0 = time.perf_counter()
-    for ep in range(args.epochs):
+    ckpt = OUT / "parasite_heatmap_last.pt"
+    first = 0
+    if args.resume and ckpt.exists():
+        state = torch.load(ckpt)
+        net.load_state_dict(state["net"]); opt.load_state_dict(state["opt"]); sched.load_state_dict(state["sched"])
+        sched.total_steps = steps   # resume with the same --epochs; a different one reshapes the schedule
+        rng.set_state(state["rng"]); history = state["history"]; first = state["epoch"]
+        print(f"resumed after epoch {first}", flush=True)
+    for ep in range(first, args.epochs):
         net.train()
         order = rng.choice(tr_idx, per_epoch, replace=per_epoch > len(tr_idx))
         total = 0.0
@@ -240,6 +250,8 @@ def main():
             line += f"; validation F1 {best['f1']:.3f} at {best['threshold']:.1f} (P {best['precision']:.3f} R {best['recall']:.3f})"
             history.append({"epoch": ep + 1, "table": table})
         print(line, flush=True)
+        torch.save({"net": net.state_dict(), "opt": opt.state_dict(), "sched": sched.state_dict(),
+                    "rng": rng.get_state(), "history": history, "epoch": ep + 1}, ckpt)
 
     table = history[-1]["table"] if history else []
     if table:
