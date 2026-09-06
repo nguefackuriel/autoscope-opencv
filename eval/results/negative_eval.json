@@ -5,28 +5,28 @@
   "infected_patients": 50,
   "per_field": {
     "fields": 572,
-    "clean_fields_pct": 94.6,
+    "clean_fields_pct": 94.8,
     "false_parasites_mean": 0.06,
     "false_parasites_median": 0.0,
     "false_parasites_p90": 0.0,
     "false_parasites_max": 3,
-    "false_per_200_wbc_pooled": 0.46,
-    "wbc_per_field_mean": 25.2
+    "false_per_200_wbc_pooled": 0.47,
+    "wbc_per_field_mean": 23.8
   },
   "arms": {
     "who-200": {
       "uninfected_per_ul_median": 0.0,
-      "uninfected_per_ul_p90": 59.700000000000045,
-      "uninfected_per_ul_max": 75.5,
+      "uninfected_per_ul_p90": 71.82,
+      "uninfected_per_ul_max": 73.7,
       "uninfected_called_negative_by_rule": 0,
       "uninfected_escalated": 0,
-      "uninfected_fields_read": 208,
+      "uninfected_fields_read": 220,
       "uninfected_fields_available": 572,
       "auc": 1.0,
       "cutoffs": [
         {
           "cutoff_per_ul": 0,
-          "specificity": 0.64,
+          "specificity": 0.6,
           "sensitivity": 1.0
         },
         {
@@ -47,7 +47,7 @@
         {
           "cutoff_per_ul": 1000,
           "specificity": 1.0,
-          "sensitivity": 0.92
+          "sensitivity": 0.94
         },
         {
           "cutoff_per_ul": 2000,
@@ -61,10 +61,10 @@
           "policy": "who-200",
           "fields_read": 9,
           "fields_available": 25,
-          "wbc": 214,
+          "wbc": 215,
           "parasites": 1,
-          "per_ul": 37.4,
-          "stopped_because": "counted 214 white cells, target was 200",
+          "per_ul": 37.2,
+          "stopped_because": "counted 215 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -74,10 +74,10 @@
           "policy": "who-200",
           "fields_read": 12,
           "fields_available": 33,
-          "wbc": 208,
+          "wbc": 202,
           "parasites": 1,
-          "per_ul": 38.5,
-          "stopped_because": "counted 208 white cells, target was 200",
+          "per_ul": 39.6,
+          "stopped_because": "counted 202 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -87,10 +87,10 @@
           "policy": "who-200",
           "fields_read": 10,
           "fields_available": 22,
-          "wbc": 214,
+          "wbc": 212,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "counted 214 white cells, target was 200",
+          "stopped_because": "counted 212 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -98,7 +98,7 @@
         {
           "patient": "TF209_15_39",
           "policy": "who-200",
-          "fields_read": 10,
+          "fields_read": 11,
           "fields_available": 26,
           "wbc": 218,
           "parasites": 0,
@@ -111,12 +111,12 @@
         {
           "patient": "TF214_15_50",
           "policy": "who-200",
-          "fields_read": 10,
+          "fields_read": 11,
           "fields_available": 24,
-          "wbc": 202,
-          "parasites": 1,
-          "per_ul": 39.6,
-          "stopped_because": "counted 202 white cells, target was 200",
+          "wbc": 217,
+          "parasites": 2,
+          "per_ul": 73.7,
+          "stopped_because": "counted 217 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -124,12 +124,12 @@
         {
           "patient": "TF217_15_54",
           "policy": "who-200",
-          "fields_read": 10,
+          "fields_read": 11,
           "fields_available": 23,
-          "wbc": 207,
+          "wbc": 220,
           "parasites": 1,
-          "per_ul": 38.6,
-          "stopped_because": "counted 207 white cells, target was 200",
+          "per_ul": 36.4,
+          "stopped_because": "counted 220 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -139,10 +139,10 @@
           "policy": "who-200",
           "fields_read": 8,
           "fields_available": 24,
-          "wbc": 221,
+          "wbc": 213,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "counted 221 white cells, target was 200",
+          "stopped_because": "counted 213 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -152,10 +152,10 @@
           "policy": "who-200",
           "fields_read": 7,
           "fields_available": 18,
-          "wbc": 223,
+          "wbc": 220,
           "parasites": 1,
-          "per_ul": 35.9,
-          "stopped_because": "counted 223 white cells, target was 200",
+          "per_ul": 36.4,
+          "stopped_because": "counted 220 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -165,10 +165,10 @@
           "policy": "who-200",
           "fields_read": 8,
           "fields_available": 22,
-          "wbc": 204,
+          "wbc": 201,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "counted 204 white cells, target was 200",
+          "stopped_because": "counted 201 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -178,10 +178,10 @@
           "policy": "who-200",
           "fields_read": 7,
           "fields_available": 18,
-          "wbc": 220,
+          "wbc": 204,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "counted 220 white cells, target was 200",
+          "stopped_because": "counted 204 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -191,10 +191,10 @@
           "policy": "who-200",
           "fields_read": 9,
           "fields_available": 22,
-          "wbc": 221,
+          "wbc": 213,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "counted 221 white cells, target was 200",
+          "stopped_because": "counted 213 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -215,12 +215,12 @@
         {
           "patient": "TF227_15_64",
           "policy": "who-200",
-          "fields_read": 10,
+          "fields_read": 11,
           "fields_available": 33,
-          "wbc": 214,
-          "parasites": 0,
-          "per_ul": 0.0,
-          "stopped_because": "counted 214 white cells, target was 200",
+          "wbc": 209,
+          "parasites": 1,
+          "per_ul": 38.3,
+          "stopped_because": "counted 209 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -230,10 +230,10 @@
           "policy": "who-200",
           "fields_read": 4,
           "fields_available": 11,
-          "wbc": 205,
+          "wbc": 207,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "counted 205 white cells, target was 200",
+          "stopped_because": "counted 207 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -243,10 +243,10 @@
           "policy": "who-200",
           "fields_read": 8,
           "fields_available": 24,
-          "wbc": 224,
+          "wbc": 201,
           "parasites": 1,
-          "per_ul": 35.7,
-          "stopped_because": "counted 224 white cells, target was 200",
+          "per_ul": 39.8,
+          "stopped_because": "counted 201 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -254,12 +254,12 @@
         {
           "patient": "TF232_15_69",
           "policy": "who-200",
-          "fields_read": 8,
+          "fields_read": 9,
           "fields_available": 24,
-          "wbc": 211,
+          "wbc": 208,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "counted 211 white cells, target was 200",
+          "stopped_because": "counted 208 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -267,12 +267,12 @@
         {
           "patient": "TF233_15_70",
           "policy": "who-200",
-          "fields_read": 9,
+          "fields_read": 11,
           "fields_available": 30,
-          "wbc": 211,
+          "wbc": 201,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "counted 211 white cells, target was 200",
+          "stopped_because": "counted 201 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -280,12 +280,12 @@
         {
           "patient": "TF236_15_75",
           "policy": "who-200",
-          "fields_read": 11,
+          "fields_read": 12,
           "fields_available": 33,
-          "wbc": 211,
+          "wbc": 212,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "counted 211 white cells, target was 200",
+          "stopped_because": "counted 212 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -293,12 +293,12 @@
         {
           "patient": "TF238_15_77",
           "policy": "who-200",
-          "fields_read": 10,
+          "fields_read": 11,
           "fields_available": 29,
-          "wbc": 213,
+          "wbc": 208,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "counted 213 white cells, target was 200",
+          "stopped_because": "counted 208 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -306,12 +306,12 @@
         {
           "patient": "TF240_15_79",
           "policy": "who-200",
-          "fields_read": 7,
+          "fields_read": 8,
           "fields_available": 22,
-          "wbc": 205,
+          "wbc": 217,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "counted 205 white cells, target was 200",
+          "stopped_because": "counted 217 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -319,12 +319,12 @@
         {
           "patient": "TF242_15_84",
           "policy": "who-200",
-          "fields_read": 9,
+          "fields_read": 10,
           "fields_available": 27,
-          "wbc": 213,
+          "wbc": 215,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "counted 213 white cells, target was 200",
+          "stopped_because": "counted 215 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -332,12 +332,12 @@
         {
           "patient": "TF243_15_78R",
           "policy": "who-200",
-          "fields_read": 7,
+          "fields_read": 8,
           "fields_available": 21,
-          "wbc": 204,
+          "wbc": 223,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "counted 204 white cells, target was 200",
+          "stopped_because": "counted 223 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -347,10 +347,10 @@
           "policy": "who-200",
           "fields_read": 5,
           "fields_available": 14,
-          "wbc": 212,
+          "wbc": 224,
           "parasites": 2,
-          "per_ul": 75.5,
-          "stopped_because": "counted 212 white cells, target was 200",
+          "per_ul": 71.4,
+          "stopped_because": "counted 224 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -360,10 +360,10 @@
           "policy": "who-200",
           "fields_read": 5,
           "fields_available": 12,
-          "wbc": 219,
+          "wbc": 218,
           "parasites": 2,
-          "per_ul": 73.1,
-          "stopped_because": "counted 219 white cells, target was 200",
+          "per_ul": 73.4,
+          "stopped_because": "counted 218 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -373,10 +373,10 @@
           "policy": "who-200",
           "fields_read": 6,
           "fields_available": 13,
-          "wbc": 217,
+          "wbc": 222,
           "parasites": 2,
-          "per_ul": 73.7,
-          "stopped_because": "counted 217 white cells, target was 200",
+          "per_ul": 72.1,
+          "stopped_because": "counted 222 white cells, target was 200",
           "escalated": false,
           "call": null,
           "band": null
@@ -385,11 +385,11 @@
     },
     "rule-based": {
       "uninfected_per_ul_median": 0.0,
-      "uninfected_per_ul_p90": 54.22000000000003,
-      "uninfected_per_ul_max": 112.7,
+      "uninfected_per_ul_p90": 54.440000000000026,
+      "uninfected_per_ul_max": 111.1,
       "uninfected_called_negative_by_rule": 15,
       "uninfected_escalated": 10,
-      "uninfected_fields_read": 331,
+      "uninfected_fields_read": 340,
       "uninfected_fields_available": 572,
       "auc": 1.0,
       "cutoffs": [
@@ -421,7 +421,7 @@
         {
           "cutoff_per_ul": 2000,
           "specificity": 1.0,
-          "sensitivity": 0.88
+          "sensitivity": 0.86
         }
       ],
       "runs_uninfected": [
@@ -430,9 +430,9 @@
           "policy": "rule-based",
           "fields_read": 21,
           "fields_available": 25,
-          "wbc": 465,
+          "wbc": 468,
           "parasites": 2,
-          "per_ul": 34.4,
+          "per_ul": 34.2,
           "stopped_because": "ran out of slide before the error bar was tight enough",
           "escalated": true,
           "call": null,
@@ -443,9 +443,9 @@
           "policy": "rule-based",
           "fields_read": 33,
           "fields_available": 33,
-          "wbc": 546,
+          "wbc": 539,
           "parasites": 5,
-          "per_ul": 73.3,
+          "per_ul": 74.2,
           "stopped_because": "hit the 33 field ceiling, handing to a person",
           "escalated": true,
           "call": null,
@@ -456,10 +456,10 @@
           "policy": "rule-based",
           "fields_read": 10,
           "fields_available": 22,
-          "wbc": 214,
+          "wbc": 212,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "no parasites in 214 white cells, which meets the WHO threshold for a negative",
+          "stopped_because": "no parasites in 212 white cells, which meets the WHO threshold for a negative",
           "escalated": false,
           "call": null,
           "band": null
@@ -467,7 +467,7 @@
         {
           "patient": "TF209_15_39",
           "policy": "rule-based",
-          "fields_read": 10,
+          "fields_read": 11,
           "fields_available": 26,
           "wbc": 218,
           "parasites": 0,
@@ -482,9 +482,9 @@
           "policy": "rule-based",
           "fields_read": 24,
           "fields_available": 24,
-          "wbc": 562,
+          "wbc": 545,
           "parasites": 3,
-          "per_ul": 42.7,
+          "per_ul": 44.0,
           "stopped_because": "hit the 24 field ceiling, handing to a person",
           "escalated": true,
           "call": null,
@@ -495,9 +495,9 @@
           "policy": "rule-based",
           "fields_read": 23,
           "fields_available": 23,
-          "wbc": 532,
+          "wbc": 482,
           "parasites": 1,
-          "per_ul": 15.0,
+          "per_ul": 16.6,
           "stopped_because": "hit the 23 field ceiling, handing to a person",
           "escalated": true,
           "call": null,
@@ -508,10 +508,10 @@
           "policy": "rule-based",
           "fields_read": 8,
           "fields_available": 24,
-          "wbc": 221,
+          "wbc": 213,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "no parasites in 221 white cells, which meets the WHO threshold for a negative",
+          "stopped_because": "no parasites in 213 white cells, which meets the WHO threshold for a negative",
           "escalated": false,
           "call": null,
           "band": null
@@ -521,9 +521,9 @@
           "policy": "rule-based",
           "fields_read": 18,
           "fields_available": 18,
-          "wbc": 541,
+          "wbc": 529,
           "parasites": 1,
-          "per_ul": 14.8,
+          "per_ul": 15.1,
           "stopped_because": "hit the 18 field ceiling, handing to a person",
           "escalated": true,
           "call": null,
@@ -534,10 +534,10 @@
           "policy": "rule-based",
           "fields_read": 8,
           "fields_available": 22,
-          "wbc": 204,
+          "wbc": 201,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "no parasites in 204 white cells, which meets the WHO threshold for a negative",
+          "stopped_because": "no parasites in 201 white cells, which meets the WHO threshold for a negative",
           "escalated": false,
           "call": null,
           "band": null
@@ -547,10 +547,10 @@
           "policy": "rule-based",
           "fields_read": 7,
           "fields_available": 18,
-          "wbc": 220,
+          "wbc": 204,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "no parasites in 220 white cells, which meets the WHO threshold for a negative",
+          "stopped_because": "no parasites in 204 white cells, which meets the WHO threshold for a negative",
           "escalated": false,
           "call": null,
           "band": null
@@ -560,10 +560,10 @@
           "policy": "rule-based",
           "fields_read": 9,
           "fields_available": 22,
-          "wbc": 221,
+          "wbc": 213,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "no parasites in 221 white cells, which meets the WHO threshold for a negative",
+          "stopped_because": "no parasites in 213 white cells, which meets the WHO threshold for a negative",
           "escalated": false,
           "call": null,
           "band": null
@@ -586,9 +586,9 @@
           "policy": "rule-based",
           "fields_read": 32,
           "fields_available": 33,
-          "wbc": 642,
+          "wbc": 577,
           "parasites": 1,
-          "per_ul": 12.5,
+          "per_ul": 13.9,
           "stopped_because": "ran out of slide before the error bar was tight enough",
           "escalated": true,
           "call": null,
@@ -612,9 +612,9 @@
           "policy": "rule-based",
           "fields_read": 24,
           "fields_available": 24,
-          "wbc": 635,
+          "wbc": 594,
           "parasites": 2,
-          "per_ul": 25.2,
+          "per_ul": 26.9,
           "stopped_because": "hit the 24 field ceiling, handing to a person",
           "escalated": true,
           "call": null,
@@ -623,12 +623,12 @@
         {
           "patient": "TF232_15_69",
           "policy": "rule-based",
-          "fields_read": 8,
+          "fields_read": 9,
           "fields_available": 24,
-          "wbc": 211,
+          "wbc": 208,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "no parasites in 211 white cells, which meets the WHO threshold for a negative",
+          "stopped_because": "no parasites in 208 white cells, which meets the WHO threshold for a negative",
           "escalated": false,
           "call": null,
           "band": null
@@ -636,12 +636,12 @@
         {
           "patient": "TF233_15_70",
           "policy": "rule-based",
-          "fields_read": 9,
+          "fields_read": 11,
           "fields_available": 30,
-          "wbc": 211,
+          "wbc": 201,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "no parasites in 211 white cells, which meets the WHO threshold for a negative",
+          "stopped_because": "no parasites in 201 white cells, which meets the WHO threshold for a negative",
           "escalated": false,
           "call": null,
           "band": null
@@ -649,12 +649,12 @@
         {
           "patient": "TF236_15_75",
           "policy": "rule-based",
-          "fields_read": 11,
+          "fields_read": 12,
           "fields_available": 33,
-          "wbc": 211,
+          "wbc": 212,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "no parasites in 211 white cells, which meets the WHO threshold for a negative",
+          "stopped_because": "no parasites in 212 white cells, which meets the WHO threshold for a negative",
           "escalated": false,
           "call": null,
           "band": null
@@ -662,12 +662,12 @@
         {
           "patient": "TF238_15_77",
           "policy": "rule-based",
-          "fields_read": 10,
+          "fields_read": 11,
           "fields_available": 29,
-          "wbc": 213,
+          "wbc": 208,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "no parasites in 213 white cells, which meets the WHO threshold for a negative",
+          "stopped_because": "no parasites in 208 white cells, which meets the WHO threshold for a negative",
           "escalated": false,
           "call": null,
           "band": null
@@ -675,12 +675,12 @@
         {
           "patient": "TF240_15_79",
           "policy": "rule-based",
-          "fields_read": 7,
+          "fields_read": 8,
           "fields_available": 22,
-          "wbc": 205,
+          "wbc": 217,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "no parasites in 205 white cells, which meets the WHO threshold for a negative",
+          "stopped_because": "no parasites in 217 white cells, which meets the WHO threshold for a negative",
           "escalated": false,
           "call": null,
           "band": null
@@ -688,12 +688,12 @@
         {
           "patient": "TF242_15_84",
           "policy": "rule-based",
-          "fields_read": 9,
+          "fields_read": 10,
           "fields_available": 27,
-          "wbc": 213,
+          "wbc": 215,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "no parasites in 213 white cells, which meets the WHO threshold for a negative",
+          "stopped_because": "no parasites in 215 white cells, which meets the WHO threshold for a negative",
           "escalated": false,
           "call": null,
           "band": null
@@ -701,12 +701,12 @@
         {
           "patient": "TF243_15_78R",
           "policy": "rule-based",
-          "fields_read": 7,
+          "fields_read": 8,
           "fields_available": 21,
-          "wbc": 204,
+          "wbc": 223,
           "parasites": 0,
           "per_ul": 0.0,
-          "stopped_because": "no parasites in 204 white cells, which meets the WHO threshold for a negative",
+          "stopped_because": "no parasites in 223 white cells, which meets the WHO threshold for a negative",
           "escalated": false,
           "call": null,
           "band": null
@@ -716,7 +716,7 @@
           "policy": "rule-based",
           "fields_read": 4,
           "fields_available": 14,
-          "wbc": 175,
+          "wbc": 183,
           "parasites": 0,
           "per_ul": 0.0,
           "stopped_because": "ran out of slide before the error bar was tight enough",
@@ -729,9 +729,9 @@
           "policy": "rule-based",
           "fields_read": 12,
           "fields_available": 12,
-          "wbc": 517,
+          "wbc": 521,
           "parasites": 4,
-          "per_ul": 61.9,
+          "per_ul": 61.4,
           "stopped_because": "hit the 12 field ceiling, handing to a person",
           "escalated": true,
           "call": null,
@@ -742,9 +742,9 @@
           "policy": "rule-based",
           "fields_read": 13,
           "fields_available": 13,
-          "wbc": 497,
+          "wbc": 504,
           "parasites": 7,
-          "per_ul": 112.7,
+          "per_ul": 111.1,
           "stopped_because": "hit the 13 field ceiling, handing to a person",
           "escalated": true,
           "call": null,
@@ -754,19 +754,19 @@
     }
   },
   "decision": {
-    "floor_per_ul": 150.19681795712089,
+    "floor_per_ul": 148.05007075743845,
     "negative_wbc_min": 500,
     "clean_slides": 25,
-    "specificity": 0.8,
+    "specificity": 0.6,
     "clean_called_positive": 0,
-    "clean_to_a_person": 5,
-    "clean_fields_read": 490,
+    "clean_to_a_person": 10,
+    "clean_fields_read": 523,
     "infected_slides": 50,
     "sensitivity": 0.98,
     "infected_called_negative": 0,
     "infected_to_a_person": 1,
     "infected_band_settled": 40,
-    "infected_fields_read": 448,
+    "infected_fields_read": 450,
     "sensitivity_by_expert_band": {
       "0": {
         "slides": 1,
@@ -791,9 +791,9 @@
         "policy": "decision",
         "fields_read": 21,
         "fields_available": 25,
-        "wbc": 465,
+        "wbc": 468,
         "parasites": 2,
-        "per_ul": 34.4,
+        "per_ul": 34.2,
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": "undecided",
@@ -802,12 +802,12 @@
       {
         "patient": "TF205_HT16",
         "policy": "decision",
-        "fields_read": 30,
+        "fields_read": 31,
         "fields_available": 33,
-        "wbc": 504,
-        "parasites": 4,
-        "per_ul": 63.5,
-        "stopped_because": "negative: 4 parasites in 504 white cells reads 63/uL, within the 150/uL a clean slide produces",
+        "wbc": 512,
+        "parasites": 5,
+        "per_ul": 78.1,
+        "stopped_because": "negative: 5 parasites in 512 white cells reads 78/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -817,7 +817,7 @@
         "policy": "decision",
         "fields_read": 22,
         "fields_available": 22,
-        "wbc": 519,
+        "wbc": 518,
         "parasites": 0,
         "per_ul": 0.0,
         "stopped_because": "hit the 22 field ceiling, handing to a person",
@@ -828,25 +828,25 @@
       {
         "patient": "TF209_15_39",
         "policy": "decision",
-        "fields_read": 23,
+        "fields_read": 26,
         "fields_available": 26,
-        "wbc": 505,
+        "wbc": 510,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "negative: 0 parasites in 505 white cells reads 0/uL, within the 150/uL a clean slide produces",
-        "escalated": false,
-        "call": "negative",
+        "stopped_because": "hit the 26 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "undecided",
         "band": null
       },
       {
         "patient": "TF214_15_50",
         "policy": "decision",
-        "fields_read": 22,
+        "fields_read": 23,
         "fields_available": 24,
-        "wbc": 507,
+        "wbc": 514,
         "parasites": 3,
-        "per_ul": 47.3,
-        "stopped_because": "negative: 3 parasites in 507 white cells reads 47/uL, within the 150/uL a clean slide produces",
+        "per_ul": 46.7,
+        "stopped_because": "negative: 3 parasites in 514 white cells reads 47/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -854,25 +854,25 @@
       {
         "patient": "TF217_15_54",
         "policy": "decision",
-        "fields_read": 22,
+        "fields_read": 23,
         "fields_available": 23,
-        "wbc": 510,
+        "wbc": 482,
         "parasites": 1,
-        "per_ul": 15.7,
-        "stopped_because": "negative: 1 parasites in 510 white cells reads 16/uL, within the 150/uL a clean slide produces",
-        "escalated": false,
-        "call": "negative",
+        "per_ul": 16.6,
+        "stopped_because": "hit the 23 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "undecided",
         "band": null
       },
       {
         "patient": "TF218_15_55",
         "policy": "decision",
-        "fields_read": 20,
+        "fields_read": 21,
         "fields_available": 24,
-        "wbc": 511,
-        "parasites": 1,
-        "per_ul": 15.7,
-        "stopped_because": "negative: 1 parasites in 511 white cells reads 16/uL, within the 150/uL a clean slide produces",
+        "wbc": 520,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "negative: 0 parasites in 520 white cells reads 0/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -882,10 +882,10 @@
         "policy": "decision",
         "fields_read": 17,
         "fields_available": 18,
-        "wbc": 518,
+        "wbc": 507,
         "parasites": 1,
-        "per_ul": 15.4,
-        "stopped_because": "negative: 1 parasites in 518 white cells reads 15/uL, within the 150/uL a clean slide produces",
+        "per_ul": 15.8,
+        "stopped_because": "negative: 1 parasites in 507 white cells reads 16/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -895,10 +895,10 @@
         "policy": "decision",
         "fields_read": 21,
         "fields_available": 22,
-        "wbc": 516,
+        "wbc": 507,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "negative: 0 parasites in 516 white cells reads 0/uL, within the 150/uL a clean slide produces",
+        "stopped_because": "negative: 0 parasites in 507 white cells reads 0/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -906,25 +906,25 @@
       {
         "patient": "TF223_15_59",
         "policy": "decision",
-        "fields_read": 17,
+        "fields_read": 18,
         "fields_available": 18,
-        "wbc": 512,
+        "wbc": 513,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "negative: 0 parasites in 512 white cells reads 0/uL, within the 150/uL a clean slide produces",
-        "escalated": false,
-        "call": "negative",
+        "stopped_because": "hit the 18 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "undecided",
         "band": null
       },
       {
         "patient": "TF225_15_62",
         "policy": "decision",
-        "fields_read": 20,
+        "fields_read": 21,
         "fields_available": 22,
-        "wbc": 504,
+        "wbc": 501,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "negative: 0 parasites in 504 white cells reads 0/uL, within the 150/uL a clean slide produces",
+        "stopped_because": "negative: 0 parasites in 501 white cells reads 0/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -934,10 +934,10 @@
         "policy": "decision",
         "fields_read": 21,
         "fields_available": 22,
-        "wbc": 523,
+        "wbc": 509,
         "parasites": 1,
-        "per_ul": 15.3,
-        "stopped_because": "negative: 1 parasites in 523 white cells reads 15/uL, within the 150/uL a clean slide produces",
+        "per_ul": 15.7,
+        "stopped_because": "negative: 1 parasites in 509 white cells reads 16/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -945,12 +945,12 @@
       {
         "patient": "TF227_15_64",
         "policy": "decision",
-        "fields_read": 25,
+        "fields_read": 28,
         "fields_available": 33,
-        "wbc": 506,
+        "wbc": 513,
         "parasites": 1,
-        "per_ul": 15.8,
-        "stopped_because": "negative: 1 parasites in 506 white cells reads 16/uL, within the 150/uL a clean slide produces",
+        "per_ul": 15.6,
+        "stopped_because": "negative: 1 parasites in 513 white cells reads 16/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -960,10 +960,10 @@
         "policy": "decision",
         "fields_read": 10,
         "fields_available": 11,
-        "wbc": 529,
+        "wbc": 537,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "negative: 0 parasites in 529 white cells reads 0/uL, within the 150/uL a clean slide produces",
+        "stopped_because": "negative: 0 parasites in 537 white cells reads 0/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -971,12 +971,12 @@
       {
         "patient": "TF231_15_68",
         "policy": "decision",
-        "fields_read": 19,
+        "fields_read": 21,
         "fields_available": 24,
-        "wbc": 510,
+        "wbc": 518,
         "parasites": 2,
-        "per_ul": 31.4,
-        "stopped_because": "negative: 2 parasites in 510 white cells reads 31/uL, within the 150/uL a clean slide produces",
+        "per_ul": 30.9,
+        "stopped_because": "negative: 2 parasites in 518 white cells reads 31/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -984,25 +984,25 @@
       {
         "patient": "TF232_15_69",
         "policy": "decision",
-        "fields_read": 22,
+        "fields_read": 24,
         "fields_available": 24,
-        "wbc": 517,
+        "wbc": 512,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "negative: 0 parasites in 517 white cells reads 0/uL, within the 150/uL a clean slide produces",
-        "escalated": false,
-        "call": "negative",
+        "stopped_because": "hit the 24 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "undecided",
         "band": null
       },
       {
         "patient": "TF233_15_70",
         "policy": "decision",
-        "fields_read": 21,
+        "fields_read": 26,
         "fields_available": 30,
-        "wbc": 506,
+        "wbc": 515,
         "parasites": 1,
-        "per_ul": 15.8,
-        "stopped_because": "negative: 1 parasites in 506 white cells reads 16/uL, within the 150/uL a clean slide produces",
+        "per_ul": 15.5,
+        "stopped_because": "negative: 1 parasites in 515 white cells reads 16/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -1010,12 +1010,12 @@
       {
         "patient": "TF236_15_75",
         "policy": "decision",
-        "fields_read": 27,
+        "fields_read": 29,
         "fields_available": 33,
-        "wbc": 513,
+        "wbc": 512,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "negative: 0 parasites in 513 white cells reads 0/uL, within the 150/uL a clean slide produces",
+        "stopped_because": "negative: 0 parasites in 512 white cells reads 0/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -1023,12 +1023,12 @@
       {
         "patient": "TF238_15_77",
         "policy": "decision",
-        "fields_read": 23,
+        "fields_read": 26,
         "fields_available": 29,
-        "wbc": 508,
+        "wbc": 511,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "negative: 0 parasites in 508 white cells reads 0/uL, within the 150/uL a clean slide produces",
+        "stopped_because": "negative: 0 parasites in 511 white cells reads 0/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -1036,12 +1036,12 @@
       {
         "patient": "TF240_15_79",
         "policy": "decision",
-        "fields_read": 18,
+        "fields_read": 20,
         "fields_available": 22,
-        "wbc": 506,
+        "wbc": 501,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "negative: 0 parasites in 506 white cells reads 0/uL, within the 150/uL a clean slide produces",
+        "stopped_because": "negative: 0 parasites in 501 white cells reads 0/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -1049,25 +1049,25 @@
       {
         "patient": "TF242_15_84",
         "policy": "decision",
-        "fields_read": 23,
+        "fields_read": 26,
         "fields_available": 27,
-        "wbc": 511,
+        "wbc": 515,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "negative: 0 parasites in 511 white cells reads 0/uL, within the 150/uL a clean slide produces",
-        "escalated": false,
-        "call": "negative",
+        "stopped_because": "ran out of slide before the error bar was tight enough",
+        "escalated": true,
+        "call": "undecided",
         "band": null
       },
       {
         "patient": "TF243_15_78R",
         "policy": "decision",
-        "fields_read": 17,
+        "fields_read": 19,
         "fields_available": 21,
-        "wbc": 504,
+        "wbc": 518,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "negative: 0 parasites in 504 white cells reads 0/uL, within the 150/uL a clean slide produces",
+        "stopped_because": "negative: 0 parasites in 518 white cells reads 0/uL, within the 148/uL a clean slide produces",
         "escalated": false,
         "call": "negative",
         "band": null
@@ -1077,7 +1077,7 @@
         "policy": "decision",
         "fields_read": 4,
         "fields_available": 14,
-        "wbc": 175,
+        "wbc": 183,
         "parasites": 0,
         "per_ul": 0.0,
         "stopped_because": "ran out of slide before the error bar was tight enough",
@@ -1090,9 +1090,9 @@
         "policy": "decision",
         "fields_read": 12,
         "fields_available": 12,
-        "wbc": 517,
+        "wbc": 521,
         "parasites": 4,
-        "per_ul": 61.9,
+        "per_ul": 61.4,
         "stopped_because": "hit the 12 field ceiling, handing to a person",
         "escalated": true,
         "call": "undecided",
@@ -1103,9 +1103,9 @@
         "policy": "decision",
         "fields_read": 13,
         "fields_available": 13,
-        "wbc": 497,
+        "wbc": 504,
         "parasites": 7,
-        "per_ul": 112.7,
+        "per_ul": 111.1,
         "stopped_because": "hit the 13 field ceiling, handing to a person",
         "escalated": true,
         "call": "undecided",
@@ -1118,10 +1118,10 @@
         "policy": "decision",
         "fields_read": 11,
         "fields_available": 14,
-        "wbc": 172,
-        "parasites": 186,
-        "per_ul": 8651.2,
-        "stopped_because": "positive: 8,651/uL (7,453 to 9,988), above the 150/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "wbc": 179,
+        "parasites": 184,
+        "per_ul": 8223.5,
+        "stopped_because": "positive: 8,223/uL (7,078 to 9,501), above the 148/uL floor, 1 000 to 10 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
         "band": "1 000 to 10 000/uL"
@@ -1131,9 +1131,9 @@
         "policy": "decision",
         "fields_read": 14,
         "fields_available": 14,
-        "wbc": 225,
+        "wbc": 216,
         "parasites": 64,
-        "per_ul": 2275.6,
+        "per_ul": 2370.4,
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1144,10 +1144,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 11,
-        "wbc": 89,
-        "parasites": 957,
-        "per_ul": 86022.5,
-        "stopped_because": "positive: 86,022/uL (80,658 to 91,650), above the 150/uL floor, 10 000 to 100 000/uL; error bar 13%",
+        "wbc": 93,
+        "parasites": 955,
+        "per_ul": 82150.5,
+        "stopped_because": "positive: 82,151/uL (77,022 to 87,531), above the 148/uL floor, 10 000 to 100 000/uL; error bar 13%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1157,10 +1157,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 6,
-        "wbc": 198,
+        "wbc": 204,
         "parasites": 303,
-        "per_ul": 12242.4,
-        "stopped_because": "positive: 12,242/uL (10,903 to 13,701), above the 150/uL floor, 10 000 to 100 000/uL; error bar 23%",
+        "per_ul": 11882.4,
+        "stopped_because": "positive: 11,882/uL (10,582 to 13,298), above the 148/uL floor, 10 000 to 100 000/uL; error bar 23%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1170,10 +1170,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 12,
-        "wbc": 94,
-        "parasites": 651,
-        "per_ul": 55404.3,
-        "stopped_because": "positive: 55,404/uL (51,229 to 59,829), above the 150/uL floor, 10 000 to 100 000/uL; error bar 16%",
+        "wbc": 99,
+        "parasites": 645,
+        "per_ul": 52121.2,
+        "stopped_because": "positive: 52,121/uL (48,176 to 56,303), above the 148/uL floor, 10 000 to 100 000/uL; error bar 16%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1183,10 +1183,10 @@
         "policy": "decision",
         "fields_read": 7,
         "fields_available": 8,
-        "wbc": 233,
+        "wbc": 217,
         "parasites": 180,
-        "per_ul": 6180.3,
-        "stopped_because": "positive: 6,180/uL (5,310 to 7,152), above the 150/uL floor, 1 000 to 10 000/uL; error bar 30%",
+        "per_ul": 6635.9,
+        "stopped_because": "positive: 6,636/uL (5,702 to 7,679), above the 148/uL floor, 1 000 to 10 000/uL; error bar 30%",
         "escalated": false,
         "call": "positive",
         "band": "1 000 to 10 000/uL"
@@ -1196,9 +1196,9 @@
         "policy": "decision",
         "fields_read": 14,
         "fields_available": 14,
-        "wbc": 209,
-        "parasites": 57,
-        "per_ul": 2181.8,
+        "wbc": 207,
+        "parasites": 56,
+        "per_ul": 2164.3,
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1209,10 +1209,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 16,
-        "wbc": 97,
-        "parasites": 474,
-        "per_ul": 39092.8,
-        "stopped_because": "positive: 39,093/uL (35,652 to 42,776), above the 150/uL floor, 10 000 to 100 000/uL; error bar 18%",
+        "wbc": 82,
+        "parasites": 468,
+        "per_ul": 45658.5,
+        "stopped_because": "positive: 45,659/uL (41,615 to 49,989), above the 148/uL floor, 10 000 to 100 000/uL; error bar 18%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1222,9 +1222,9 @@
         "policy": "decision",
         "fields_read": 10,
         "fields_available": 10,
-        "wbc": 228,
+        "wbc": 237,
         "parasites": 159,
-        "per_ul": 5578.9,
+        "per_ul": 5367.1,
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1235,10 +1235,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 14,
-        "wbc": 88,
-        "parasites": 692,
-        "per_ul": 62909.1,
-        "stopped_because": "positive: 62,909/uL (58,309 to 67,776), above the 150/uL floor, 10 000 to 100 000/uL; error bar 15%",
+        "wbc": 92,
+        "parasites": 691,
+        "per_ul": 60087.0,
+        "stopped_because": "positive: 60,087/uL (55,690 to 64,739), above the 148/uL floor, 10 000 to 100 000/uL; error bar 15%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1248,9 +1248,9 @@
         "policy": "decision",
         "fields_read": 16,
         "fields_available": 16,
-        "wbc": 226,
+        "wbc": 234,
         "parasites": 322,
-        "per_ul": 11398.2,
+        "per_ul": 11008.5,
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1259,13 +1259,13 @@
       {
         "patient": "TF134_US28",
         "policy": "decision",
-        "fields_read": 14,
+        "fields_read": 15,
         "fields_available": 16,
-        "wbc": 208,
-        "parasites": 178,
-        "per_ul": 6846.2,
-        "stopped_because": "positive: 6,846/uL (5,877 to 7,929), above the 150/uL floor, 1 000 to 10 000/uL; error bar 30%",
-        "escalated": false,
+        "wbc": 229,
+        "parasites": 188,
+        "per_ul": 6567.7,
+        "stopped_because": "ran out of slide before the error bar was tight enough",
+        "escalated": true,
         "call": "positive",
         "band": "1 000 to 10 000/uL"
       },
@@ -1274,9 +1274,9 @@
         "policy": "decision",
         "fields_read": 11,
         "fields_available": 11,
-        "wbc": 221,
+        "wbc": 218,
         "parasites": 110,
-        "per_ul": 3981.9,
+        "per_ul": 4036.7,
         "stopped_because": "hit the 11 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1287,10 +1287,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 10,
-        "wbc": 108,
+        "wbc": 110,
         "parasites": 668,
-        "per_ul": 49481.5,
-        "stopped_because": "positive: 49,481/uL (45,800 to 53,380), above the 150/uL floor, 10 000 to 100 000/uL; error bar 15%",
+        "per_ul": 48581.8,
+        "stopped_because": "positive: 48,582/uL (44,967 to 52,410), above the 148/uL floor, 10 000 to 100 000/uL; error bar 15%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1300,10 +1300,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 12,
-        "wbc": 91,
-        "parasites": 758,
-        "per_ul": 66637.4,
-        "stopped_because": "positive: 66,637/uL (61,977 to 71,555), above the 150/uL floor, 10 000 to 100 000/uL; error bar 14%",
+        "wbc": 93,
+        "parasites": 753,
+        "per_ul": 64774.2,
+        "stopped_because": "positive: 64,774/uL (60,230 to 69,571), above the 148/uL floor, 10 000 to 100 000/uL; error bar 14%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1313,9 +1313,9 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 5,
-        "wbc": 304,
-        "parasites": 13,
-        "per_ul": 342.1,
+        "wbc": 306,
+        "parasites": 11,
+        "per_ul": 287.6,
         "stopped_because": "hit the 5 field ceiling, handing to a person",
         "escalated": true,
         "call": "undecided",
@@ -1326,10 +1326,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 21,
-        "wbc": 70,
-        "parasites": 567,
-        "per_ul": 64800.0,
-        "stopped_because": "positive: 64,800/uL (59,575 to 70,360), above the 150/uL floor, 10 000 to 100 000/uL; error bar 17%",
+        "wbc": 69,
+        "parasites": 555,
+        "per_ul": 64347.8,
+        "stopped_because": "positive: 64,348/uL (59,105 to 69,931), above the 148/uL floor, 10 000 to 100 000/uL; error bar 17%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1339,9 +1339,9 @@
         "policy": "decision",
         "fields_read": 12,
         "fields_available": 12,
-        "wbc": 291,
-        "parasites": 41,
-        "per_ul": 1127.1,
+        "wbc": 247,
+        "parasites": 40,
+        "per_ul": 1295.5,
         "stopped_because": "hit the 12 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1352,9 +1352,9 @@
         "policy": "decision",
         "fields_read": 11,
         "fields_available": 11,
-        "wbc": 276,
-        "parasites": 24,
-        "per_ul": 695.7,
+        "wbc": 263,
+        "parasites": 23,
+        "per_ul": 699.6,
         "stopped_because": "hit the 11 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1365,10 +1365,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 15,
-        "wbc": 77,
+        "wbc": 81,
         "parasites": 230,
-        "per_ul": 23896.1,
-        "stopped_because": "positive: 23,896/uL (20,907 to 27,192), above the 150/uL floor, 10 000 to 100 000/uL; error bar 26%",
+        "per_ul": 22716.0,
+        "stopped_because": "positive: 22,716/uL (19,875 to 25,849), above the 148/uL floor, 10 000 to 100 000/uL; error bar 26%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1378,9 +1378,9 @@
         "policy": "decision",
         "fields_read": 10,
         "fields_available": 10,
-        "wbc": 268,
+        "wbc": 248,
         "parasites": 87,
-        "per_ul": 2597.0,
+        "per_ul": 2806.5,
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1391,9 +1391,9 @@
         "policy": "decision",
         "fields_read": 10,
         "fields_available": 10,
-        "wbc": 513,
-        "parasites": 132,
-        "per_ul": 2058.5,
+        "wbc": 530,
+        "parasites": 129,
+        "per_ul": 1947.2,
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1404,9 +1404,9 @@
         "policy": "decision",
         "fields_read": 7,
         "fields_available": 14,
-        "wbc": 131,
+        "wbc": 122,
         "parasites": 155,
-        "per_ul": 9465.6,
+        "per_ul": 10163.9,
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": "positive",
@@ -1418,9 +1418,9 @@
         "fields_read": 10,
         "fields_available": 16,
         "wbc": 191,
-        "parasites": 199,
-        "per_ul": 8335.1,
-        "stopped_because": "positive: 8,335/uL (7,217 to 9,577), above the 150/uL floor, 1 000 to 10 000/uL; error bar 28%",
+        "parasites": 198,
+        "per_ul": 8293.2,
+        "stopped_because": "positive: 8,293/uL (7,178 to 9,532), above the 148/uL floor, 1 000 to 10 000/uL; error bar 28%",
         "escalated": false,
         "call": "positive",
         "band": "1 000 to 10 000/uL"
@@ -1430,10 +1430,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 19,
-        "wbc": 106,
-        "parasites": 270,
-        "per_ul": 20377.4,
-        "stopped_because": "positive: 20,377/uL (18,019 to 22,959), above the 150/uL floor, 10 000 to 100 000/uL; error bar 24%",
+        "wbc": 90,
+        "parasites": 266,
+        "per_ul": 23644.4,
+        "stopped_because": "positive: 23,644/uL (20,888 to 26,663), above the 148/uL floor, 10 000 to 100 000/uL; error bar 24%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1443,9 +1443,9 @@
         "policy": "decision",
         "fields_read": 13,
         "fields_available": 13,
-        "wbc": 231,
+        "wbc": 243,
         "parasites": 174,
-        "per_ul": 6026.0,
+        "per_ul": 5728.4,
         "stopped_because": "hit the 13 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1456,10 +1456,10 @@
         "policy": "decision",
         "fields_read": 11,
         "fields_available": 14,
-        "wbc": 208,
-        "parasites": 188,
-        "per_ul": 7230.8,
-        "stopped_because": "positive: 7,231/uL (6,234 to 8,342), above the 150/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "wbc": 193,
+        "parasites": 185,
+        "per_ul": 7668.4,
+        "stopped_because": "positive: 7,668/uL (6,603 to 8,857), above the 148/uL floor, 1 000 to 10 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
         "band": "1 000 to 10 000/uL"
@@ -1469,9 +1469,9 @@
         "policy": "decision",
         "fields_read": 9,
         "fields_available": 9,
-        "wbc": 212,
+        "wbc": 205,
         "parasites": 61,
-        "per_ul": 2301.9,
+        "per_ul": 2380.5,
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1485,7 +1485,7 @@
         "wbc": 185,
         "parasites": 179,
         "per_ul": 7740.5,
-        "stopped_because": "positive: 7,741/uL (6,648 to 8,961), above the 150/uL floor, 1 000 to 10 000/uL; error bar 30%",
+        "stopped_because": "positive: 7,741/uL (6,648 to 8,961), above the 148/uL floor, 1 000 to 10 000/uL; error bar 30%",
         "escalated": false,
         "call": "positive",
         "band": "1 000 to 10 000/uL"
@@ -1495,10 +1495,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 14,
-        "wbc": 80,
-        "parasites": 917,
-        "per_ul": 91700.0,
-        "stopped_because": "positive: 91,700/uL (85,860 to 97,833), above the 150/uL floor, 10 000 to 100 000/uL; error bar 13%",
+        "wbc": 77,
+        "parasites": 900,
+        "per_ul": 93506.5,
+        "stopped_because": "positive: 93,506/uL (87,497 to 99,821), above the 148/uL floor, 10 000 to 100 000/uL; error bar 13%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1508,9 +1508,9 @@
         "policy": "decision",
         "fields_read": 14,
         "fields_available": 14,
-        "wbc": 287,
-        "parasites": 36,
-        "per_ul": 1003.5,
+        "wbc": 243,
+        "parasites": 35,
+        "per_ul": 1152.3,
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1521,9 +1521,9 @@
         "policy": "decision",
         "fields_read": 12,
         "fields_available": 12,
-        "wbc": 220,
+        "wbc": 221,
         "parasites": 70,
-        "per_ul": 2545.5,
+        "per_ul": 2533.9,
         "stopped_because": "hit the 12 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1534,10 +1534,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 6,
-        "wbc": 163,
-        "parasites": 674,
-        "per_ul": 33079.8,
-        "stopped_because": "positive: 33,080/uL (30,629 to 35,674), above the 150/uL floor, 10 000 to 100 000/uL; error bar 15%",
+        "wbc": 160,
+        "parasites": 670,
+        "per_ul": 33500.0,
+        "stopped_because": "positive: 33,500/uL (31,011 to 36,136), above the 148/uL floor, 10 000 to 100 000/uL; error bar 15%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1548,9 +1548,9 @@
         "fields_read": 6,
         "fields_available": 8,
         "wbc": 175,
-        "parasites": 263,
-        "per_ul": 12022.9,
-        "stopped_because": "positive: 12,023/uL (10,614 to 13,567), above the 150/uL floor, 10 000 to 100 000/uL; error bar 25%",
+        "parasites": 255,
+        "per_ul": 11657.1,
+        "stopped_because": "positive: 11,657/uL (10,270 to 13,179), above the 148/uL floor, 10 000 to 100 000/uL; error bar 25%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1560,9 +1560,9 @@
         "policy": "decision",
         "fields_read": 13,
         "fields_available": 13,
-        "wbc": 258,
-        "parasites": 84,
-        "per_ul": 2604.7,
+        "wbc": 255,
+        "parasites": 83,
+        "per_ul": 2603.9,
         "stopped_because": "hit the 13 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1573,10 +1573,10 @@
         "policy": "decision",
         "fields_read": 13,
         "fields_available": 18,
-        "wbc": 201,
-        "parasites": 185,
-        "per_ul": 7363.2,
-        "stopped_because": "positive: 7,363/uL (6,340 to 8,504), above the 150/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "wbc": 195,
+        "parasites": 181,
+        "per_ul": 7425.6,
+        "stopped_because": "positive: 7,426/uL (6,383 to 8,590), above the 148/uL floor, 1 000 to 10 000/uL; error bar 30%",
         "escalated": false,
         "call": "positive",
         "band": "1 000 to 10 000/uL"
@@ -1584,25 +1584,25 @@
       {
         "patient": "TF61_CS20",
         "policy": "decision",
-        "fields_read": 6,
+        "fields_read": 7,
         "fields_available": 7,
-        "wbc": 222,
-        "parasites": 312,
-        "per_ul": 11243.2,
-        "stopped_because": "positive: 11,243/uL (10,030 to 12,563), above the 150/uL floor, 10 000 to 100 000/uL; error bar 23%",
-        "escalated": false,
+        "wbc": 261,
+        "parasites": 358,
+        "per_ul": 10973.2,
+        "stopped_because": "hit the 7 field ceiling, handing to a person",
+        "escalated": true,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": null
       },
       {
         "patient": "TF64_US2",
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 10,
-        "wbc": 111,
-        "parasites": 591,
-        "per_ul": 42594.6,
-        "stopped_because": "positive: 42,595/uL (39,229 to 46,171), above the 150/uL floor, 10 000 to 100 000/uL; error bar 16%",
+        "wbc": 107,
+        "parasites": 590,
+        "per_ul": 44112.1,
+        "stopped_because": "positive: 44,112/uL (40,624 to 47,820), above the 148/uL floor, 10 000 to 100 000/uL; error bar 16%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1612,9 +1612,9 @@
         "policy": "decision",
         "fields_read": 14,
         "fields_available": 16,
-        "wbc": 206,
+        "wbc": 212,
         "parasites": 273,
-        "per_ul": 10601.9,
+        "per_ul": 10301.9,
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": "positive",
@@ -1625,10 +1625,10 @@
         "policy": "decision",
         "fields_read": 14,
         "fields_available": 16,
-        "wbc": 253,
-        "parasites": 194,
-        "per_ul": 6134.4,
-        "stopped_because": "positive: 6,134/uL (5,302 to 7,061), above the 150/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "wbc": 235,
+        "parasites": 190,
+        "per_ul": 6468.1,
+        "stopped_because": "positive: 6,468/uL (5,581 to 7,456), above the 148/uL floor, 1 000 to 10 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
         "band": "1 000 to 10 000/uL"
@@ -1638,9 +1638,9 @@
         "policy": "decision",
         "fields_read": 16,
         "fields_available": 16,
-        "wbc": 226,
+        "wbc": 236,
         "parasites": 110,
-        "per_ul": 3893.8,
+        "per_ul": 3728.8,
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1651,23 +1651,23 @@
         "policy": "decision",
         "fields_read": 7,
         "fields_available": 10,
-        "wbc": 164,
-        "parasites": 183,
-        "per_ul": 8926.8,
-        "stopped_because": "ran out of slide while skipping unusable fields",
-        "escalated": true,
+        "wbc": 174,
+        "parasites": 181,
+        "per_ul": 8321.8,
+        "stopped_because": "positive: 8,322/uL (7,154 to 9,626), above the 148/uL floor, 1 000 to 10 000/uL; error bar 30%",
+        "escalated": false,
         "call": "positive",
-        "band": null
+        "band": "1 000 to 10 000/uL"
       },
       {
         "patient": "TF77_CO15",
         "policy": "decision",
         "fields_read": 8,
         "fields_available": 11,
-        "wbc": 184,
-        "parasites": 193,
-        "per_ul": 8391.3,
-        "stopped_because": "positive: 8,391/uL (7,249 to 9,662), above the 150/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "wbc": 185,
+        "parasites": 192,
+        "per_ul": 8302.7,
+        "stopped_because": "positive: 8,303/uL (7,170 to 9,564), above the 148/uL floor, 1 000 to 10 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
         "band": "1 000 to 10 000/uL"
@@ -1677,9 +1677,9 @@
         "policy": "decision",
         "fields_read": 10,
         "fields_available": 10,
-        "wbc": 238,
+        "wbc": 249,
         "parasites": 73,
-        "per_ul": 2453.8,
+        "per_ul": 2345.4,
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1690,9 +1690,9 @@
         "policy": "decision",
         "fields_read": 6,
         "fields_available": 12,
-        "wbc": 112,
+        "wbc": 113,
         "parasites": 174,
-        "per_ul": 12428.6,
+        "per_ul": 12318.6,
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": "positive",
@@ -1703,10 +1703,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 7,
-        "wbc": 112,
+        "wbc": 111,
         "parasites": 672,
-        "per_ul": 48000.0,
-        "stopped_because": "positive: 48,000/uL (44,439 to 51,770), above the 150/uL floor, 10 000 to 100 000/uL; error bar 15%",
+        "per_ul": 48432.4,
+        "stopped_because": "positive: 48,432/uL (44,839 to 52,237), above the 148/uL floor, 10 000 to 100 000/uL; error bar 15%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1716,9 +1716,9 @@
         "policy": "decision",
         "fields_read": 9,
         "fields_available": 9,
-        "wbc": 262,
-        "parasites": 25,
-        "per_ul": 763.4,
+        "wbc": 239,
+        "parasites": 24,
+        "per_ul": 803.3,
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1729,9 +1729,9 @@
         "policy": "decision",
         "fields_read": 7,
         "fields_available": 7,
-        "wbc": 231,
+        "wbc": 239,
         "parasites": 39,
-        "per_ul": 1350.6,
+        "per_ul": 1305.4,
         "stopped_because": "hit the 7 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1742,10 +1742,10 @@
         "policy": "decision",
         "fields_read": 5,
         "fields_available": 14,
-        "wbc": 86,
-        "parasites": 186,
-        "per_ul": 17302.3,
-        "stopped_because": "positive: 17,302/uL (14,905 to 19,975), above the 150/uL floor, 10 000 to 100 000/uL; error bar 29%",
+        "wbc": 90,
+        "parasites": 184,
+        "per_ul": 16355.6,
+        "stopped_because": "positive: 16,356/uL (14,078 to 18,897), above the 148/uL floor, 10 000 to 100 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
         "band": "10 000 to 100 000/uL"
@@ -1755,9 +1755,9 @@
         "policy": "decision",
         "fields_read": 9,
         "fields_available": 9,
-        "wbc": 194,
-        "parasites": 135,
-        "per_ul": 5567.0,
+        "wbc": 201,
+        "parasites": 134,
+        "per_ul": 5333.3,
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
@@ -1765,809 +1765,17 @@
       }
     ]
   },
-  "decision_sweep": [
-    {
-      "floor_per_ul": 69,
-      "negative_wbc_min": 200,
-      "clean_slides": 25,
-      "specificity": 0.96,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 1,
-      "clean_fields_read": 212,
-      "infected_slides": 50,
-      "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 26
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 150,
-      "negative_wbc_min": 200,
-      "clean_slides": 25,
-      "specificity": 0.96,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 1,
-      "clean_fields_read": 208,
-      "infected_slides": 50,
-      "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 26
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 223,
-      "negative_wbc_min": 200,
-      "clean_slides": 25,
-      "specificity": 0.96,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 1,
-      "clean_fields_read": 208,
-      "infected_slides": 50,
-      "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 26
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 300,
-      "negative_wbc_min": 200,
-      "clean_slides": 25,
-      "specificity": 0.96,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 1,
-      "clean_fields_read": 208,
-      "infected_slides": 50,
-      "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 26
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 500,
-      "negative_wbc_min": 200,
-      "clean_slides": 25,
-      "specificity": 0.96,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 1,
-      "clean_fields_read": 208,
-      "infected_slides": 50,
-      "sensitivity": 0.96,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 2,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 25
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 800,
-      "negative_wbc_min": 200,
-      "clean_slides": 25,
-      "specificity": 0.96,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 1,
-      "clean_fields_read": 208,
-      "infected_slides": 50,
-      "sensitivity": 0.9,
-      "infected_called_negative": 1,
-      "infected_to_a_person": 4,
-      "infected_band_settled": 40,
-      "infected_fields_read": 446,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 22
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 1000,
-      "negative_wbc_min": 200,
-      "clean_slides": 25,
-      "specificity": 0.96,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 1,
-      "clean_fields_read": 208,
-      "infected_slides": 50,
-      "sensitivity": 0.88,
-      "infected_called_negative": 3,
-      "infected_to_a_person": 3,
-      "infected_band_settled": 40,
-      "infected_fields_read": 440,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 21
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 1500,
-      "negative_wbc_min": 200,
-      "clean_slides": 25,
-      "specificity": 0.96,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 1,
-      "clean_fields_read": 208,
-      "infected_slides": 50,
-      "sensitivity": 0.88,
-      "infected_called_negative": 5,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
-      "infected_fields_read": 436,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 21
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 69,
-      "negative_wbc_min": 500,
-      "clean_slides": 25,
-      "specificity": 0.8,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 5,
-      "clean_fields_read": 490,
-      "infected_slides": 50,
-      "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 26
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 150,
-      "negative_wbc_min": 500,
-      "clean_slides": 25,
-      "specificity": 0.8,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 5,
-      "clean_fields_read": 490,
-      "infected_slides": 50,
-      "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 26
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 223,
-      "negative_wbc_min": 500,
-      "clean_slides": 25,
-      "specificity": 0.8,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 5,
-      "clean_fields_read": 490,
-      "infected_slides": 50,
-      "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 26
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 300,
-      "negative_wbc_min": 500,
-      "clean_slides": 25,
-      "specificity": 0.8,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 5,
-      "clean_fields_read": 490,
-      "infected_slides": 50,
-      "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 26
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 500,
-      "negative_wbc_min": 500,
-      "clean_slides": 25,
-      "specificity": 0.8,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 5,
-      "clean_fields_read": 490,
-      "infected_slides": 50,
-      "sensitivity": 0.96,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 2,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 25
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 800,
-      "negative_wbc_min": 500,
-      "clean_slides": 25,
-      "specificity": 0.8,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 5,
-      "clean_fields_read": 490,
-      "infected_slides": 50,
-      "sensitivity": 0.9,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 5,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 22
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 1000,
-      "negative_wbc_min": 500,
-      "clean_slides": 25,
-      "specificity": 0.8,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 5,
-      "clean_fields_read": 490,
-      "infected_slides": 50,
-      "sensitivity": 0.88,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 6,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 21
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 1500,
-      "negative_wbc_min": 500,
-      "clean_slides": 25,
-      "specificity": 0.8,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 5,
-      "clean_fields_read": 490,
-      "infected_slides": 50,
-      "sensitivity": 0.88,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 6,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 21
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 69,
-      "negative_wbc_min": 1000,
-      "clean_slides": 25,
-      "specificity": 0.0,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 25,
-      "clean_fields_read": 555,
-      "infected_slides": 50,
-      "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 26
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 150,
-      "negative_wbc_min": 1000,
-      "clean_slides": 25,
-      "specificity": 0.0,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 25,
-      "clean_fields_read": 555,
-      "infected_slides": 50,
-      "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 26
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 223,
-      "negative_wbc_min": 1000,
-      "clean_slides": 25,
-      "specificity": 0.0,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 25,
-      "clean_fields_read": 555,
-      "infected_slides": 50,
-      "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 26
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 300,
-      "negative_wbc_min": 1000,
-      "clean_slides": 25,
-      "specificity": 0.0,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 25,
-      "clean_fields_read": 555,
-      "infected_slides": 50,
-      "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 26
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 500,
-      "negative_wbc_min": 1000,
-      "clean_slides": 25,
-      "specificity": 0.0,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 25,
-      "clean_fields_read": 555,
-      "infected_slides": 50,
-      "sensitivity": 0.96,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 2,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 25
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 800,
-      "negative_wbc_min": 1000,
-      "clean_slides": 25,
-      "specificity": 0.0,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 25,
-      "clean_fields_read": 555,
-      "infected_slides": 50,
-      "sensitivity": 0.9,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 5,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 22
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 1000,
-      "negative_wbc_min": 1000,
-      "clean_slides": 25,
-      "specificity": 0.0,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 25,
-      "clean_fields_read": 555,
-      "infected_slides": 50,
-      "sensitivity": 0.88,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 6,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 21
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    },
-    {
-      "floor_per_ul": 1500,
-      "negative_wbc_min": 1000,
-      "clean_slides": 25,
-      "specificity": 0.0,
-      "clean_called_positive": 0,
-      "clean_to_a_person": 25,
-      "clean_fields_read": 555,
-      "infected_slides": 50,
-      "sensitivity": 0.88,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 6,
-      "infected_band_settled": 40,
-      "infected_fields_read": 448,
-      "sensitivity_by_expert_band": {
-        "0": {
-          "slides": 1,
-          "called_positive": 0
-        },
-        "1": {
-          "slides": 26,
-          "called_positive": 21
-        },
-        "2": {
-          "slides": 22,
-          "called_positive": 22
-        },
-        "3": {
-          "slides": 1,
-          "called_positive": 1
-        }
-      }
-    }
-  ],
+  "decision_sweep": [],
   "floor": {
     "fit_half_slides": 25,
     "fit_half_per_ul": {
-      "median": 14.8975791433892,
-      "p90": 68.68054876657868,
-      "p95": 150.19681795712089,
-      "max": 222.95081967213116
+      "median": 15.209125475285171,
+      "p90": 86.07927256952763,
+      "p95": 148.05007075743845,
+      "max": 213.50078492935637
     }
   },
+  "decision_scored_on": "frozen test half",
   "infected_expert_density_percentiles": {
     "0": 282.9581993569132,
     "10": 1731.7732439737847,

@@ -30,12 +30,13 @@ and `results-agent.md`, 6 September):
 | negatives called negative | ≥ 90% | 0 of 25 | **20 of 20 long enough to decide** (5 of 25 too short for 500 white cells, sent to a person; none called positive) |
 | positives called positive | ≥ 90% | no call existed | **49 of 50**, none called negative (TF150_R5 at 283/µL sent to a person) |
 | limit of detection, 95% sensitivity | | above 2 000/µL | **500/µL** by dilution |
-| counts within 25% | ≥ 50% | 58% | **64%** (every field), 92% within 50% |
+| counts within 25% | ≥ 50% | 58% | **64%** (every field), 92% within 50%; **70% / 90% with the white cell gate, 6 Sept afternoon** |
 | species | ≥ 90% | nothing | nothing |
 | another microscope, camera, stain | | nothing | nothing |
 
-The table that follows is the 4 September state the plan was written
-against.
+The white cell gate of 6 September afternoon (`results-wbc.md`) took the
+density error per slide from 28.3% to 25.7% on top of this. The table
+that follows is the 4 September state the plan was written against.
 
 
 | ECAMM criterion | Level 1 | AutoScope, 4 Sept | what is missing |

@@ -256,3 +256,11 @@ Band alone stopped every dense slide after five fields with the band right
 and the number wrong; 20% is the old rule again. 30% is the compromise
 shipped: a clinic monitoring a patient on day 0, 2 and 3 needs the number
 as well as the call.
+
+### With the white cell gate (6 September, afternoon)
+
+Same replay after the white cell gate (`results-wbc.md`), network
+unchanged. Expert-count arms identical by construction; real counter:
+who-200 26.5% (from 29.1%), rule-based 27.2% (from 29.6%), decision 27.4%
+(from 29.6%) mean absolute density error, decision arm 450 fields, 49
+positive, 40 banded.

@@ -678,3 +678,30 @@ detector.
 
 On clean slides the effect of this chain is larger still, and it is the
 reason it was run: `results-negatives.md`, 6 September.
+
+### 15b. The same network with the white cell gate (6 September, afternoon)
+
+`results-wbc.md`, 6 September afternoon: the dark-fraction gate with the
+area floor at 1 200 px² takes the held-out white cell F1 from 0.910 to
+0.926 and the count bias from +2.0% to +1.1%. Re-measured with the chain
+in measure-only mode (`chain_2026-09-06_cnn.log`), network and threshold
+unchanged (0.53; the exclusion zone in `candidates()` follows
+`AREA_MIN_FULL`, so a few candidates differ):
+
+| held-out, 50 patients | chain 3, morning | **with the white cell gate** |
+|---|---|---|
+| precision / recall / F1, 99 images | 0.813 / 0.787 / 0.800 | 0.814 / 0.783 / 0.798 |
+| 609 images: count bias / MAE | −1.1% / 6.76 | −1.9% / 6.70 |
+| mean abs. density error per slide, WHO protocol | 28.3% | **25.7%** |
+| 95% limits of agreement | −49% to +65% | **−47% to +59%** |
+| every field: mean abs. error / within 25% / within 50% | 20.9% / 64% / 92% | **19.3% / 70% / 90%** |
+| 1 000 to 10 000/µL band: error, parasite bias, white cell bias | 24.5%, +10.5%, +6.1% | 23.3%, +9.6%, **+3.9%** |
+| 10 000 to 100 000/µL band | 17.2%, −3.3%, +5.3% | 16.0%, −3.9%, +4.0% |
+| agent, real counter, density error | 29.6% | **27.4%** |
+
+The numerator did not move; the denominator did, and the number a user
+gets is two and a half points better for it. The worst eight are now the
+three sparse over-counts (TF70 +85%, TF81 +71%, TF37 +63%) and four dense
+under-counts (TF124 −56%, TF134 −51%, TF1N −42%, TF2N −42%), all
+parasite errors with the white cells within ±10%: the learned detector's
+list.

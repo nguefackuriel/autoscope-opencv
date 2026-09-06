@@ -212,3 +212,20 @@ recall on light fields. What the harness does not model: a real light
 slide spreads its parasites over every field, where here they sit in a few
 fields among clean ones; the running total the rule reads is the same, the
 clustering is not.
+
+### With the white cell gate (6 September, afternoon)
+
+Same network, white cells with the dark-fraction gate
+(`results-wbc.md`). Frozen half: 94.8% of clean fields zero, 0.06 false
+parasites per field, floor 19/µL, AUC 1.000; the fit half's p95 floor is
+148/µL (from 150). The decision rule at N = 500 now calls **15 of the 15
+clean slides long enough** negative and sends 10 to a person, up from 5,
+for a reason that is not the vision: the gate removes white cell false
+alarms, so a clean slide counts fewer white cells and more of them fall
+short of 500 before the captured fields run out. On the fit half the
+same rule decides 22 of 25 at N = 300 and 23 of 25 at N = 200
+(`chain_2026-09-06_cnn.log`, design sweep). N stays at 500 because the limit of detection depends on
+it (500/µL at N = 500, 1 000/µL at N = 200), and a slide with fewer than
+500 white cells captured is a limit of this dataset, not of a microscope
+with a stage. Sensitivity 49 of 50, unchanged; dilution unchanged, limit
+of detection 500/µL, level 0 98% negative.
