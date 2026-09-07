@@ -243,3 +243,14 @@ negative, none positive, 49 of 50 infected positive) and the dilution
 gives the same 500/µL. Twice the false alarms of the plain pair on clean
 fields, for the same decisions; the retrained judge of chain 4 is what
 should close it.
+
+### What the vision can reach (7 September)
+
+The chain-5 pair (`results-parasites.md` 16d), not shipped because of the
+sparse infected slides, shows what this data allows on the clean side:
+99.5% of clean fields at zero, 0.01 false parasites per field, a floor
+of 2/µL on the frozen half and 23/µL p95 on the fit half, limit of
+detection by dilution 200/µL (82% at 100, 48% at 50), and the decision
+rule at N = 200 with a floor of 23 to 30/µL reading specificity 1.00 and
+sensitivity 0.98 on the fit half. The shipped pair reads 0.06 per field,
+19/µL and 500/µL.
