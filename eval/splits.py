@@ -30,10 +30,33 @@ def fit_patients() -> set[str]:
     return set(ids)
 
 
-def all_patients() -> list[str]:
+def _has_patients(d: Path) -> bool:
+    return any(p.is_dir() and p.name.startswith("TF") for p in d.iterdir())
+
+
+def patient_root() -> Path:
+    """The directory that actually holds the TF* patient folders.
+
+    download.py extracts to data/raw/ThickBloodSmears_150/, but the older eval
+    scripts scan data/raw/ directly, so where the patients land depends on how
+    the archive was unpacked. Resolving it here turns a confusing "0 patients,
+    F1 0.000" run into an error that says what is wrong.
+    """
     if not RAW.exists():
         raise SystemExit(f"{RAW} is missing: run `make data` first")
-    return sorted(p.name for p in RAW.iterdir() if p.is_dir() and p.name.startswith("TF"))
+    if _has_patients(RAW):
+        return RAW
+    for child in sorted(p for p in RAW.iterdir() if p.is_dir()):
+        if _has_patients(child):
+            return child
+    raise SystemExit(
+        f"no TF* patient directories under {RAW} or one level below it.\n"
+        "Run `make data` and read the layout it prints.")
+
+
+def all_patients() -> list[str]:
+    root = patient_root()
+    return sorted(p.name for p in root.iterdir() if p.is_dir() and p.name.startswith("TF"))
 
 
 def holdout_patients() -> list[str]:

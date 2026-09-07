@@ -37,7 +37,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from autoscope import annotations as ann, boxes as bx, parasites as par
 import splits
 
-RAW = Path(__file__).resolve().parents[1] / "data" / "raw"
+# Patient images: resolved via splits.patient_root(), not assumed to sit
+# directly under data/raw -- download.py may nest them one level down.
 CATEGORY = {"id": 1, "name": "parasite", "supercategory": "cell"}
 
 
@@ -69,6 +70,7 @@ def boxes_in_tile(all_boxes, ox, oy, tile, edge=1):
 
 
 def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov):
+    root = splits.patient_root()
     train_ids, val_ids = splits.train_val(seed=seed)
     wanted = {p: "train" for p in train_ids}
     wanted.update({p: "val" for p in val_ids})
@@ -93,7 +95,7 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov)
         # invalidate every number, so it is checked rather than trusted.
         assert patient not in holdout, f"{patient} is held out, never export it"
         subset = wanted[patient]
-        candidates = sorted((RAW / patient).glob("*.jpg"))
+        candidates = sorted((root / patient).glob("*.jpg"))
         if not candidates:
             continue
 

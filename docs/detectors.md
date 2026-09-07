@@ -103,3 +103,16 @@ python eval/detector_eval.py --backend yolo --weights <best> --split holdout --t
 ```
 
 The last line runs **once**.
+
+On Colab, `notebooks/colab_detectors.ipynb` walks the same order with the
+caching and the split checks wired in. It uses Colab's preinstalled torch
+rather than the pins in `requirements-detect.txt`, because forcing the pins
+re-downloads ~3 GB and can break the CUDA build; it records the versions it
+actually ran with in `eval/results/colab_env.json` so a result stays
+attributable. On the AWS instance, use the pins.
+
+One layout trap worth knowing: `data/download.py` extracts to
+`data/raw/ThickBloodSmears_150/`, while the older eval scripts scan
+`data/raw/` directly. `splits.patient_root()` resolves either and raises if it
+finds neither, because the alternative is a run that reports a split of zero
+patients and an F1 of 0.000 without ever saying why.

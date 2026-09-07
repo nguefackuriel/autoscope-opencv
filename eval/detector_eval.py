@@ -43,7 +43,8 @@ from autoscope import annotations as ann, parasites as par
 from wbc_eval import match
 import splits
 
-RAW = Path(__file__).resolve().parents[1] / "data" / "raw"
+# Patient images: resolved via splits.patient_root(), not assumed to sit
+# directly under data/raw -- download.py may nest them one level down.
 OUT = Path(__file__).resolve().parent / "results"
 
 # Same tolerance as parasite_eval.py. Do not change it without changing that
@@ -167,12 +168,13 @@ def detect_field(backend, prepared, mask, tile, stride, conf, batch=8, min_fov=0
 
 def evaluate(backend, patients, per_patient, seed, tile, stride, thresholds):
     """Score at every threshold in one pass, so the field is read once."""
+    root = splits.patient_root()
     rng = random.Random(seed)
     rows = {t: [] for t in thresholds}
     lowest = min(thresholds)
 
     for n, patient in enumerate(sorted(patients), 1):
-        candidates = sorted((RAW / patient).glob("*.jpg"))
+        candidates = sorted((root / patient).glob("*.jpg"))
         if not candidates:
             continue
         for path in rng.sample(candidates, min(per_patient, len(candidates))):
