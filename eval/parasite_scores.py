@@ -36,6 +36,8 @@ def main():
                          "so its scores on them are honest and a calibration fitted there is not "
                          "fitted on its own training data")
     ap.add_argument("--per-patient", type=int, default=0, help="0 means every image")
+    ap.add_argument("--model", default="cnn", choices=["cnn", "heatmap", "heat-cnn"],
+                    help="heatmap: the learned detector's peaks above its floor are the candidates, its heights the scores")
     args = ap.parse_args()
 
     fitted = set(json.loads((OUT / "wbc_sweep.json").read_text())["fit_patients"])
@@ -47,7 +49,7 @@ def main():
         patients = [p for p in patients if (p.name in fitted) == (args.group == "fit")]
     print(f"{len(patients)} {args.group} patients")
 
-    scorer = par.PatchScorer.load()
+    scorer = par.load_scorer(args.model)
     rows, t0 = [], time.perf_counter()
     for i, patient in enumerate(patients, 1):
         images = sorted(patient.glob("*.jpg"))
@@ -62,9 +64,17 @@ def main():
             if truth is None:
                 continue
             prepared, mask, ox, oy = par._prepare(img, True, True)
-            cands, _ = par.candidates(prepared, mask)
-            scores = (scorer.score(par.patches_at(prepared, cands))
-                      if cands else np.zeros(0, np.float32))
+            if args.model == "heatmap":
+                pts_found, scores = scorer.peaks(prepared, mask)
+                cands = [par.Candidate(float(x), float(y), 0.0, None) for x, y in pts_found]
+            elif args.model == "heat-cnn":
+                cands = par.heatmap_candidates(prepared, mask)
+                scores = (scorer.score(par.patches_at(prepared, cands))
+                          if cands else np.zeros(0, np.float32))
+            else:
+                cands, _ = par.candidates(prepared, mask)
+                scores = (scorer.score(par.patches_at(prepared, cands))
+                          if cands else np.zeros(0, np.float32))
             # Per-candidate labels, by the same 15 px rule the evaluation uses.
             # Needed to calibrate score -> probability; harmless elsewhere.
             pts = (np.array([[p.x - ox, p.y - oy] for p in truth.parasites])
@@ -96,6 +106,7 @@ def main():
         truth_wbc=np.array([r["truth_wbc"] for r in rows]),
         found_wbc=np.array([r["found_wbc"] for r in rows]),
         candidates=np.array([r["candidates"] for r in rows]),
+        model=np.array(args.model),
     )
     print(f"\n{len(rows)} images, {len(flat)} candidates, "
           f"{(time.perf_counter() - t0) / 60:.1f} min")

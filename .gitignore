@@ -14,3 +14,5 @@ src/*.egg-info/
 .venv-train/
 eval/results/*patches*.npz
 eval/results/*.log
+eval/results/*tiles*.npz
+eval/results/*.pt

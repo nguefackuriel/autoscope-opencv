@@ -21,7 +21,7 @@ import numpy as np
 
 from autoscope import annotations as ann
 from autoscope.counter import count_field
-from autoscope.parasites import PatchScorer
+from autoscope.parasites import load_scorer
 from autoscope.quality import assess_field
 
 RAW = Path(__file__).resolve().parents[1] / "data" / "raw"
@@ -30,7 +30,8 @@ OUT = Path(__file__).resolve().parent / "results"
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--threshold", type=float, default=0.80)
+    ap.add_argument("--threshold", type=float, default=None, help="default: the model's own")
+    ap.add_argument("--model", default="cnn", choices=["cnn", "heatmap", "heat-cnn"])
     ap.add_argument("--max-patients", type=int, default=None)
     ap.add_argument("--out", default="agent_fields.json")
     args = ap.parse_args()
@@ -42,7 +43,9 @@ def main():
         patients = patients[:args.max_patients]
     print(f"{len(patients)} held-out patients")
 
-    scorer = PatchScorer.load()
+    scorer = load_scorer(args.model)
+    from autoscope.parasites import threshold_for
+    args.threshold = threshold_for(args.model, args.threshold)
     rows, t0 = [], time.perf_counter()
     for i, patient in enumerate(patients, 1):
         for path in sorted(patient.glob("*.jpg")):
@@ -54,7 +57,7 @@ def main():
             if truth is None:
                 continue
             t = time.perf_counter()
-            result = count_field(img, model="cnn", threshold=args.threshold, scorer=scorer)
+            result = count_field(img, model=args.model, threshold=args.threshold, scorer=scorer)
             quality = assess_field(img)
             rows.append({
                 "patient": patient.name, "image": path.name,
@@ -71,7 +74,7 @@ def main():
               f"{done / 60:.1f} min elapsed", flush=True)
 
     (OUT / args.out).write_text(json.dumps({
-        "threshold": args.threshold, "patients": len(patients), "fields": len(rows),
+        "threshold": args.threshold, "model": args.model, "patients": len(patients), "fields": len(rows),
         "seconds_per_field": round(float(np.mean([r["seconds"] for r in rows])), 2),
         "rows": rows,
     }, indent=2))

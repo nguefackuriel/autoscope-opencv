@@ -36,7 +36,7 @@ import cv2 as cv
 import numpy as np
 
 from autoscope.counter import count_field
-from autoscope.parasites import DEFAULT_THRESHOLD, PatchScorer
+from autoscope.parasites import DEFAULT_THRESHOLD, load_scorer
 from autoscope.quality import assess_field
 
 RAW = Path(__file__).resolve().parents[1] / "data" / "raw"
@@ -74,7 +74,8 @@ def truth_wbc(patient: Path, image: Path, w: int, h: int) -> int | None:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--threshold", type=float, default=DEFAULT_THRESHOLD)
+    ap.add_argument("--threshold", type=float, default=None, help="default: the model's own")
+    ap.add_argument("--model", default="cnn", choices=["cnn", "heatmap", "heat-cnn"])
     ap.add_argument("--max-patients", type=int, default=None)
     ap.add_argument("--max-images", type=int, default=None, help="per patient, for a quick pass")
     ap.add_argument("--out", default="negative_fields.json")
@@ -87,7 +88,9 @@ def main():
         patients = patients[:args.max_patients]
     print(f"{len(patients)} uninfected patient folders under {ROOT.name}")
 
-    scorer = PatchScorer.load()
+    scorer = load_scorer(args.model)
+    from autoscope.parasites import threshold_for
+    args.threshold = threshold_for(args.model, args.threshold)
     rows, t0 = [], time.perf_counter()
     for i, patient in enumerate(patients, 1):
         images = images_of(patient)
@@ -100,7 +103,7 @@ def main():
                 continue
             h, w = img.shape[:2]
             t = time.perf_counter()
-            result = count_field(img, model="cnn", threshold=args.threshold, scorer=scorer)
+            result = count_field(img, model=args.model, threshold=args.threshold, scorer=scorer)
             quality = assess_field(img)
             rows.append({
                 "patient": patient.name, "image": path.name,
@@ -123,7 +126,7 @@ def main():
               f"{(time.perf_counter() - t0) / 60:.1f} min", flush=True)
         # Save as we go: a 40 minute run should survive an interruption.
         (OUT / args.out).write_text(json.dumps({
-            "threshold": args.threshold, "patients": i, "fields": len(rows),
+            "threshold": args.threshold, "model": args.model, "patients": i, "fields": len(rows),
             "label": "uninfected", "source_set": ROOT.name,
             "seconds_per_field": round(float(np.mean([r["seconds"] for r in rows])), 2),
             "rows": rows,

@@ -29,7 +29,9 @@ def main():
     print(f"{len(d['offsets']) - 1} calibration images, {len(scores)} candidates, "
           f"{truth} annotated parasites, candidate recall {recall:.3f}")
 
-    grid = np.round(np.arange(0.50, 0.96, 0.01), 2)
+    # 0.20 and up: with the heat map proposing (heat-cnn) the count matches
+    # the annotation below 0.50, where the first grid started (6 September).
+    grid = np.round(np.arange(0.20, 0.96, 0.01), 2)
     bias = np.array([(float((scores >= t).sum()) - truth) / truth for t in grid])
     best = int(np.argmin(np.abs(bias)))
     print("\n  thr    count   bias vs annotated")

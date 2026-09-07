@@ -212,3 +212,34 @@ recall on light fields. What the harness does not model: a real light
 slide spreads its parasites over every field, where here they sit in a few
 fields among clean ones; the running total the rule reads is the same, the
 clustering is not.
+
+### With the white cell gate (6 September, afternoon)
+
+Same network, white cells with the dark-fraction gate
+(`results-wbc.md`). Frozen half: 94.8% of clean fields zero, 0.06 false
+parasites per field, floor 19/µL, AUC 1.000; the fit half's p95 floor is
+148/µL (from 150). The decision rule at N = 500 now calls **15 of the 15
+clean slides long enough** negative and sends 10 to a person, up from 5,
+for a reason that is not the vision: the gate removes white cell false
+alarms, so a clean slide counts fewer white cells and more of them fall
+short of 500 before the captured fields run out. On the fit half the
+same rule decides 22 of 25 at N = 300 and 23 of 25 at N = 200
+(`chain_2026-09-06_cnn.log`, design sweep). N stays at 500 because the limit of detection depends on
+it (500/µL at N = 500, 1 000/µL at N = 200), and a slide with fewer than
+500 white cells captured is a limit of this dataset, not of a microscope
+with a stage. Sensitivity 49 of 50, unchanged; dilution unchanged, limit
+of detection 500/µL, level 0 98% negative.
+
+### The learned detector and heat-cnn (6 September, evening)
+
+`results-parasites.md` section 16. The heat map alone reads 1.96 false
+parasites per clean field on the frozen half (27% of fields at zero),
+floor 659/µL, AUC 0.971, no negative call and a limit of detection above
+2 000/µL: not a scorer. heat-cnn (its peaks judged by the patch network,
+0.42): 0.12 per field, 90% at zero, floor 40/µL on the frozen half and
+181/µL p95 on the fit half, AUC 1.000; the decision rule at N = 500 makes
+the same calls as the plain pair (15 of 15 clean slides long enough
+negative, none positive, 49 of 50 infected positive) and the dilution
+gives the same 500/µL. Twice the false alarms of the plain pair on clean
+fields, for the same decisions; the retrained judge of chain 4 is what
+should close it.

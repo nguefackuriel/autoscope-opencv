@@ -44,8 +44,8 @@ def evaluate(per_patient: int, seed: int, holdout: bool, threshold: float,
     if max_patients:
         patients = patients[:max_patients]
 
-    scorer = {"cnn": lambda: PatchScorer.load(), "hybrid": lambda: PatchScorer.load(HYBRID_PATH),
-              "mlp": lambda: Scorer.load()}[model]()
+    from autoscope.parasites import load_scorer
+    scorer = load_scorer(model)
     rows = []
     for patient in patients:
         candidates = sorted(patient.glob("*.jpg"))
@@ -128,7 +128,7 @@ def main():
     ap.add_argument("--holdout", action="store_true")
     ap.add_argument("--max-patients", type=int, default=None)
     ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--model", choices=["cnn", "hybrid", "mlp"], default="cnn")
+    ap.add_argument("--model", choices=["cnn", "hybrid", "mlp", "heatmap", "heat-cnn"], default="cnn")
     args = ap.parse_args()
 
     report = evaluate(args.per_patient, args.seed, args.holdout, args.threshold, args.max_patients, args.model)

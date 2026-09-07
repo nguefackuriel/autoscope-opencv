@@ -1,0 +1,384 @@
+{
+  "tiles": 8464,
+  "parasites": 25146,
+  "patients": 125,
+  "training_tiles": 7054,
+  "validation_tiles": 1410,
+  "val_file": "calibration_patients.json",
+  "epochs": 16,
+  "tiles_per_epoch": 4000,
+  "batch": 16,
+  "lr": 0.002,
+  "pos_weight": 10.0,
+  "channels": [
+    12,
+    24,
+    48,
+    96
+  ],
+  "crop": 256,
+  "sigma": 2.5,
+  "nms_px": 4,
+  "match_px": 7.5,
+  "input_mean_bgr": [
+    25.890766143798828,
+    25.890766143798828,
+    25.890766143798828
+  ],
+  "input_std_bgr": [
+    81.41275024414062,
+    81.41275024414062,
+    81.41275024414062
+  ],
+  "validation": [
+    {
+      "threshold": 0.1,
+      "precision": 0.5481,
+      "recall": 0.9475,
+      "f1": 0.6945,
+      "count_bias_pct": 72.87
+    },
+    {
+      "threshold": 0.2,
+      "precision": 0.6437,
+      "recall": 0.9332,
+      "f1": 0.7619,
+      "count_bias_pct": 44.97
+    },
+    {
+      "threshold": 0.3,
+      "precision": 0.71,
+      "recall": 0.9203,
+      "f1": 0.8016,
+      "count_bias_pct": 29.62
+    },
+    {
+      "threshold": 0.4,
+      "precision": 0.7511,
+      "recall": 0.9032,
+      "f1": 0.8202,
+      "count_bias_pct": 20.25
+    },
+    {
+      "threshold": 0.5,
+      "precision": 0.8129,
+      "recall": 0.8628,
+      "f1": 0.8371,
+      "count_bias_pct": 6.14
+    },
+    {
+      "threshold": 0.6,
+      "precision": 0.9092,
+      "recall": 0.6848,
+      "f1": 0.7812,
+      "count_bias_pct": -24.68
+    },
+    {
+      "threshold": 0.7,
+      "precision": 0.9254,
+      "recall": 0.0241,
+      "f1": 0.047,
+      "count_bias_pct": -97.4
+    },
+    {
+      "threshold": 0.8,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "count_bias_pct": -100.0
+    },
+    {
+      "threshold": 0.9,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "count_bias_pct": -100.0
+    }
+  ],
+  "history": [
+    {
+      "epoch": 4,
+      "table": [
+        {
+          "threshold": 0.1,
+          "precision": 0.2897,
+          "recall": 0.8632,
+          "f1": 0.4338,
+          "count_bias_pct": 197.98
+        },
+        {
+          "threshold": 0.2,
+          "precision": 0.3878,
+          "recall": 0.8391,
+          "f1": 0.5304,
+          "count_bias_pct": 116.4
+        },
+        {
+          "threshold": 0.3,
+          "precision": 0.4854,
+          "recall": 0.8134,
+          "f1": 0.608,
+          "count_bias_pct": 67.59
+        },
+        {
+          "threshold": 0.4,
+          "precision": 0.5712,
+          "recall": 0.7761,
+          "f1": 0.6581,
+          "count_bias_pct": 35.87
+        },
+        {
+          "threshold": 0.5,
+          "precision": 0.6839,
+          "recall": 0.665,
+          "f1": 0.6743,
+          "count_bias_pct": -2.76
+        },
+        {
+          "threshold": 0.6,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "count_bias_pct": -100.0
+        },
+        {
+          "threshold": 0.7,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "count_bias_pct": -100.0
+        },
+        {
+          "threshold": 0.8,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "count_bias_pct": -100.0
+        },
+        {
+          "threshold": 0.9,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "count_bias_pct": -100.0
+        }
+      ]
+    },
+    {
+      "epoch": 8,
+      "table": [
+        {
+          "threshold": 0.1,
+          "precision": 0.5886,
+          "recall": 0.9102,
+          "f1": 0.7149,
+          "count_bias_pct": 54.64
+        },
+        {
+          "threshold": 0.2,
+          "precision": 0.6786,
+          "recall": 0.8795,
+          "f1": 0.7661,
+          "count_bias_pct": 29.62
+        },
+        {
+          "threshold": 0.3,
+          "precision": 0.7382,
+          "recall": 0.8449,
+          "f1": 0.788,
+          "count_bias_pct": 14.46
+        },
+        {
+          "threshold": 0.4,
+          "precision": 0.7924,
+          "recall": 0.8084,
+          "f1": 0.8003,
+          "count_bias_pct": 2.02
+        },
+        {
+          "threshold": 0.5,
+          "precision": 0.8664,
+          "recall": 0.6731,
+          "f1": 0.7577,
+          "count_bias_pct": -22.31
+        },
+        {
+          "threshold": 0.6,
+          "precision": 0.9315,
+          "recall": 0.0529,
+          "f1": 0.1,
+          "count_bias_pct": -94.33
+        },
+        {
+          "threshold": 0.7,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "count_bias_pct": -100.0
+        },
+        {
+          "threshold": 0.8,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "count_bias_pct": -100.0
+        },
+        {
+          "threshold": 0.9,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "count_bias_pct": -100.0
+        }
+      ]
+    },
+    {
+      "epoch": 12,
+      "table": [
+        {
+          "threshold": 0.1,
+          "precision": 0.5817,
+          "recall": 0.9382,
+          "f1": 0.7181,
+          "count_bias_pct": 61.29
+        },
+        {
+          "threshold": 0.2,
+          "precision": 0.6744,
+          "recall": 0.9207,
+          "f1": 0.7785,
+          "count_bias_pct": 36.53
+        },
+        {
+          "threshold": 0.3,
+          "precision": 0.7325,
+          "recall": 0.9036,
+          "f1": 0.8091,
+          "count_bias_pct": 23.36
+        },
+        {
+          "threshold": 0.4,
+          "precision": 0.7724,
+          "recall": 0.885,
+          "f1": 0.8249,
+          "count_bias_pct": 14.57
+        },
+        {
+          "threshold": 0.5,
+          "precision": 0.8332,
+          "recall": 0.8348,
+          "f1": 0.834,
+          "count_bias_pct": 0.19
+        },
+        {
+          "threshold": 0.6,
+          "precision": 0.9294,
+          "recall": 0.583,
+          "f1": 0.7165,
+          "count_bias_pct": -37.27
+        },
+        {
+          "threshold": 0.7,
+          "precision": 0.9512,
+          "recall": 0.0152,
+          "f1": 0.0298,
+          "count_bias_pct": -98.41
+        },
+        {
+          "threshold": 0.8,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "count_bias_pct": -100.0
+        },
+        {
+          "threshold": 0.9,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "count_bias_pct": -100.0
+        }
+      ]
+    },
+    {
+      "epoch": 16,
+      "table": [
+        {
+          "threshold": 0.1,
+          "precision": 0.5481,
+          "recall": 0.9475,
+          "f1": 0.6945,
+          "count_bias_pct": 72.87
+        },
+        {
+          "threshold": 0.2,
+          "precision": 0.6437,
+          "recall": 0.9332,
+          "f1": 0.7619,
+          "count_bias_pct": 44.97
+        },
+        {
+          "threshold": 0.3,
+          "precision": 0.71,
+          "recall": 0.9203,
+          "f1": 0.8016,
+          "count_bias_pct": 29.62
+        },
+        {
+          "threshold": 0.4,
+          "precision": 0.7511,
+          "recall": 0.9032,
+          "f1": 0.8202,
+          "count_bias_pct": 20.25
+        },
+        {
+          "threshold": 0.5,
+          "precision": 0.8129,
+          "recall": 0.8628,
+          "f1": 0.8371,
+          "count_bias_pct": 6.14
+        },
+        {
+          "threshold": 0.6,
+          "precision": 0.9092,
+          "recall": 0.6848,
+          "f1": 0.7812,
+          "count_bias_pct": -24.68
+        },
+        {
+          "threshold": 0.7,
+          "precision": 0.9254,
+          "recall": 0.0241,
+          "f1": 0.047,
+          "count_bias_pct": -97.4
+        },
+        {
+          "threshold": 0.8,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "count_bias_pct": -100.0
+        },
+        {
+          "threshold": 0.9,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "count_bias_pct": -100.0
+        }
+      ]
+    }
+  ],
+  "check_tiles": [
+    222,
+    223,
+    224,
+    225,
+    226,
+    227,
+    228,
+    229
+  ],
+  "tiles_file": "parasite_tiles.npz",
+  "minutes": 217.4
+}

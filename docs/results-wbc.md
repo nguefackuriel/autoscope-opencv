@@ -189,3 +189,55 @@ TF35 at 1.55 and TF1N at 1.34 of their annotated count. The fix is a shape
 gate on the clump, not a colour one, and it comes after the parasite
 detector because it is now the smaller of the two numerator-denominator
 errors only on the dense band.
+
+## 6 September, afternoon: a blob has to be mostly dark, and the area floor drops to 1 200
+
+`eval/wbc_fp_look.py`, 197 fit images, 2 per patient: 4 591 detections,
+4 147 hits, 444 false alarms (9.7%). What the false alarms look like
+against the hits (medians): brightness L 135 against 83, minimum L 102
+against 56, `a - b` 81 against 104, solidity 0.81 against 0.93, and the
+share of the blob's pixels under `L_DARK_MAX`, **34% against 94%**. They
+are the bright purple clumps the colour rules admit through the area gate:
+parasite clusters, platelet heaps, precipitate. A gate on that share
+(`DARK_FRACTION_MIN`) at 0.3 removes 214 of the 444 for 31 of the 4 147
+hits; at 0.5, 270 for 65.
+
+Two sweeps, same 100 fit images, same selection rule (count bias within
+one point, then best F1).
+
+**The gate alone does not ship** (`wbc_sweep_dark_fraction.log`, 48
+points). At every seed fraction it lifts precision by eight to ten points
+with recall unchanged, and reads −6.6% to −10.8% count bias, because on
+the fit set the false alarms were balancing the misses (recall 0.91).
+The rule kept it off.
+
+**The gate with the recall given back** (`wbc_sweep_gate_recall.log`, 37
+points): the gate at 0.3 or 0.5 with `AREA_MIN_FULL` in (1 200, 1 500,
+1 800) and `STAIN_MIN_DARK` in (20, 30), the shipped setting as control.
+Chosen: gate 0.3, area floor **1 200 px²** (a small nucleus, or a lobe
+fragment the watershed cut off), dark path purple floor 30, seed 0.75,
+close 24: fit-set F1 0.921 at +0.5%, control 0.915 at −0.1%, passing over
+0.933 at −6.4%.
+
+Held-out, the same 50 patients and 144 images as every column since
+August:
+
+| | 3 Sept, dark path | **6 Sept, gate + area 1 200** |
+|---|---|---|
+| precision | 0.901 | **0.921** |
+| recall | 0.919 | **0.931** |
+| F1 | 0.910 | **0.926** |
+| count bias | +2.0% | **+1.1%** |
+| count MAE | 2.29 cells/image | **1.82** |
+
+On every held-out field (`density_bands.py`, chain of 6 September
+afternoon): the white cell bias falls from +6.1% to **+3.9%** on the
+1 000 to 10 000/µL band and from +5.3% to +4.0% above it; TF70_Scr440
+from +30% to +21%, TF1N_1522 from +26% to +7%, TF46_UW23 out of the
+worst list. With the parasite network unchanged, the density error per
+slide through the WHO protocol goes from 28.3% to **25.7%** and the 95%
+limits from −49% / +65% to **−47% / +59%**; reading every field, 70% of
+slides are within 25% (from 64%). What remains of the over-count is on
+the slides where the parasites themselves cluster into nucleus-sized
+purple masses (TF70 +21%), and that is the learned detector's problem as
+much as this stage's.

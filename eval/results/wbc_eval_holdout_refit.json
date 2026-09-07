@@ -2,20 +2,20 @@
   "images": 144,
   "patients": 50,
   "cells_in_truth": 3046,
-  "precision": 0.9012,
-  "recall": 0.9189,
-  "f1": 0.9099,
-  "count_bias": 0.417,
-  "count_mae": 2.292,
-  "count_bias_pct": 1.97,
+  "precision": 0.9214,
+  "recall": 0.9311,
+  "f1": 0.9262,
+  "count_bias": 0.222,
+  "count_mae": 1.819,
+  "count_bias_pct": 1.05,
   "rows": [
     {
       "patient": "TF101_233",
       "image": "20170830_105334.jpg",
-      "found": 13,
+      "found": 15,
       "truth": 13,
       "hits": 13,
-      "false_alarms": 0,
+      "false_alarms": 2,
       "misses": 0
     },
     {
@@ -30,10 +30,10 @@
     {
       "patient": "TF101_233",
       "image": "20170830_105253.jpg",
-      "found": 13,
+      "found": 10,
       "truth": 11,
       "hits": 10,
-      "false_alarms": 3,
+      "false_alarms": 0,
       "misses": 1
     },
     {
@@ -48,28 +48,28 @@
     {
       "patient": "TF107_249",
       "image": "20170830_145738.jpg",
-      "found": 17,
+      "found": 14,
       "truth": 22,
       "hits": 14,
-      "false_alarms": 3,
+      "false_alarms": 0,
       "misses": 8
     },
     {
       "patient": "TF107_249",
       "image": "20170830_150937.jpg",
-      "found": 19,
+      "found": 18,
       "truth": 18,
       "hits": 17,
-      "false_alarms": 2,
+      "false_alarms": 1,
       "misses": 1
     },
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144935.jpg",
-      "found": 22,
+      "found": 23,
       "truth": 22,
       "hits": 22,
-      "false_alarms": 0,
+      "false_alarms": 1,
       "misses": 0
     },
     {
@@ -84,19 +84,19 @@
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144514.jpg",
-      "found": 15,
+      "found": 16,
       "truth": 17,
       "hits": 13,
-      "false_alarms": 2,
+      "false_alarms": 3,
       "misses": 4
     },
     {
       "patient": "TF110_270",
       "image": "20170830_170322.jpg",
-      "found": 48,
+      "found": 49,
       "truth": 54,
       "hits": 46,
-      "false_alarms": 2,
+      "false_alarms": 3,
       "misses": 8
     },
     {
@@ -120,19 +120,19 @@
     {
       "patient": "TF111_238",
       "image": "20170830_172609.jpg",
-      "found": 22,
+      "found": 21,
       "truth": 19,
-      "hits": 18,
-      "false_alarms": 4,
-      "misses": 1
+      "hits": 19,
+      "false_alarms": 2,
+      "misses": 0
     },
     {
       "patient": "TF111_238",
       "image": "20170830_171528.jpg",
-      "found": 22,
+      "found": 23,
       "truth": 25,
       "hits": 22,
-      "false_alarms": 0,
+      "false_alarms": 1,
       "misses": 3
     },
     {
@@ -156,28 +156,28 @@
     {
       "patient": "TF117_R1",
       "image": "20170831_001051.jpg",
-      "found": 37,
+      "found": 34,
       "truth": 32,
       "hits": 32,
-      "false_alarms": 5,
+      "false_alarms": 2,
       "misses": 0
     },
     {
       "patient": "TF117_R1",
       "image": "20170830_235824.jpg",
-      "found": 39,
+      "found": 32,
       "truth": 33,
       "hits": 31,
-      "false_alarms": 8,
+      "false_alarms": 1,
       "misses": 2
     },
     {
       "patient": "TF122_1533R",
       "image": "20170831_120312.jpg",
-      "found": 12,
+      "found": 13,
       "truth": 12,
       "hits": 12,
-      "false_alarms": 0,
+      "false_alarms": 1,
       "misses": 0
     },
     {
@@ -192,37 +192,37 @@
     {
       "patient": "TF122_1533R",
       "image": "20170831_115715.jpg",
-      "found": 20,
+      "found": 22,
       "truth": 20,
       "hits": 20,
-      "false_alarms": 0,
+      "false_alarms": 2,
       "misses": 0
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_111153.jpg",
-      "found": 23,
+      "found": 19,
       "truth": 18,
       "hits": 16,
-      "false_alarms": 7,
+      "false_alarms": 3,
       "misses": 2
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_113331.jpg",
-      "found": 19,
+      "found": 14,
       "truth": 13,
       "hits": 13,
-      "false_alarms": 6,
+      "false_alarms": 1,
       "misses": 0
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_110701.jpg",
-      "found": 17,
+      "found": 13,
       "truth": 13,
       "hits": 13,
-      "false_alarms": 4,
+      "false_alarms": 0,
       "misses": 0
     },
     {
@@ -237,28 +237,28 @@
     {
       "patient": "TF124_S540",
       "image": "20170831_134509.jpg",
-      "found": 21,
+      "found": 23,
       "truth": 26,
-      "hits": 21,
+      "hits": 23,
       "false_alarms": 0,
-      "misses": 5
+      "misses": 3
     },
     {
       "patient": "TF124_S540",
       "image": "20170831_135016.jpg",
-      "found": 25,
+      "found": 28,
       "truth": 25,
       "hits": 25,
-      "false_alarms": 0,
+      "false_alarms": 3,
       "misses": 0
     },
     {
       "patient": "TF130_S521",
       "image": "20170831_170352.jpg",
-      "found": 13,
+      "found": 15,
       "truth": 12,
       "hits": 12,
-      "false_alarms": 1,
+      "false_alarms": 3,
       "misses": 0
     },
     {
@@ -282,10 +282,10 @@
     {
       "patient": "TF132_S527",
       "image": "20170831_181112.jpg",
-      "found": 11,
+      "found": 12,
       "truth": 11,
       "hits": 11,
-      "false_alarms": 0,
+      "false_alarms": 1,
       "misses": 0
     },
     {
@@ -318,19 +318,19 @@
     {
       "patient": "TF134_US28",
       "image": "20170831_203415.jpg",
-      "found": 17,
+      "found": 18,
       "truth": 15,
       "hits": 14,
-      "false_alarms": 3,
+      "false_alarms": 4,
       "misses": 1
     },
     {
       "patient": "TF137_US8",
       "image": "20170831_214542.jpg",
-      "found": 18,
+      "found": 19,
       "truth": 23,
       "hits": 18,
-      "false_alarms": 0,
+      "false_alarms": 1,
       "misses": 5
     },
     {
@@ -345,28 +345,28 @@
     {
       "patient": "TF137_US8",
       "image": "20170831_213511.jpg",
-      "found": 13,
+      "found": 12,
       "truth": 11,
       "hits": 11,
-      "false_alarms": 2,
+      "false_alarms": 1,
       "misses": 0
     },
     {
       "patient": "TF141_CT12",
       "image": "20170901_000932.jpg",
-      "found": 27,
+      "found": 26,
       "truth": 30,
       "hits": 26,
-      "false_alarms": 1,
+      "false_alarms": 0,
       "misses": 4
     },
     {
       "patient": "TF141_CT12",
       "image": "20170901_000307.jpg",
-      "found": 18,
+      "found": 20,
       "truth": 16,
       "hits": 15,
-      "false_alarms": 3,
+      "false_alarms": 5,
       "misses": 1
     },
     {
@@ -381,10 +381,10 @@
     {
       "patient": "TF147_R3",
       "image": "20170901_020716.jpg",
-      "found": 15,
+      "found": 18,
       "truth": 15,
       "hits": 15,
-      "false_alarms": 0,
+      "false_alarms": 3,
       "misses": 0
     },
     {
@@ -401,27 +401,27 @@
       "image": "20170901_031213.jpg",
       "found": 48,
       "truth": 53,
-      "hits": 45,
-      "false_alarms": 3,
-      "misses": 8
+      "hits": 47,
+      "false_alarms": 1,
+      "misses": 6
     },
     {
       "patient": "TF150_R5",
       "image": "20170901_032046.jpg",
-      "found": 45,
+      "found": 47,
       "truth": 51,
-      "hits": 42,
-      "false_alarms": 3,
-      "misses": 9
+      "hits": 45,
+      "false_alarms": 2,
+      "misses": 6
     },
     {
       "patient": "TF150_R5",
       "image": "20170901_031525.jpg",
-      "found": 73,
+      "found": 74,
       "truth": 80,
-      "hits": 71,
-      "false_alarms": 2,
-      "misses": 9
+      "hits": 73,
+      "false_alarms": 1,
+      "misses": 7
     },
     {
       "patient": "TF15_C87P48",
@@ -435,46 +435,46 @@
     {
       "patient": "TF15_C87P48",
       "image": "20170613_174737.jpg",
-      "found": 14,
+      "found": 13,
       "truth": 10,
       "hits": 10,
-      "false_alarms": 4,
+      "false_alarms": 3,
       "misses": 0
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_173247.jpg",
-      "found": 12,
+      "found": 13,
       "truth": 12,
       "hits": 11,
-      "false_alarms": 1,
+      "false_alarms": 2,
       "misses": 1
     },
     {
       "patient": "TF1N_1522",
       "image": "20171023_111357.jpg",
-      "found": 21,
+      "found": 22,
       "truth": 17,
       "hits": 14,
-      "false_alarms": 7,
+      "false_alarms": 8,
       "misses": 3
     },
     {
       "patient": "TF1N_1522",
       "image": "20171023_113655.jpg",
-      "found": 23,
+      "found": 20,
       "truth": 14,
       "hits": 11,
-      "false_alarms": 12,
+      "false_alarms": 9,
       "misses": 3
     },
     {
       "patient": "TF1N_1522",
       "image": "20171023_114235.jpg",
-      "found": 19,
+      "found": 15,
       "truth": 16,
       "hits": 15,
-      "false_alarms": 4,
+      "false_alarms": 0,
       "misses": 1
     },
     {
@@ -482,26 +482,26 @@
       "image": "20170708_161235.jpg",
       "found": 24,
       "truth": 22,
-      "hits": 21,
-      "false_alarms": 3,
-      "misses": 1
+      "hits": 22,
+      "false_alarms": 2,
+      "misses": 0
     },
     {
       "patient": "TF22_C104P65",
       "image": "20170708_160739.jpg",
-      "found": 21,
+      "found": 20,
       "truth": 20,
-      "hits": 19,
-      "false_alarms": 2,
-      "misses": 1
+      "hits": 20,
+      "false_alarms": 0,
+      "misses": 0
     },
     {
       "patient": "TF22_C104P65",
       "image": "20170708_163607.jpg",
-      "found": 31,
+      "found": 29,
       "truth": 30,
       "hits": 27,
-      "false_alarms": 4,
+      "false_alarms": 2,
       "misses": 3
     },
     {
@@ -516,46 +516,46 @@
     {
       "patient": "TF24_C67P28",
       "image": "20170710_155503.jpg",
-      "found": 18,
+      "found": 19,
       "truth": 18,
       "hits": 17,
-      "false_alarms": 1,
+      "false_alarms": 2,
       "misses": 1
     },
     {
       "patient": "TF24_C67P28",
       "image": "20170710_162728.jpg",
-      "found": 16,
+      "found": 17,
       "truth": 15,
       "hits": 14,
-      "false_alarms": 2,
+      "false_alarms": 3,
       "misses": 1
     },
     {
       "patient": "TF28W13B15A",
       "image": "20170724_122336.jpg",
-      "found": 36,
+      "found": 34,
       "truth": 33,
       "hits": 31,
-      "false_alarms": 5,
+      "false_alarms": 3,
       "misses": 2
     },
     {
       "patient": "TF28W13B15A",
       "image": "20170724_122901.jpg",
-      "found": 24,
+      "found": 22,
       "truth": 18,
       "hits": 18,
-      "false_alarms": 6,
+      "false_alarms": 4,
       "misses": 0
     },
     {
       "patient": "TF28W13B15A",
       "image": "20170724_122720.jpg",
-      "found": 24,
+      "found": 22,
       "truth": 15,
       "hits": 15,
-      "false_alarms": 9,
+      "false_alarms": 7,
       "misses": 0
     },
     {
@@ -588,11 +588,11 @@
     {
       "patient": "TF2N_159R",
       "image": "20171023_130206.jpg",
-      "found": 13,
+      "found": 14,
       "truth": 15,
-      "hits": 13,
+      "hits": 14,
       "false_alarms": 0,
-      "misses": 2
+      "misses": 1
     },
     {
       "patient": "TF2N_159R",
@@ -606,64 +606,64 @@
     {
       "patient": "TF2N_159R",
       "image": "20171023_125837.jpg",
-      "found": 21,
+      "found": 14,
       "truth": 14,
       "hits": 14,
-      "false_alarms": 7,
+      "false_alarms": 0,
       "misses": 0
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152944.jpg",
-      "found": 15,
+      "found": 19,
       "truth": 11,
       "hits": 10,
-      "false_alarms": 5,
+      "false_alarms": 9,
       "misses": 1
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152351.jpg",
-      "found": 21,
+      "found": 18,
       "truth": 14,
       "hits": 14,
-      "false_alarms": 7,
+      "false_alarms": 4,
       "misses": 0
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152844.jpg",
-      "found": 20,
+      "found": 19,
       "truth": 14,
       "hits": 14,
-      "false_alarms": 6,
+      "false_alarms": 5,
       "misses": 0
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_161049.jpg",
-      "found": 17,
+      "found": 14,
       "truth": 10,
       "hits": 10,
-      "false_alarms": 7,
+      "false_alarms": 4,
       "misses": 0
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_155113.jpg",
-      "found": 20,
+      "found": 12,
       "truth": 11,
       "hits": 11,
-      "false_alarms": 9,
+      "false_alarms": 1,
       "misses": 0
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_160813.jpg",
-      "found": 25,
+      "found": 18,
       "truth": 19,
       "hits": 16,
-      "false_alarms": 9,
+      "false_alarms": 2,
       "misses": 3
     },
     {
@@ -687,15 +687,24 @@
     {
       "patient": "TF36_Sc542",
       "image": "20170725_211833.jpg",
-      "found": 16,
+      "found": 19,
       "truth": 19,
       "hits": 16,
-      "false_alarms": 0,
+      "false_alarms": 3,
       "misses": 3
     },
     {
       "patient": "TF37_Sc563",
       "image": "20170727_115749.jpg",
+      "found": 17,
+      "truth": 15,
+      "hits": 15,
+      "false_alarms": 2,
+      "misses": 0
+    },
+    {
+      "patient": "TF37_Sc563",
+      "image": "20170727_115340.jpg",
       "found": 15,
       "truth": 15,
       "hits": 15,
@@ -704,20 +713,11 @@
     },
     {
       "patient": "TF37_Sc563",
-      "image": "20170727_115340.jpg",
-      "found": 16,
-      "truth": 15,
-      "hits": 15,
-      "false_alarms": 1,
-      "misses": 0
-    },
-    {
-      "patient": "TF37_Sc563",
       "image": "20170727_115616.jpg",
-      "found": 15,
+      "found": 14,
       "truth": 14,
       "hits": 14,
-      "false_alarms": 1,
+      "false_alarms": 0,
       "misses": 0
     },
     {
@@ -725,18 +725,18 @@
       "image": "20170727_145502.jpg",
       "found": 18,
       "truth": 17,
-      "hits": 15,
-      "false_alarms": 3,
-      "misses": 2
+      "hits": 16,
+      "false_alarms": 2,
+      "misses": 1
     },
     {
       "patient": "TF38_CT1",
       "image": "20170727_144944.jpg",
-      "found": 22,
+      "found": 24,
       "truth": 24,
-      "hits": 21,
-      "false_alarms": 1,
-      "misses": 3
+      "hits": 22,
+      "false_alarms": 2,
+      "misses": 2
     },
     {
       "patient": "TF38_CT1",
@@ -777,64 +777,64 @@
     {
       "patient": "TF41_UT5",
       "image": "20170728_171350.jpg",
-      "found": 21,
+      "found": 22,
       "truth": 18,
-      "hits": 15,
-      "false_alarms": 6,
-      "misses": 3
+      "hits": 18,
+      "false_alarms": 4,
+      "misses": 0
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_172025.jpg",
-      "found": 19,
+      "found": 18,
       "truth": 18,
       "hits": 18,
-      "false_alarms": 1,
+      "false_alarms": 0,
       "misses": 0
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_165317.jpg",
-      "found": 17,
+      "found": 19,
       "truth": 16,
       "hits": 15,
-      "false_alarms": 2,
+      "false_alarms": 4,
       "misses": 1
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_164644.jpg",
-      "found": 26,
+      "found": 14,
       "truth": 14,
       "hits": 14,
-      "false_alarms": 12,
+      "false_alarms": 0,
       "misses": 0
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_164114.jpg",
-      "found": 18,
+      "found": 17,
       "truth": 18,
       "hits": 17,
-      "false_alarms": 1,
+      "false_alarms": 0,
       "misses": 1
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_164451.jpg",
-      "found": 20,
+      "found": 18,
       "truth": 18,
       "hits": 18,
-      "false_alarms": 2,
+      "false_alarms": 0,
       "misses": 0
     },
     {
       "patient": "TF47_UW29",
       "image": "20170807_175228.jpg",
-      "found": 13,
+      "found": 14,
       "truth": 15,
       "hits": 13,
-      "false_alarms": 0,
+      "false_alarms": 1,
       "misses": 2
     },
     {
@@ -849,55 +849,55 @@
     {
       "patient": "TF47_UW29",
       "image": "20170807_174613.jpg",
-      "found": 17,
+      "found": 19,
       "truth": 18,
-      "hits": 17,
-      "false_alarms": 0,
-      "misses": 1
+      "hits": 18,
+      "false_alarms": 1,
+      "misses": 0
     },
     {
       "patient": "TF48_UW31",
       "image": "20170811_154915.jpg",
       "found": 21,
       "truth": 21,
-      "hits": 20,
-      "false_alarms": 1,
-      "misses": 1
+      "hits": 21,
+      "false_alarms": 0,
+      "misses": 0
     },
     {
       "patient": "TF53_CW41",
       "image": "20170812_165110.jpg",
-      "found": 33,
+      "found": 34,
       "truth": 32,
-      "hits": 31,
-      "false_alarms": 2,
-      "misses": 1
-    },
-    {
-      "patient": "TF53_CW41",
-      "image": "20170812_171051.jpg",
-      "found": 27,
-      "truth": 25,
-      "hits": 25,
+      "hits": 32,
       "false_alarms": 2,
       "misses": 0
     },
     {
       "patient": "TF53_CW41",
+      "image": "20170812_171051.jpg",
+      "found": 29,
+      "truth": 25,
+      "hits": 25,
+      "false_alarms": 4,
+      "misses": 0
+    },
+    {
+      "patient": "TF53_CW41",
       "image": "20170812_163628.jpg",
-      "found": 23,
+      "found": 22,
       "truth": 22,
       "hits": 20,
-      "false_alarms": 3,
+      "false_alarms": 2,
       "misses": 2
     },
     {
       "patient": "TF55_CV4",
       "image": "20170812_182706.jpg",
-      "found": 17,
+      "found": 15,
       "truth": 16,
       "hits": 11,
-      "false_alarms": 6,
+      "false_alarms": 4,
       "misses": 5
     },
     {
@@ -921,10 +921,10 @@
     {
       "patient": "TF58_UT8",
       "image": "20170813_222615.jpg",
-      "found": 10,
+      "found": 9,
       "truth": 10,
       "hits": 9,
-      "false_alarms": 1,
+      "false_alarms": 0,
       "misses": 1
     },
     {
@@ -932,9 +932,9 @@
       "image": "20170813_220032.jpg",
       "found": 14,
       "truth": 14,
-      "hits": 13,
-      "false_alarms": 1,
-      "misses": 1
+      "hits": 14,
+      "false_alarms": 0,
+      "misses": 0
     },
     {
       "patient": "TF58_UT8",
@@ -948,29 +948,29 @@
     {
       "patient": "TF61_CS20",
       "image": "20170816_223144.jpg",
-      "found": 40,
+      "found": 42,
       "truth": 52,
       "hits": 39,
-      "false_alarms": 1,
+      "false_alarms": 3,
       "misses": 13
     },
     {
       "patient": "TF61_CS20",
       "image": "20170816_223442.jpg",
-      "found": 26,
+      "found": 28,
       "truth": 31,
-      "hits": 25,
-      "false_alarms": 1,
-      "misses": 6
+      "hits": 26,
+      "false_alarms": 2,
+      "misses": 5
     },
     {
       "patient": "TF61_CS20",
       "image": "20170816_223028.jpg",
-      "found": 38,
+      "found": 40,
       "truth": 43,
-      "hits": 36,
+      "hits": 38,
       "false_alarms": 2,
-      "misses": 7
+      "misses": 5
     },
     {
       "patient": "TF64_US2",
@@ -984,28 +984,28 @@
     {
       "patient": "TF64_US2",
       "image": "20170817_113941.jpg",
-      "found": 30,
+      "found": 28,
       "truth": 28,
       "hits": 28,
-      "false_alarms": 2,
+      "false_alarms": 0,
       "misses": 0
     },
     {
       "patient": "TF64_US2",
       "image": "20170817_114411.jpg",
-      "found": 18,
+      "found": 20,
       "truth": 19,
-      "hits": 17,
-      "false_alarms": 1,
-      "misses": 2
+      "hits": 18,
+      "false_alarms": 2,
+      "misses": 1
     },
     {
       "patient": "TF6N_527",
       "image": "20171023_154528.jpg",
-      "found": 12,
+      "found": 13,
       "truth": 12,
       "hits": 12,
-      "false_alarms": 0,
+      "false_alarms": 1,
       "misses": 0
     },
     {
@@ -1029,10 +1029,10 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192404.jpg",
-      "found": 21,
+      "found": 20,
       "truth": 20,
       "hits": 18,
-      "false_alarms": 3,
+      "false_alarms": 2,
       "misses": 2
     },
     {
@@ -1047,37 +1047,37 @@
     {
       "patient": "TF70_Scr440",
       "image": "20170817_190830.jpg",
-      "found": 14,
+      "found": 17,
       "truth": 16,
-      "hits": 12,
-      "false_alarms": 2,
-      "misses": 4
+      "hits": 13,
+      "false_alarms": 4,
+      "misses": 3
     },
     {
       "patient": "TF73_Scr538",
       "image": "20170818_142102.jpg",
-      "found": 15,
+      "found": 14,
       "truth": 14,
       "hits": 14,
-      "false_alarms": 1,
+      "false_alarms": 0,
       "misses": 0
     },
     {
       "patient": "TF73_Scr538",
       "image": "20170818_135933.jpg",
-      "found": 15,
+      "found": 16,
       "truth": 15,
       "hits": 14,
-      "false_alarms": 1,
+      "false_alarms": 2,
       "misses": 1
     },
     {
       "patient": "TF73_Scr538",
       "image": "20170818_142824.jpg",
-      "found": 12,
+      "found": 15,
       "truth": 12,
       "hits": 12,
-      "false_alarms": 0,
+      "false_alarms": 3,
       "misses": 0
     },
     {
@@ -1092,19 +1092,19 @@
     {
       "patient": "TF75_CO7",
       "image": "20170818_163339.jpg",
-      "found": 25,
+      "found": 26,
       "truth": 24,
       "hits": 24,
-      "false_alarms": 1,
+      "false_alarms": 2,
       "misses": 0
     },
     {
       "patient": "TF75_CO7",
       "image": "20170818_163623.jpg",
-      "found": 24,
+      "found": 25,
       "truth": 28,
       "hits": 23,
-      "false_alarms": 1,
+      "false_alarms": 2,
       "misses": 5
     },
     {
@@ -1119,28 +1119,28 @@
     {
       "patient": "TF77_CO15",
       "image": "20170818_172551.jpg",
-      "found": 21,
+      "found": 20,
       "truth": 20,
       "hits": 19,
-      "false_alarms": 2,
+      "false_alarms": 1,
       "misses": 1
     },
     {
       "patient": "TF77_CO15",
       "image": "20170818_181525.jpg",
-      "found": 25,
+      "found": 26,
       "truth": 25,
-      "hits": 23,
+      "hits": 24,
       "false_alarms": 2,
-      "misses": 2
+      "misses": 1
     },
     {
       "patient": "TF81_W8B5",
       "image": "20170819_154851.jpg",
-      "found": 31,
+      "found": 34,
       "truth": 32,
       "hits": 31,
-      "false_alarms": 0,
+      "false_alarms": 3,
       "misses": 1
     },
     {
@@ -1173,19 +1173,19 @@
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_164346.jpg",
-      "found": 16,
+      "found": 17,
       "truth": 19,
-      "hits": 16,
+      "hits": 17,
       "false_alarms": 0,
-      "misses": 3
+      "misses": 2
     },
     {
       "patient": "TF89_CM5",
       "image": "20170820_164418.jpg",
-      "found": 15,
+      "found": 14,
       "truth": 14,
       "hits": 14,
-      "false_alarms": 1,
+      "false_alarms": 0,
       "misses": 0
     },
     {
@@ -1200,47 +1200,47 @@
     {
       "patient": "TF90_15_60",
       "image": "20170820_182310.jpg",
-      "found": 28,
+      "found": 24,
       "truth": 27,
-      "hits": 23,
-      "false_alarms": 5,
-      "misses": 4
+      "hits": 24,
+      "false_alarms": 0,
+      "misses": 3
     },
     {
       "patient": "TF90_15_60",
       "image": "20170820_182644.jpg",
-      "found": 33,
+      "found": 30,
       "truth": 30,
       "hits": 29,
-      "false_alarms": 4,
+      "false_alarms": 1,
       "misses": 1
     },
     {
       "patient": "TF90_15_60",
       "image": "20170820_183120.jpg",
-      "found": 36,
+      "found": 35,
       "truth": 35,
-      "hits": 32,
-      "false_alarms": 4,
-      "misses": 3
+      "hits": 35,
+      "false_alarms": 0,
+      "misses": 0
     },
     {
       "patient": "TF94_210",
       "image": "20170829_155959.jpg",
-      "found": 27,
+      "found": 28,
       "truth": 28,
       "hits": 26,
-      "false_alarms": 1,
+      "false_alarms": 2,
       "misses": 2
     },
     {
       "patient": "TF94_210",
       "image": "20170829_155602.jpg",
-      "found": 37,
+      "found": 38,
       "truth": 39,
-      "hits": 35,
-      "false_alarms": 2,
-      "misses": 4
+      "hits": 37,
+      "false_alarms": 1,
+      "misses": 2
     },
     {
       "patient": "TF94_210",
@@ -1254,56 +1254,56 @@
     {
       "patient": "TF95_223",
       "image": "20170829_164055.jpg",
-      "found": 19,
+      "found": 22,
       "truth": 17,
       "hits": 17,
-      "false_alarms": 2,
+      "false_alarms": 5,
       "misses": 0
     },
     {
       "patient": "TF95_223",
       "image": "20170829_163557.jpg",
-      "found": 13,
+      "found": 17,
       "truth": 13,
-      "hits": 10,
-      "false_alarms": 3,
-      "misses": 3
+      "hits": 11,
+      "false_alarms": 6,
+      "misses": 2
     },
     {
       "patient": "TF95_223",
       "image": "20170829_163958.jpg",
-      "found": 18,
+      "found": 17,
       "truth": 17,
       "hits": 17,
-      "false_alarms": 1,
+      "false_alarms": 0,
       "misses": 0
     },
     {
       "patient": "TF97_CS31",
       "image": "20170829_172637.jpg",
-      "found": 26,
+      "found": 27,
       "truth": 34,
       "hits": 25,
-      "false_alarms": 1,
+      "false_alarms": 2,
       "misses": 9
     },
     {
       "patient": "TF97_CS31",
       "image": "20170829_172518.jpg",
-      "found": 15,
+      "found": 16,
       "truth": 18,
       "hits": 12,
-      "false_alarms": 3,
+      "false_alarms": 4,
       "misses": 6
     },
     {
       "patient": "TF97_CS31",
       "image": "20170829_174225.jpg",
-      "found": 26,
+      "found": 28,
       "truth": 29,
-      "hits": 26,
-      "false_alarms": 0,
-      "misses": 3
+      "hits": 27,
+      "false_alarms": 1,
+      "misses": 2
     }
   ]
 }

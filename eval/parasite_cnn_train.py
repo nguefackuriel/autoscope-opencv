@@ -185,6 +185,7 @@ def main():
     ap.add_argument("--hybrid", action="store_true",
                     help="also feed the 19 context features (neighbours, distance to white cells, local field)")
     ap.add_argument("--model-out", default=None, help="where to write the ONNX (default: models/); for smoke tests")
+    ap.add_argument("--out-tag", default=None, help="name of the results files, parasite_<tag>_train.json and _check.npy (default cnn / hybrid)")
     args = ap.parse_args()
     torch.set_num_threads(max(1, torch.get_num_threads() - 1))
 
@@ -192,7 +193,9 @@ def main():
     P, y, patient = d["patches"], d["y"], d["patient"]
     if P.shape[1] < args.crop:
         raise SystemExit(f"stored patches are {P.shape[1]} px, cannot crop {args.crop}")
-    recall = json.loads((OUT / "parasite_candidates.json").read_text())["candidate_recall"]
+    own = OUT / (Path(args.patches).stem + ".json")     # written by parasite_patches.py --mine
+    recall = (json.loads(own.read_text()).get("candidate_recall_fit_images") if own.exists() else None) \
+        or json.loads((OUT / "parasite_candidates.json").read_text())["candidate_recall"]
     print(f"candidate recall {recall:.3f}: the count bias below is against every "
           f"annotated parasite, not just the candidates")
     F = d["X"].astype(np.float32) if args.hybrid else None
@@ -259,7 +262,7 @@ def main():
         torch.onnx.export(final, torch.zeros(1, 3, crop, crop), str(model_path), input_names=["patch"], output_names=["p"],
                           dynamic_axes={"patch": {0: "n"}, "p": {0: "n"}}, opset_version=13, do_constant_folding=True)
         check = predict(final, P[:512], crop)
-    tag = "hybrid" if args.hybrid else "cnn"
+    tag = args.out_tag or ("hybrid" if args.hybrid else "cnn")
     np.save(OUT / f"parasite_{tag}_check.npy", check)   # the runtime venv compares cv.dnn against this
     (OUT / f"parasite_{tag}_train.json").write_text(json.dumps({
         "patches": int(len(y)), "positives": int(y.sum()), "patients": len(set(patient)),

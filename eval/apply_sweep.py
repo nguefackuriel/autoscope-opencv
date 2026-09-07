@@ -34,7 +34,7 @@ def main() -> None:
     chosen = pick(sweep["grid"])
     best_f1 = max(sweep["grid"], key=lambda r: r["f1"])
 
-    print(f"chosen: l_dark_max={chosen.get('l_dark_max', 'unchanged')} stain_min={chosen.get('stain_min', 'unchanged')} "
+    print(f"chosen: l_dark_max={chosen.get('l_dark_max', 'unchanged')} dark_fraction_min={chosen.get('dark_fraction_min', 'unchanged')} area_min={chosen.get('area_min_full', 'unchanged')} stain_min_dark={chosen.get('stain_min_dark', 'unchanged')} stain_min={chosen.get('stain_min', 'unchanged')} "
           f"seed_fraction={chosen['seed_fraction']} close_px={chosen['close_px']}")
     print(f"  fit-set F1 {chosen['f1']:.3f}, bias {chosen['count_bias_pct']:+.1f}%")
     if best_f1 is not chosen:
@@ -48,6 +48,12 @@ def main() -> None:
         src = re.sub(r"STAIN_MIN = [0-9.]+", f"STAIN_MIN = {chosen['stain_min']:.1f}", src)
     if "l_dark_max" in chosen:
         src = re.sub(r"L_DARK_MAX = [0-9.]+", f"L_DARK_MAX = {chosen['l_dark_max']:.1f}", src)
+    if "dark_fraction_min" in chosen:
+        src = re.sub(r"DARK_FRACTION_MIN = [0-9.]+", f"DARK_FRACTION_MIN = {chosen['dark_fraction_min']:.1f}", src)
+    if "area_min_full" in chosen:
+        src = re.sub(r"AREA_MIN_FULL = \d+", f"AREA_MIN_FULL = {chosen['area_min_full']}", src)
+    if "stain_min_dark" in chosen:
+        src = re.sub(r"STAIN_MIN_DARK = [0-9.]+", f"STAIN_MIN_DARK = {chosen['stain_min_dark']:.1f}", src)
     SEG.write_text(src)
     print(f"\nwrote parameters into {SEG.name}")
 

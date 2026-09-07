@@ -1,8 +1,9 @@
 {
   "threshold": 0.53,
+  "model": "cnn",
   "patients": 50,
   "fields": 609,
-  "seconds_per_field": 1.54,
+  "seconds_per_field": 1.72,
   "rows": [
     {
       "patient": "TF101_233",
@@ -15,20 +16,20 @@
       "even": 0.9527,
       "debris": 0.8123,
       "usable": true,
-      "seconds": 1.74
+      "seconds": 1.8
     },
     {
       "patient": "TF101_233",
       "image": "20170830_104154.jpg",
       "found_parasites": 15,
-      "found_wbc": 13,
+      "found_wbc": 14,
       "truth_parasites": 16,
       "truth_wbc": 14,
       "focus": 3.02,
       "even": 0.9616,
       "debris": 0.7712,
       "usable": true,
-      "seconds": 1.9
+      "seconds": 2.0
     },
     {
       "patient": "TF101_233",
@@ -41,38 +42,38 @@
       "even": 0.9655,
       "debris": 0.7552,
       "usable": true,
-      "seconds": 1.99
+      "seconds": 2.22
     },
     {
       "patient": "TF101_233",
       "image": "20170830_104418.jpg",
       "found_parasites": 21,
-      "found_wbc": 17,
+      "found_wbc": 18,
       "truth_parasites": 18,
       "truth_wbc": 19,
       "focus": 4.13,
       "even": 0.9523,
       "debris": 0.7594,
       "usable": true,
-      "seconds": 2.49
+      "seconds": 2.67
     },
     {
       "patient": "TF101_233",
       "image": "20170830_104521.jpg",
       "found_parasites": 22,
-      "found_wbc": 18,
+      "found_wbc": 19,
       "truth_parasites": 24,
       "truth_wbc": 29,
       "focus": 3.53,
       "even": 0.968,
       "debris": 0.7695,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 1.42
     },
     {
       "patient": "TF101_233",
       "image": "20170830_104641.jpg",
-      "found_parasites": 17,
+      "found_parasites": 16,
       "found_wbc": 18,
       "truth_parasites": 15,
       "truth_wbc": 18,
@@ -80,46 +81,46 @@
       "even": 0.9676,
       "debris": 0.7365,
       "usable": true,
-      "seconds": 1.63
+      "seconds": 1.72
     },
     {
       "patient": "TF101_233",
       "image": "20170830_104736.jpg",
       "found_parasites": 18,
-      "found_wbc": 13,
+      "found_wbc": 14,
       "truth_parasites": 21,
       "truth_wbc": 14,
       "focus": 3.41,
       "even": 0.9794,
       "debris": 0.7949,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 1.64
     },
     {
       "patient": "TF101_233",
       "image": "20170830_104901.jpg",
       "found_parasites": 13,
-      "found_wbc": 14,
+      "found_wbc": 15,
       "truth_parasites": 15,
       "truth_wbc": 13,
       "focus": 3.68,
       "even": 0.9686,
       "debris": 0.7977,
       "usable": true,
-      "seconds": 1.8
+      "seconds": 1.93
     },
     {
       "patient": "TF101_233",
       "image": "20170830_104957.jpg",
-      "found_parasites": 15,
-      "found_wbc": 16,
+      "found_parasites": 14,
+      "found_wbc": 17,
       "truth_parasites": 14,
       "truth_wbc": 16,
       "focus": 3.84,
       "even": 0.9735,
       "debris": 0.7854,
       "usable": true,
-      "seconds": 2.07
+      "seconds": 1.99
     },
     {
       "patient": "TF101_233",
@@ -132,25 +133,25 @@
       "even": 0.9783,
       "debris": 0.8003,
       "usable": true,
-      "seconds": 2.61
+      "seconds": 2.92
     },
     {
       "patient": "TF101_233",
       "image": "20170830_105127.jpg",
       "found_parasites": 8,
-      "found_wbc": 13,
+      "found_wbc": 14,
       "truth_parasites": 11,
       "truth_wbc": 12,
       "focus": 3.63,
       "even": 0.9779,
       "debris": 0.7977,
       "usable": true,
-      "seconds": 2.28
+      "seconds": 2.47
     },
     {
       "patient": "TF101_233",
       "image": "20170830_105211.jpg",
-      "found_parasites": 27,
+      "found_parasites": 25,
       "found_wbc": 14,
       "truth_parasites": 26,
       "truth_wbc": 13,
@@ -158,33 +159,33 @@
       "even": 0.978,
       "debris": 0.7862,
       "usable": true,
-      "seconds": 2.45
+      "seconds": 2.64
     },
     {
       "patient": "TF101_233",
       "image": "20170830_105253.jpg",
       "found_parasites": 21,
-      "found_wbc": 13,
+      "found_wbc": 10,
       "truth_parasites": 24,
       "truth_wbc": 11,
       "focus": 3.32,
       "even": 0.9757,
       "debris": 0.7998,
       "usable": true,
-      "seconds": 2.4
+      "seconds": 2.22
     },
     {
       "patient": "TF101_233",
       "image": "20170830_105334.jpg",
       "found_parasites": 23,
-      "found_wbc": 13,
+      "found_wbc": 15,
       "truth_parasites": 19,
       "truth_wbc": 13,
       "focus": 3.38,
       "even": 0.9695,
       "debris": 0.8179,
       "usable": true,
-      "seconds": 1.92
+      "seconds": 1.78
     },
     {
       "patient": "TF107_249",
@@ -197,20 +198,20 @@
       "even": 0.986,
       "debris": 0.8103,
       "usable": true,
-      "seconds": 1.37
+      "seconds": 1.12
     },
     {
       "patient": "TF107_249",
       "image": "20170830_145411.jpg",
       "found_parasites": 4,
-      "found_wbc": 12,
+      "found_wbc": 11,
       "truth_parasites": 2,
       "truth_wbc": 10,
       "focus": 3.12,
       "even": 0.9784,
       "debris": 0.7078,
       "usable": true,
-      "seconds": 2.29
+      "seconds": 1.89
     },
     {
       "patient": "TF107_249",
@@ -223,98 +224,98 @@
       "even": 0.9744,
       "debris": 0.6945,
       "usable": true,
-      "seconds": 2.69
+      "seconds": 3.23
     },
     {
       "patient": "TF107_249",
       "image": "20170830_145648.jpg",
       "found_parasites": 5,
-      "found_wbc": 19,
+      "found_wbc": 14,
       "truth_parasites": 5,
       "truth_wbc": 14,
       "focus": 2.89,
       "even": 0.9665,
       "debris": 0.7067,
       "usable": true,
-      "seconds": 2.12
+      "seconds": 2.5
     },
     {
       "patient": "TF107_249",
       "image": "20170830_145738.jpg",
       "found_parasites": 7,
-      "found_wbc": 18,
+      "found_wbc": 15,
       "truth_parasites": 2,
       "truth_wbc": 22,
       "focus": 3.88,
       "even": 0.9565,
       "debris": 0.7177,
       "usable": true,
-      "seconds": 2.71
+      "seconds": 2.92
     },
     {
       "patient": "TF107_249",
       "image": "20170830_145936.jpg",
       "found_parasites": 8,
-      "found_wbc": 19,
+      "found_wbc": 20,
       "truth_parasites": 5,
       "truth_wbc": 23,
       "focus": 4.31,
       "even": 0.9694,
       "debris": 0.6748,
       "usable": true,
-      "seconds": 2.07
+      "seconds": 2.05
     },
     {
       "patient": "TF107_249",
       "image": "20170830_150548.jpg",
       "found_parasites": 6,
-      "found_wbc": 18,
+      "found_wbc": 20,
       "truth_parasites": 4,
       "truth_wbc": 21,
       "focus": 3.94,
       "even": 0.9633,
       "debris": 0.7077,
       "usable": true,
-      "seconds": 2.4
+      "seconds": 2.15
     },
     {
       "patient": "TF107_249",
       "image": "20170830_150701.jpg",
       "found_parasites": 3,
-      "found_wbc": 15,
+      "found_wbc": 13,
       "truth_parasites": 1,
       "truth_wbc": 15,
       "focus": 3.06,
       "even": 0.9722,
       "debris": 0.6296,
       "usable": true,
-      "seconds": 2.23
+      "seconds": 2.26
     },
     {
       "patient": "TF107_249",
       "image": "20170830_150937.jpg",
       "found_parasites": 4,
-      "found_wbc": 22,
+      "found_wbc": 19,
       "truth_parasites": 6,
       "truth_wbc": 18,
       "focus": 3.5,
       "even": 0.9763,
       "debris": 0.7261,
       "usable": true,
-      "seconds": 1.62
+      "seconds": 1.69
     },
     {
       "patient": "TF107_249",
       "image": "20170830_151056.jpg",
       "found_parasites": 4,
-      "found_wbc": 15,
+      "found_wbc": 16,
       "truth_parasites": 3,
       "truth_wbc": 19,
       "focus": 3.11,
       "even": 0.9816,
       "debris": 0.7188,
       "usable": true,
-      "seconds": 1.64
+      "seconds": 1.83
     },
     {
       "patient": "TF107_249",
@@ -340,7 +341,7 @@
       "even": 0.9686,
       "debris": 0.7148,
       "usable": true,
-      "seconds": 1.81
+      "seconds": 1.95
     },
     {
       "patient": "TF107_249",
@@ -353,25 +354,25 @@
       "even": 0.9755,
       "debris": 0.7109,
       "usable": true,
-      "seconds": 1.75
+      "seconds": 1.99
     },
     {
       "patient": "TF107_249",
       "image": "20170830_152020.jpg",
       "found_parasites": 6,
-      "found_wbc": 13,
+      "found_wbc": 14,
       "truth_parasites": 6,
       "truth_wbc": 17,
       "focus": 3.04,
       "even": 0.9723,
       "debris": 0.6776,
       "usable": true,
-      "seconds": 1.72
+      "seconds": 1.87
     },
     {
       "patient": "TF10_C65P26",
       "image": "20170612_143853.jpg",
-      "found_parasites": 148,
+      "found_parasites": 147,
       "found_wbc": 16,
       "truth_parasites": 147,
       "truth_wbc": 20,
@@ -379,33 +380,33 @@
       "even": 0.9576,
       "debris": 0.6286,
       "usable": true,
-      "seconds": 1.5
+      "seconds": 1.65
     },
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144112.jpg",
       "found_parasites": 191,
-      "found_wbc": 16,
+      "found_wbc": 17,
       "truth_parasites": 191,
       "truth_wbc": 15,
       "focus": 4.21,
       "even": 0.9521,
       "debris": 0.6851,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 1.87
     },
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144255.jpg",
       "found_parasites": 268,
-      "found_wbc": 20,
+      "found_wbc": 22,
       "truth_parasites": 264,
       "truth_wbc": 19,
       "focus": 3.83,
       "even": 0.957,
       "debris": 0.6785,
       "usable": true,
-      "seconds": 2.25
+      "seconds": 2.37
     },
     {
       "patient": "TF10_C65P26",
@@ -418,20 +419,20 @@
       "even": 0.9584,
       "debris": 0.6473,
       "usable": true,
-      "seconds": 1.58
+      "seconds": 1.8
     },
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144514.jpg",
-      "found_parasites": 136,
-      "found_wbc": 15,
+      "found_parasites": 135,
+      "found_wbc": 16,
       "truth_parasites": 163,
       "truth_wbc": 17,
       "focus": 3.39,
       "even": 0.9399,
       "debris": 0.6311,
       "usable": true,
-      "seconds": 1.5
+      "seconds": 1.57
     },
     {
       "patient": "TF10_C65P26",
@@ -444,12 +445,12 @@
       "even": 0.9596,
       "debris": 0.581,
       "usable": true,
-      "seconds": 1.67
+      "seconds": 2.03
     },
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144808.jpg",
-      "found_parasites": 124,
+      "found_parasites": 123,
       "found_wbc": 22,
       "truth_parasites": 148,
       "truth_wbc": 21,
@@ -457,20 +458,20 @@
       "even": 0.9589,
       "debris": 0.551,
       "usable": true,
-      "seconds": 1.5
+      "seconds": 2.54
     },
     {
       "patient": "TF10_C65P26",
       "image": "20170612_144935.jpg",
       "found_parasites": 236,
-      "found_wbc": 22,
+      "found_wbc": 23,
       "truth_parasites": 250,
       "truth_wbc": 22,
       "focus": 4.0,
       "even": 0.9431,
       "debris": 0.6203,
       "usable": true,
-      "seconds": 1.82
+      "seconds": 2.66
     },
     {
       "patient": "TF10_C65P26",
@@ -483,46 +484,46 @@
       "even": 0.9562,
       "debris": 0.5765,
       "usable": true,
-      "seconds": 1.67
+      "seconds": 2.69
     },
     {
       "patient": "TF10_C65P26",
       "image": "20170612_145239.jpg",
       "found_parasites": 166,
-      "found_wbc": 19,
+      "found_wbc": 20,
       "truth_parasites": 183,
       "truth_wbc": 18,
       "focus": 4.26,
       "even": 0.959,
       "debris": 0.5748,
       "usable": true,
-      "seconds": 2.06
+      "seconds": 2.39
     },
     {
       "patient": "TF10_C65P26",
       "image": "20170612_145409.jpg",
       "found_parasites": 236,
-      "found_wbc": 30,
+      "found_wbc": 27,
       "truth_parasites": 242,
       "truth_wbc": 25,
       "focus": 3.9,
       "even": 0.9606,
       "debris": 0.5943,
       "usable": true,
-      "seconds": 2.83
+      "seconds": 2.74
     },
     {
       "patient": "TF110_270",
       "image": "20170830_165753.jpg",
       "found_parasites": 55,
-      "found_wbc": 38,
+      "found_wbc": 39,
       "truth_parasites": 75,
       "truth_wbc": 42,
       "focus": 3.55,
       "even": 0.9708,
       "debris": 0.6426,
       "usable": true,
-      "seconds": 1.04
+      "seconds": 1.41
     },
     {
       "patient": "TF110_270",
@@ -535,7 +536,7 @@
       "even": 0.9668,
       "debris": 0.704,
       "usable": true,
-      "seconds": 1.01
+      "seconds": 1.44
     },
     {
       "patient": "TF110_270",
@@ -548,85 +549,85 @@
       "even": 0.9734,
       "debris": 0.6409,
       "usable": true,
-      "seconds": 1.14
+      "seconds": 1.28
     },
     {
       "patient": "TF110_270",
       "image": "20170830_170322.jpg",
       "found_parasites": 57,
-      "found_wbc": 50,
+      "found_wbc": 52,
       "truth_parasites": 68,
       "truth_wbc": 54,
       "focus": 4.33,
       "even": 0.9618,
       "debris": 0.755,
       "usable": true,
-      "seconds": 1.14
+      "seconds": 1.24
     },
     {
       "patient": "TF110_270",
       "image": "20170830_170535.jpg",
       "found_parasites": 81,
-      "found_wbc": 40,
+      "found_wbc": 43,
       "truth_parasites": 98,
       "truth_wbc": 40,
       "focus": 3.77,
       "even": 0.957,
       "debris": 0.7499,
       "usable": true,
-      "seconds": 1.19
+      "seconds": 1.22
     },
     {
       "patient": "TF110_270",
       "image": "20170830_170700.jpg",
       "found_parasites": 56,
-      "found_wbc": 52,
+      "found_wbc": 53,
       "truth_parasites": 69,
       "truth_wbc": 54,
       "focus": 3.73,
       "even": 0.964,
       "debris": 0.6953,
       "usable": true,
-      "seconds": 1.04
+      "seconds": 1.14
     },
     {
       "patient": "TF111_238",
       "image": "20170830_171214.jpg",
-      "found_parasites": 139,
-      "found_wbc": 14,
+      "found_parasites": 136,
+      "found_wbc": 16,
       "truth_parasites": 132,
       "truth_wbc": 12,
       "focus": 3.7,
       "even": 0.9849,
       "debris": 0.7215,
       "usable": true,
-      "seconds": 2.04
+      "seconds": 1.92
     },
     {
       "patient": "TF111_238",
       "image": "20170830_171341.jpg",
-      "found_parasites": 130,
-      "found_wbc": 23,
+      "found_parasites": 129,
+      "found_wbc": 25,
       "truth_parasites": 114,
       "truth_wbc": 22,
       "focus": 3.72,
       "even": 0.9806,
       "debris": 0.6752,
       "usable": true,
-      "seconds": 1.71
+      "seconds": 1.74
     },
     {
       "patient": "TF111_238",
       "image": "20170830_171528.jpg",
-      "found_parasites": 118,
-      "found_wbc": 23,
+      "found_parasites": 116,
+      "found_wbc": 24,
       "truth_parasites": 105,
       "truth_wbc": 25,
       "focus": 3.66,
       "even": 0.9812,
       "debris": 0.6531,
       "usable": true,
-      "seconds": 1.67
+      "seconds": 1.64
     },
     {
       "patient": "TF111_238",
@@ -639,7 +640,7 @@
       "even": 0.9858,
       "debris": 0.7203,
       "usable": true,
-      "seconds": 2.21
+      "seconds": 2.16
     },
     {
       "patient": "TF111_238",
@@ -652,124 +653,124 @@
       "even": 0.9884,
       "debris": 0.76,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 1.62
     },
     {
       "patient": "TF111_238",
       "image": "20170830_172031.jpg",
       "found_parasites": 122,
-      "found_wbc": 16,
+      "found_wbc": 17,
       "truth_parasites": 98,
       "truth_wbc": 14,
       "focus": 3.72,
       "even": 0.9878,
       "debris": 0.7216,
       "usable": true,
-      "seconds": 1.89
+      "seconds": 1.74
     },
     {
       "patient": "TF111_238",
       "image": "20170830_172327.jpg",
       "found_parasites": 119,
-      "found_wbc": 28,
+      "found_wbc": 26,
       "truth_parasites": 128,
       "truth_wbc": 25,
       "focus": 4.45,
       "even": 0.9682,
       "debris": 0.7343,
       "usable": true,
-      "seconds": 2.07
+      "seconds": 2.04
     },
     {
       "patient": "TF111_238",
       "image": "20170830_172447.jpg",
-      "found_parasites": 145,
-      "found_wbc": 24,
+      "found_parasites": 143,
+      "found_wbc": 25,
       "truth_parasites": 142,
       "truth_wbc": 25,
       "focus": 4.46,
       "even": 0.9723,
       "debris": 0.7013,
       "usable": true,
-      "seconds": 2.16
+      "seconds": 2.13
     },
     {
       "patient": "TF111_238",
       "image": "20170830_172609.jpg",
       "found_parasites": 144,
-      "found_wbc": 22,
+      "found_wbc": 21,
       "truth_parasites": 164,
       "truth_wbc": 19,
       "focus": 5.53,
       "even": 0.9766,
       "debris": 0.7248,
       "usable": true,
-      "seconds": 2.96
+      "seconds": 2.9
     },
     {
       "patient": "TF111_238",
       "image": "20170830_173058.jpg",
       "found_parasites": 170,
-      "found_wbc": 19,
+      "found_wbc": 21,
       "truth_parasites": 189,
       "truth_wbc": 18,
       "focus": 4.37,
       "even": 0.9694,
       "debris": 0.7028,
       "usable": true,
-      "seconds": 2.15
+      "seconds": 2.03
     },
     {
       "patient": "TF111_238",
       "image": "20170830_173144.jpg",
-      "found_parasites": 166,
-      "found_wbc": 20,
+      "found_parasites": 165,
+      "found_wbc": 22,
       "truth_parasites": 191,
       "truth_wbc": 19,
       "focus": 4.75,
       "even": 0.971,
       "debris": 0.7197,
       "usable": true,
-      "seconds": 2.79
+      "seconds": 2.66
     },
     {
       "patient": "TF111_238",
       "image": "20170830_173445.jpg",
-      "found_parasites": 161,
-      "found_wbc": 25,
+      "found_parasites": 160,
+      "found_wbc": 26,
       "truth_parasites": 191,
       "truth_wbc": 27,
       "focus": 5.06,
       "even": 0.9716,
       "debris": 0.7242,
       "usable": true,
-      "seconds": 2.11
+      "seconds": 2.13
     },
     {
       "patient": "TF117_R1",
       "image": "20170830_235824.jpg",
       "found_parasites": 38,
-      "found_wbc": 40,
+      "found_wbc": 33,
       "truth_parasites": 27,
       "truth_wbc": 33,
       "focus": 4.17,
       "even": 0.9575,
       "debris": 0.6852,
       "usable": true,
-      "seconds": 1.76
+      "seconds": 1.94
     },
     {
       "patient": "TF117_R1",
       "image": "20170831_000500.jpg",
       "found_parasites": 16,
-      "found_wbc": 35,
+      "found_wbc": 34,
       "truth_parasites": 25,
       "truth_wbc": 33,
       "focus": 4.55,
       "even": 0.9256,
       "debris": 0.6891,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 1.6
     },
     {
       "patient": "TF117_R1",
@@ -782,72 +783,72 @@
       "even": 0.9034,
       "debris": 0.6509,
       "usable": true,
-      "seconds": 1.21
+      "seconds": 1.34
     },
     {
       "patient": "TF117_R1",
       "image": "20170831_000755.jpg",
       "found_parasites": 29,
-      "found_wbc": 28,
+      "found_wbc": 27,
       "truth_parasites": 26,
       "truth_wbc": 33,
       "focus": 3.76,
       "even": 0.9357,
       "debris": 0.6913,
       "usable": true,
-      "seconds": 1.39
+      "seconds": 1.49
     },
     {
       "patient": "TF117_R1",
       "image": "20170831_000849.jpg",
       "found_parasites": 28,
-      "found_wbc": 33,
+      "found_wbc": 32,
       "truth_parasites": 36,
       "truth_wbc": 34,
       "focus": 3.78,
       "even": 0.9428,
       "debris": 0.6943,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 1.38
     },
     {
       "patient": "TF117_R1",
       "image": "20170831_000954.jpg",
       "found_parasites": 25,
-      "found_wbc": 30,
+      "found_wbc": 28,
       "truth_parasites": 31,
       "truth_wbc": 27,
       "focus": 3.8,
       "even": 0.9388,
       "debris": 0.6602,
       "usable": true,
-      "seconds": 1.63
+      "seconds": 1.67
     },
     {
       "patient": "TF117_R1",
       "image": "20170831_001051.jpg",
       "found_parasites": 23,
-      "found_wbc": 38,
+      "found_wbc": 34,
       "truth_parasites": 29,
       "truth_wbc": 32,
       "focus": 3.76,
       "even": 0.9438,
       "debris": 0.643,
       "usable": true,
-      "seconds": 1.41
+      "seconds": 1.45
     },
     {
       "patient": "TF117_R1",
       "image": "20170831_001143.jpg",
       "found_parasites": 36,
-      "found_wbc": 29,
+      "found_wbc": 25,
       "truth_parasites": 36,
       "truth_wbc": 29,
       "focus": 4.08,
       "even": 0.9484,
       "debris": 0.6837,
       "usable": true,
-      "seconds": 1.74
+      "seconds": 1.97
     },
     {
       "patient": "TF122_1533R",
@@ -860,20 +861,20 @@
       "even": 0.9649,
       "debris": 0.818,
       "usable": true,
-      "seconds": 0.88
+      "seconds": 0.94
     },
     {
       "patient": "TF122_1533R",
       "image": "20170831_115335.jpg",
       "found_parasites": 4,
-      "found_wbc": 14,
+      "found_wbc": 12,
       "truth_parasites": 6,
       "truth_wbc": 10,
       "focus": 2.46,
       "even": 0.971,
       "debris": 0.8325,
       "usable": true,
-      "seconds": 1.07
+      "seconds": 1.08
     },
     {
       "patient": "TF122_1533R",
@@ -886,33 +887,33 @@
       "even": 0.9428,
       "debris": 0.7569,
       "usable": true,
-      "seconds": 1.37
+      "seconds": 1.58
     },
     {
       "patient": "TF122_1533R",
       "image": "20170831_115624.jpg",
       "found_parasites": 8,
-      "found_wbc": 17,
+      "found_wbc": 16,
       "truth_parasites": 9,
       "truth_wbc": 16,
       "focus": 2.48,
       "even": 0.967,
       "debris": 0.8144,
       "usable": true,
-      "seconds": 0.93
+      "seconds": 1.01
     },
     {
       "patient": "TF122_1533R",
       "image": "20170831_115715.jpg",
       "found_parasites": 5,
-      "found_wbc": 20,
+      "found_wbc": 22,
       "truth_parasites": 5,
       "truth_wbc": 20,
       "focus": 2.64,
       "even": 0.9646,
       "debris": 0.784,
       "usable": true,
-      "seconds": 0.9
+      "seconds": 0.96
     },
     {
       "patient": "TF122_1533R",
@@ -925,7 +926,7 @@
       "even": 0.9631,
       "debris": 0.7686,
       "usable": true,
-      "seconds": 0.85
+      "seconds": 0.87
     },
     {
       "patient": "TF122_1533R",
@@ -938,7 +939,7 @@
       "even": 0.9728,
       "debris": 0.8174,
       "usable": true,
-      "seconds": 0.92
+      "seconds": 0.86
     },
     {
       "patient": "TF122_1533R",
@@ -951,7 +952,7 @@
       "even": 0.9651,
       "debris": 0.8051,
       "usable": true,
-      "seconds": 0.9
+      "seconds": 0.89
     },
     {
       "patient": "TF122_1533R",
@@ -964,20 +965,20 @@
       "even": 0.9672,
       "debris": 0.8499,
       "usable": true,
-      "seconds": 0.94
+      "seconds": 0.92
     },
     {
       "patient": "TF122_1533R",
       "image": "20170831_120312.jpg",
-      "found_parasites": 7,
-      "found_wbc": 12,
+      "found_parasites": 6,
+      "found_wbc": 13,
       "truth_parasites": 7,
       "truth_wbc": 12,
       "focus": 2.56,
       "even": 0.9629,
       "debris": 0.811,
       "usable": true,
-      "seconds": 0.99
+      "seconds": 0.96
     },
     {
       "patient": "TF122_1533R",
@@ -990,33 +991,33 @@
       "even": 0.9494,
       "debris": 0.8234,
       "usable": true,
-      "seconds": 0.95
+      "seconds": 1.04
     },
     {
       "patient": "TF122_1533R",
       "image": "20170831_120518.jpg",
       "found_parasites": 0,
-      "found_wbc": 13,
+      "found_wbc": 12,
       "truth_parasites": 3,
       "truth_wbc": 13,
       "focus": 2.6,
       "even": 0.9676,
       "debris": 0.8189,
       "usable": true,
-      "seconds": 0.88
+      "seconds": 0.92
     },
     {
       "patient": "TF122_1533R",
       "image": "20170831_120553.jpg",
       "found_parasites": 3,
-      "found_wbc": 16,
+      "found_wbc": 15,
       "truth_parasites": 3,
       "truth_wbc": 15,
       "focus": 2.51,
       "even": 0.9417,
       "debris": 0.781,
       "usable": true,
-      "seconds": 0.85
+      "seconds": 0.87
     },
     {
       "patient": "TF122_1533R",
@@ -1029,52 +1030,52 @@
       "even": 0.9697,
       "debris": 0.8203,
       "usable": true,
-      "seconds": 1.01
+      "seconds": 0.88
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_110548.jpg",
       "found_parasites": 76,
-      "found_wbc": 17,
+      "found_wbc": 14,
       "truth_parasites": 76,
       "truth_wbc": 13,
       "focus": 3.08,
       "even": 0.9481,
       "debris": 0.746,
       "usable": true,
-      "seconds": 1.63
+      "seconds": 1.88
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_110701.jpg",
-      "found_parasites": 104,
-      "found_wbc": 18,
+      "found_parasites": 101,
+      "found_wbc": 13,
       "truth_parasites": 112,
       "truth_wbc": 13,
       "focus": 3.24,
       "even": 0.9581,
       "debris": 0.681,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 1.74
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_110740.jpg",
-      "found_parasites": 105,
-      "found_wbc": 20,
+      "found_parasites": 104,
+      "found_wbc": 19,
       "truth_parasites": 109,
       "truth_wbc": 19,
       "focus": 3.57,
       "even": 0.9706,
       "debris": 0.6884,
       "usable": true,
-      "seconds": 1.75
+      "seconds": 1.7
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_111014.jpg",
-      "found_parasites": 91,
-      "found_wbc": 19,
+      "found_parasites": 90,
+      "found_wbc": 17,
       "truth_parasites": 92,
       "truth_wbc": 18,
       "focus": 3.03,
@@ -1086,59 +1087,59 @@
     {
       "patient": "TF123_1542",
       "image": "20170831_111153.jpg",
-      "found_parasites": 98,
-      "found_wbc": 23,
+      "found_parasites": 97,
+      "found_wbc": 19,
       "truth_parasites": 99,
       "truth_wbc": 18,
       "focus": 3.81,
       "even": 0.9752,
       "debris": 0.6962,
       "usable": true,
-      "seconds": 1.93
+      "seconds": 2.23
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_111250.jpg",
-      "found_parasites": 98,
-      "found_wbc": 16,
+      "found_parasites": 97,
+      "found_wbc": 14,
       "truth_parasites": 101,
       "truth_wbc": 12,
       "focus": 3.45,
       "even": 0.9718,
       "debris": 0.673,
       "usable": true,
-      "seconds": 2.87
+      "seconds": 4.0
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_111417.jpg",
       "found_parasites": 103,
-      "found_wbc": 20,
+      "found_wbc": 13,
       "truth_parasites": 99,
       "truth_wbc": 17,
       "focus": 3.68,
       "even": 0.9728,
       "debris": 0.6652,
       "usable": true,
-      "seconds": 1.98
+      "seconds": 2.46
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_111524.jpg",
       "found_parasites": 105,
-      "found_wbc": 21,
+      "found_wbc": 14,
       "truth_parasites": 105,
       "truth_wbc": 15,
       "focus": 2.96,
       "even": 0.9749,
       "debris": 0.6275,
       "usable": true,
-      "seconds": 1.55
+      "seconds": 1.66
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_111656.jpg",
-      "found_parasites": 140,
+      "found_parasites": 139,
       "found_wbc": 16,
       "truth_parasites": 137,
       "truth_wbc": 13,
@@ -1146,20 +1147,20 @@
       "even": 0.9764,
       "debris": 0.6922,
       "usable": true,
-      "seconds": 1.93
+      "seconds": 2.11
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_111741.jpg",
-      "found_parasites": 136,
-      "found_wbc": 16,
+      "found_parasites": 133,
+      "found_wbc": 13,
       "truth_parasites": 141,
       "truth_wbc": 12,
       "focus": 3.69,
       "even": 0.9669,
       "debris": 0.6856,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 1.91
     },
     {
       "patient": "TF123_1542",
@@ -1172,25 +1173,25 @@
       "even": 0.9799,
       "debris": 0.678,
       "usable": true,
-      "seconds": 1.78
+      "seconds": 2.03
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_112619.jpg",
       "found_parasites": 104,
-      "found_wbc": 16,
+      "found_wbc": 18,
       "truth_parasites": 96,
       "truth_wbc": 15,
       "focus": 3.51,
       "even": 0.966,
       "debris": 0.6868,
       "usable": true,
-      "seconds": 2.4
+      "seconds": 2.76
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_112743.jpg",
-      "found_parasites": 89,
+      "found_parasites": 85,
       "found_wbc": 12,
       "truth_parasites": 89,
       "truth_wbc": 12,
@@ -1198,46 +1199,46 @@
       "even": 0.975,
       "debris": 0.6846,
       "usable": true,
-      "seconds": 2.29
+      "seconds": 2.58
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_113046.jpg",
       "found_parasites": 85,
-      "found_wbc": 17,
+      "found_wbc": 13,
       "truth_parasites": 86,
       "truth_wbc": 14,
       "focus": 3.58,
       "even": 0.9689,
       "debris": 0.7252,
       "usable": true,
-      "seconds": 1.6
+      "seconds": 1.8
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_113239.jpg",
-      "found_parasites": 145,
-      "found_wbc": 15,
+      "found_parasites": 139,
+      "found_wbc": 13,
       "truth_parasites": 143,
       "truth_wbc": 17,
       "focus": 3.59,
       "even": 0.9648,
       "debris": 0.7008,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 2.15
     },
     {
       "patient": "TF123_1542",
       "image": "20170831_113331.jpg",
       "found_parasites": 135,
-      "found_wbc": 20,
+      "found_wbc": 14,
       "truth_parasites": 129,
       "truth_wbc": 13,
       "focus": 3.69,
       "even": 0.9656,
       "debris": 0.6771,
       "usable": true,
-      "seconds": 1.75
+      "seconds": 2.36
     },
     {
       "patient": "TF124_S540",
@@ -1250,7 +1251,7 @@
       "even": 0.9497,
       "debris": 0.6265,
       "usable": true,
-      "seconds": 1.14
+      "seconds": 1.74
     },
     {
       "patient": "TF124_S540",
@@ -1263,7 +1264,7 @@
       "even": 0.9709,
       "debris": 0.6781,
       "usable": true,
-      "seconds": 1.13
+      "seconds": 1.73
     },
     {
       "patient": "TF124_S540",
@@ -1276,20 +1277,20 @@
       "even": 0.9668,
       "debris": 0.676,
       "usable": true,
-      "seconds": 1.29
+      "seconds": 1.69
     },
     {
       "patient": "TF124_S540",
       "image": "20170831_134119.jpg",
       "found_parasites": 12,
-      "found_wbc": 22,
+      "found_wbc": 25,
       "truth_parasites": 32,
       "truth_wbc": 25,
       "focus": 2.5,
       "even": 0.9539,
       "debris": 0.6662,
       "usable": true,
-      "seconds": 1.08
+      "seconds": 1.42
     },
     {
       "patient": "TF124_S540",
@@ -1302,46 +1303,46 @@
       "even": 0.9495,
       "debris": 0.6217,
       "usable": true,
-      "seconds": 0.9
+      "seconds": 1.31
     },
     {
       "patient": "TF124_S540",
       "image": "20170831_134509.jpg",
       "found_parasites": 2,
-      "found_wbc": 21,
+      "found_wbc": 23,
       "truth_parasites": 41,
       "truth_wbc": 26,
       "focus": 2.69,
       "even": 0.9636,
       "debris": 0.6804,
       "usable": true,
-      "seconds": 1.09
+      "seconds": 1.37
     },
     {
       "patient": "TF124_S540",
       "image": "20170831_134843.jpg",
       "found_parasites": 1,
-      "found_wbc": 19,
+      "found_wbc": 20,
       "truth_parasites": 29,
       "truth_wbc": 21,
       "focus": 2.69,
       "even": 0.96,
       "debris": 0.742,
       "usable": true,
-      "seconds": 0.98
+      "seconds": 1.36
     },
     {
       "patient": "TF124_S540",
       "image": "20170831_135016.jpg",
       "found_parasites": 9,
-      "found_wbc": 25,
+      "found_wbc": 28,
       "truth_parasites": 28,
       "truth_wbc": 25,
       "focus": 2.43,
       "even": 0.9807,
       "debris": 0.6737,
       "usable": true,
-      "seconds": 1.16
+      "seconds": 1.83
     },
     {
       "patient": "TF124_S540",
@@ -1354,7 +1355,7 @@
       "even": 0.9779,
       "debris": 0.7588,
       "usable": true,
-      "seconds": 0.95
+      "seconds": 1.24
     },
     {
       "patient": "TF124_S540",
@@ -1367,20 +1368,20 @@
       "even": 0.9818,
       "debris": 0.6799,
       "usable": true,
-      "seconds": 0.92
+      "seconds": 1.17
     },
     {
       "patient": "TF130_S521",
       "image": "20170831_165712.jpg",
       "found_parasites": 178,
-      "found_wbc": 17,
+      "found_wbc": 20,
       "truth_parasites": 181,
       "truth_wbc": 16,
       "focus": 2.83,
       "even": 0.9457,
       "debris": 0.6115,
       "usable": true,
-      "seconds": 1.82
+      "seconds": 2.44
     },
     {
       "patient": "TF130_S521",
@@ -1393,20 +1394,20 @@
       "even": 0.9543,
       "debris": 0.6043,
       "usable": true,
-      "seconds": 1.5
+      "seconds": 2.03
     },
     {
       "patient": "TF130_S521",
       "image": "20170831_165848.jpg",
-      "found_parasites": 102,
-      "found_wbc": 14,
+      "found_parasites": 101,
+      "found_wbc": 15,
       "truth_parasites": 113,
       "truth_wbc": 13,
       "focus": 2.88,
       "even": 0.9542,
       "debris": 0.6039,
       "usable": true,
-      "seconds": 1.26
+      "seconds": 1.46
     },
     {
       "patient": "TF130_S521",
@@ -1419,7 +1420,7 @@
       "even": 0.9176,
       "debris": 0.6843,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 1.41
     },
     {
       "patient": "TF130_S521",
@@ -1432,7 +1433,7 @@
       "even": 0.9444,
       "debris": 0.596,
       "usable": true,
-      "seconds": 1.41
+      "seconds": 1.49
     },
     {
       "patient": "TF130_S521",
@@ -1445,20 +1446,20 @@
       "even": 0.9506,
       "debris": 0.603,
       "usable": true,
-      "seconds": 1.45
+      "seconds": 1.57
     },
     {
       "patient": "TF130_S521",
       "image": "20170831_170216.jpg",
       "found_parasites": 147,
-      "found_wbc": 16,
+      "found_wbc": 17,
       "truth_parasites": 191,
       "truth_wbc": 16,
       "focus": 2.82,
       "even": 0.9492,
       "debris": 0.6001,
       "usable": true,
-      "seconds": 1.46
+      "seconds": 1.66
     },
     {
       "patient": "TF130_S521",
@@ -1471,25 +1472,25 @@
       "even": 0.9404,
       "debris": 0.5882,
       "usable": true,
-      "seconds": 1.56
+      "seconds": 1.69
     },
     {
       "patient": "TF130_S521",
       "image": "20170831_170352.jpg",
       "found_parasites": 139,
-      "found_wbc": 13,
+      "found_wbc": 15,
       "truth_parasites": 137,
       "truth_wbc": 12,
       "focus": 3.04,
       "even": 0.9663,
       "debris": 0.6084,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 1.61
     },
     {
       "patient": "TF130_S521",
       "image": "20170831_170434.jpg",
-      "found_parasites": 201,
+      "found_parasites": 200,
       "found_wbc": 16,
       "truth_parasites": 189,
       "truth_wbc": 15,
@@ -1497,12 +1498,12 @@
       "even": 0.9438,
       "debris": 0.6106,
       "usable": true,
-      "seconds": 1.45
+      "seconds": 1.51
     },
     {
       "patient": "TF130_S521",
       "image": "20170831_170549.jpg",
-      "found_parasites": 160,
+      "found_parasites": 159,
       "found_wbc": 17,
       "truth_parasites": 132,
       "truth_wbc": 17,
@@ -1510,7 +1511,7 @@
       "even": 0.9343,
       "debris": 0.57,
       "usable": true,
-      "seconds": 2.1
+      "seconds": 1.54
     },
     {
       "patient": "TF130_S521",
@@ -1523,33 +1524,33 @@
       "even": 0.955,
       "debris": 0.5764,
       "usable": true,
-      "seconds": 1.42
+      "seconds": 1.51
     },
     {
       "patient": "TF130_S521",
       "image": "20170831_170744.jpg",
       "found_parasites": 178,
-      "found_wbc": 12,
+      "found_wbc": 11,
       "truth_parasites": 160,
       "truth_wbc": 12,
       "focus": 3.11,
       "even": 0.8991,
       "debris": 0.5763,
       "usable": false,
-      "seconds": 1.49
+      "seconds": 1.75
     },
     {
       "patient": "TF130_S521",
       "image": "20170831_170902.jpg",
       "found_parasites": 152,
-      "found_wbc": 15,
+      "found_wbc": 16,
       "truth_parasites": 151,
       "truth_wbc": 14,
       "focus": 2.82,
       "even": 0.9488,
       "debris": 0.5722,
       "usable": true,
-      "seconds": 1.54
+      "seconds": 1.56
     },
     {
       "patient": "TF132_S527",
@@ -1562,7 +1563,7 @@
       "even": 0.9677,
       "debris": 0.6905,
       "usable": true,
-      "seconds": 1.1
+      "seconds": 1.28
     },
     {
       "patient": "TF132_S527",
@@ -1575,7 +1576,7 @@
       "even": 0.9659,
       "debris": 0.6873,
       "usable": true,
-      "seconds": 1.08
+      "seconds": 1.14
     },
     {
       "patient": "TF132_S527",
@@ -1588,20 +1589,20 @@
       "even": 0.9707,
       "debris": 0.6944,
       "usable": true,
-      "seconds": 1.19
+      "seconds": 1.2
     },
     {
       "patient": "TF132_S527",
       "image": "20170831_175310.jpg",
       "found_parasites": 28,
-      "found_wbc": 13,
+      "found_wbc": 14,
       "truth_parasites": 26,
       "truth_wbc": 13,
       "focus": 2.97,
       "even": 0.9562,
       "debris": 0.6796,
       "usable": true,
-      "seconds": 1.15
+      "seconds": 1.21
     },
     {
       "patient": "TF132_S527",
@@ -1614,7 +1615,7 @@
       "even": 0.9705,
       "debris": 0.6755,
       "usable": true,
-      "seconds": 1.39
+      "seconds": 1.07
     },
     {
       "patient": "TF132_S527",
@@ -1627,7 +1628,7 @@
       "even": 0.9696,
       "debris": 0.6832,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 1.12
     },
     {
       "patient": "TF132_S527",
@@ -1640,7 +1641,7 @@
       "even": 0.9586,
       "debris": 0.6495,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 1.18
     },
     {
       "patient": "TF132_S527",
@@ -1653,46 +1654,46 @@
       "even": 0.9804,
       "debris": 0.6943,
       "usable": true,
-      "seconds": 0.89
+      "seconds": 1.01
     },
     {
       "patient": "TF132_S527",
       "image": "20170831_180224.jpg",
       "found_parasites": 16,
-      "found_wbc": 17,
+      "found_wbc": 19,
       "truth_parasites": 24,
       "truth_wbc": 17,
       "focus": 2.63,
       "even": 0.9682,
       "debris": 0.6837,
       "usable": true,
-      "seconds": 0.97
+      "seconds": 1.09
     },
     {
       "patient": "TF132_S527",
       "image": "20170831_180510.jpg",
       "found_parasites": 15,
-      "found_wbc": 16,
+      "found_wbc": 17,
       "truth_parasites": 22,
       "truth_wbc": 16,
       "focus": 2.67,
       "even": 0.9733,
       "debris": 0.7144,
       "usable": true,
-      "seconds": 0.95
+      "seconds": 1.15
     },
     {
       "patient": "TF132_S527",
       "image": "20170831_180613.jpg",
       "found_parasites": 20,
-      "found_wbc": 13,
+      "found_wbc": 14,
       "truth_parasites": 23,
       "truth_wbc": 13,
       "focus": 2.55,
       "even": 0.9819,
       "debris": 0.7153,
       "usable": true,
-      "seconds": 0.89
+      "seconds": 0.98
     },
     {
       "patient": "TF132_S527",
@@ -1705,33 +1706,33 @@
       "even": 0.9636,
       "debris": 0.7073,
       "usable": true,
-      "seconds": 0.93
+      "seconds": 1.27
     },
     {
       "patient": "TF132_S527",
       "image": "20170831_180949.jpg",
       "found_parasites": 17,
-      "found_wbc": 12,
+      "found_wbc": 13,
       "truth_parasites": 15,
       "truth_wbc": 11,
       "focus": 2.34,
       "even": 0.9664,
       "debris": 0.6463,
       "usable": true,
-      "seconds": 1.09
+      "seconds": 1.62
     },
     {
       "patient": "TF132_S527",
       "image": "20170831_181112.jpg",
       "found_parasites": 36,
-      "found_wbc": 11,
+      "found_wbc": 12,
       "truth_parasites": 32,
       "truth_wbc": 11,
       "focus": 2.62,
       "even": 0.9744,
       "debris": 0.6554,
       "usable": true,
-      "seconds": 1.14
+      "seconds": 1.61
     },
     {
       "patient": "TF132_S527",
@@ -1744,98 +1745,98 @@
       "even": 0.9615,
       "debris": 0.7384,
       "usable": true,
-      "seconds": 1.06
+      "seconds": 1.36
     },
     {
       "patient": "TF132_S527",
       "image": "20170831_181256.jpg",
       "found_parasites": 26,
-      "found_wbc": 12,
+      "found_wbc": 13,
       "truth_parasites": 24,
       "truth_wbc": 11,
       "focus": 3.17,
       "even": 0.975,
       "debris": 0.75,
       "usable": true,
-      "seconds": 1.21
+      "seconds": 2.24
     },
     {
       "patient": "TF134_US28",
       "image": "20170831_202026.jpg",
       "found_parasites": 16,
-      "found_wbc": 14,
+      "found_wbc": 15,
       "truth_parasites": 57,
       "truth_wbc": 13,
       "focus": 3.29,
       "even": 0.98,
       "debris": 0.8116,
       "usable": true,
-      "seconds": 1.26
+      "seconds": 1.56
     },
     {
       "patient": "TF134_US28",
       "image": "20170831_202109.jpg",
       "found_parasites": 12,
-      "found_wbc": 13,
+      "found_wbc": 12,
       "truth_parasites": 19,
       "truth_wbc": 10,
       "focus": 2.55,
       "even": 0.9831,
       "debris": 0.7591,
       "usable": true,
-      "seconds": 1.19
+      "seconds": 1.4
     },
     {
       "patient": "TF134_US28",
       "image": "20170831_202201.jpg",
       "found_parasites": 15,
-      "found_wbc": 16,
+      "found_wbc": 17,
       "truth_parasites": 25,
       "truth_wbc": 16,
       "focus": 2.61,
       "even": 0.9802,
       "debris": 0.7858,
       "usable": true,
-      "seconds": 0.96
+      "seconds": 1.15
     },
     {
       "patient": "TF134_US28",
       "image": "20170831_202251.jpg",
       "found_parasites": 11,
-      "found_wbc": 13,
+      "found_wbc": 14,
       "truth_parasites": 12,
       "truth_wbc": 13,
       "focus": 2.49,
       "even": 0.9845,
       "debris": 0.8016,
       "usable": true,
-      "seconds": 1.1
+      "seconds": 1.45
     },
     {
       "patient": "TF134_US28",
       "image": "20170831_202541.jpg",
       "found_parasites": 5,
-      "found_wbc": 18,
+      "found_wbc": 19,
       "truth_parasites": 11,
       "truth_wbc": 16,
       "focus": 2.56,
       "even": 0.9886,
       "debris": 0.8082,
       "usable": true,
-      "seconds": 1.02
+      "seconds": 1.54
     },
     {
       "patient": "TF134_US28",
       "image": "20170831_202726.jpg",
       "found_parasites": 8,
-      "found_wbc": 20,
+      "found_wbc": 19,
       "truth_parasites": 10,
       "truth_wbc": 18,
       "focus": 2.83,
       "even": 0.9835,
       "debris": 0.8185,
       "usable": true,
-      "seconds": 1.13
+      "seconds": 1.28
     },
     {
       "patient": "TF134_US28",
@@ -1848,59 +1849,59 @@
       "even": 0.9785,
       "debris": 0.8641,
       "usable": false,
-      "seconds": 1.19
+      "seconds": 1.46
     },
     {
       "patient": "TF134_US28",
       "image": "20170831_202932.jpg",
       "found_parasites": 12,
-      "found_wbc": 11,
+      "found_wbc": 12,
       "truth_parasites": 14,
       "truth_wbc": 11,
       "focus": 2.35,
       "even": 0.9804,
       "debris": 0.8495,
       "usable": true,
-      "seconds": 1.14
+      "seconds": 1.24
     },
     {
       "patient": "TF134_US28",
       "image": "20170831_203023.jpg",
       "found_parasites": 9,
-      "found_wbc": 12,
+      "found_wbc": 13,
       "truth_parasites": 12,
       "truth_wbc": 12,
       "focus": 2.56,
       "even": 0.9806,
       "debris": 0.8335,
       "usable": true,
-      "seconds": 1.09
+      "seconds": 1.13
     },
     {
       "patient": "TF134_US28",
       "image": "20170831_203057.jpg",
-      "found_parasites": 13,
-      "found_wbc": 14,
+      "found_parasites": 11,
+      "found_wbc": 15,
       "truth_parasites": 20,
       "truth_wbc": 12,
       "focus": 2.55,
       "even": 0.9785,
       "debris": 0.8218,
       "usable": true,
-      "seconds": 1.1
+      "seconds": 3.05
     },
     {
       "patient": "TF134_US28",
       "image": "20170831_203231.jpg",
       "found_parasites": 13,
-      "found_wbc": 11,
+      "found_wbc": 12,
       "truth_parasites": 20,
       "truth_wbc": 14,
       "focus": 3.13,
       "even": 0.9816,
       "debris": 0.7214,
       "usable": true,
-      "seconds": 1.16
+      "seconds": 1.66
     },
     {
       "patient": "TF134_US28",
@@ -1913,20 +1914,20 @@
       "even": 0.9838,
       "debris": 0.7971,
       "usable": true,
-      "seconds": 1.12
+      "seconds": 1.72
     },
     {
       "patient": "TF134_US28",
       "image": "20170831_203415.jpg",
       "found_parasites": 18,
-      "found_wbc": 17,
+      "found_wbc": 19,
       "truth_parasites": 36,
       "truth_wbc": 15,
       "focus": 2.93,
       "even": 0.9815,
       "debris": 0.7852,
       "usable": true,
-      "seconds": 1.13
+      "seconds": 1.34
     },
     {
       "patient": "TF134_US28",
@@ -1939,7 +1940,7 @@
       "even": 0.9804,
       "debris": 0.7769,
       "usable": true,
-      "seconds": 1.18
+      "seconds": 1.27
     },
     {
       "patient": "TF134_US28",
@@ -1952,46 +1953,46 @@
       "even": 0.9819,
       "debris": 0.8185,
       "usable": true,
-      "seconds": 1.3
+      "seconds": 1.53
     },
     {
       "patient": "TF134_US28",
       "image": "20170831_203803.jpg",
       "found_parasites": 12,
-      "found_wbc": 12,
+      "found_wbc": 13,
       "truth_parasites": 23,
       "truth_wbc": 15,
       "focus": 2.98,
       "even": 0.9797,
       "debris": 0.7312,
       "usable": true,
-      "seconds": 1.19
+      "seconds": 1.22
     },
     {
       "patient": "TF137_US8",
       "image": "20170831_213511.jpg",
       "found_parasites": 12,
-      "found_wbc": 13,
+      "found_wbc": 12,
       "truth_parasites": 9,
       "truth_wbc": 11,
       "focus": 2.83,
       "even": 0.9693,
       "debris": 0.7055,
       "usable": true,
-      "seconds": 1.36
+      "seconds": 1.34
     },
     {
       "patient": "TF137_US8",
       "image": "20170831_213711.jpg",
       "found_parasites": 9,
-      "found_wbc": 23,
+      "found_wbc": 22,
       "truth_parasites": 8,
       "truth_wbc": 25,
       "focus": 2.87,
       "even": 0.9695,
       "debris": 0.6173,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 1.53
     },
     {
       "patient": "TF137_US8",
@@ -2004,7 +2005,7 @@
       "even": 0.9408,
       "debris": 0.6742,
       "usable": true,
-      "seconds": 1.55
+      "seconds": 1.63
     },
     {
       "patient": "TF137_US8",
@@ -2017,7 +2018,7 @@
       "even": 0.9659,
       "debris": 0.607,
       "usable": true,
-      "seconds": 1.21
+      "seconds": 1.3
     },
     {
       "patient": "TF137_US8",
@@ -2030,33 +2031,33 @@
       "even": 0.965,
       "debris": 0.6894,
       "usable": true,
-      "seconds": 1.32
+      "seconds": 1.5
     },
     {
       "patient": "TF137_US8",
       "image": "20170831_214207.jpg",
       "found_parasites": 13,
-      "found_wbc": 18,
+      "found_wbc": 17,
       "truth_parasites": 9,
       "truth_wbc": 16,
       "focus": 2.92,
       "even": 0.9678,
       "debris": 0.6948,
       "usable": true,
-      "seconds": 1.95
+      "seconds": 2.05
     },
     {
       "patient": "TF137_US8",
       "image": "20170831_214312.jpg",
       "found_parasites": 8,
-      "found_wbc": 20,
+      "found_wbc": 21,
       "truth_parasites": 8,
       "truth_wbc": 29,
       "focus": 3.71,
       "even": 0.9599,
       "debris": 0.736,
       "usable": true,
-      "seconds": 1.4
+      "seconds": 1.46
     },
     {
       "patient": "TF137_US8",
@@ -2069,59 +2070,59 @@
       "even": 0.943,
       "debris": 0.6858,
       "usable": true,
-      "seconds": 1.09
+      "seconds": 1.14
     },
     {
       "patient": "TF137_US8",
       "image": "20170831_214542.jpg",
       "found_parasites": 15,
-      "found_wbc": 18,
+      "found_wbc": 19,
       "truth_parasites": 14,
       "truth_wbc": 23,
       "focus": 3.03,
       "even": 0.9648,
       "debris": 0.6941,
       "usable": true,
-      "seconds": 1.41
+      "seconds": 1.5
     },
     {
       "patient": "TF137_US8",
       "image": "20170831_214652.jpg",
       "found_parasites": 13,
-      "found_wbc": 19,
+      "found_wbc": 20,
       "truth_parasites": 10,
       "truth_wbc": 20,
       "focus": 2.96,
       "even": 0.9812,
       "debris": 0.6765,
       "usable": true,
-      "seconds": 1.53
+      "seconds": 1.51
     },
     {
       "patient": "TF137_US8",
       "image": "20170831_214737.jpg",
       "found_parasites": 3,
-      "found_wbc": 21,
+      "found_wbc": 18,
       "truth_parasites": 2,
       "truth_wbc": 18,
       "focus": 2.32,
       "even": 0.9594,
       "debris": 0.619,
       "usable": true,
-      "seconds": 1.19
+      "seconds": 1.35
     },
     {
       "patient": "TF141_CT12",
       "image": "20170901_000307.jpg",
       "found_parasites": 121,
-      "found_wbc": 18,
+      "found_wbc": 20,
       "truth_parasites": 123,
       "truth_wbc": 16,
       "focus": 3.28,
       "even": 0.9809,
       "debris": 0.6712,
       "usable": true,
-      "seconds": 1.19
+      "seconds": 1.33
     },
     {
       "patient": "TF141_CT12",
@@ -2134,7 +2135,7 @@
       "even": 0.9845,
       "debris": 0.7498,
       "usable": true,
-      "seconds": 1.23
+      "seconds": 1.32
     },
     {
       "patient": "TF141_CT12",
@@ -2147,51 +2148,51 @@
       "even": 0.9823,
       "debris": 0.722,
       "usable": true,
-      "seconds": 1.31
+      "seconds": 1.4
     },
     {
       "patient": "TF141_CT12",
       "image": "20170901_000540.jpg",
       "found_parasites": 165,
-      "found_wbc": 22,
+      "found_wbc": 21,
       "truth_parasites": 157,
       "truth_wbc": 20,
       "focus": 3.45,
       "even": 0.9823,
       "debris": 0.6618,
       "usable": true,
-      "seconds": 1.38
+      "seconds": 1.44
     },
     {
       "patient": "TF141_CT12",
       "image": "20170901_000630.jpg",
       "found_parasites": 148,
-      "found_wbc": 22,
+      "found_wbc": 23,
       "truth_parasites": 146,
       "truth_wbc": 20,
       "focus": 3.03,
       "even": 0.9797,
       "debris": 0.6594,
       "usable": true,
-      "seconds": 1.12
+      "seconds": 1.22
     },
     {
       "patient": "TF141_CT12",
       "image": "20170901_000716.jpg",
       "found_parasites": 183,
-      "found_wbc": 16,
+      "found_wbc": 20,
       "truth_parasites": 189,
       "truth_wbc": 15,
       "focus": 3.87,
       "even": 0.9804,
       "debris": 0.7226,
       "usable": true,
-      "seconds": 1.47
+      "seconds": 1.57
     },
     {
       "patient": "TF141_CT12",
       "image": "20170901_000759.jpg",
-      "found_parasites": 175,
+      "found_parasites": 174,
       "found_wbc": 20,
       "truth_parasites": 181,
       "truth_wbc": 22,
@@ -2199,7 +2200,7 @@
       "even": 0.9822,
       "debris": 0.7394,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 1.51
     },
     {
       "patient": "TF141_CT12",
@@ -2212,59 +2213,59 @@
       "even": 0.9831,
       "debris": 0.7109,
       "usable": true,
-      "seconds": 1.29
+      "seconds": 1.83
     },
     {
       "patient": "TF141_CT12",
       "image": "20170901_000932.jpg",
       "found_parasites": 153,
-      "found_wbc": 27,
+      "found_wbc": 26,
       "truth_parasites": 160,
       "truth_wbc": 30,
       "focus": 4.0,
       "even": 0.9744,
       "debris": 0.7278,
       "usable": true,
-      "seconds": 1.28
+      "seconds": 1.54
     },
     {
       "patient": "TF141_CT12",
       "image": "20170901_001029.jpg",
       "found_parasites": 157,
-      "found_wbc": 24,
+      "found_wbc": 23,
       "truth_parasites": 167,
       "truth_wbc": 24,
       "focus": 3.89,
       "even": 0.9784,
       "debris": 0.6821,
       "usable": true,
-      "seconds": 1.29
+      "seconds": 2.01
     },
     {
       "patient": "TF147_R3",
       "image": "20170901_015654.jpg",
       "found_parasites": 156,
-      "found_wbc": 18,
+      "found_wbc": 20,
       "truth_parasites": 158,
       "truth_wbc": 20,
       "focus": 3.6,
       "even": 0.9884,
       "debris": 0.699,
       "usable": true,
-      "seconds": 1.38
+      "seconds": 2.16
     },
     {
       "patient": "TF147_R3",
       "image": "20170901_015748.jpg",
-      "found_parasites": 153,
-      "found_wbc": 18,
+      "found_parasites": 148,
+      "found_wbc": 17,
       "truth_parasites": 146,
       "truth_wbc": 17,
       "focus": 3.42,
       "even": 0.989,
       "debris": 0.6564,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 2.07
     },
     {
       "patient": "TF147_R3",
@@ -2277,7 +2278,7 @@
       "even": 0.9836,
       "debris": 0.667,
       "usable": true,
-      "seconds": 1.27
+      "seconds": 1.78
     },
     {
       "patient": "TF147_R3",
@@ -2290,20 +2291,20 @@
       "even": 0.9857,
       "debris": 0.6887,
       "usable": true,
-      "seconds": 1.4
+      "seconds": 1.83
     },
     {
       "patient": "TF147_R3",
       "image": "20170901_020120.jpg",
       "found_parasites": 157,
-      "found_wbc": 14,
+      "found_wbc": 15,
       "truth_parasites": 157,
       "truth_wbc": 13,
       "focus": 3.51,
       "even": 0.9854,
       "debris": 0.7256,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 1.83
     },
     {
       "patient": "TF147_R3",
@@ -2316,12 +2317,12 @@
       "even": 0.9836,
       "debris": 0.6366,
       "usable": true,
-      "seconds": 1.31
+      "seconds": 1.48
     },
     {
       "patient": "TF147_R3",
       "image": "20170901_020310.jpg",
-      "found_parasites": 149,
+      "found_parasites": 148,
       "found_wbc": 16,
       "truth_parasites": 143,
       "truth_wbc": 16,
@@ -2329,7 +2330,7 @@
       "even": 0.991,
       "debris": 0.674,
       "usable": true,
-      "seconds": 1.23
+      "seconds": 1.69
     },
     {
       "patient": "TF147_R3",
@@ -2342,20 +2343,20 @@
       "even": 0.9884,
       "debris": 0.7265,
       "usable": true,
-      "seconds": 1.12
+      "seconds": 1.39
     },
     {
       "patient": "TF147_R3",
       "image": "20170901_020443.jpg",
       "found_parasites": 177,
-      "found_wbc": 13,
+      "found_wbc": 14,
       "truth_parasites": 177,
       "truth_wbc": 14,
       "focus": 3.27,
       "even": 0.9888,
       "debris": 0.6748,
       "usable": true,
-      "seconds": 1.42
+      "seconds": 1.51
     },
     {
       "patient": "TF147_R3",
@@ -2368,12 +2369,12 @@
       "even": 0.983,
       "debris": 0.6475,
       "usable": true,
-      "seconds": 1.28
+      "seconds": 1.39
     },
     {
       "patient": "TF147_R3",
       "image": "20170901_020635.jpg",
-      "found_parasites": 146,
+      "found_parasites": 145,
       "found_wbc": 13,
       "truth_parasites": 146,
       "truth_wbc": 14,
@@ -2381,150 +2382,150 @@
       "even": 0.983,
       "debris": 0.7103,
       "usable": true,
-      "seconds": 1.6
+      "seconds": 1.64
     },
     {
       "patient": "TF147_R3",
       "image": "20170901_020716.jpg",
       "found_parasites": 162,
-      "found_wbc": 15,
+      "found_wbc": 18,
       "truth_parasites": 165,
       "truth_wbc": 15,
       "focus": 3.92,
       "even": 0.9877,
       "debris": 0.7562,
       "usable": true,
-      "seconds": 1.81
+      "seconds": 1.91
     },
     {
       "patient": "TF150_R5",
       "image": "20170901_031213.jpg",
       "found_parasites": 5,
-      "found_wbc": 54,
+      "found_wbc": 53,
       "truth_parasites": 3,
       "truth_wbc": 53,
       "focus": 3.91,
       "even": 0.9543,
       "debris": 0.6748,
       "usable": true,
-      "seconds": 1.62
+      "seconds": 1.88
     },
     {
       "patient": "TF150_R5",
       "image": "20170901_031525.jpg",
       "found_parasites": 1,
-      "found_wbc": 77,
+      "found_wbc": 78,
       "truth_parasites": 1,
       "truth_wbc": 80,
       "focus": 4.43,
       "even": 0.939,
       "debris": 0.6266,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 1.72
     },
     {
       "patient": "TF150_R5",
       "image": "20170901_031822.jpg",
-      "found_parasites": 4,
-      "found_wbc": 47,
+      "found_parasites": 2,
+      "found_wbc": 49,
       "truth_parasites": 4,
       "truth_wbc": 50,
       "focus": 3.85,
       "even": 0.944,
       "debris": 0.6562,
       "usable": true,
-      "seconds": 1.52
+      "seconds": 1.59
     },
     {
       "patient": "TF150_R5",
       "image": "20170901_032046.jpg",
       "found_parasites": 2,
-      "found_wbc": 51,
+      "found_wbc": 53,
       "truth_parasites": 2,
       "truth_wbc": 51,
       "focus": 4.23,
       "even": 0.9483,
       "debris": 0.6852,
       "usable": true,
-      "seconds": 1.58
+      "seconds": 1.62
     },
     {
       "patient": "TF150_R5",
       "image": "20170901_032308.jpg",
       "found_parasites": 1,
-      "found_wbc": 75,
+      "found_wbc": 73,
       "truth_parasites": 1,
       "truth_wbc": 77,
       "focus": 3.91,
       "even": 0.9441,
       "debris": 0.6009,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 1.51
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_172423.jpg",
-      "found_parasites": 110,
-      "found_wbc": 14,
+      "found_parasites": 107,
+      "found_wbc": 13,
       "truth_parasites": 80,
       "truth_wbc": 11,
       "focus": 3.77,
       "even": 0.9631,
       "debris": 0.7091,
       "usable": true,
-      "seconds": 2.09
+      "seconds": 2.15
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_173121.jpg",
-      "found_parasites": 115,
-      "found_wbc": 14,
+      "found_parasites": 111,
+      "found_wbc": 13,
       "truth_parasites": 78,
       "truth_wbc": 12,
       "focus": 3.68,
       "even": 0.9636,
       "debris": 0.6739,
       "usable": true,
-      "seconds": 1.89
+      "seconds": 2.3
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_173247.jpg",
-      "found_parasites": 123,
-      "found_wbc": 12,
+      "found_parasites": 121,
+      "found_wbc": 13,
       "truth_parasites": 89,
       "truth_wbc": 12,
       "focus": 3.74,
       "even": 0.9714,
       "debris": 0.7105,
       "usable": true,
-      "seconds": 1.93
+      "seconds": 2.16
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_173415.jpg",
-      "found_parasites": 114,
-      "found_wbc": 13,
+      "found_parasites": 113,
+      "found_wbc": 12,
       "truth_parasites": 82,
       "truth_wbc": 10,
       "focus": 3.48,
       "even": 0.9625,
       "debris": 0.673,
       "usable": true,
-      "seconds": 2.03
+      "seconds": 2.42
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_173631.jpg",
-      "found_parasites": 105,
-      "found_wbc": 17,
+      "found_parasites": 103,
+      "found_wbc": 18,
       "truth_parasites": 74,
       "truth_wbc": 14,
       "focus": 3.53,
       "even": 0.9435,
       "debris": 0.6745,
       "usable": true,
-      "seconds": 1.75
+      "seconds": 2.14
     },
     {
       "patient": "TF15_C87P48",
@@ -2537,25 +2538,25 @@
       "even": 0.9612,
       "debris": 0.6801,
       "usable": true,
-      "seconds": 2.12
+      "seconds": 2.24
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_174016.jpg",
-      "found_parasites": 92,
-      "found_wbc": 14,
+      "found_parasites": 89,
+      "found_wbc": 15,
       "truth_parasites": 78,
       "truth_wbc": 11,
       "focus": 3.51,
       "even": 0.9457,
       "debris": 0.6963,
       "usable": true,
-      "seconds": 2.15
+      "seconds": 2.72
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_174205.jpg",
-      "found_parasites": 101,
+      "found_parasites": 98,
       "found_wbc": 15,
       "truth_parasites": 66,
       "truth_wbc": 8,
@@ -2563,38 +2564,38 @@
       "even": 0.9705,
       "debris": 0.6948,
       "usable": true,
-      "seconds": 2.11
+      "seconds": 2.38
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_174434.jpg",
-      "found_parasites": 67,
-      "found_wbc": 18,
+      "found_parasites": 63,
+      "found_wbc": 15,
       "truth_parasites": 50,
       "truth_wbc": 9,
       "focus": 3.19,
       "even": 0.955,
       "debris": 0.6281,
       "usable": true,
-      "seconds": 1.98
+      "seconds": 2.63
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_174547.jpg",
-      "found_parasites": 77,
-      "found_wbc": 14,
+      "found_parasites": 76,
+      "found_wbc": 12,
       "truth_parasites": 58,
       "truth_wbc": 10,
       "focus": 3.39,
       "even": 0.9688,
       "debris": 0.6297,
       "usable": true,
-      "seconds": 2.13
+      "seconds": 2.58
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_174737.jpg",
-      "found_parasites": 63,
+      "found_parasites": 62,
       "found_wbc": 15,
       "truth_parasites": 48,
       "truth_wbc": 10,
@@ -2602,12 +2603,12 @@
       "even": 0.9686,
       "debris": 0.6331,
       "usable": true,
-      "seconds": 1.89
+      "seconds": 1.98
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_174927.jpg",
-      "found_parasites": 74,
+      "found_parasites": 73,
       "found_wbc": 12,
       "truth_parasites": 54,
       "truth_wbc": 8,
@@ -2615,12 +2616,12 @@
       "even": 0.951,
       "debris": 0.6941,
       "usable": true,
-      "seconds": 1.86
+      "seconds": 2.21
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_175036.jpg",
-      "found_parasites": 108,
+      "found_parasites": 105,
       "found_wbc": 11,
       "truth_parasites": 74,
       "truth_wbc": 10,
@@ -2628,85 +2629,85 @@
       "even": 0.96,
       "debris": 0.6879,
       "usable": true,
-      "seconds": 2.04
+      "seconds": 2.31
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_175232.jpg",
-      "found_parasites": 67,
-      "found_wbc": 14,
+      "found_parasites": 66,
+      "found_wbc": 11,
       "truth_parasites": 61,
       "truth_wbc": 11,
       "focus": 2.83,
       "even": 0.972,
       "debris": 0.6505,
       "usable": true,
-      "seconds": 1.54
+      "seconds": 1.69
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_175518.jpg",
-      "found_parasites": 130,
-      "found_wbc": 8,
+      "found_parasites": 124,
+      "found_wbc": 10,
       "truth_parasites": 99,
       "truth_wbc": 10,
       "focus": 3.51,
       "even": 0.955,
       "debris": 0.6748,
       "usable": true,
-      "seconds": 1.96
+      "seconds": 2.16
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_175637.jpg",
-      "found_parasites": 98,
-      "found_wbc": 16,
+      "found_parasites": 94,
+      "found_wbc": 17,
       "truth_parasites": 77,
       "truth_wbc": 16,
       "focus": 3.29,
       "even": 0.955,
       "debris": 0.6501,
       "usable": true,
-      "seconds": 1.62
+      "seconds": 1.88
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_175754.jpg",
       "found_parasites": 87,
-      "found_wbc": 15,
+      "found_wbc": 14,
       "truth_parasites": 62,
       "truth_wbc": 11,
       "focus": 3.8,
       "even": 0.9525,
       "debris": 0.6543,
       "usable": true,
-      "seconds": 1.91
+      "seconds": 2.09
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_175916.jpg",
       "found_parasites": 109,
-      "found_wbc": 17,
+      "found_wbc": 18,
       "truth_parasites": 87,
       "truth_wbc": 12,
       "focus": 3.24,
       "even": 0.9523,
       "debris": 0.6714,
       "usable": true,
-      "seconds": 2.26
+      "seconds": 2.59
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_180044.jpg",
       "found_parasites": 105,
-      "found_wbc": 16,
+      "found_wbc": 18,
       "truth_parasites": 85,
       "truth_wbc": 12,
       "focus": 3.46,
       "even": 0.9416,
       "debris": 0.7086,
       "usable": true,
-      "seconds": 2.06
+      "seconds": 2.31
     },
     {
       "patient": "TF15_C87P48",
@@ -2719,12 +2720,12 @@
       "even": 0.9706,
       "debris": 0.6918,
       "usable": true,
-      "seconds": 2.05
+      "seconds": 2.29
     },
     {
       "patient": "TF15_C87P48",
       "image": "20170613_180326.jpg",
-      "found_parasites": 121,
+      "found_parasites": 118,
       "found_wbc": 22,
       "truth_parasites": 91,
       "truth_wbc": 19,
@@ -2732,12 +2733,12 @@
       "even": 0.9514,
       "debris": 0.647,
       "usable": true,
-      "seconds": 2.1
+      "seconds": 2.28
     },
     {
       "patient": "TF1N_1522",
       "image": "20171023_110309.jpg",
-      "found_parasites": 6,
+      "found_parasites": 5,
       "found_wbc": 25,
       "truth_parasites": 6,
       "truth_wbc": 25,
@@ -2745,33 +2746,33 @@
       "even": 0.9647,
       "debris": 0.7355,
       "usable": true,
-      "seconds": 1.55
+      "seconds": 1.86
     },
     {
       "patient": "TF1N_1522",
       "image": "20171023_111022.jpg",
       "found_parasites": 9,
-      "found_wbc": 21,
+      "found_wbc": 16,
       "truth_parasites": 10,
       "truth_wbc": 19,
       "focus": 2.91,
       "even": 0.9672,
       "debris": 0.6981,
       "usable": true,
-      "seconds": 1.37
+      "seconds": 1.52
     },
     {
       "patient": "TF1N_1522",
       "image": "20171023_111241.jpg",
       "found_parasites": 3,
-      "found_wbc": 26,
+      "found_wbc": 22,
       "truth_parasites": 10,
       "truth_wbc": 22,
       "focus": 3.3,
       "even": 0.964,
       "debris": 0.6862,
       "usable": true,
-      "seconds": 1.85
+      "seconds": 2.16
     },
     {
       "patient": "TF1N_1522",
@@ -2784,7 +2785,7 @@
       "even": 0.97,
       "debris": 0.6911,
       "usable": true,
-      "seconds": 1.66
+      "seconds": 1.96
     },
     {
       "patient": "TF1N_1522",
@@ -2797,137 +2798,137 @@
       "even": 0.9698,
       "debris": 0.7197,
       "usable": true,
-      "seconds": 1.79
+      "seconds": 1.99
     },
     {
       "patient": "TF1N_1522",
       "image": "20171023_111948.jpg",
       "found_parasites": 2,
-      "found_wbc": 25,
+      "found_wbc": 26,
       "truth_parasites": 8,
       "truth_wbc": 18,
       "focus": 3.49,
       "even": 0.9689,
       "debris": 0.7308,
       "usable": true,
-      "seconds": 1.7
+      "seconds": 2.05
     },
     {
       "patient": "TF1N_1522",
       "image": "20171023_112502.jpg",
       "found_parasites": 3,
-      "found_wbc": 25,
+      "found_wbc": 19,
       "truth_parasites": 4,
       "truth_wbc": 21,
       "focus": 3.33,
       "even": 0.9472,
       "debris": 0.7061,
       "usable": true,
-      "seconds": 1.4
+      "seconds": 1.57
     },
     {
       "patient": "TF1N_1522",
       "image": "20171023_112933.jpg",
       "found_parasites": 5,
-      "found_wbc": 25,
+      "found_wbc": 17,
       "truth_parasites": 6,
       "truth_wbc": 16,
       "focus": 3.53,
       "even": 0.967,
       "debris": 0.7117,
       "usable": true,
-      "seconds": 2.04
+      "seconds": 2.46
     },
     {
       "patient": "TF1N_1522",
       "image": "20171023_113206.jpg",
       "found_parasites": 0,
-      "found_wbc": 24,
+      "found_wbc": 22,
       "truth_parasites": 4,
       "truth_wbc": 25,
       "focus": 3.67,
       "even": 0.9638,
       "debris": 0.7083,
       "usable": true,
-      "seconds": 1.79
+      "seconds": 2.0
     },
     {
       "patient": "TF1N_1522",
       "image": "20171023_113655.jpg",
       "found_parasites": 3,
-      "found_wbc": 28,
+      "found_wbc": 22,
       "truth_parasites": 2,
       "truth_wbc": 14,
       "focus": 3.19,
       "even": 0.9728,
       "debris": 0.7096,
       "usable": true,
-      "seconds": 1.73
+      "seconds": 2.1
     },
     {
       "patient": "TF1N_1522",
       "image": "20171023_113955.jpg",
       "found_parasites": 1,
-      "found_wbc": 29,
+      "found_wbc": 20,
       "truth_parasites": 4,
       "truth_wbc": 24,
       "focus": 3.67,
       "even": 0.9698,
       "debris": 0.7216,
       "usable": true,
-      "seconds": 1.8
+      "seconds": 1.89
     },
     {
       "patient": "TF1N_1522",
       "image": "20171023_114235.jpg",
       "found_parasites": 5,
-      "found_wbc": 21,
+      "found_wbc": 16,
       "truth_parasites": 9,
       "truth_wbc": 16,
       "focus": 3.22,
       "even": 0.9357,
       "debris": 0.7182,
       "usable": true,
-      "seconds": 1.42
+      "seconds": 1.59
     },
     {
       "patient": "TF22_C104P65",
       "image": "20170708_160236.jpg",
       "found_parasites": 2,
-      "found_wbc": 23,
+      "found_wbc": 24,
       "truth_parasites": 7,
       "truth_wbc": 21,
       "focus": 3.17,
       "even": 0.9626,
       "debris": 0.6877,
       "usable": true,
-      "seconds": 1.85
+      "seconds": 2.03
     },
     {
       "patient": "TF22_C104P65",
       "image": "20170708_160546.jpg",
       "found_parasites": 3,
-      "found_wbc": 18,
+      "found_wbc": 17,
       "truth_parasites": 4,
       "truth_wbc": 16,
       "focus": 3.0,
       "even": 0.9348,
       "debris": 0.6797,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 1.37
     },
     {
       "patient": "TF22_C104P65",
       "image": "20170708_160739.jpg",
       "found_parasites": 4,
-      "found_wbc": 25,
+      "found_wbc": 23,
       "truth_parasites": 3,
       "truth_wbc": 20,
       "focus": 2.8,
       "even": 0.9691,
       "debris": 0.6791,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 1.5
     },
     {
       "patient": "TF22_C104P65",
@@ -2940,25 +2941,25 @@
       "even": 0.9575,
       "debris": 0.6902,
       "usable": true,
-      "seconds": 1.6
+      "seconds": 1.74
     },
     {
       "patient": "TF22_C104P65",
       "image": "20170708_161705.jpg",
       "found_parasites": 1,
-      "found_wbc": 18,
+      "found_wbc": 16,
       "truth_parasites": 1,
       "truth_wbc": 16,
       "focus": 2.97,
       "even": 0.9477,
       "debris": 0.6745,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 1.47
     },
     {
       "patient": "TF22_C104P65",
       "image": "20170708_161947.jpg",
-      "found_parasites": 4,
+      "found_parasites": 3,
       "found_wbc": 26,
       "truth_parasites": 6,
       "truth_wbc": 24,
@@ -2966,20 +2967,20 @@
       "even": 0.9428,
       "debris": 0.6893,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 1.44
     },
     {
       "patient": "TF22_C104P65",
       "image": "20170708_162827.jpg",
       "found_parasites": 2,
-      "found_wbc": 26,
+      "found_wbc": 25,
       "truth_parasites": 1,
       "truth_wbc": 21,
       "focus": 3.16,
       "even": 0.9664,
       "debris": 0.7161,
       "usable": true,
-      "seconds": 1.37
+      "seconds": 1.5
     },
     {
       "patient": "TF22_C104P65",
@@ -2992,85 +2993,85 @@
       "even": 0.9597,
       "debris": 0.6651,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 1.57
     },
     {
       "patient": "TF22_C104P65",
       "image": "20170708_163607.jpg",
       "found_parasites": 1,
-      "found_wbc": 31,
+      "found_wbc": 29,
       "truth_parasites": 2,
       "truth_wbc": 30,
       "focus": 3.3,
       "even": 0.9625,
       "debris": 0.663,
       "usable": true,
-      "seconds": 1.36
+      "seconds": 1.66
     },
     {
       "patient": "TF22_C104P65",
       "image": "20170708_163952.jpg",
       "found_parasites": 2,
-      "found_wbc": 24,
+      "found_wbc": 23,
       "truth_parasites": 2,
       "truth_wbc": 23,
       "focus": 3.11,
       "even": 0.9701,
       "debris": 0.655,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 1.45
     },
     {
       "patient": "TF22_C104P65",
       "image": "20170708_164751.jpg",
       "found_parasites": 1,
-      "found_wbc": 36,
+      "found_wbc": 31,
       "truth_parasites": 2,
       "truth_wbc": 29,
       "focus": 2.96,
       "even": 0.9598,
       "debris": 0.7226,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 1.44
     },
     {
       "patient": "TF24_C67P28",
       "image": "20170710_155209.jpg",
       "found_parasites": 33,
-      "found_wbc": 14,
+      "found_wbc": 18,
       "truth_parasites": 31,
       "truth_wbc": 12,
       "focus": 2.75,
       "even": 0.9606,
       "debris": 0.8286,
       "usable": true,
-      "seconds": 1.36
+      "seconds": 2.96
     },
     {
       "patient": "TF24_C67P28",
       "image": "20170710_155503.jpg",
       "found_parasites": 39,
-      "found_wbc": 19,
+      "found_wbc": 20,
       "truth_parasites": 36,
       "truth_wbc": 18,
       "focus": 2.77,
       "even": 0.9428,
       "debris": 0.613,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 1.74
     },
     {
       "patient": "TF24_C67P28",
       "image": "20170710_155758.jpg",
       "found_parasites": 57,
-      "found_wbc": 14,
+      "found_wbc": 13,
       "truth_parasites": 43,
       "truth_wbc": 12,
       "focus": 2.69,
       "even": 0.9415,
       "debris": 0.564,
       "usable": true,
-      "seconds": 1.37
+      "seconds": 1.47
     },
     {
       "patient": "TF24_C67P28",
@@ -3083,7 +3084,7 @@
       "even": 0.9609,
       "debris": 0.5497,
       "usable": true,
-      "seconds": 1.29
+      "seconds": 1.46
     },
     {
       "patient": "TF24_C67P28",
@@ -3096,7 +3097,7 @@
       "even": 0.9412,
       "debris": 0.5698,
       "usable": true,
-      "seconds": 1.14
+      "seconds": 1.23
     },
     {
       "patient": "TF24_C67P28",
@@ -3109,20 +3110,20 @@
       "even": 0.9445,
       "debris": 0.5558,
       "usable": true,
-      "seconds": 1.43
+      "seconds": 1.56
     },
     {
       "patient": "TF24_C67P28",
       "image": "20170710_161357.jpg",
       "found_parasites": 39,
-      "found_wbc": 14,
+      "found_wbc": 15,
       "truth_parasites": 26,
       "truth_wbc": 15,
       "focus": 2.58,
       "even": 0.9322,
       "debris": 0.5356,
       "usable": true,
-      "seconds": 1.25
+      "seconds": 1.39
     },
     {
       "patient": "TF24_C67P28",
@@ -3135,33 +3136,33 @@
       "even": 0.9247,
       "debris": 0.5591,
       "usable": true,
-      "seconds": 1.31
+      "seconds": 1.56
     },
     {
       "patient": "TF24_C67P28",
       "image": "20170710_161713.jpg",
-      "found_parasites": 59,
-      "found_wbc": 15,
+      "found_parasites": 58,
+      "found_wbc": 14,
       "truth_parasites": 40,
       "truth_wbc": 14,
       "focus": 2.72,
       "even": 0.9292,
       "debris": 0.5595,
       "usable": true,
-      "seconds": 1.29
+      "seconds": 1.55
     },
     {
       "patient": "TF24_C67P28",
       "image": "20170710_161856.jpg",
-      "found_parasites": 66,
-      "found_wbc": 19,
+      "found_parasites": 65,
+      "found_wbc": 18,
       "truth_parasites": 50,
       "truth_wbc": 18,
       "focus": 2.82,
       "even": 0.9511,
       "debris": 0.5748,
       "usable": true,
-      "seconds": 1.37
+      "seconds": 1.63
     },
     {
       "patient": "TF24_C67P28",
@@ -3174,20 +3175,20 @@
       "even": 0.9001,
       "debris": 0.5654,
       "usable": true,
-      "seconds": 1.29
+      "seconds": 1.6
     },
     {
       "patient": "TF24_C67P28",
       "image": "20170710_162401.jpg",
-      "found_parasites": 49,
-      "found_wbc": 14,
+      "found_parasites": 48,
+      "found_wbc": 18,
       "truth_parasites": 35,
       "truth_wbc": 12,
       "focus": 2.61,
       "even": 0.9515,
       "debris": 0.5421,
       "usable": true,
-      "seconds": 1.58
+      "seconds": 1.91
     },
     {
       "patient": "TF24_C67P28",
@@ -3200,72 +3201,72 @@
       "even": 0.9369,
       "debris": 0.5282,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 1.59
     },
     {
       "patient": "TF24_C67P28",
       "image": "20170710_162728.jpg",
       "found_parasites": 36,
-      "found_wbc": 17,
+      "found_wbc": 18,
       "truth_parasites": 33,
       "truth_wbc": 15,
       "focus": 2.71,
       "even": 0.9529,
       "debris": 0.6037,
       "usable": true,
-      "seconds": 1.17
+      "seconds": 1.33
     },
     {
       "patient": "TF24_C67P28",
       "image": "20170710_163622.jpg",
       "found_parasites": 23,
-      "found_wbc": 10,
+      "found_wbc": 12,
       "truth_parasites": 21,
       "truth_wbc": 10,
       "focus": 2.39,
       "even": 0.9346,
       "debris": 0.527,
       "usable": true,
-      "seconds": 1.23
+      "seconds": 1.66
     },
     {
       "patient": "TF28W13B15A",
       "image": "20170724_121402.jpg",
       "found_parasites": 8,
-      "found_wbc": 25,
+      "found_wbc": 24,
       "truth_parasites": 10,
       "truth_wbc": 25,
       "focus": 3.36,
       "even": 0.9325,
       "debris": 0.6922,
       "usable": true,
-      "seconds": 1.07
+      "seconds": 1.33
     },
     {
       "patient": "TF28W13B15A",
       "image": "20170724_121612.jpg",
       "found_parasites": 11,
-      "found_wbc": 31,
+      "found_wbc": 26,
       "truth_parasites": 18,
       "truth_wbc": 25,
       "focus": 3.33,
       "even": 0.917,
       "debris": 0.661,
       "usable": true,
-      "seconds": 1.04
+      "seconds": 1.28
     },
     {
       "patient": "TF28W13B15A",
       "image": "20170724_121805.jpg",
       "found_parasites": 13,
-      "found_wbc": 31,
+      "found_wbc": 30,
       "truth_parasites": 19,
       "truth_wbc": 30,
       "focus": 3.62,
       "even": 0.9385,
       "debris": 0.6887,
       "usable": true,
-      "seconds": 1.08
+      "seconds": 1.43
     },
     {
       "patient": "TF28W13B15A",
@@ -3278,137 +3279,137 @@
       "even": 0.9024,
       "debris": 0.6794,
       "usable": true,
-      "seconds": 1.04
+      "seconds": 1.28
     },
     {
       "patient": "TF28W13B15A",
       "image": "20170724_122144.jpg",
       "found_parasites": 10,
-      "found_wbc": 15,
+      "found_wbc": 13,
       "truth_parasites": 13,
       "truth_wbc": 16,
       "focus": 3.56,
       "even": 0.9005,
       "debris": 0.675,
       "usable": true,
-      "seconds": 1.16
+      "seconds": 1.44
     },
     {
       "patient": "TF28W13B15A",
       "image": "20170724_122336.jpg",
       "found_parasites": 8,
-      "found_wbc": 38,
+      "found_wbc": 37,
       "truth_parasites": 9,
       "truth_wbc": 33,
       "focus": 3.34,
       "even": 0.9686,
       "debris": 0.6944,
       "usable": true,
-      "seconds": 1.21
+      "seconds": 1.33
     },
     {
       "patient": "TF28W13B15A",
       "image": "20170724_122519.jpg",
       "found_parasites": 6,
-      "found_wbc": 18,
+      "found_wbc": 16,
       "truth_parasites": 7,
       "truth_wbc": 15,
       "focus": 3.55,
       "even": 0.9398,
       "debris": 0.7371,
       "usable": true,
-      "seconds": 1.12
+      "seconds": 1.38
     },
     {
       "patient": "TF28W13B15A",
       "image": "20170724_122720.jpg",
       "found_parasites": 9,
-      "found_wbc": 25,
+      "found_wbc": 23,
       "truth_parasites": 11,
       "truth_wbc": 15,
       "focus": 2.96,
       "even": 0.9497,
       "debris": 0.7149,
       "usable": true,
-      "seconds": 1.55
+      "seconds": 1.83
     },
     {
       "patient": "TF28W13B15A",
       "image": "20170724_122901.jpg",
       "found_parasites": 7,
-      "found_wbc": 26,
+      "found_wbc": 23,
       "truth_parasites": 7,
       "truth_wbc": 18,
       "focus": 3.36,
       "even": 0.965,
       "debris": 0.7031,
       "usable": true,
-      "seconds": 1.39
+      "seconds": 1.67
     },
     {
       "patient": "TF28W13B15A",
       "image": "20170724_123054.jpg",
       "found_parasites": 10,
-      "found_wbc": 23,
+      "found_wbc": 20,
       "truth_parasites": 9,
       "truth_wbc": 20,
       "focus": 3.2,
       "even": 0.9575,
       "debris": 0.7152,
       "usable": true,
-      "seconds": 1.13
+      "seconds": 1.35
     },
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_141308.jpg",
       "found_parasites": 9,
-      "found_wbc": 62,
+      "found_wbc": 63,
       "truth_parasites": 8,
       "truth_wbc": 64,
       "focus": 3.78,
       "even": 0.953,
       "debris": 0.5599,
       "usable": true,
-      "seconds": 1.19
+      "seconds": 1.7
     },
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_141429.jpg",
       "found_parasites": 10,
-      "found_wbc": 25,
+      "found_wbc": 26,
       "truth_parasites": 11,
       "truth_wbc": 27,
       "focus": 3.3,
       "even": 0.9703,
       "debris": 0.7121,
       "usable": true,
-      "seconds": 1.16
+      "seconds": 1.35
     },
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_141555.jpg",
       "found_parasites": 10,
-      "found_wbc": 46,
+      "found_wbc": 47,
       "truth_parasites": 7,
       "truth_wbc": 49,
       "focus": 3.62,
       "even": 0.9637,
       "debris": 0.6227,
       "usable": true,
-      "seconds": 1.17
+      "seconds": 1.43
     },
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_141719.jpg",
       "found_parasites": 8,
-      "found_wbc": 50,
+      "found_wbc": 52,
       "truth_parasites": 11,
       "truth_wbc": 54,
       "focus": 3.96,
       "even": 0.9545,
       "debris": 0.5829,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 1.41
     },
     {
       "patient": "TF29_15_1_36",
@@ -3421,46 +3422,46 @@
       "even": 0.9627,
       "debris": 0.4942,
       "usable": true,
-      "seconds": 1.11
+      "seconds": 1.41
     },
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_141956.jpg",
       "found_parasites": 10,
-      "found_wbc": 64,
+      "found_wbc": 70,
       "truth_parasites": 11,
       "truth_wbc": 68,
       "focus": 3.36,
       "even": 0.9512,
       "debris": 0.6054,
       "usable": true,
-      "seconds": 1.16
+      "seconds": 1.51
     },
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_142131.jpg",
       "found_parasites": 29,
-      "found_wbc": 57,
+      "found_wbc": 59,
       "truth_parasites": 32,
       "truth_wbc": 55,
       "focus": 3.48,
       "even": 0.9577,
       "debris": 0.6543,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 1.48
     },
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_142245.jpg",
-      "found_parasites": 15,
-      "found_wbc": 60,
+      "found_parasites": 13,
+      "found_wbc": 63,
       "truth_parasites": 18,
       "truth_wbc": 63,
       "focus": 3.93,
       "even": 0.9494,
       "debris": 0.6445,
       "usable": true,
-      "seconds": 1.46
+      "seconds": 1.48
     },
     {
       "patient": "TF29_15_1_36",
@@ -3473,33 +3474,33 @@
       "even": 0.9498,
       "debris": 0.6863,
       "usable": true,
-      "seconds": 1.26
+      "seconds": 1.48
     },
     {
       "patient": "TF29_15_1_36",
       "image": "20170724_142701.jpg",
-      "found_parasites": 23,
-      "found_wbc": 48,
+      "found_parasites": 22,
+      "found_wbc": 49,
       "truth_parasites": 27,
       "truth_wbc": 49,
       "focus": 3.7,
       "even": 0.9513,
       "debris": 0.6371,
       "usable": true,
-      "seconds": 1.31
+      "seconds": 1.51
     },
     {
       "patient": "TF2N_159R",
       "image": "20171023_123059.jpg",
       "found_parasites": 17,
-      "found_wbc": 16,
+      "found_wbc": 17,
       "truth_parasites": 48,
       "truth_wbc": 18,
       "focus": 3.29,
       "even": 0.8675,
       "debris": 0.7007,
       "usable": false,
-      "seconds": 1.05
+      "seconds": 1.48
     },
     {
       "patient": "TF2N_159R",
@@ -3512,20 +3513,20 @@
       "even": 0.8916,
       "debris": 0.6778,
       "usable": false,
-      "seconds": 0.94
+      "seconds": 1.11
     },
     {
       "patient": "TF2N_159R",
       "image": "20171023_124359.jpg",
       "found_parasites": 17,
-      "found_wbc": 23,
+      "found_wbc": 18,
       "truth_parasites": 27,
       "truth_wbc": 18,
       "focus": 3.95,
       "even": 0.9286,
       "debris": 0.6713,
       "usable": true,
-      "seconds": 1.56
+      "seconds": 1.71
     },
     {
       "patient": "TF2N_159R",
@@ -3538,39 +3539,39 @@
       "even": 0.8844,
       "debris": 0.655,
       "usable": false,
-      "seconds": 0.93
+      "seconds": 1.08
     },
     {
       "patient": "TF2N_159R",
       "image": "20171023_125255.jpg",
       "found_parasites": 35,
-      "found_wbc": 26,
+      "found_wbc": 21,
       "truth_parasites": 39,
       "truth_wbc": 19,
       "focus": 3.5,
       "even": 0.9128,
       "debris": 0.6788,
       "usable": true,
-      "seconds": 1.46
+      "seconds": 1.88
     },
     {
       "patient": "TF2N_159R",
       "image": "20171023_125459.jpg",
       "found_parasites": 10,
-      "found_wbc": 18,
+      "found_wbc": 15,
       "truth_parasites": 16,
       "truth_wbc": 15,
       "focus": 3.43,
       "even": 0.9028,
       "debris": 0.6449,
       "usable": true,
-      "seconds": 1.22
+      "seconds": 1.41
     },
     {
       "patient": "TF2N_159R",
       "image": "20171023_125551.jpg",
       "found_parasites": 21,
-      "found_wbc": 18,
+      "found_wbc": 19,
       "truth_parasites": 35,
       "truth_wbc": 19,
       "focus": 3.72,
@@ -3583,66 +3584,66 @@
       "patient": "TF2N_159R",
       "image": "20171023_125641.jpg",
       "found_parasites": 8,
-      "found_wbc": 18,
+      "found_wbc": 16,
       "truth_parasites": 20,
       "truth_wbc": 19,
       "focus": 3.8,
       "even": 0.8935,
       "debris": 0.6052,
       "usable": false,
-      "seconds": 1.31
+      "seconds": 1.49
     },
     {
       "patient": "TF2N_159R",
       "image": "20171023_125837.jpg",
       "found_parasites": 25,
-      "found_wbc": 21,
+      "found_wbc": 14,
       "truth_parasites": 33,
       "truth_wbc": 14,
       "focus": 3.18,
       "even": 0.8847,
       "debris": 0.6164,
       "usable": false,
-      "seconds": 1.24
+      "seconds": 1.38
     },
     {
       "patient": "TF2N_159R",
       "image": "20171023_125951.jpg",
       "found_parasites": 15,
-      "found_wbc": 20,
+      "found_wbc": 15,
       "truth_parasites": 25,
       "truth_wbc": 15,
       "focus": 3.53,
       "even": 0.8977,
       "debris": 0.635,
       "usable": false,
-      "seconds": 1.21
+      "seconds": 1.38
     },
     {
       "patient": "TF2N_159R",
       "image": "20171023_130104.jpg",
       "found_parasites": 24,
-      "found_wbc": 15,
+      "found_wbc": 17,
       "truth_parasites": 44,
       "truth_wbc": 19,
       "focus": 3.59,
       "even": 0.9061,
       "debris": 0.6168,
       "usable": true,
-      "seconds": 1.13
+      "seconds": 1.53
     },
     {
       "patient": "TF2N_159R",
       "image": "20171023_130206.jpg",
       "found_parasites": 9,
-      "found_wbc": 13,
+      "found_wbc": 14,
       "truth_parasites": 35,
       "truth_wbc": 15,
       "focus": 3.32,
       "even": 0.8953,
       "debris": 0.6256,
       "usable": false,
-      "seconds": 1.12
+      "seconds": 1.26
     },
     {
       "patient": "TF2N_159R",
@@ -3655,176 +3656,176 @@
       "even": 0.9282,
       "debris": 0.6925,
       "usable": true,
-      "seconds": 1.27
+      "seconds": 1.39
     },
     {
       "patient": "TF2N_159R",
       "image": "20171023_130443.jpg",
       "found_parasites": 20,
-      "found_wbc": 19,
+      "found_wbc": 20,
       "truth_parasites": 48,
       "truth_wbc": 21,
       "focus": 3.04,
       "even": 0.9081,
       "debris": 0.607,
       "usable": true,
-      "seconds": 1.12
+      "seconds": 1.26
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_151538.jpg",
       "found_parasites": 11,
-      "found_wbc": 22,
+      "found_wbc": 21,
       "truth_parasites": 13,
       "truth_wbc": 19,
       "focus": 3.74,
       "even": 0.9445,
       "debris": 0.6491,
       "usable": true,
-      "seconds": 1.8
+      "seconds": 1.94
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_151707.jpg",
       "found_parasites": 12,
-      "found_wbc": 22,
+      "found_wbc": 23,
       "truth_parasites": 8,
       "truth_wbc": 10,
       "focus": 3.44,
       "even": 0.9423,
       "debris": 0.645,
       "usable": true,
-      "seconds": 1.58
+      "seconds": 1.86
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_151827.jpg",
       "found_parasites": 25,
-      "found_wbc": 16,
+      "found_wbc": 14,
       "truth_parasites": 16,
       "truth_wbc": 21,
       "focus": 3.53,
       "even": 0.9311,
       "debris": 0.6213,
       "usable": true,
-      "seconds": 1.57
+      "seconds": 1.73
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_151946.jpg",
       "found_parasites": 3,
-      "found_wbc": 15,
+      "found_wbc": 14,
       "truth_parasites": 3,
       "truth_wbc": 14,
       "focus": 2.9,
       "even": 0.964,
       "debris": 0.52,
       "usable": true,
-      "seconds": 1.28
+      "seconds": 1.54
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152108.jpg",
       "found_parasites": 16,
-      "found_wbc": 15,
+      "found_wbc": 16,
       "truth_parasites": 11,
       "truth_wbc": 11,
       "focus": 3.62,
       "even": 0.9637,
       "debris": 0.681,
       "usable": true,
-      "seconds": 1.82
+      "seconds": 1.92
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152222.jpg",
       "found_parasites": 17,
-      "found_wbc": 18,
+      "found_wbc": 21,
       "truth_parasites": 13,
       "truth_wbc": 13,
       "focus": 3.97,
       "even": 0.9516,
       "debris": 0.6554,
       "usable": true,
-      "seconds": 1.74
+      "seconds": 1.9
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152351.jpg",
-      "found_parasites": 16,
-      "found_wbc": 21,
+      "found_parasites": 15,
+      "found_wbc": 18,
       "truth_parasites": 12,
       "truth_wbc": 14,
       "focus": 3.31,
       "even": 0.9412,
       "debris": 0.6305,
       "usable": true,
-      "seconds": 1.67
+      "seconds": 1.62
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152559.jpg",
       "found_parasites": 18,
-      "found_wbc": 14,
+      "found_wbc": 18,
       "truth_parasites": 14,
       "truth_wbc": 12,
       "focus": 3.12,
       "even": 0.9531,
       "debris": 0.5761,
       "usable": true,
-      "seconds": 2.23
+      "seconds": 2.37
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152727.jpg",
       "found_parasites": 39,
-      "found_wbc": 27,
+      "found_wbc": 26,
       "truth_parasites": 23,
       "truth_wbc": 22,
       "focus": 4.12,
       "even": 0.9656,
       "debris": 0.6066,
       "usable": true,
-      "seconds": 1.96
+      "seconds": 2.07
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152844.jpg",
       "found_parasites": 42,
-      "found_wbc": 21,
+      "found_wbc": 20,
       "truth_parasites": 22,
       "truth_wbc": 14,
       "focus": 3.71,
       "even": 0.9751,
       "debris": 0.6126,
       "usable": true,
-      "seconds": 2.34
+      "seconds": 2.49
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_152944.jpg",
-      "found_parasites": 34,
-      "found_wbc": 16,
+      "found_parasites": 33,
+      "found_wbc": 21,
       "truth_parasites": 21,
       "truth_wbc": 11,
       "focus": 3.7,
       "even": 0.9796,
       "debris": 0.6011,
       "usable": true,
-      "seconds": 2.1
+      "seconds": 2.34
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_153032.jpg",
       "found_parasites": 21,
-      "found_wbc": 12,
+      "found_wbc": 13,
       "truth_parasites": 13,
       "truth_wbc": 13,
       "focus": 3.28,
       "even": 0.9695,
       "debris": 0.6753,
       "usable": true,
-      "seconds": 1.4
+      "seconds": 1.48
     },
     {
       "patient": "TF34_Sc520",
@@ -3837,12 +3838,12 @@
       "even": 0.9751,
       "debris": 0.575,
       "usable": true,
-      "seconds": 1.86
+      "seconds": 1.99
     },
     {
       "patient": "TF34_Sc520",
       "image": "20170725_153343.jpg",
-      "found_parasites": 7,
+      "found_parasites": 6,
       "found_wbc": 14,
       "truth_parasites": 9,
       "truth_wbc": 13,
@@ -3850,7 +3851,7 @@
       "even": 0.9681,
       "debris": 0.6751,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 1.39
     },
     {
       "patient": "TF34_Sc520",
@@ -3863,7 +3864,7 @@
       "even": 0.9731,
       "debris": 0.6521,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 1.53
     },
     {
       "patient": "TF34_Sc520",
@@ -3876,20 +3877,20 @@
       "even": 0.9708,
       "debris": 0.6842,
       "usable": true,
-      "seconds": 1.36
+      "seconds": 1.47
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_154738.jpg",
-      "found_parasites": 47,
-      "found_wbc": 21,
+      "found_parasites": 46,
+      "found_wbc": 20,
       "truth_parasites": 56,
       "truth_wbc": 12,
       "focus": 4.72,
       "even": 0.9714,
       "debris": 0.6403,
       "usable": true,
-      "seconds": 3.1
+      "seconds": 3.21
     },
     {
       "patient": "TF35_Sc521",
@@ -3902,254 +3903,254 @@
       "even": 0.9617,
       "debris": 0.6153,
       "usable": true,
-      "seconds": 3.88
+      "seconds": 3.38
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_155113.jpg",
       "found_parasites": 55,
-      "found_wbc": 21,
+      "found_wbc": 13,
       "truth_parasites": 58,
       "truth_wbc": 11,
       "focus": 5.08,
       "even": 0.9741,
       "debris": 0.6076,
       "usable": true,
-      "seconds": 3.71
+      "seconds": 3.98
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_155237.jpg",
-      "found_parasites": 55,
-      "found_wbc": 16,
+      "found_parasites": 54,
+      "found_wbc": 19,
       "truth_parasites": 51,
       "truth_wbc": 11,
       "focus": 4.64,
       "even": 0.9727,
       "debris": 0.6215,
       "usable": true,
-      "seconds": 3.36
+      "seconds": 3.58
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_155347.jpg",
-      "found_parasites": 58,
-      "found_wbc": 32,
+      "found_parasites": 56,
+      "found_wbc": 22,
       "truth_parasites": 62,
       "truth_wbc": 19,
       "focus": 5.54,
       "even": 0.9606,
       "debris": 0.6183,
       "usable": true,
-      "seconds": 3.26
+      "seconds": 3.64
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_155552.jpg",
       "found_parasites": 38,
-      "found_wbc": 27,
+      "found_wbc": 20,
       "truth_parasites": 37,
       "truth_wbc": 15,
       "focus": 5.69,
       "even": 0.9734,
       "debris": 0.5912,
       "usable": true,
-      "seconds": 3.38
+      "seconds": 3.47
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_155755.jpg",
       "found_parasites": 58,
-      "found_wbc": 26,
+      "found_wbc": 21,
       "truth_parasites": 57,
       "truth_wbc": 14,
       "focus": 5.12,
       "even": 0.9787,
       "debris": 0.5981,
       "usable": true,
-      "seconds": 3.27
+      "seconds": 3.54
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_155934.jpg",
-      "found_parasites": 51,
-      "found_wbc": 17,
+      "found_parasites": 50,
+      "found_wbc": 15,
       "truth_parasites": 52,
       "truth_wbc": 11,
       "focus": 4.21,
       "even": 0.9586,
       "debris": 0.6265,
       "usable": true,
-      "seconds": 3.38
+      "seconds": 3.78
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_160136.jpg",
       "found_parasites": 37,
-      "found_wbc": 21,
+      "found_wbc": 16,
       "truth_parasites": 30,
       "truth_wbc": 12,
       "focus": 3.36,
       "even": 0.9813,
       "debris": 0.6777,
       "usable": true,
-      "seconds": 2.18
+      "seconds": 2.29
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_160453.jpg",
       "found_parasites": 38,
-      "found_wbc": 21,
+      "found_wbc": 16,
       "truth_parasites": 40,
       "truth_wbc": 17,
       "focus": 4.17,
       "even": 0.976,
       "debris": 0.6503,
       "usable": true,
-      "seconds": 2.77
+      "seconds": 3.02
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_160548.jpg",
-      "found_parasites": 41,
-      "found_wbc": 17,
+      "found_parasites": 40,
+      "found_wbc": 15,
       "truth_parasites": 44,
       "truth_wbc": 9,
       "focus": 3.8,
       "even": 0.9821,
       "debris": 0.714,
       "usable": true,
-      "seconds": 2.42
+      "seconds": 2.37
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_160658.jpg",
       "found_parasites": 47,
-      "found_wbc": 19,
+      "found_wbc": 12,
       "truth_parasites": 45,
       "truth_wbc": 11,
       "focus": 4.38,
       "even": 0.9774,
       "debris": 0.6573,
       "usable": true,
-      "seconds": 3.0
+      "seconds": 3.2
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_160813.jpg",
-      "found_parasites": 47,
-      "found_wbc": 24,
+      "found_parasites": 45,
+      "found_wbc": 17,
       "truth_parasites": 48,
       "truth_wbc": 19,
       "focus": 5.31,
       "even": 0.969,
       "debris": 0.6145,
       "usable": true,
-      "seconds": 4.05
+      "seconds": 3.67
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_160931.jpg",
       "found_parasites": 49,
-      "found_wbc": 12,
+      "found_wbc": 11,
       "truth_parasites": 48,
       "truth_wbc": 9,
       "focus": 3.8,
       "even": 0.9783,
       "debris": 0.687,
       "usable": true,
-      "seconds": 3.9
+      "seconds": 3.68
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_161049.jpg",
-      "found_parasites": 49,
-      "found_wbc": 20,
+      "found_parasites": 47,
+      "found_wbc": 14,
       "truth_parasites": 53,
       "truth_wbc": 10,
       "focus": 4.31,
       "even": 0.9573,
       "debris": 0.6271,
       "usable": true,
-      "seconds": 3.76
+      "seconds": 3.12
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_161146.jpg",
-      "found_parasites": 56,
-      "found_wbc": 22,
+      "found_parasites": 55,
+      "found_wbc": 15,
       "truth_parasites": 48,
       "truth_wbc": 8,
       "focus": 4.75,
       "even": 0.9681,
       "debris": 0.6331,
       "usable": true,
-      "seconds": 3.87
+      "seconds": 3.05
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_161315.jpg",
-      "found_parasites": 83,
-      "found_wbc": 30,
+      "found_parasites": 82,
+      "found_wbc": 20,
       "truth_parasites": 77,
       "truth_wbc": 14,
       "focus": 5.26,
       "even": 0.9595,
       "debris": 0.596,
       "usable": true,
-      "seconds": 3.87
+      "seconds": 3.76
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_161445.jpg",
       "found_parasites": 46,
-      "found_wbc": 22,
+      "found_wbc": 20,
       "truth_parasites": 50,
       "truth_wbc": 17,
       "focus": 6.1,
       "even": 0.9756,
       "debris": 0.5823,
       "usable": true,
-      "seconds": 4.33
+      "seconds": 4.65
     },
     {
       "patient": "TF35_Sc521",
       "image": "20170725_161604.jpg",
       "found_parasites": 43,
-      "found_wbc": 16,
+      "found_wbc": 14,
       "truth_parasites": 44,
       "truth_wbc": 14,
       "focus": 3.87,
       "even": 0.9763,
       "debris": 0.6311,
       "usable": true,
-      "seconds": 2.92
+      "seconds": 2.94
     },
     {
       "patient": "TF36_Sc542",
       "image": "20170725_210912.jpg",
       "found_parasites": 17,
-      "found_wbc": 22,
+      "found_wbc": 23,
       "truth_parasites": 20,
       "truth_wbc": 21,
       "focus": 2.79,
       "even": 0.9523,
       "debris": 0.648,
       "usable": true,
-      "seconds": 1.25
+      "seconds": 1.34
     },
     {
       "patient": "TF36_Sc542",
       "image": "20170725_211143.jpg",
       "found_parasites": 12,
-      "found_wbc": 16,
+      "found_wbc": 17,
       "truth_parasites": 9,
       "truth_wbc": 16,
       "focus": 2.59,
       "even": 0.9535,
       "debris": 0.636,
       "usable": true,
-      "seconds": 1.22
+      "seconds": 1.35
     },
     {
       "patient": "TF36_Sc542",
@@ -4162,20 +4163,20 @@
       "even": 0.9433,
       "debris": 0.6013,
       "usable": true,
-      "seconds": 1.14
+      "seconds": 1.24
     },
     {
       "patient": "TF36_Sc542",
       "image": "20170725_211833.jpg",
       "found_parasites": 6,
-      "found_wbc": 16,
+      "found_wbc": 19,
       "truth_parasites": 7,
       "truth_wbc": 19,
       "focus": 2.77,
       "even": 0.9574,
       "debris": 0.6205,
       "usable": true,
-      "seconds": 1.26
+      "seconds": 1.33
     },
     {
       "patient": "TF36_Sc542",
@@ -4188,7 +4189,7 @@
       "even": 0.9792,
       "debris": 0.6456,
       "usable": true,
-      "seconds": 1.49
+      "seconds": 1.47
     },
     {
       "patient": "TF36_Sc542",
@@ -4201,46 +4202,46 @@
       "even": 0.9603,
       "debris": 0.6166,
       "usable": true,
-      "seconds": 1.37
+      "seconds": 1.55
     },
     {
       "patient": "TF36_Sc542",
       "image": "20170725_212759.jpg",
       "found_parasites": 9,
-      "found_wbc": 13,
+      "found_wbc": 14,
       "truth_parasites": 13,
       "truth_wbc": 12,
       "focus": 2.74,
       "even": 0.9683,
       "debris": 0.6181,
       "usable": true,
-      "seconds": 1.55
+      "seconds": 1.68
     },
     {
       "patient": "TF36_Sc542",
       "image": "20170725_213218.jpg",
       "found_parasites": 19,
-      "found_wbc": 19,
+      "found_wbc": 22,
       "truth_parasites": 13,
       "truth_wbc": 20,
       "focus": 3.0,
       "even": 0.9726,
       "debris": 0.6501,
       "usable": true,
-      "seconds": 1.42
+      "seconds": 1.47
     },
     {
       "patient": "TF36_Sc542",
       "image": "20170725_213456.jpg",
       "found_parasites": 9,
-      "found_wbc": 17,
+      "found_wbc": 19,
       "truth_parasites": 8,
       "truth_wbc": 14,
       "focus": 2.49,
       "even": 0.9709,
       "debris": 0.6684,
       "usable": true,
-      "seconds": 1.28
+      "seconds": 1.32
     },
     {
       "patient": "TF36_Sc542",
@@ -4253,7 +4254,7 @@
       "even": 0.9597,
       "debris": 0.6322,
       "usable": true,
-      "seconds": 1.21
+      "seconds": 1.27
     },
     {
       "patient": "TF36_Sc542",
@@ -4266,20 +4267,20 @@
       "even": 0.9684,
       "debris": 0.6387,
       "usable": true,
-      "seconds": 1.45
+      "seconds": 1.51
     },
     {
       "patient": "TF36_Sc542",
       "image": "20170725_214324.jpg",
       "found_parasites": 15,
-      "found_wbc": 17,
+      "found_wbc": 18,
       "truth_parasites": 12,
       "truth_wbc": 16,
       "focus": 2.8,
       "even": 0.9599,
       "debris": 0.6713,
       "usable": true,
-      "seconds": 1.36
+      "seconds": 1.42
     },
     {
       "patient": "TF36_Sc542",
@@ -4292,12 +4293,12 @@
       "even": 0.968,
       "debris": 0.6007,
       "usable": true,
-      "seconds": 1.31
+      "seconds": 1.43
     },
     {
       "patient": "TF37_Sc563",
       "image": "20170727_113312.jpg",
-      "found_parasites": 18,
+      "found_parasites": 15,
       "found_wbc": 19,
       "truth_parasites": 10,
       "truth_wbc": 13,
@@ -4305,72 +4306,72 @@
       "even": 0.9812,
       "debris": 0.706,
       "usable": true,
-      "seconds": 1.43
+      "seconds": 1.58
     },
     {
       "patient": "TF37_Sc563",
       "image": "20170727_113512.jpg",
       "found_parasites": 11,
-      "found_wbc": 22,
+      "found_wbc": 21,
       "truth_parasites": 7,
       "truth_wbc": 21,
       "focus": 3.43,
       "even": 0.9825,
       "debris": 0.7169,
       "usable": true,
-      "seconds": 1.31
+      "seconds": 1.43
     },
     {
       "patient": "TF37_Sc563",
       "image": "20170727_115340.jpg",
       "found_parasites": 18,
-      "found_wbc": 16,
+      "found_wbc": 15,
       "truth_parasites": 8,
       "truth_wbc": 15,
       "focus": 3.1,
       "even": 0.9834,
       "debris": 0.6717,
       "usable": true,
-      "seconds": 1.45
+      "seconds": 1.6
     },
     {
       "patient": "TF37_Sc563",
       "image": "20170727_115616.jpg",
       "found_parasites": 19,
-      "found_wbc": 15,
+      "found_wbc": 14,
       "truth_parasites": 17,
       "truth_wbc": 14,
       "focus": 3.04,
       "even": 0.9805,
       "debris": 0.6725,
       "usable": true,
-      "seconds": 1.27
+      "seconds": 1.42
     },
     {
       "patient": "TF37_Sc563",
       "image": "20170727_115749.jpg",
       "found_parasites": 16,
-      "found_wbc": 15,
+      "found_wbc": 17,
       "truth_parasites": 10,
       "truth_wbc": 15,
       "focus": 2.85,
       "even": 0.9751,
       "debris": 0.6625,
       "usable": true,
-      "seconds": 1.42
+      "seconds": 1.51
     },
     {
       "patient": "TF37_Sc563",
       "image": "20170727_115923.jpg",
       "found_parasites": 23,
-      "found_wbc": 16,
+      "found_wbc": 15,
       "truth_parasites": 8,
       "truth_wbc": 18,
       "focus": 3.27,
       "even": 0.9617,
       "debris": 0.7297,
       "usable": true,
-      "seconds": 1.58
+      "seconds": 1.77
     },
     {
       "patient": "TF37_Sc563",
@@ -4383,46 +4384,46 @@
       "even": 0.9544,
       "debris": 0.749,
       "usable": true,
-      "seconds": 1.48
+      "seconds": 1.63
     },
     {
       "patient": "TF37_Sc563",
       "image": "20170727_120431.jpg",
       "found_parasites": 10,
-      "found_wbc": 19,
+      "found_wbc": 13,
       "truth_parasites": 7,
       "truth_wbc": 11,
       "focus": 3.55,
       "even": 0.9703,
       "debris": 0.704,
       "usable": true,
-      "seconds": 1.78
+      "seconds": 1.87
     },
     {
       "patient": "TF37_Sc563",
       "image": "20170727_120624.jpg",
       "found_parasites": 17,
-      "found_wbc": 20,
+      "found_wbc": 18,
       "truth_parasites": 6,
       "truth_wbc": 18,
       "focus": 4.07,
       "even": 0.954,
       "debris": 0.6637,
       "usable": true,
-      "seconds": 1.58
+      "seconds": 1.75
     },
     {
       "patient": "TF37_Sc563",
       "image": "20170727_120906.jpg",
       "found_parasites": 15,
-      "found_wbc": 31,
+      "found_wbc": 26,
       "truth_parasites": 8,
       "truth_wbc": 25,
       "focus": 3.66,
       "even": 0.9568,
       "debris": 0.5898,
       "usable": true,
-      "seconds": 1.52
+      "seconds": 1.84
     },
     {
       "patient": "TF37_Sc563",
@@ -4435,124 +4436,124 @@
       "even": 0.9827,
       "debris": 0.6781,
       "usable": true,
-      "seconds": 1.59
+      "seconds": 1.79
     },
     {
       "patient": "TF37_Sc563",
       "image": "20170727_121303.jpg",
       "found_parasites": 8,
-      "found_wbc": 23,
+      "found_wbc": 21,
       "truth_parasites": 5,
       "truth_wbc": 20,
       "focus": 3.23,
       "even": 0.9714,
       "debris": 0.6766,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 1.47
     },
     {
       "patient": "TF37_Sc563",
       "image": "20170727_121540.jpg",
       "found_parasites": 22,
-      "found_wbc": 23,
+      "found_wbc": 25,
       "truth_parasites": 11,
       "truth_wbc": 22,
       "focus": 3.0,
       "even": 0.9676,
       "debris": 0.6511,
       "usable": true,
-      "seconds": 1.42
+      "seconds": 1.61
     },
     {
       "patient": "TF37_Sc563",
       "image": "20170727_121814.jpg",
       "found_parasites": 22,
-      "found_wbc": 21,
+      "found_wbc": 20,
       "truth_parasites": 16,
       "truth_wbc": 23,
       "focus": 3.33,
       "even": 0.9585,
       "debris": 0.6213,
       "usable": true,
-      "seconds": 1.53
+      "seconds": 1.58
     },
     {
       "patient": "TF38_CT1",
       "image": "20170727_144944.jpg",
       "found_parasites": 8,
-      "found_wbc": 22,
+      "found_wbc": 24,
       "truth_parasites": 6,
       "truth_wbc": 24,
       "focus": 4.16,
       "even": 0.9519,
       "debris": 0.6757,
       "usable": true,
-      "seconds": 2.09
+      "seconds": 2.3
     },
     {
       "patient": "TF38_CT1",
       "image": "20170727_145210.jpg",
       "found_parasites": 8,
-      "found_wbc": 27,
+      "found_wbc": 28,
       "truth_parasites": 11,
       "truth_wbc": 27,
       "focus": 3.99,
       "even": 0.963,
       "debris": 0.663,
       "usable": true,
-      "seconds": 1.97
+      "seconds": 2.06
     },
     {
       "patient": "TF38_CT1",
       "image": "20170727_145502.jpg",
       "found_parasites": 11,
-      "found_wbc": 20,
+      "found_wbc": 19,
       "truth_parasites": 10,
       "truth_wbc": 17,
       "focus": 4.45,
       "even": 0.9653,
       "debris": 0.674,
       "usable": true,
-      "seconds": 2.34
+      "seconds": 2.44
     },
     {
       "patient": "TF38_CT1",
       "image": "20170727_145649.jpg",
       "found_parasites": 3,
-      "found_wbc": 23,
+      "found_wbc": 21,
       "truth_parasites": 2,
       "truth_wbc": 26,
       "focus": 3.91,
       "even": 0.9464,
       "debris": 0.6844,
       "usable": true,
-      "seconds": 1.74
+      "seconds": 1.9
     },
     {
       "patient": "TF38_CT1",
       "image": "20170727_145829.jpg",
       "found_parasites": 4,
-      "found_wbc": 24,
+      "found_wbc": 23,
       "truth_parasites": 6,
       "truth_wbc": 23,
       "focus": 3.82,
       "even": 0.9586,
       "debris": 0.7027,
       "usable": true,
-      "seconds": 2.02
+      "seconds": 2.15
     },
     {
       "patient": "TF38_CT1",
       "image": "20170727_150051.jpg",
       "found_parasites": 7,
-      "found_wbc": 34,
+      "found_wbc": 33,
       "truth_parasites": 6,
       "truth_wbc": 32,
       "focus": 3.12,
       "even": 0.9552,
       "debris": 0.6634,
       "usable": true,
-      "seconds": 1.27
+      "seconds": 1.45
     },
     {
       "patient": "TF38_CT1",
@@ -4565,33 +4566,33 @@
       "even": 0.9428,
       "debris": 0.7111,
       "usable": true,
-      "seconds": 1.45
+      "seconds": 1.58
     },
     {
       "patient": "TF38_CT1",
       "image": "20170727_150459.jpg",
       "found_parasites": 6,
-      "found_wbc": 26,
+      "found_wbc": 20,
       "truth_parasites": 6,
       "truth_wbc": 24,
       "focus": 3.67,
       "even": 0.9532,
       "debris": 0.6237,
       "usable": true,
-      "seconds": 2.07
+      "seconds": 2.08
     },
     {
       "patient": "TF38_CT1",
       "image": "20170727_150955.jpg",
       "found_parasites": 7,
-      "found_wbc": 17,
+      "found_wbc": 18,
       "truth_parasites": 7,
       "truth_wbc": 18,
       "focus": 3.64,
       "even": 0.9379,
       "debris": 0.6686,
       "usable": true,
-      "seconds": 1.95
+      "seconds": 2.21
     },
     {
       "patient": "TF40_UT3",
@@ -4604,7 +4605,7 @@
       "even": 0.9825,
       "debris": 0.749,
       "usable": true,
-      "seconds": 0.98
+      "seconds": 1.38
     },
     {
       "patient": "TF40_UT3",
@@ -4617,7 +4618,7 @@
       "even": 0.9773,
       "debris": 0.7423,
       "usable": true,
-      "seconds": 1.09
+      "seconds": 1.24
     },
     {
       "patient": "TF40_UT3",
@@ -4630,7 +4631,7 @@
       "even": 0.9824,
       "debris": 0.7272,
       "usable": true,
-      "seconds": 1.16
+      "seconds": 1.25
     },
     {
       "patient": "TF40_UT3",
@@ -4643,7 +4644,7 @@
       "even": 0.9839,
       "debris": 0.7545,
       "usable": true,
-      "seconds": 1.39
+      "seconds": 1.42
     },
     {
       "patient": "TF40_UT3",
@@ -4656,7 +4657,7 @@
       "even": 0.9898,
       "debris": 0.7516,
       "usable": true,
-      "seconds": 1.11
+      "seconds": 1.22
     },
     {
       "patient": "TF40_UT3",
@@ -4669,20 +4670,20 @@
       "even": 0.9842,
       "debris": 0.7186,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 1.23
     },
     {
       "patient": "TF40_UT3",
       "image": "20170727_175514.jpg",
       "found_parasites": 12,
-      "found_wbc": 13,
+      "found_wbc": 15,
       "truth_parasites": 19,
       "truth_wbc": 13,
       "focus": 2.89,
       "even": 0.9868,
       "debris": 0.7175,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 1.45
     },
     {
       "patient": "TF40_UT3",
@@ -4695,7 +4696,7 @@
       "even": 0.9853,
       "debris": 0.6983,
       "usable": true,
-      "seconds": 1.13
+      "seconds": 1.19
     },
     {
       "patient": "TF40_UT3",
@@ -4721,33 +4722,33 @@
       "even": 0.9822,
       "debris": 0.7562,
       "usable": true,
-      "seconds": 1.19
+      "seconds": 1.26
     },
     {
       "patient": "TF40_UT3",
       "image": "20170727_181719.jpg",
       "found_parasites": 13,
-      "found_wbc": 10,
+      "found_wbc": 11,
       "truth_parasites": 15,
       "truth_wbc": 10,
       "focus": 2.46,
       "even": 0.9873,
       "debris": 0.757,
       "usable": true,
-      "seconds": 1.15
+      "seconds": 1.22
     },
     {
       "patient": "TF40_UT3",
       "image": "20170727_182222.jpg",
       "found_parasites": 13,
-      "found_wbc": 19,
+      "found_wbc": 16,
       "truth_parasites": 15,
       "truth_wbc": 13,
       "focus": 3.03,
       "even": 0.9754,
       "debris": 0.7185,
       "usable": true,
-      "seconds": 1.28
+      "seconds": 1.38
     },
     {
       "patient": "TF40_UT3",
@@ -4760,7 +4761,7 @@
       "even": 0.981,
       "debris": 0.7579,
       "usable": true,
-      "seconds": 1.07
+      "seconds": 1.16
     },
     {
       "patient": "TF40_UT3",
@@ -4773,7 +4774,7 @@
       "even": 0.9818,
       "debris": 0.7714,
       "usable": true,
-      "seconds": 1.3
+      "seconds": 1.38
     },
     {
       "patient": "TF40_UT3",
@@ -4786,7 +4787,7 @@
       "even": 0.9814,
       "debris": 0.7875,
       "usable": true,
-      "seconds": 1.47
+      "seconds": 1.9
     },
     {
       "patient": "TF40_UT3",
@@ -4799,51 +4800,51 @@
       "even": 0.9814,
       "debris": 0.7321,
       "usable": true,
-      "seconds": 1.02
+      "seconds": 1.09
     },
     {
       "patient": "TF40_UT3",
       "image": "20170727_184226.jpg",
       "found_parasites": 14,
-      "found_wbc": 9,
+      "found_wbc": 10,
       "truth_parasites": 17,
       "truth_wbc": 10,
       "focus": 2.89,
       "even": 0.9857,
       "debris": 0.7747,
       "usable": true,
-      "seconds": 1.25
+      "seconds": 1.34
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_164610.jpg",
-      "found_parasites": 165,
-      "found_wbc": 20,
+      "found_parasites": 164,
+      "found_wbc": 17,
       "truth_parasites": 166,
       "truth_wbc": 16,
       "focus": 3.22,
       "even": 0.9775,
       "debris": 0.6747,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 1.52
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_165143.jpg",
-      "found_parasites": 174,
-      "found_wbc": 10,
+      "found_parasites": 170,
+      "found_wbc": 11,
       "truth_parasites": 161,
       "truth_wbc": 10,
       "focus": 3.0,
       "even": 0.975,
       "debris": 0.6252,
       "usable": true,
-      "seconds": 1.47
+      "seconds": 1.64
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_165317.jpg",
-      "found_parasites": 189,
+      "found_parasites": 186,
       "found_wbc": 18,
       "truth_parasites": 196,
       "truth_wbc": 16,
@@ -4851,12 +4852,12 @@
       "even": 0.9815,
       "debris": 0.6932,
       "usable": true,
-      "seconds": 1.75
+      "seconds": 1.87
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_170053.jpg",
-      "found_parasites": 202,
+      "found_parasites": 199,
       "found_wbc": 16,
       "truth_parasites": 196,
       "truth_wbc": 15,
@@ -4864,38 +4865,38 @@
       "even": 0.9613,
       "debris": 0.6887,
       "usable": true,
-      "seconds": 1.78
+      "seconds": 2.0
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_170237.jpg",
-      "found_parasites": 187,
-      "found_wbc": 16,
+      "found_parasites": 181,
+      "found_wbc": 15,
       "truth_parasites": 178,
       "truth_wbc": 14,
       "focus": 3.13,
       "even": 0.9711,
       "debris": 0.6202,
       "usable": true,
-      "seconds": 1.43
+      "seconds": 1.65
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_170423.jpg",
-      "found_parasites": 209,
-      "found_wbc": 20,
+      "found_parasites": 208,
+      "found_wbc": 18,
       "truth_parasites": 216,
       "truth_wbc": 17,
       "focus": 3.45,
       "even": 0.9727,
       "debris": 0.6622,
       "usable": true,
-      "seconds": 1.67
+      "seconds": 2.12
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_170602.jpg",
-      "found_parasites": 195,
+      "found_parasites": 193,
       "found_wbc": 16,
       "truth_parasites": 193,
       "truth_wbc": 16,
@@ -4903,12 +4904,12 @@
       "even": 0.9788,
       "debris": 0.6343,
       "usable": true,
-      "seconds": 1.46
+      "seconds": 1.65
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_170746.jpg",
-      "found_parasites": 171,
+      "found_parasites": 169,
       "found_wbc": 16,
       "truth_parasites": 175,
       "truth_wbc": 16,
@@ -4916,7 +4917,7 @@
       "even": 0.9625,
       "debris": 0.6622,
       "usable": true,
-      "seconds": 1.38
+      "seconds": 1.59
     },
     {
       "patient": "TF41_UT5",
@@ -4929,12 +4930,12 @@
       "even": 0.9646,
       "debris": 0.674,
       "usable": true,
-      "seconds": 1.64
+      "seconds": 1.83
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_171127.jpg",
-      "found_parasites": 194,
+      "found_parasites": 187,
       "found_wbc": 14,
       "truth_parasites": 196,
       "truth_wbc": 12,
@@ -4942,241 +4943,241 @@
       "even": 0.9702,
       "debris": 0.6631,
       "usable": true,
-      "seconds": 1.65
+      "seconds": 1.8
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_171350.jpg",
-      "found_parasites": 192,
-      "found_wbc": 23,
+      "found_parasites": 188,
+      "found_wbc": 22,
       "truth_parasites": 194,
       "truth_wbc": 18,
       "focus": 3.91,
       "even": 0.9732,
       "debris": 0.718,
       "usable": true,
-      "seconds": 2.03
+      "seconds": 2.06
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_171910.jpg",
-      "found_parasites": 245,
-      "found_wbc": 19,
+      "found_parasites": 239,
+      "found_wbc": 17,
       "truth_parasites": 225,
       "truth_wbc": 16,
       "focus": 3.93,
       "even": 0.9712,
       "debris": 0.6734,
       "usable": true,
-      "seconds": 1.96
+      "seconds": 2.02
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_172025.jpg",
-      "found_parasites": 178,
-      "found_wbc": 20,
+      "found_parasites": 174,
+      "found_wbc": 18,
       "truth_parasites": 157,
       "truth_wbc": 18,
       "focus": 3.55,
       "even": 0.9721,
       "debris": 0.6872,
       "usable": true,
-      "seconds": 1.57
+      "seconds": 1.79
     },
     {
       "patient": "TF41_UT5",
       "image": "20170728_172303.jpg",
-      "found_parasites": 209,
-      "found_wbc": 14,
+      "found_parasites": 208,
+      "found_wbc": 13,
       "truth_parasites": 210,
       "truth_wbc": 14,
       "focus": 3.47,
       "even": 0.9582,
       "debris": 0.6616,
       "usable": true,
-      "seconds": 1.54
+      "seconds": 1.59
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_164114.jpg",
       "found_parasites": 2,
-      "found_wbc": 18,
+      "found_wbc": 17,
       "truth_parasites": 3,
       "truth_wbc": 18,
       "focus": 2.75,
       "even": 0.9717,
       "debris": 0.6941,
       "usable": true,
-      "seconds": 1.25
+      "seconds": 1.38
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_164451.jpg",
       "found_parasites": 4,
-      "found_wbc": 20,
+      "found_wbc": 18,
       "truth_parasites": 5,
       "truth_wbc": 18,
       "focus": 2.61,
       "even": 0.959,
       "debris": 0.6567,
       "usable": true,
-      "seconds": 1.29
+      "seconds": 1.5
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_164644.jpg",
       "found_parasites": 3,
-      "found_wbc": 26,
+      "found_wbc": 14,
       "truth_parasites": 4,
       "truth_wbc": 14,
       "focus": 2.64,
       "even": 0.9636,
       "debris": 0.6828,
       "usable": true,
-      "seconds": 1.22
+      "seconds": 1.35
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_165155.jpg",
       "found_parasites": 2,
-      "found_wbc": 23,
+      "found_wbc": 20,
       "truth_parasites": 6,
       "truth_wbc": 18,
       "focus": 2.47,
       "even": 0.9678,
       "debris": 0.6401,
       "usable": true,
-      "seconds": 1.4
+      "seconds": 1.41
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_165401.jpg",
       "found_parasites": 3,
-      "found_wbc": 16,
+      "found_wbc": 17,
       "truth_parasites": 3,
       "truth_wbc": 16,
       "focus": 2.71,
       "even": 0.9663,
       "debris": 0.644,
       "usable": true,
-      "seconds": 1.23
+      "seconds": 1.56
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_165530.jpg",
-      "found_parasites": 1,
-      "found_wbc": 19,
+      "found_parasites": 0,
+      "found_wbc": 17,
       "truth_parasites": 3,
       "truth_wbc": 17,
       "focus": 2.49,
       "even": 0.9421,
       "debris": 0.6594,
       "usable": true,
-      "seconds": 1.17
+      "seconds": 1.53
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_165816.jpg",
       "found_parasites": 1,
-      "found_wbc": 16,
+      "found_wbc": 13,
       "truth_parasites": 5,
       "truth_wbc": 12,
       "focus": 2.7,
       "even": 0.9592,
       "debris": 0.6498,
       "usable": true,
-      "seconds": 1.36
+      "seconds": 1.62
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_170053.jpg",
       "found_parasites": 2,
-      "found_wbc": 22,
+      "found_wbc": 18,
       "truth_parasites": 2,
       "truth_wbc": 17,
       "focus": 2.9,
       "even": 0.9628,
       "debris": 0.6679,
       "usable": true,
-      "seconds": 1.45
+      "seconds": 2.0
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_170442.jpg",
       "found_parasites": 3,
-      "found_wbc": 27,
+      "found_wbc": 23,
       "truth_parasites": 3,
       "truth_wbc": 19,
       "focus": 2.53,
       "even": 0.9627,
       "debris": 0.6134,
       "usable": true,
-      "seconds": 1.31
+      "seconds": 1.39
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_170527.jpg",
       "found_parasites": 3,
-      "found_wbc": 26,
+      "found_wbc": 23,
       "truth_parasites": 3,
       "truth_wbc": 21,
       "focus": 2.42,
       "even": 0.9601,
       "debris": 0.5605,
       "usable": true,
-      "seconds": 1.15
+      "seconds": 1.46
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_171125.jpg",
       "found_parasites": 2,
-      "found_wbc": 19,
+      "found_wbc": 18,
       "truth_parasites": 3,
       "truth_wbc": 15,
       "focus": 2.77,
       "even": 0.9605,
       "debris": 0.6956,
       "usable": true,
-      "seconds": 1.2
+      "seconds": 1.36
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_171351.jpg",
       "found_parasites": 3,
-      "found_wbc": 16,
+      "found_wbc": 13,
       "truth_parasites": 2,
       "truth_wbc": 13,
       "focus": 2.63,
       "even": 0.963,
       "debris": 0.7025,
       "usable": true,
-      "seconds": 1.3
+      "seconds": 1.39
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_171647.jpg",
       "found_parasites": 5,
-      "found_wbc": 16,
+      "found_wbc": 13,
       "truth_parasites": 5,
       "truth_wbc": 9,
       "focus": 2.75,
       "even": 0.9643,
       "debris": 0.7124,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 1.54
     },
     {
       "patient": "TF46_UW23",
       "image": "20170807_171809.jpg",
       "found_parasites": 2,
-      "found_wbc": 23,
+      "found_wbc": 19,
       "truth_parasites": 2,
       "truth_wbc": 19,
       "focus": 2.74,
       "even": 0.9645,
       "debris": 0.6799,
       "usable": true,
-      "seconds": 1.25
+      "seconds": 1.4
     },
     {
       "patient": "TF47_UW29",
@@ -5189,7 +5190,7 @@
       "even": 0.9484,
       "debris": 0.685,
       "usable": true,
-      "seconds": 1.26
+      "seconds": 1.48
     },
     {
       "patient": "TF47_UW29",
@@ -5202,7 +5203,7 @@
       "even": 0.9321,
       "debris": 0.6815,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 1.36
     },
     {
       "patient": "TF47_UW29",
@@ -5215,20 +5216,20 @@
       "even": 0.9472,
       "debris": 0.6941,
       "usable": true,
-      "seconds": 1.21
+      "seconds": 1.3
     },
     {
       "patient": "TF47_UW29",
       "image": "20170807_174144.jpg",
       "found_parasites": 6,
-      "found_wbc": 22,
+      "found_wbc": 23,
       "truth_parasites": 7,
       "truth_wbc": 25,
       "focus": 3.17,
       "even": 0.9464,
       "debris": 0.7411,
       "usable": true,
-      "seconds": 1.09
+      "seconds": 1.13
     },
     {
       "patient": "TF47_UW29",
@@ -5241,7 +5242,7 @@
       "even": 0.9526,
       "debris": 0.7299,
       "usable": true,
-      "seconds": 1.29
+      "seconds": 1.53
     },
     {
       "patient": "TF47_UW29",
@@ -5254,20 +5255,20 @@
       "even": 0.9564,
       "debris": 0.7138,
       "usable": true,
-      "seconds": 1.04
+      "seconds": 1.11
     },
     {
       "patient": "TF47_UW29",
       "image": "20170807_174613.jpg",
       "found_parasites": 5,
-      "found_wbc": 18,
+      "found_wbc": 19,
       "truth_parasites": 5,
       "truth_wbc": 18,
       "focus": 3.0,
       "even": 0.949,
       "debris": 0.7374,
       "usable": true,
-      "seconds": 1.03
+      "seconds": 1.22
     },
     {
       "patient": "TF47_UW29",
@@ -5280,33 +5281,33 @@
       "even": 0.9274,
       "debris": 0.7404,
       "usable": true,
-      "seconds": 1.12
+      "seconds": 1.15
     },
     {
       "patient": "TF47_UW29",
       "image": "20170807_174912.jpg",
       "found_parasites": 9,
-      "found_wbc": 14,
+      "found_wbc": 13,
       "truth_parasites": 8,
       "truth_wbc": 13,
       "focus": 2.75,
       "even": 0.9318,
       "debris": 0.7464,
       "usable": true,
-      "seconds": 1.03
+      "seconds": 1.13
     },
     {
       "patient": "TF47_UW29",
       "image": "20170807_175008.jpg",
       "found_parasites": 10,
-      "found_wbc": 16,
+      "found_wbc": 15,
       "truth_parasites": 7,
       "truth_wbc": 15,
       "focus": 3.2,
       "even": 0.9211,
       "debris": 0.7523,
       "usable": true,
-      "seconds": 1.07
+      "seconds": 1.17
     },
     {
       "patient": "TF47_UW29",
@@ -5319,38 +5320,38 @@
       "even": 0.9388,
       "debris": 0.7444,
       "usable": true,
-      "seconds": 1.15
+      "seconds": 1.38
     },
     {
       "patient": "TF47_UW29",
       "image": "20170807_175228.jpg",
       "found_parasites": 2,
-      "found_wbc": 13,
+      "found_wbc": 14,
       "truth_parasites": 2,
       "truth_wbc": 15,
       "focus": 2.79,
       "even": 0.9506,
       "debris": 0.7639,
       "usable": true,
-      "seconds": 1.0
+      "seconds": 1.25
     },
     {
       "patient": "TF48_UW31",
       "image": "20170811_153442.jpg",
-      "found_parasites": 126,
-      "found_wbc": 41,
+      "found_parasites": 125,
+      "found_wbc": 40,
       "truth_parasites": 188,
       "truth_wbc": 45,
       "focus": 3.97,
       "even": 0.962,
       "debris": 0.6252,
       "usable": true,
-      "seconds": 1.62
+      "seconds": 2.0
     },
     {
       "patient": "TF48_UW31",
       "image": "20170811_153539.jpg",
-      "found_parasites": 132,
+      "found_parasites": 131,
       "found_wbc": 36,
       "truth_parasites": 174,
       "truth_wbc": 39,
@@ -5358,13 +5359,13 @@
       "even": 0.933,
       "debris": 0.623,
       "usable": true,
-      "seconds": 1.8
+      "seconds": 2.13
     },
     {
       "patient": "TF48_UW31",
       "image": "20170811_153810.jpg",
       "found_parasites": 130,
-      "found_wbc": 39,
+      "found_wbc": 37,
       "truth_parasites": 178,
       "truth_wbc": 43,
       "focus": 3.92,
@@ -5376,7 +5377,7 @@
     {
       "patient": "TF48_UW31",
       "image": "20170811_154515.jpg",
-      "found_parasites": 134,
+      "found_parasites": 132,
       "found_wbc": 26,
       "truth_parasites": 156,
       "truth_wbc": 28,
@@ -5384,7 +5385,7 @@
       "even": 0.9527,
       "debris": 0.6408,
       "usable": true,
-      "seconds": 1.66
+      "seconds": 1.89
     },
     {
       "patient": "TF48_UW31",
@@ -5397,38 +5398,38 @@
       "even": 0.9442,
       "debris": 0.6596,
       "usable": true,
-      "seconds": 1.7
+      "seconds": 1.9
     },
     {
       "patient": "TF48_UW31",
       "image": "20170811_155234.jpg",
       "found_parasites": 193,
-      "found_wbc": 27,
+      "found_wbc": 26,
       "truth_parasites": 231,
       "truth_wbc": 27,
       "focus": 3.93,
       "even": 0.9342,
       "debris": 0.6427,
       "usable": true,
-      "seconds": 1.59
+      "seconds": 1.79
     },
     {
       "patient": "TF53_CW41",
       "image": "20170812_163436.jpg",
       "found_parasites": 39,
-      "found_wbc": 34,
+      "found_wbc": 35,
       "truth_parasites": 40,
       "truth_wbc": 32,
       "focus": 2.91,
       "even": 0.9646,
       "debris": 0.7224,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 1.46
     },
     {
       "patient": "TF53_CW41",
       "image": "20170812_163628.jpg",
-      "found_parasites": 42,
+      "found_parasites": 41,
       "found_wbc": 23,
       "truth_parasites": 55,
       "truth_wbc": 22,
@@ -5436,38 +5437,38 @@
       "even": 0.9588,
       "debris": 0.7074,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 1.5
     },
     {
       "patient": "TF53_CW41",
       "image": "20170812_164716.jpg",
-      "found_parasites": 33,
-      "found_wbc": 31,
+      "found_parasites": 32,
+      "found_wbc": 30,
       "truth_parasites": 42,
       "truth_wbc": 38,
       "focus": 3.0,
       "even": 0.9611,
       "debris": 0.7173,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 1.26
     },
     {
       "patient": "TF53_CW41",
       "image": "20170812_165110.jpg",
-      "found_parasites": 37,
-      "found_wbc": 33,
+      "found_parasites": 36,
+      "found_wbc": 34,
       "truth_parasites": 42,
       "truth_wbc": 32,
       "focus": 2.97,
       "even": 0.968,
       "debris": 0.7309,
       "usable": true,
-      "seconds": 1.21
+      "seconds": 1.32
     },
     {
       "patient": "TF53_CW41",
       "image": "20170812_170033.jpg",
-      "found_parasites": 58,
+      "found_parasites": 56,
       "found_wbc": 31,
       "truth_parasites": 58,
       "truth_wbc": 36,
@@ -5475,46 +5476,46 @@
       "even": 0.9749,
       "debris": 0.7395,
       "usable": true,
-      "seconds": 1.23
+      "seconds": 1.29
     },
     {
       "patient": "TF53_CW41",
       "image": "20170812_170639.jpg",
-      "found_parasites": 54,
-      "found_wbc": 23,
+      "found_parasites": 51,
+      "found_wbc": 22,
       "truth_parasites": 57,
       "truth_wbc": 23,
       "focus": 2.93,
       "even": 0.9637,
       "debris": 0.7338,
       "usable": true,
-      "seconds": 1.32
+      "seconds": 1.41
     },
     {
       "patient": "TF53_CW41",
       "image": "20170812_171051.jpg",
       "found_parasites": 47,
-      "found_wbc": 27,
+      "found_wbc": 29,
       "truth_parasites": 44,
       "truth_wbc": 25,
       "focus": 2.9,
       "even": 0.9643,
       "debris": 0.7344,
       "usable": true,
-      "seconds": 1.39
+      "seconds": 1.61
     },
     {
       "patient": "TF53_CW41",
       "image": "20170812_171245.jpg",
-      "found_parasites": 41,
-      "found_wbc": 31,
+      "found_parasites": 40,
+      "found_wbc": 33,
       "truth_parasites": 41,
       "truth_wbc": 34,
       "focus": 2.91,
       "even": 0.9624,
       "debris": 0.7279,
       "usable": true,
-      "seconds": 1.2
+      "seconds": 1.3
     },
     {
       "patient": "TF55_CV4",
@@ -5527,46 +5528,46 @@
       "even": 0.9524,
       "debris": 0.679,
       "usable": true,
-      "seconds": 2.31
+      "seconds": 2.62
     },
     {
       "patient": "TF55_CV4",
       "image": "20170812_181225.jpg",
       "found_parasites": 10,
-      "found_wbc": 24,
+      "found_wbc": 23,
       "truth_parasites": 8,
       "truth_wbc": 24,
       "focus": 4.42,
       "even": 0.9618,
       "debris": 0.7008,
       "usable": true,
-      "seconds": 2.42
+      "seconds": 2.61
     },
     {
       "patient": "TF55_CV4",
       "image": "20170812_181337.jpg",
       "found_parasites": 7,
-      "found_wbc": 20,
+      "found_wbc": 19,
       "truth_parasites": 7,
       "truth_wbc": 17,
       "focus": 4.42,
       "even": 0.9584,
       "debris": 0.6832,
       "usable": true,
-      "seconds": 2.81
+      "seconds": 2.98
     },
     {
       "patient": "TF55_CV4",
       "image": "20170812_181450.jpg",
       "found_parasites": 11,
-      "found_wbc": 21,
+      "found_wbc": 17,
       "truth_parasites": 7,
       "truth_wbc": 13,
       "focus": 3.9,
       "even": 0.9647,
       "debris": 0.6648,
       "usable": true,
-      "seconds": 2.61
+      "seconds": 2.54
     },
     {
       "patient": "TF55_CV4",
@@ -5579,20 +5580,20 @@
       "even": 0.9709,
       "debris": 0.6724,
       "usable": true,
-      "seconds": 2.97
+      "seconds": 3.58
     },
     {
       "patient": "TF55_CV4",
       "image": "20170812_181837.jpg",
       "found_parasites": 10,
-      "found_wbc": 19,
+      "found_wbc": 18,
       "truth_parasites": 9,
       "truth_wbc": 16,
       "focus": 5.11,
       "even": 0.9698,
       "debris": 0.718,
       "usable": true,
-      "seconds": 2.96
+      "seconds": 3.36
     },
     {
       "patient": "TF55_CV4",
@@ -5605,33 +5606,33 @@
       "even": 0.9537,
       "debris": 0.6943,
       "usable": true,
-      "seconds": 2.34
+      "seconds": 2.6
     },
     {
       "patient": "TF55_CV4",
       "image": "20170812_182219.jpg",
-      "found_parasites": 2,
-      "found_wbc": 15,
+      "found_parasites": 1,
+      "found_wbc": 17,
       "truth_parasites": 3,
       "truth_wbc": 11,
       "focus": 3.37,
       "even": 0.9634,
       "debris": 0.6594,
       "usable": true,
-      "seconds": 1.94
+      "seconds": 2.18
     },
     {
       "patient": "TF55_CV4",
       "image": "20170812_182342.jpg",
       "found_parasites": 7,
-      "found_wbc": 18,
+      "found_wbc": 20,
       "truth_parasites": 7,
       "truth_wbc": 19,
       "focus": 3.46,
       "even": 0.9765,
       "debris": 0.7387,
       "usable": true,
-      "seconds": 1.56
+      "seconds": 1.7
     },
     {
       "patient": "TF55_CV4",
@@ -5644,124 +5645,124 @@
       "even": 0.9664,
       "debris": 0.7168,
       "usable": true,
-      "seconds": 2.19
+      "seconds": 2.84
     },
     {
       "patient": "TF55_CV4",
       "image": "20170812_182706.jpg",
       "found_parasites": 5,
-      "found_wbc": 18,
+      "found_wbc": 16,
       "truth_parasites": 6,
       "truth_wbc": 16,
       "focus": 3.18,
       "even": 0.9771,
       "debris": 0.7653,
       "usable": true,
-      "seconds": 1.64
+      "seconds": 1.51
     },
     {
       "patient": "TF55_CV4",
       "image": "20170812_182932.jpg",
       "found_parasites": 5,
-      "found_wbc": 18,
+      "found_wbc": 19,
       "truth_parasites": 7,
       "truth_wbc": 15,
       "focus": 3.87,
       "even": 0.9728,
       "debris": 0.6839,
       "usable": true,
-      "seconds": 2.24
+      "seconds": 2.88
     },
     {
       "patient": "TF55_CV4",
       "image": "20170812_183402.jpg",
       "found_parasites": 5,
-      "found_wbc": 17,
+      "found_wbc": 18,
       "truth_parasites": 8,
       "truth_wbc": 23,
       "focus": 4.01,
       "even": 0.9699,
       "debris": 0.7528,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 1.99
     },
     {
       "patient": "TF58_UT8",
       "image": "20170813_213516.jpg",
       "found_parasites": 22,
-      "found_wbc": 16,
+      "found_wbc": 18,
       "truth_parasites": 19,
       "truth_wbc": 15,
       "focus": 3.16,
       "even": 0.9711,
       "debris": 0.7506,
       "usable": true,
-      "seconds": 2.43
+      "seconds": 2.76
     },
     {
       "patient": "TF58_UT8",
       "image": "20170813_213647.jpg",
       "found_parasites": 12,
-      "found_wbc": 16,
+      "found_wbc": 13,
       "truth_parasites": 10,
       "truth_wbc": 9,
       "focus": 3.21,
       "even": 0.9672,
       "debris": 0.7347,
       "usable": true,
-      "seconds": 2.21
+      "seconds": 2.62
     },
     {
       "patient": "TF58_UT8",
       "image": "20170813_213823.jpg",
       "found_parasites": 17,
-      "found_wbc": 17,
+      "found_wbc": 15,
       "truth_parasites": 13,
       "truth_wbc": 14,
       "focus": 3.19,
       "even": 0.9757,
       "debris": 0.777,
       "usable": true,
-      "seconds": 1.68
+      "seconds": 2.08
     },
     {
       "patient": "TF58_UT8",
       "image": "20170813_214149.jpg",
       "found_parasites": 8,
-      "found_wbc": 15,
+      "found_wbc": 17,
       "truth_parasites": 7,
       "truth_wbc": 12,
       "focus": 2.96,
       "even": 0.9709,
       "debris": 0.7639,
       "usable": true,
-      "seconds": 1.59
+      "seconds": 1.85
     },
     {
       "patient": "TF58_UT8",
       "image": "20170813_214852.jpg",
       "found_parasites": 25,
-      "found_wbc": 15,
+      "found_wbc": 16,
       "truth_parasites": 17,
       "truth_wbc": 12,
       "focus": 3.0,
       "even": 0.9736,
       "debris": 0.7626,
       "usable": true,
-      "seconds": 2.49
+      "seconds": 2.68
     },
     {
       "patient": "TF58_UT8",
       "image": "20170813_215142.jpg",
-      "found_parasites": 12,
-      "found_wbc": 18,
+      "found_parasites": 10,
+      "found_wbc": 17,
       "truth_parasites": 8,
       "truth_wbc": 15,
       "focus": 2.94,
       "even": 0.9851,
       "debris": 0.761,
       "usable": true,
-      "seconds": 1.67
+      "seconds": 1.8
     },
     {
       "patient": "TF58_UT8",
@@ -5774,7 +5775,7 @@
       "even": 0.9831,
       "debris": 0.7689,
       "usable": true,
-      "seconds": 1.77
+      "seconds": 1.78
     },
     {
       "patient": "TF58_UT8",
@@ -5787,33 +5788,33 @@
       "even": 0.9727,
       "debris": 0.7515,
       "usable": true,
-      "seconds": 2.03
+      "seconds": 2.14
     },
     {
       "patient": "TF58_UT8",
       "image": "20170813_220032.jpg",
-      "found_parasites": 16,
-      "found_wbc": 15,
+      "found_parasites": 15,
+      "found_wbc": 14,
       "truth_parasites": 14,
       "truth_wbc": 14,
       "focus": 3.39,
       "even": 0.9819,
       "debris": 0.7743,
       "usable": true,
-      "seconds": 1.96
+      "seconds": 2.04
     },
     {
       "patient": "TF58_UT8",
       "image": "20170813_220425.jpg",
-      "found_parasites": 14,
-      "found_wbc": 19,
+      "found_parasites": 13,
+      "found_wbc": 18,
       "truth_parasites": 13,
       "truth_wbc": 17,
       "focus": 3.48,
       "even": 0.9719,
       "debris": 0.7628,
       "usable": true,
-      "seconds": 1.9
+      "seconds": 2.05
     },
     {
       "patient": "TF58_UT8",
@@ -5826,20 +5827,20 @@
       "even": 0.9682,
       "debris": 0.7169,
       "usable": true,
-      "seconds": 1.88
+      "seconds": 2.16
     },
     {
       "patient": "TF58_UT8",
       "image": "20170813_220948.jpg",
       "found_parasites": 13,
-      "found_wbc": 13,
+      "found_wbc": 10,
       "truth_parasites": 12,
       "truth_wbc": 12,
       "focus": 2.78,
       "even": 0.9673,
       "debris": 0.7298,
       "usable": true,
-      "seconds": 1.8
+      "seconds": 2.41
     },
     {
       "patient": "TF58_UT8",
@@ -5852,20 +5853,20 @@
       "even": 0.9671,
       "debris": 0.7698,
       "usable": true,
-      "seconds": 1.86
+      "seconds": 2.13
     },
     {
       "patient": "TF58_UT8",
       "image": "20170813_221318.jpg",
       "found_parasites": 14,
-      "found_wbc": 13,
+      "found_wbc": 11,
       "truth_parasites": 15,
       "truth_wbc": 9,
       "focus": 3.2,
       "even": 0.9723,
       "debris": 0.7598,
       "usable": true,
-      "seconds": 2.28
+      "seconds": 2.67
     },
     {
       "patient": "TF58_UT8",
@@ -5878,7 +5879,7 @@
       "even": 0.9755,
       "debris": 0.7538,
       "usable": true,
-      "seconds": 2.2
+      "seconds": 2.22
     },
     {
       "patient": "TF58_UT8",
@@ -5891,7 +5892,7 @@
       "even": 0.9684,
       "debris": 0.7363,
       "usable": true,
-      "seconds": 2.83
+      "seconds": 2.82
     },
     {
       "patient": "TF58_UT8",
@@ -5904,20 +5905,20 @@
       "even": 0.9773,
       "debris": 0.7161,
       "usable": true,
-      "seconds": 2.75
+      "seconds": 2.34
     },
     {
       "patient": "TF58_UT8",
       "image": "20170813_222615.jpg",
       "found_parasites": 18,
-      "found_wbc": 10,
+      "found_wbc": 9,
       "truth_parasites": 13,
       "truth_wbc": 10,
       "focus": 3.52,
       "even": 0.9759,
       "debris": 0.726,
       "usable": true,
-      "seconds": 2.6
+      "seconds": 2.78
     },
     {
       "patient": "TF61_CS20",
@@ -5930,64 +5931,64 @@
       "even": 0.9717,
       "debris": 0.6925,
       "usable": true,
-      "seconds": 1.65
+      "seconds": 1.78
     },
     {
       "patient": "TF61_CS20",
       "image": "20170816_222855.jpg",
       "found_parasites": 46,
-      "found_wbc": 44,
+      "found_wbc": 42,
       "truth_parasites": 37,
       "truth_wbc": 46,
       "focus": 4.32,
       "even": 0.9507,
       "debris": 0.6586,
       "usable": true,
-      "seconds": 2.0
+      "seconds": 1.63
     },
     {
       "patient": "TF61_CS20",
       "image": "20170816_223028.jpg",
-      "found_parasites": 70,
-      "found_wbc": 40,
+      "found_parasites": 68,
+      "found_wbc": 42,
       "truth_parasites": 71,
       "truth_wbc": 43,
       "focus": 4.76,
       "even": 0.9767,
       "debris": 0.6954,
       "usable": true,
-      "seconds": 2.4
+      "seconds": 2.02
     },
     {
       "patient": "TF61_CS20",
       "image": "20170816_223144.jpg",
       "found_parasites": 48,
-      "found_wbc": 41,
+      "found_wbc": 42,
       "truth_parasites": 65,
       "truth_wbc": 52,
       "focus": 4.59,
       "even": 0.9651,
       "debris": 0.686,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 1.63
     },
     {
       "patient": "TF61_CS20",
       "image": "20170816_223331.jpg",
-      "found_parasites": 59,
-      "found_wbc": 26,
+      "found_parasites": 57,
+      "found_wbc": 28,
       "truth_parasites": 53,
       "truth_wbc": 30,
       "focus": 4.17,
       "even": 0.9737,
       "debris": 0.701,
       "usable": true,
-      "seconds": 1.97
+      "seconds": 2.09
     },
     {
       "patient": "TF61_CS20",
       "image": "20170816_223442.jpg",
-      "found_parasites": 49,
+      "found_parasites": 47,
       "found_wbc": 30,
       "truth_parasites": 50,
       "truth_wbc": 31,
@@ -5995,20 +5996,20 @@
       "even": 0.9657,
       "debris": 0.6954,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 1.56
     },
     {
       "patient": "TF61_CS20",
       "image": "20170816_223533.jpg",
       "found_parasites": 52,
-      "found_wbc": 35,
+      "found_wbc": 36,
       "truth_parasites": 53,
       "truth_wbc": 33,
       "focus": 4.73,
       "even": 0.9761,
       "debris": 0.714,
       "usable": true,
-      "seconds": 2.16
+      "seconds": 2.56
     },
     {
       "patient": "TF64_US2",
@@ -6021,7 +6022,7 @@
       "even": 0.9301,
       "debris": 0.7525,
       "usable": true,
-      "seconds": 1.49
+      "seconds": 1.89
     },
     {
       "patient": "TF64_US2",
@@ -6034,25 +6035,25 @@
       "even": 0.9471,
       "debris": 0.741,
       "usable": true,
-      "seconds": 1.64
+      "seconds": 1.58
     },
     {
       "patient": "TF64_US2",
       "image": "20170817_113430.jpg",
       "found_parasites": 126,
-      "found_wbc": 23,
+      "found_wbc": 22,
       "truth_parasites": 125,
       "truth_wbc": 22,
       "focus": 4.61,
       "even": 0.926,
       "debris": 0.7725,
       "usable": true,
-      "seconds": 1.46
+      "seconds": 1.71
     },
     {
       "patient": "TF64_US2",
       "image": "20170817_113557.jpg",
-      "found_parasites": 80,
+      "found_parasites": 79,
       "found_wbc": 19,
       "truth_parasites": 86,
       "truth_wbc": 22,
@@ -6060,98 +6061,98 @@
       "even": 0.9301,
       "debris": 0.7204,
       "usable": true,
-      "seconds": 1.28
+      "seconds": 1.43
     },
     {
       "patient": "TF64_US2",
       "image": "20170817_113831.jpg",
       "found_parasites": 107,
-      "found_wbc": 23,
+      "found_wbc": 20,
       "truth_parasites": 111,
       "truth_wbc": 20,
       "focus": 4.13,
       "even": 0.9315,
       "debris": 0.7377,
       "usable": true,
-      "seconds": 1.29
+      "seconds": 1.34
     },
     {
       "patient": "TF64_US2",
       "image": "20170817_113941.jpg",
       "found_parasites": 124,
-      "found_wbc": 30,
+      "found_wbc": 28,
       "truth_parasites": 106,
       "truth_wbc": 28,
       "focus": 4.31,
       "even": 0.9255,
       "debris": 0.7215,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 1.58
     },
     {
       "patient": "TF64_US2",
       "image": "20170817_114037.jpg",
       "found_parasites": 123,
-      "found_wbc": 20,
+      "found_wbc": 17,
       "truth_parasites": 126,
       "truth_wbc": 19,
       "focus": 4.88,
       "even": 0.9517,
       "debris": 0.7223,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 1.51
     },
     {
       "patient": "TF64_US2",
       "image": "20170817_114226.jpg",
       "found_parasites": 111,
-      "found_wbc": 15,
+      "found_wbc": 16,
       "truth_parasites": 95,
       "truth_wbc": 15,
       "focus": 4.3,
       "even": 0.9339,
       "debris": 0.7663,
       "usable": true,
-      "seconds": 1.32
+      "seconds": 1.65
     },
     {
       "patient": "TF64_US2",
       "image": "20170817_114302.jpg",
       "found_parasites": 116,
-      "found_wbc": 20,
+      "found_wbc": 19,
       "truth_parasites": 100,
       "truth_wbc": 19,
       "focus": 3.98,
       "even": 0.9492,
       "debris": 0.7628,
       "usable": true,
-      "seconds": 1.43
+      "seconds": 1.6
     },
     {
       "patient": "TF64_US2",
       "image": "20170817_114411.jpg",
       "found_parasites": 101,
-      "found_wbc": 20,
+      "found_wbc": 21,
       "truth_parasites": 93,
       "truth_wbc": 19,
       "focus": 3.82,
       "even": 0.9634,
       "debris": 0.7482,
       "usable": true,
-      "seconds": 1.42
+      "seconds": 1.57
     },
     {
       "patient": "TF6N_527",
       "image": "20171023_154053.jpg",
       "found_parasites": 13,
-      "found_wbc": 13,
+      "found_wbc": 12,
       "truth_parasites": 16,
       "truth_wbc": 12,
       "focus": 3.14,
       "even": 0.9726,
       "debris": 0.8878,
       "usable": false,
-      "seconds": 1.33
+      "seconds": 1.28
     },
     {
       "patient": "TF6N_527",
@@ -6164,7 +6165,7 @@
       "even": 0.9556,
       "debris": 0.8198,
       "usable": true,
-      "seconds": 1.3
+      "seconds": 1.35
     },
     {
       "patient": "TF6N_527",
@@ -6177,33 +6178,33 @@
       "even": 0.9519,
       "debris": 0.7453,
       "usable": true,
-      "seconds": 1.27
+      "seconds": 1.66
     },
     {
       "patient": "TF6N_527",
       "image": "20171023_154528.jpg",
       "found_parasites": 18,
-      "found_wbc": 12,
+      "found_wbc": 13,
       "truth_parasites": 20,
       "truth_wbc": 12,
       "focus": 3.01,
       "even": 0.9697,
       "debris": 0.7673,
       "usable": true,
-      "seconds": 1.06
+      "seconds": 1.43
     },
     {
       "patient": "TF6N_527",
       "image": "20171023_154703.jpg",
       "found_parasites": 22,
-      "found_wbc": 12,
+      "found_wbc": 13,
       "truth_parasites": 14,
       "truth_wbc": 12,
       "focus": 2.81,
       "even": 0.9798,
       "debris": 0.7738,
       "usable": true,
-      "seconds": 1.13
+      "seconds": 1.52
     },
     {
       "patient": "TF6N_527",
@@ -6216,7 +6217,7 @@
       "even": 0.9756,
       "debris": 0.7566,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 1.33
     },
     {
       "patient": "TF6N_527",
@@ -6229,20 +6230,20 @@
       "even": 0.959,
       "debris": 0.6987,
       "usable": true,
-      "seconds": 1.19
+      "seconds": 1.32
     },
     {
       "patient": "TF6N_527",
       "image": "20171023_161700.jpg",
       "found_parasites": 13,
-      "found_wbc": 9,
+      "found_wbc": 10,
       "truth_parasites": 12,
       "truth_wbc": 10,
       "focus": 3.47,
       "even": 0.979,
       "debris": 0.9271,
       "usable": false,
-      "seconds": 1.16
+      "seconds": 1.43
     },
     {
       "patient": "TF6N_527",
@@ -6255,7 +6256,7 @@
       "even": 0.9785,
       "debris": 0.762,
       "usable": true,
-      "seconds": 1.05
+      "seconds": 1.25
     },
     {
       "patient": "TF6N_527",
@@ -6268,7 +6269,7 @@
       "even": 0.9728,
       "debris": 0.76,
       "usable": true,
-      "seconds": 1.09
+      "seconds": 1.34
     },
     {
       "patient": "TF6N_527",
@@ -6281,7 +6282,7 @@
       "even": 0.9809,
       "debris": 0.7234,
       "usable": true,
-      "seconds": 1.11
+      "seconds": 1.31
     },
     {
       "patient": "TF6N_527",
@@ -6294,20 +6295,20 @@
       "even": 0.9789,
       "debris": 0.721,
       "usable": true,
-      "seconds": 1.16
+      "seconds": 1.44
     },
     {
       "patient": "TF6N_527",
       "image": "20171023_162259.jpg",
       "found_parasites": 28,
-      "found_wbc": 14,
+      "found_wbc": 16,
       "truth_parasites": 24,
       "truth_wbc": 13,
       "focus": 2.64,
       "even": 0.9782,
       "debris": 0.7248,
       "usable": true,
-      "seconds": 1.13
+      "seconds": 1.29
     },
     {
       "patient": "TF6N_527",
@@ -6320,59 +6321,59 @@
       "even": 0.9791,
       "debris": 0.7086,
       "usable": true,
-      "seconds": 1.15
+      "seconds": 1.3
     },
     {
       "patient": "TF6N_527",
       "image": "20171023_162513.jpg",
       "found_parasites": 13,
-      "found_wbc": 17,
+      "found_wbc": 18,
       "truth_parasites": 12,
       "truth_wbc": 18,
       "focus": 2.84,
       "even": 0.9796,
       "debris": 0.7341,
       "usable": true,
-      "seconds": 1.11
+      "seconds": 1.2
     },
     {
       "patient": "TF6N_527",
       "image": "20171023_162554.jpg",
       "found_parasites": 34,
-      "found_wbc": 17,
+      "found_wbc": 18,
       "truth_parasites": 29,
       "truth_wbc": 17,
       "focus": 3.12,
       "even": 0.9713,
       "debris": 0.7366,
       "usable": true,
-      "seconds": 1.27
+      "seconds": 1.23
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_190318.jpg",
       "found_parasites": 16,
-      "found_wbc": 19,
+      "found_wbc": 17,
       "truth_parasites": 10,
       "truth_wbc": 13,
       "focus": 3.23,
       "even": 0.9487,
       "debris": 0.5063,
       "usable": true,
-      "seconds": 2.02
+      "seconds": 2.19
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_190510.jpg",
       "found_parasites": 8,
-      "found_wbc": 16,
+      "found_wbc": 14,
       "truth_parasites": 4,
       "truth_wbc": 11,
       "focus": 2.9,
       "even": 0.9478,
       "debris": 0.6035,
       "usable": true,
-      "seconds": 1.8
+      "seconds": 1.87
     },
     {
       "patient": "TF70_Scr440",
@@ -6385,189 +6386,189 @@
       "even": 0.9529,
       "debris": 0.5934,
       "usable": true,
-      "seconds": 1.82
+      "seconds": 2.09
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_190830.jpg",
       "found_parasites": 18,
-      "found_wbc": 15,
+      "found_wbc": 17,
       "truth_parasites": 6,
       "truth_wbc": 16,
       "focus": 3.28,
       "even": 0.9518,
       "debris": 0.5745,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 1.78
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_191101.jpg",
       "found_parasites": 9,
-      "found_wbc": 19,
+      "found_wbc": 17,
       "truth_parasites": 4,
       "truth_wbc": 14,
       "focus": 2.84,
       "even": 0.9601,
       "debris": 0.5976,
       "usable": true,
-      "seconds": 1.47
+      "seconds": 1.75
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_191240.jpg",
       "found_parasites": 14,
-      "found_wbc": 21,
+      "found_wbc": 13,
       "truth_parasites": 4,
       "truth_wbc": 13,
       "focus": 3.39,
       "even": 0.9429,
       "debris": 0.6109,
       "usable": true,
-      "seconds": 1.58
+      "seconds": 2.01
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_191406.jpg",
       "found_parasites": 13,
-      "found_wbc": 18,
+      "found_wbc": 15,
       "truth_parasites": 5,
       "truth_wbc": 12,
       "focus": 3.18,
       "even": 0.9659,
       "debris": 0.6364,
       "usable": true,
-      "seconds": 1.53
+      "seconds": 1.97
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_191723.jpg",
-      "found_parasites": 10,
-      "found_wbc": 19,
+      "found_parasites": 8,
+      "found_wbc": 14,
       "truth_parasites": 5,
       "truth_wbc": 12,
       "focus": 3.33,
       "even": 0.9426,
       "debris": 0.6205,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 1.98
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192037.jpg",
       "found_parasites": 9,
-      "found_wbc": 11,
+      "found_wbc": 13,
       "truth_parasites": 4,
       "truth_wbc": 11,
       "focus": 2.78,
       "even": 0.9554,
       "debris": 0.6566,
       "usable": true,
-      "seconds": 1.39
+      "seconds": 1.62
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192242.jpg",
       "found_parasites": 7,
-      "found_wbc": 16,
+      "found_wbc": 15,
       "truth_parasites": 5,
       "truth_wbc": 12,
       "focus": 2.56,
       "even": 0.9557,
       "debris": 0.5664,
       "usable": true,
-      "seconds": 1.21
+      "seconds": 1.33
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192404.jpg",
       "found_parasites": 10,
-      "found_wbc": 21,
+      "found_wbc": 20,
       "truth_parasites": 4,
       "truth_wbc": 20,
       "focus": 3.09,
       "even": 0.954,
       "debris": 0.5713,
       "usable": true,
-      "seconds": 1.56
+      "seconds": 1.72
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192509.jpg",
       "found_parasites": 13,
-      "found_wbc": 18,
+      "found_wbc": 16,
       "truth_parasites": 6,
       "truth_wbc": 12,
       "focus": 2.96,
       "even": 0.9567,
       "debris": 0.6284,
       "usable": true,
-      "seconds": 1.86
+      "seconds": 2.03
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192556.jpg",
-      "found_parasites": 32,
-      "found_wbc": 19,
+      "found_parasites": 30,
+      "found_wbc": 25,
       "truth_parasites": 10,
       "truth_wbc": 17,
       "focus": 3.56,
       "even": 0.9447,
       "debris": 0.5823,
       "usable": true,
-      "seconds": 1.95
+      "seconds": 2.1
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192715.jpg",
       "found_parasites": 18,
-      "found_wbc": 23,
+      "found_wbc": 21,
       "truth_parasites": 7,
       "truth_wbc": 17,
       "focus": 2.91,
       "even": 0.9409,
       "debris": 0.5777,
       "usable": true,
-      "seconds": 1.67
+      "seconds": 1.75
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192822.jpg",
       "found_parasites": 18,
-      "found_wbc": 21,
+      "found_wbc": 19,
       "truth_parasites": 5,
       "truth_wbc": 15,
       "focus": 2.9,
       "even": 0.9401,
       "debris": 0.5554,
       "usable": true,
-      "seconds": 1.76
+      "seconds": 1.92
     },
     {
       "patient": "TF70_Scr440",
       "image": "20170817_192909.jpg",
       "found_parasites": 14,
-      "found_wbc": 17,
+      "found_wbc": 16,
       "truth_parasites": 11,
       "truth_wbc": 15,
       "focus": 2.94,
       "even": 0.9501,
       "debris": 0.5603,
       "usable": true,
-      "seconds": 1.63
+      "seconds": 1.77
     },
     {
       "patient": "TF73_Scr538",
       "image": "20170818_135933.jpg",
       "found_parasites": 12,
-      "found_wbc": 15,
+      "found_wbc": 16,
       "truth_parasites": 5,
       "truth_wbc": 15,
       "focus": 3.02,
       "even": 0.9522,
       "debris": 0.7161,
       "usable": true,
-      "seconds": 1.05
+      "seconds": 1.22
     },
     {
       "patient": "TF73_Scr538",
@@ -6580,7 +6581,7 @@
       "even": 0.9597,
       "debris": 0.7502,
       "usable": true,
-      "seconds": 0.96
+      "seconds": 1.04
     },
     {
       "patient": "TF73_Scr538",
@@ -6593,7 +6594,7 @@
       "even": 0.9707,
       "debris": 0.7588,
       "usable": true,
-      "seconds": 1.14
+      "seconds": 1.17
     },
     {
       "patient": "TF73_Scr538",
@@ -6606,46 +6607,46 @@
       "even": 0.9783,
       "debris": 0.7763,
       "usable": true,
-      "seconds": 1.1
+      "seconds": 1.18
     },
     {
       "patient": "TF73_Scr538",
       "image": "20170818_141825.jpg",
       "found_parasites": 6,
-      "found_wbc": 14,
+      "found_wbc": 16,
       "truth_parasites": 3,
       "truth_wbc": 14,
       "focus": 2.43,
       "even": 0.9799,
       "debris": 0.6613,
       "usable": true,
-      "seconds": 0.92
+      "seconds": 1.27
     },
     {
       "patient": "TF73_Scr538",
       "image": "20170818_141927.jpg",
       "found_parasites": 6,
-      "found_wbc": 16,
+      "found_wbc": 18,
       "truth_parasites": 5,
       "truth_wbc": 14,
       "focus": 3.09,
       "even": 0.9619,
       "debris": 0.7237,
       "usable": true,
-      "seconds": 1.12
+      "seconds": 1.65
     },
     {
       "patient": "TF73_Scr538",
       "image": "20170818_142102.jpg",
       "found_parasites": 6,
-      "found_wbc": 15,
+      "found_wbc": 14,
       "truth_parasites": 2,
       "truth_wbc": 14,
       "focus": 3.01,
       "even": 0.9711,
       "debris": 0.7086,
       "usable": true,
-      "seconds": 1.05
+      "seconds": 1.55
     },
     {
       "patient": "TF73_Scr538",
@@ -6658,20 +6659,20 @@
       "even": 0.968,
       "debris": 0.7355,
       "usable": true,
-      "seconds": 1.13
+      "seconds": 1.54
     },
     {
       "patient": "TF73_Scr538",
       "image": "20170818_142413.jpg",
       "found_parasites": 10,
-      "found_wbc": 16,
+      "found_wbc": 18,
       "truth_parasites": 10,
       "truth_wbc": 15,
       "focus": 3.22,
       "even": 0.9686,
       "debris": 0.7433,
       "usable": true,
-      "seconds": 1.16
+      "seconds": 1.53
     },
     {
       "patient": "TF73_Scr538",
@@ -6684,20 +6685,20 @@
       "even": 0.9662,
       "debris": 0.7471,
       "usable": true,
-      "seconds": 1.07
+      "seconds": 1.38
     },
     {
       "patient": "TF73_Scr538",
       "image": "20170818_142824.jpg",
       "found_parasites": 3,
-      "found_wbc": 12,
+      "found_wbc": 14,
       "truth_parasites": 6,
       "truth_wbc": 12,
       "focus": 2.55,
       "even": 0.944,
       "debris": 0.6679,
       "usable": true,
-      "seconds": 0.93
+      "seconds": 1.17
     },
     {
       "patient": "TF73_Scr538",
@@ -6710,33 +6711,33 @@
       "even": 0.9496,
       "debris": 0.6936,
       "usable": true,
-      "seconds": 0.91
+      "seconds": 1.17
     },
     {
       "patient": "TF73_Scr538",
       "image": "20170818_143619.jpg",
       "found_parasites": 9,
-      "found_wbc": 18,
+      "found_wbc": 19,
       "truth_parasites": 5,
       "truth_wbc": 18,
       "focus": 2.88,
       "even": 0.9622,
       "debris": 0.7096,
       "usable": true,
-      "seconds": 1.0
+      "seconds": 1.4
     },
     {
       "patient": "TF73_Scr538",
       "image": "20170818_143739.jpg",
       "found_parasites": 2,
-      "found_wbc": 13,
+      "found_wbc": 14,
       "truth_parasites": 3,
       "truth_wbc": 13,
       "focus": 2.71,
       "even": 0.9566,
       "debris": 0.7119,
       "usable": true,
-      "seconds": 1.05
+      "seconds": 1.23
     },
     {
       "patient": "TF73_Scr538",
@@ -6749,7 +6750,7 @@
       "even": 0.9512,
       "debris": 0.7075,
       "usable": true,
-      "seconds": 1.01
+      "seconds": 1.3
     },
     {
       "patient": "TF73_Scr538",
@@ -6762,85 +6763,85 @@
       "even": 0.975,
       "debris": 0.725,
       "usable": true,
-      "seconds": 1.12
+      "seconds": 1.49
     },
     {
       "patient": "TF75_CO7",
       "image": "20170818_162315.jpg",
       "found_parasites": 20,
-      "found_wbc": 28,
+      "found_wbc": 29,
       "truth_parasites": 21,
       "truth_wbc": 34,
       "focus": 3.05,
       "even": 0.9711,
       "debris": 0.7992,
       "usable": true,
-      "seconds": 0.91
+      "seconds": 1.14
     },
     {
       "patient": "TF75_CO7",
       "image": "20170818_163339.jpg",
       "found_parasites": 41,
-      "found_wbc": 25,
+      "found_wbc": 26,
       "truth_parasites": 34,
       "truth_wbc": 24,
       "focus": 3.73,
       "even": 0.9758,
       "debris": 0.7415,
       "usable": true,
-      "seconds": 1.09
+      "seconds": 1.38
     },
     {
       "patient": "TF75_CO7",
       "image": "20170818_163453.jpg",
-      "found_parasites": 28,
-      "found_wbc": 24,
+      "found_parasites": 27,
+      "found_wbc": 26,
       "truth_parasites": 24,
       "truth_wbc": 24,
       "focus": 3.53,
       "even": 0.9741,
       "debris": 0.8059,
       "usable": true,
-      "seconds": 1.13
+      "seconds": 1.32
     },
     {
       "patient": "TF75_CO7",
       "image": "20170818_163623.jpg",
       "found_parasites": 28,
-      "found_wbc": 24,
+      "found_wbc": 25,
       "truth_parasites": 22,
       "truth_wbc": 28,
       "focus": 4.01,
       "even": 0.9764,
       "debris": 0.8567,
       "usable": false,
-      "seconds": 1.22
+      "seconds": 1.53
     },
     {
       "patient": "TF75_CO7",
       "image": "20170818_163903.jpg",
       "found_parasites": 27,
-      "found_wbc": 20,
+      "found_wbc": 21,
       "truth_parasites": 36,
       "truth_wbc": 20,
       "focus": 2.85,
       "even": 0.9724,
       "debris": 0.7717,
       "usable": true,
-      "seconds": 0.99
+      "seconds": 1.2
     },
     {
       "patient": "TF75_CO7",
       "image": "20170818_164045.jpg",
       "found_parasites": 12,
-      "found_wbc": 11,
+      "found_wbc": 13,
       "truth_parasites": 14,
       "truth_wbc": 10,
       "focus": 3.36,
       "even": 0.9728,
       "debris": 0.8914,
       "usable": false,
-      "seconds": 1.28
+      "seconds": 1.41
     },
     {
       "patient": "TF75_CO7",
@@ -6853,116 +6854,116 @@
       "even": 0.9717,
       "debris": 0.7916,
       "usable": true,
-      "seconds": 0.95
+      "seconds": 1.06
     },
     {
       "patient": "TF75_CO7",
       "image": "20170818_164517.jpg",
-      "found_parasites": 22,
-      "found_wbc": 27,
+      "found_parasites": 21,
+      "found_wbc": 31,
       "truth_parasites": 20,
       "truth_wbc": 29,
       "focus": 3.23,
       "even": 0.9628,
       "debris": 0.7421,
       "usable": true,
-      "seconds": 0.93
+      "seconds": 1.0
     },
     {
       "patient": "TF75_CO7",
       "image": "20170818_164901.jpg",
       "found_parasites": 21,
-      "found_wbc": 27,
+      "found_wbc": 28,
       "truth_parasites": 23,
       "truth_wbc": 25,
       "focus": 2.84,
       "even": 0.9768,
       "debris": 0.7393,
       "usable": true,
-      "seconds": 0.99
+      "seconds": 1.1
     },
     {
       "patient": "TF75_CO7",
       "image": "20170818_165237.jpg",
       "found_parasites": 13,
-      "found_wbc": 18,
+      "found_wbc": 17,
       "truth_parasites": 11,
       "truth_wbc": 17,
       "focus": 2.98,
       "even": 0.9512,
       "debris": 0.8929,
       "usable": false,
-      "seconds": 1.13
+      "seconds": 1.25
     },
     {
       "patient": "TF77_CO15",
       "image": "20170818_172227.jpg",
       "found_parasites": 20,
-      "found_wbc": 32,
+      "found_wbc": 33,
       "truth_parasites": 26,
       "truth_wbc": 34,
       "focus": 2.86,
       "even": 0.9762,
       "debris": 0.7947,
       "usable": true,
-      "seconds": 1.65
+      "seconds": 1.6
     },
     {
       "patient": "TF77_CO15",
       "image": "20170818_172418.jpg",
       "found_parasites": 15,
-      "found_wbc": 24,
+      "found_wbc": 22,
       "truth_parasites": 30,
       "truth_wbc": 22,
       "focus": 2.75,
       "even": 0.9748,
       "debris": 0.8175,
       "usable": true,
-      "seconds": 1.67
+      "seconds": 1.69
     },
     {
       "patient": "TF77_CO15",
       "image": "20170818_172551.jpg",
       "found_parasites": 25,
-      "found_wbc": 21,
+      "found_wbc": 20,
       "truth_parasites": 28,
       "truth_wbc": 20,
       "focus": 3.08,
       "even": 0.9818,
       "debris": 0.8632,
       "usable": false,
-      "seconds": 1.16
+      "seconds": 1.29
     },
     {
       "patient": "TF77_CO15",
       "image": "20170818_175246.jpg",
       "found_parasites": 42,
-      "found_wbc": 22,
+      "found_wbc": 21,
       "truth_parasites": 48,
       "truth_wbc": 25,
       "focus": 3.01,
       "even": 0.9739,
       "debris": 0.7857,
       "usable": true,
-      "seconds": 1.16
+      "seconds": 1.21
     },
     {
       "patient": "TF77_CO15",
       "image": "20170818_175447.jpg",
       "found_parasites": 8,
-      "found_wbc": 20,
+      "found_wbc": 23,
       "truth_parasites": 20,
       "truth_wbc": 24,
       "focus": 2.5,
       "even": 0.9766,
       "debris": 0.7325,
       "usable": true,
-      "seconds": 1.02
+      "seconds": 1.03
     },
     {
       "patient": "TF77_CO15",
       "image": "20170818_175753.jpg",
-      "found_parasites": 20,
+      "found_parasites": 19,
       "found_wbc": 23,
       "truth_parasites": 32,
       "truth_wbc": 23,
@@ -6970,33 +6971,33 @@
       "even": 0.9692,
       "debris": 0.7101,
       "usable": true,
-      "seconds": 0.97
+      "seconds": 1.03
     },
     {
       "patient": "TF77_CO15",
       "image": "20170818_175939.jpg",
       "found_parasites": 42,
-      "found_wbc": 22,
+      "found_wbc": 21,
       "truth_parasites": 54,
       "truth_wbc": 25,
       "focus": 2.52,
       "even": 0.978,
       "debris": 0.6933,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 1.28
     },
     {
       "patient": "TF77_CO15",
       "image": "20170818_180346.jpg",
       "found_parasites": 20,
-      "found_wbc": 23,
+      "found_wbc": 24,
       "truth_parasites": 29,
       "truth_wbc": 22,
       "focus": 2.38,
       "even": 0.9809,
       "debris": 0.6785,
       "usable": true,
-      "seconds": 1.37
+      "seconds": 1.18
     },
     {
       "patient": "TF77_CO15",
@@ -7009,33 +7010,33 @@
       "even": 0.9668,
       "debris": 0.7244,
       "usable": true,
-      "seconds": 1.22
+      "seconds": 1.18
     },
     {
       "patient": "TF77_CO15",
       "image": "20170818_181332.jpg",
       "found_parasites": 17,
-      "found_wbc": 18,
+      "found_wbc": 19,
       "truth_parasites": 21,
       "truth_wbc": 14,
       "focus": 2.19,
       "even": 0.9728,
       "debris": 0.7286,
       "usable": false,
-      "seconds": 0.98
+      "seconds": 1.03
     },
     {
       "patient": "TF77_CO15",
       "image": "20170818_181525.jpg",
       "found_parasites": 30,
-      "found_wbc": 25,
+      "found_wbc": 26,
       "truth_parasites": 35,
       "truth_wbc": 25,
       "focus": 2.48,
       "even": 0.9693,
       "debris": 0.6947,
       "usable": true,
-      "seconds": 1.02
+      "seconds": 1.33
     },
     {
       "patient": "TF81_W8B5",
@@ -7048,20 +7049,20 @@
       "even": 0.9765,
       "debris": 0.6831,
       "usable": true,
-      "seconds": 1.02
+      "seconds": 1.07
     },
     {
       "patient": "TF81_W8B5",
       "image": "20170819_153950.jpg",
       "found_parasites": 11,
-      "found_wbc": 22,
+      "found_wbc": 23,
       "truth_parasites": 6,
       "truth_wbc": 24,
       "focus": 2.88,
       "even": 0.9803,
       "debris": 0.7148,
       "usable": true,
-      "seconds": 1.02
+      "seconds": 1.08
     },
     {
       "patient": "TF81_W8B5",
@@ -7074,7 +7075,7 @@
       "even": 0.9727,
       "debris": 0.6235,
       "usable": true,
-      "seconds": 0.87
+      "seconds": 0.97
     },
     {
       "patient": "TF81_W8B5",
@@ -7087,46 +7088,46 @@
       "even": 0.9791,
       "debris": 0.6891,
       "usable": true,
-      "seconds": 1.0
+      "seconds": 1.01
     },
     {
       "patient": "TF81_W8B5",
       "image": "20170819_154555.jpg",
       "found_parasites": 7,
-      "found_wbc": 27,
+      "found_wbc": 29,
       "truth_parasites": 3,
       "truth_wbc": 27,
       "focus": 2.85,
       "even": 0.9715,
       "debris": 0.7299,
       "usable": true,
-      "seconds": 1.04
+      "seconds": 1.06
     },
     {
       "patient": "TF81_W8B5",
       "image": "20170819_154851.jpg",
       "found_parasites": 9,
-      "found_wbc": 31,
+      "found_wbc": 34,
       "truth_parasites": 6,
       "truth_wbc": 32,
       "focus": 3.5,
       "even": 0.9727,
       "debris": 0.7464,
       "usable": true,
-      "seconds": 1.06
+      "seconds": 1.14
     },
     {
       "patient": "TF81_W8B5",
       "image": "20170819_155210.jpg",
       "found_parasites": 5,
-      "found_wbc": 24,
+      "found_wbc": 27,
       "truth_parasites": 2,
       "truth_wbc": 21,
       "focus": 3.31,
       "even": 0.9808,
       "debris": 0.7958,
       "usable": true,
-      "seconds": 1.12
+      "seconds": 1.26
     },
     {
       "patient": "TF81_W8B5",
@@ -7139,33 +7140,33 @@
       "even": 0.9837,
       "debris": 0.6825,
       "usable": true,
-      "seconds": 1.0
+      "seconds": 1.05
     },
     {
       "patient": "TF81_W8B5",
       "image": "20170819_160141.jpg",
       "found_parasites": 5,
-      "found_wbc": 21,
+      "found_wbc": 22,
       "truth_parasites": 4,
       "truth_wbc": 19,
       "focus": 2.43,
       "even": 0.9732,
       "debris": 0.6849,
       "usable": true,
-      "seconds": 0.91
+      "seconds": 1.01
     },
     {
       "patient": "TF81_W8B5",
       "image": "20170819_160546.jpg",
       "found_parasites": 11,
-      "found_wbc": 18,
+      "found_wbc": 19,
       "truth_parasites": 6,
       "truth_wbc": 18,
       "focus": 2.43,
       "even": 0.9774,
       "debris": 0.6973,
       "usable": true,
-      "seconds": 0.88
+      "seconds": 0.95
     },
     {
       "patient": "TF82_15_1_9",
@@ -7178,20 +7179,20 @@
       "even": 0.8708,
       "debris": 0.7212,
       "usable": false,
-      "seconds": 1.04
+      "seconds": 1.13
     },
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_164518.jpg",
       "found_parasites": 7,
-      "found_wbc": 20,
+      "found_wbc": 21,
       "truth_parasites": 33,
       "truth_wbc": 21,
       "focus": 3.16,
       "even": 0.8746,
       "debris": 0.6962,
       "usable": false,
-      "seconds": 0.91
+      "seconds": 1.0
     },
     {
       "patient": "TF82_15_1_9",
@@ -7204,7 +7205,7 @@
       "even": 0.8922,
       "debris": 0.6799,
       "usable": false,
-      "seconds": 0.92
+      "seconds": 0.96
     },
     {
       "patient": "TF82_15_1_9",
@@ -7217,20 +7218,20 @@
       "even": 0.9113,
       "debris": 0.7282,
       "usable": true,
-      "seconds": 1.07
+      "seconds": 1.1
     },
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_165147.jpg",
       "found_parasites": 38,
-      "found_wbc": 24,
+      "found_wbc": 23,
       "truth_parasites": 50,
       "truth_wbc": 24,
       "focus": 3.44,
       "even": 0.9242,
       "debris": 0.6865,
       "usable": true,
-      "seconds": 1.32
+      "seconds": 1.61
     },
     {
       "patient": "TF82_15_1_9",
@@ -7243,7 +7244,7 @@
       "even": 0.9009,
       "debris": 0.7062,
       "usable": true,
-      "seconds": 1.07
+      "seconds": 1.18
     },
     {
       "patient": "TF82_15_1_9",
@@ -7256,33 +7257,33 @@
       "even": 0.9081,
       "debris": 0.7023,
       "usable": true,
-      "seconds": 0.92
+      "seconds": 1.0
     },
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_165435.jpg",
       "found_parasites": 21,
-      "found_wbc": 18,
+      "found_wbc": 19,
       "truth_parasites": 36,
       "truth_wbc": 19,
       "focus": 3.5,
       "even": 0.8788,
       "debris": 0.7012,
       "usable": false,
-      "seconds": 0.95
+      "seconds": 1.06
     },
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_165554.jpg",
       "found_parasites": 26,
-      "found_wbc": 22,
+      "found_wbc": 23,
       "truth_parasites": 39,
       "truth_wbc": 23,
       "focus": 3.59,
       "even": 0.9297,
       "debris": 0.7181,
       "usable": true,
-      "seconds": 1.0
+      "seconds": 1.05
     },
     {
       "patient": "TF82_15_1_9",
@@ -7295,7 +7296,7 @@
       "even": 0.8888,
       "debris": 0.6756,
       "usable": false,
-      "seconds": 1.05
+      "seconds": 1.12
     },
     {
       "patient": "TF82_15_1_9",
@@ -7308,20 +7309,20 @@
       "even": 0.8878,
       "debris": 0.7261,
       "usable": false,
-      "seconds": 0.98
+      "seconds": 1.07
     },
     {
       "patient": "TF82_15_1_9",
       "image": "20170819_165903.jpg",
       "found_parasites": 18,
-      "found_wbc": 15,
+      "found_wbc": 16,
       "truth_parasites": 30,
       "truth_wbc": 16,
       "focus": 3.66,
       "even": 0.9034,
       "debris": 0.7054,
       "usable": true,
-      "seconds": 1.05
+      "seconds": 1.15
     },
     {
       "patient": "TF89_CM5",
@@ -7334,20 +7335,20 @@
       "even": 0.9671,
       "debris": 0.6489,
       "usable": true,
-      "seconds": 1.3
+      "seconds": 1.51
     },
     {
       "patient": "TF89_CM5",
       "image": "20170820_164418.jpg",
       "found_parasites": 83,
-      "found_wbc": 15,
+      "found_wbc": 14,
       "truth_parasites": 86,
       "truth_wbc": 14,
       "focus": 2.94,
       "even": 0.9774,
       "debris": 0.6902,
       "usable": true,
-      "seconds": 1.43
+      "seconds": 1.51
     },
     {
       "patient": "TF89_CM5",
@@ -7360,7 +7361,7 @@
       "even": 0.9688,
       "debris": 0.6798,
       "usable": true,
-      "seconds": 1.73
+      "seconds": 1.87
     },
     {
       "patient": "TF89_CM5",
@@ -7373,7 +7374,7 @@
       "even": 0.977,
       "debris": 0.5638,
       "usable": true,
-      "seconds": 1.27
+      "seconds": 1.38
     },
     {
       "patient": "TF89_CM5",
@@ -7386,7 +7387,7 @@
       "even": 0.9677,
       "debris": 0.6628,
       "usable": true,
-      "seconds": 1.17
+      "seconds": 1.31
     },
     {
       "patient": "TF89_CM5",
@@ -7399,7 +7400,7 @@
       "even": 0.959,
       "debris": 0.605,
       "usable": true,
-      "seconds": 1.36
+      "seconds": 1.56
     },
     {
       "patient": "TF89_CM5",
@@ -7412,124 +7413,124 @@
       "even": 0.9658,
       "debris": 0.6405,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 1.7
     },
     {
       "patient": "TF90_15_60",
       "image": "20170820_182121.jpg",
-      "found_parasites": 4,
-      "found_wbc": 29,
+      "found_parasites": 3,
+      "found_wbc": 27,
       "truth_parasites": 2,
       "truth_wbc": 24,
       "focus": 3.56,
       "even": 0.9669,
       "debris": 0.7058,
       "usable": true,
-      "seconds": 1.78
+      "seconds": 1.95
     },
     {
       "patient": "TF90_15_60",
       "image": "20170820_182310.jpg",
       "found_parasites": 1,
-      "found_wbc": 27,
+      "found_wbc": 25,
       "truth_parasites": 1,
       "truth_wbc": 27,
       "focus": 3.21,
       "even": 0.9612,
       "debris": 0.6073,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 1.74
     },
     {
       "patient": "TF90_15_60",
       "image": "20170820_182427.jpg",
       "found_parasites": 3,
-      "found_wbc": 29,
+      "found_wbc": 31,
       "truth_parasites": 6,
       "truth_wbc": 30,
       "focus": 3.81,
       "even": 0.9566,
       "debris": 0.6953,
       "usable": true,
-      "seconds": 1.98
+      "seconds": 2.18
     },
     {
       "patient": "TF90_15_60",
       "image": "20170820_182644.jpg",
       "found_parasites": 4,
-      "found_wbc": 33,
+      "found_wbc": 30,
       "truth_parasites": 3,
       "truth_wbc": 30,
       "focus": 3.66,
       "even": 0.9652,
       "debris": 0.6706,
       "usable": true,
-      "seconds": 1.66
+      "seconds": 1.61
     },
     {
       "patient": "TF90_15_60",
       "image": "20170820_183120.jpg",
       "found_parasites": 3,
-      "found_wbc": 38,
+      "found_wbc": 35,
       "truth_parasites": 7,
       "truth_wbc": 35,
       "focus": 3.69,
       "even": 0.9667,
       "debris": 0.7124,
       "usable": true,
-      "seconds": 1.79
+      "seconds": 1.87
     },
     {
       "patient": "TF90_15_60",
       "image": "20170820_183440.jpg",
       "found_parasites": 4,
-      "found_wbc": 28,
+      "found_wbc": 26,
       "truth_parasites": 4,
       "truth_wbc": 30,
       "focus": 2.9,
       "even": 0.9663,
       "debris": 0.5656,
       "usable": true,
-      "seconds": 1.4
+      "seconds": 1.47
     },
     {
       "patient": "TF90_15_60",
       "image": "20170820_183655.jpg",
       "found_parasites": 2,
-      "found_wbc": 22,
+      "found_wbc": 20,
       "truth_parasites": 3,
       "truth_wbc": 20,
       "focus": 2.78,
       "even": 0.9355,
       "debris": 0.6537,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 1.49
     },
     {
       "patient": "TF90_15_60",
       "image": "20170820_184305.jpg",
       "found_parasites": 3,
-      "found_wbc": 26,
+      "found_wbc": 24,
       "truth_parasites": 4,
       "truth_wbc": 21,
       "focus": 3.42,
       "even": 0.9757,
       "debris": 0.7115,
       "usable": true,
-      "seconds": 1.57
+      "seconds": 1.61
     },
     {
       "patient": "TF90_15_60",
       "image": "20170820_184440.jpg",
       "found_parasites": 1,
-      "found_wbc": 30,
+      "found_wbc": 21,
       "truth_parasites": 5,
       "truth_wbc": 21,
       "focus": 3.73,
       "even": 0.949,
       "debris": 0.7111,
       "usable": true,
-      "seconds": 1.62
+      "seconds": 1.79
     },
     {
       "patient": "TF94_210",
@@ -7542,124 +7543,124 @@
       "even": 0.9724,
       "debris": 0.6798,
       "usable": true,
-      "seconds": 2.09
+      "seconds": 2.33
     },
     {
       "patient": "TF94_210",
       "image": "20170829_154341.jpg",
       "found_parasites": 3,
-      "found_wbc": 37,
+      "found_wbc": 40,
       "truth_parasites": 11,
       "truth_wbc": 38,
       "focus": 4.0,
       "even": 0.9592,
       "debris": 0.6841,
       "usable": true,
-      "seconds": 2.03
+      "seconds": 2.25
     },
     {
       "patient": "TF94_210",
       "image": "20170829_154523.jpg",
       "found_parasites": 4,
-      "found_wbc": 39,
+      "found_wbc": 38,
       "truth_parasites": 6,
       "truth_wbc": 39,
       "focus": 3.52,
       "even": 0.9592,
       "debris": 0.646,
       "usable": true,
-      "seconds": 1.67
+      "seconds": 1.79
     },
     {
       "patient": "TF94_210",
       "image": "20170829_155229.jpg",
       "found_parasites": 3,
-      "found_wbc": 25,
+      "found_wbc": 26,
       "truth_parasites": 5,
       "truth_wbc": 25,
       "focus": 3.37,
       "even": 0.9662,
       "debris": 0.6631,
       "usable": true,
-      "seconds": 1.82
+      "seconds": 2.21
     },
     {
       "patient": "TF94_210",
       "image": "20170829_155602.jpg",
       "found_parasites": 5,
-      "found_wbc": 39,
+      "found_wbc": 40,
       "truth_parasites": 7,
       "truth_wbc": 39,
       "focus": 4.06,
       "even": 0.9749,
       "debris": 0.6885,
       "usable": true,
-      "seconds": 1.86
+      "seconds": 2.05
     },
     {
       "patient": "TF94_210",
       "image": "20170829_155826.jpg",
       "found_parasites": 9,
-      "found_wbc": 30,
+      "found_wbc": 32,
       "truth_parasites": 10,
       "truth_wbc": 34,
       "focus": 3.53,
       "even": 0.9767,
       "debris": 0.6595,
       "usable": true,
-      "seconds": 1.64
+      "seconds": 1.93
     },
     {
       "patient": "TF94_210",
       "image": "20170829_155959.jpg",
       "found_parasites": 8,
-      "found_wbc": 28,
+      "found_wbc": 30,
       "truth_parasites": 10,
       "truth_wbc": 28,
       "focus": 3.84,
       "even": 0.973,
       "debris": 0.6622,
       "usable": true,
-      "seconds": 2.19
+      "seconds": 2.22
     },
     {
       "patient": "TF95_223",
       "image": "20170829_163412.jpg",
-      "found_parasites": 43,
-      "found_wbc": 18,
+      "found_parasites": 42,
+      "found_wbc": 19,
       "truth_parasites": 38,
       "truth_wbc": 14,
       "focus": 3.4,
       "even": 0.9796,
       "debris": 0.7571,
       "usable": true,
-      "seconds": 1.65
+      "seconds": 1.79
     },
     {
       "patient": "TF95_223",
       "image": "20170829_163557.jpg",
       "found_parasites": 29,
-      "found_wbc": 14,
+      "found_wbc": 17,
       "truth_parasites": 16,
       "truth_wbc": 13,
       "focus": 3.13,
       "even": 0.9522,
       "debris": 0.7167,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 1.49
     },
     {
       "patient": "TF95_223",
       "image": "20170829_163656.jpg",
       "found_parasites": 34,
-      "found_wbc": 21,
+      "found_wbc": 22,
       "truth_parasites": 23,
       "truth_wbc": 18,
       "focus": 3.44,
       "even": 0.9786,
       "debris": 0.7207,
       "usable": true,
-      "seconds": 1.53
+      "seconds": 1.69
     },
     {
       "patient": "TF95_223",
@@ -7672,189 +7673,189 @@
       "even": 0.9637,
       "debris": 0.7465,
       "usable": true,
-      "seconds": 1.27
+      "seconds": 1.47
     },
     {
       "patient": "TF95_223",
       "image": "20170829_163958.jpg",
-      "found_parasites": 41,
-      "found_wbc": 18,
+      "found_parasites": 40,
+      "found_wbc": 17,
       "truth_parasites": 39,
       "truth_wbc": 17,
       "focus": 2.79,
       "even": 0.9771,
       "debris": 0.7584,
       "usable": true,
-      "seconds": 1.26
+      "seconds": 1.36
     },
     {
       "patient": "TF95_223",
       "image": "20170829_164055.jpg",
       "found_parasites": 17,
-      "found_wbc": 19,
+      "found_wbc": 22,
       "truth_parasites": 19,
       "truth_wbc": 17,
       "focus": 2.73,
       "even": 0.9267,
       "debris": 0.7637,
       "usable": true,
-      "seconds": 1.12
+      "seconds": 1.07
     },
     {
       "patient": "TF95_223",
       "image": "20170829_164205.jpg",
       "found_parasites": 27,
-      "found_wbc": 16,
+      "found_wbc": 18,
       "truth_parasites": 22,
       "truth_wbc": 14,
       "focus": 2.82,
       "even": 0.9545,
       "debris": 0.7612,
       "usable": true,
-      "seconds": 1.1
+      "seconds": 1.49
     },
     {
       "patient": "TF95_223",
       "image": "20170829_164307.jpg",
       "found_parasites": 12,
-      "found_wbc": 16,
+      "found_wbc": 18,
       "truth_parasites": 9,
       "truth_wbc": 16,
       "focus": 2.39,
       "even": 0.965,
       "debris": 0.6862,
       "usable": true,
-      "seconds": 0.95
+      "seconds": 1.05
     },
     {
       "patient": "TF95_223",
       "image": "20170829_164432.jpg",
       "found_parasites": 43,
-      "found_wbc": 22,
+      "found_wbc": 24,
       "truth_parasites": 39,
       "truth_wbc": 23,
       "focus": 2.99,
       "even": 0.9716,
       "debris": 0.7377,
       "usable": true,
-      "seconds": 1.07
+      "seconds": 1.21
     },
     {
       "patient": "TF95_223",
       "image": "20170829_164619.jpg",
-      "found_parasites": 38,
-      "found_wbc": 17,
+      "found_parasites": 37,
+      "found_wbc": 18,
       "truth_parasites": 33,
       "truth_wbc": 16,
       "focus": 2.76,
       "even": 0.9663,
       "debris": 0.7353,
       "usable": true,
-      "seconds": 1.23
+      "seconds": 1.35
     },
     {
       "patient": "TF95_223",
       "image": "20170829_164715.jpg",
       "found_parasites": 43,
-      "found_wbc": 16,
+      "found_wbc": 15,
       "truth_parasites": 30,
       "truth_wbc": 12,
       "focus": 2.96,
       "even": 0.981,
       "debris": 0.731,
       "usable": true,
-      "seconds": 1.37
+      "seconds": 1.5
     },
     {
       "patient": "TF95_223",
       "image": "20170829_164819.jpg",
       "found_parasites": 41,
-      "found_wbc": 26,
+      "found_wbc": 25,
       "truth_parasites": 35,
       "truth_wbc": 26,
       "focus": 2.89,
       "even": 0.9814,
       "debris": 0.6982,
       "usable": true,
-      "seconds": 1.09
+      "seconds": 1.16
     },
     {
       "patient": "TF95_223",
       "image": "20170829_165310.jpg",
-      "found_parasites": 45,
-      "found_wbc": 17,
+      "found_parasites": 43,
+      "found_wbc": 18,
       "truth_parasites": 34,
       "truth_wbc": 15,
       "focus": 2.59,
       "even": 0.958,
       "debris": 0.6861,
       "usable": true,
-      "seconds": 1.25
+      "seconds": 1.44
     },
     {
       "patient": "TF95_223",
       "image": "20170829_165416.jpg",
-      "found_parasites": 26,
-      "found_wbc": 17,
+      "found_parasites": 25,
+      "found_wbc": 20,
       "truth_parasites": 25,
       "truth_wbc": 15,
       "focus": 2.55,
       "even": 0.9703,
       "debris": 0.7058,
       "usable": true,
-      "seconds": 1.08
+      "seconds": 1.26
     },
     {
       "patient": "TF97_CS31",
       "image": "20170829_172518.jpg",
       "found_parasites": 15,
-      "found_wbc": 16,
+      "found_wbc": 17,
       "truth_parasites": 15,
       "truth_wbc": 18,
       "focus": 3.21,
       "even": 0.9718,
       "debris": 0.7179,
       "usable": true,
-      "seconds": 1.87
+      "seconds": 2.12
     },
     {
       "patient": "TF97_CS31",
       "image": "20170829_172637.jpg",
       "found_parasites": 15,
-      "found_wbc": 27,
+      "found_wbc": 28,
       "truth_parasites": 17,
       "truth_wbc": 34,
       "focus": 3.81,
       "even": 0.9591,
       "debris": 0.7203,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 1.72
     },
     {
       "patient": "TF97_CS31",
       "image": "20170829_172758.jpg",
       "found_parasites": 12,
-      "found_wbc": 23,
+      "found_wbc": 24,
       "truth_parasites": 16,
       "truth_wbc": 20,
       "focus": 3.38,
       "even": 0.98,
       "debris": 0.7346,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 1.81
     },
     {
       "patient": "TF97_CS31",
       "image": "20170829_173033.jpg",
       "found_parasites": 19,
-      "found_wbc": 24,
+      "found_wbc": 25,
       "truth_parasites": 12,
       "truth_wbc": 24,
       "focus": 3.32,
       "even": 0.9828,
       "debris": 0.7388,
       "usable": true,
-      "seconds": 1.9
+      "seconds": 2.2
     },
     {
       "patient": "TF97_CS31",
@@ -7867,20 +7868,20 @@
       "even": 0.9723,
       "debris": 0.7172,
       "usable": true,
-      "seconds": 1.86
+      "seconds": 2.23
     },
     {
       "patient": "TF97_CS31",
       "image": "20170829_173437.jpg",
       "found_parasites": 20,
-      "found_wbc": 16,
+      "found_wbc": 18,
       "truth_parasites": 17,
       "truth_wbc": 19,
       "focus": 3.55,
       "even": 0.979,
       "debris": 0.7512,
       "usable": true,
-      "seconds": 2.48
+      "seconds": 2.62
     },
     {
       "patient": "TF97_CS31",
@@ -7893,33 +7894,33 @@
       "even": 0.9753,
       "debris": 0.7389,
       "usable": true,
-      "seconds": 1.78
+      "seconds": 1.91
     },
     {
       "patient": "TF97_CS31",
       "image": "20170829_174225.jpg",
-      "found_parasites": 11,
-      "found_wbc": 26,
+      "found_parasites": 10,
+      "found_wbc": 28,
       "truth_parasites": 10,
       "truth_wbc": 29,
       "focus": 4.1,
       "even": 0.971,
       "debris": 0.7516,
       "usable": true,
-      "seconds": 1.91
+      "seconds": 1.9
     },
     {
       "patient": "TF97_CS31",
       "image": "20170829_174501.jpg",
       "found_parasites": 5,
-      "found_wbc": 17,
+      "found_wbc": 16,
       "truth_parasites": 10,
       "truth_wbc": 12,
       "focus": 2.92,
       "even": 0.9632,
       "debris": 0.7009,
       "usable": true,
-      "seconds": 1.63
+      "seconds": 1.71
     }
   ]
 }
