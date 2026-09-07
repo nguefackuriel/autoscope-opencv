@@ -12,7 +12,7 @@ generator we set out to beat.
 So a detection is reduced to its box centre and matched against the annotated
 centre with `wbc_eval.match`, greedy nearest, 15 px tolerance. Identical to
 parasite_eval.py. That is what makes a number here directly comparable with the
-patch network's held-out F1 of 0.762, which is the entire point of the exercise.
+patch network's held-out F1 of 0.763, which is the entire point of the exercise.
 
 WHY TILED INFERENCE
 
@@ -280,7 +280,10 @@ def main():
     for t, r in sorted(report.items()):
         print(f"{t:>5} {r['precision']:>7.3f} {r['recall']:>7.3f} "
               f"{r['f1']:>7.3f} {r['count_bias_pct']:>+8.1f}")
-    print(f"\ncompare against the patch network: held-out F1 0.762, precision 0.841")
+    print("\npatch CNN on the same held-out patients, at its shipped 0.75 threshold:")
+    print("  precision 0.790  recall 0.739  F1 0.763  count bias -6.4%")
+    print("  A better F1 with a worse count bias is not a better detector: the")
+    print("  count is the denominator of every density.")
     print(f"written to {OUT / f'detector_eval_{tag}.json'}")
 
 

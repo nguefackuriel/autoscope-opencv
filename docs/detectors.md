@@ -6,7 +6,13 @@ when a number arrives it can be read against what we said we would do rather
 than against what we wish we had done.
 
 The target to beat is the patch network on the same held-out patients:
-**F1 0.762, precision 0.841** (`docs/results-parasites.md`).
+**F1 0.763, precision 0.790, recall 0.739, count bias -6.4%**
+(`docs/results-parasites.md`, patch CNN at the corrected 0.75 threshold).
+
+Quote the count bias alongside the F1, always. The threshold moved from 0.80
+to 0.75 not because F1 improved -- it is 0.762 against 0.763, the same curve --
+but because 0.80 ran the count 14.4% low, and the count is the denominator of
+every density a clinician reads.
 
 ## The split is inherited, not chosen
 
@@ -50,7 +56,7 @@ mean we had reproduced the top-hat generator we set out to beat.
 So detections are scored the way everything else here is scored: **box centre
 against annotated centre, greedy nearest, 15 px tolerance**, via the same
 `wbc_eval.match` that `parasite_eval.py` uses. That is what makes a number
-comparable with 0.762. `eval/detector_eval.py` refuses to sweep a threshold on
+comparable with 0.763. `eval/detector_eval.py` refuses to sweep a threshold on
 the held-out split.
 
 ## Why tiles
