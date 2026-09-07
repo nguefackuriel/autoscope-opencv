@@ -139,9 +139,16 @@ def main():
                     help="also compute the 19 hand-made features (hybrid path); a second per image")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--max-images", type=int, default=0, help="smoke tests: stop after this many infected and clean images")
-    ap.add_argument("--candidates", default="tophat", choices=["tophat", "heatmap"],
-                    help="heatmap: the learned detector's peaks propose (chain 4, 6 September 2026), so the judge learns their look-alikes")
+    ap.add_argument("--candidates", default="tophat", choices=["tophat", "heatmap", "both"],
+                    help="heatmap: the learned detector's peaks propose (chain 4, 6 September 2026), so the judge learns their "
+                         "look-alikes; both: the union of the two proposers (chain 5), so the judge keeps the top-hat set's "
+                         "balance and sees the heat map's look-alikes as well")
+    ap.add_argument("--easy-keep-clean", type=float, default=None,
+                    help="share of easy negatives kept on clean fields (default: --easy-keep). Chain 4 kept 2 608 clean-field "
+                         "patches of 72 000 and read 1.0 false parasites per clean field; 1.0 keeps every clean-field candidate")
     args = ap.parse_args()
+    if args.easy_keep_clean is None:
+        args.easy_keep_clean = args.easy_keep
 
     fit = set(json.loads((OUT / "wbc_sweep.json").read_text())["fit_patients"])
     calibration = set(json.loads((OUT / "calibration_patients.json").read_text()))
@@ -153,7 +160,15 @@ def main():
     def propose(prepared, mask):
         if args.candidates == "heatmap":
             return par.heatmap_candidates(prepared, mask)
-        return par.candidates(prepared, mask, features=features)[0]
+        cands = par.candidates(prepared, mask, features=features)[0]
+        if args.candidates == "both":
+            extra = par.heatmap_candidates(prepared, mask)
+            if cands and extra:
+                a = np.array([[c.x, c.y] for c in cands]); b = np.array([[c.x, c.y] for c in extra])
+                d = np.linalg.norm(b[:, None, :] - a[None, :, :], axis=2).min(axis=1)
+                extra = [c for c, dist in zip(extra, d) if dist > 6.0]   # a heat peak on a top-hat peak is the same candidate
+            cands = cands + extra
+        return cands
 
     patches, feats, labels, meta, source = [], [], [], [], []
     stats = {"fit": [0, 0, 0, 0], "calibration": [0, 0, 0, 0], "clean": [0, 0, 0, 0]}  # images, candidates, kept, positives
@@ -162,7 +177,7 @@ def main():
 
     def take(prepared, cands, y, scores, src, patient):
         if miner is not None and src != "calibration":
-            keep = keep_mask(y, scores, args.hard_min, args.easy_keep, rng)
+            keep = keep_mask(y, scores, args.hard_min, args.easy_keep_clean if src == "clean" else args.easy_keep, rng)
         else:
             keep = np.ones(len(cands), bool)
         cut_patches, idx = cut(prepared, cands, keep, half)
@@ -242,7 +257,7 @@ def main():
         arrays["X"] = np.stack(feats)
     np.savez_compressed(OUT / args.out, **arrays)
     summary = {
-        "out": args.out, "patch": args.patch, "mine": args.mine, "candidates": args.candidates,
+        "out": args.out, "patch": args.patch, "mine": args.mine, "candidates": args.candidates, "easy_keep_clean": args.easy_keep_clean,
         "hard_min": args.hard_min if args.mine else None, "easy_keep": args.easy_keep if args.mine else None,
         "miner_model": Path(args.miner_model).name if args.mine else None,
         "candidate_recall_fit_images": round(total_hit / max(total_truth, 1), 4),
