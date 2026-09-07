@@ -1,0 +1,24 @@
+# Box detectors (YOLO26, Faster R-CNN), training and scoring only.
+#
+# Its own venv, like requirements-train.txt. The runtime venv never imports
+# torch or ultralytics, and the pipeline that ships on Graviton must not grow a
+# 2 GB dependency because an experiment needed one.
+#
+# On linux x86_64 the default PyPI torch wheel is the CUDA build, so a plain
+# `pip install -r` on the GPU instance is enough and no extra index is needed.
+# torchvision 0.29 is the pairing for torch 2.14; bumping one without the other
+# gives an import error about C++ symbols that reads like a broken install.
+#
+#   python -m venv .venv-detect
+#   .venv-detect/bin/pip install -r requirements-detect.txt
+#
+torch==2.14.0
+torchvision==0.29.0
+ultralytics==8.4.142
+clearml==2.1.12
+
+# Held at the runtime pins on purpose. boxes.py and the export are shared with
+# the pipeline, and a NumPy or OpenCV that disagrees across the two venvs would
+# mean the boxes trained on are not the boxes the pipeline would derive.
+numpy==2.3.4
+opencv-python==5.0.0.93

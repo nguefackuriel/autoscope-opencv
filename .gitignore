@@ -14,3 +14,8 @@ src/*.egg-info/
 .venv-train/
 eval/results/*patches*.npz
 eval/results/*.log
+.venv-detect/
+# Detector checkpoints: a Faster R-CNN epoch is ~160 MB and there are 20
+# of them. The chosen weights go to ClearML artifacts, never into git.
+models/frcnn/
+models/yolo26/
