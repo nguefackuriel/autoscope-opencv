@@ -3,6 +3,7 @@ detector calls a parasite and the experts did not, next to what both agree on.
 
     ../.venv/bin/python parasite_fp_look.py --patients TF70_Scr440 TF37_Sc563 --per-patient 2
     ../.venv/bin/python parasite_fp_look.py --uninfected TF208_15_38 TF210_15_40 --per-patient 2
+    ../.venv/bin/python parasite_fp_look.py --model heat-cnn --threshold 0.71 --patients TF70_Scr440 TF107_249 TF81_W8B5 --tag worst3-heat5
 
 Writes docs/figures/fp-look-<tag>.png: 48 px crops of the prepared (cropped,
 normalised) field around each detection, magnified 3x, score in the corner.
@@ -57,8 +58,10 @@ def main():
     ap.add_argument("--threshold", type=float, default=par.DEFAULT_THRESHOLD)
     ap.add_argument("--max", type=int, default=60, help="tiles per group")
     ap.add_argument("--tag", default="worst")
+    ap.add_argument("--model", default="cnn", choices=["cnn", "heat-cnn"],
+                    help="heat-cnn: the heat map proposes and the heat judge (models/parasite_cnn_heat.onnx) scores")
     args = ap.parse_args()
-    scorer = par.PatchScorer.load()
+    scorer = par.load_scorer(args.model)
     fp_tiles, tp_tiles, fn_note = [], [], []
     jobs = [(RAW / p, False) for p in args.patients] + \
            [(RAW / "NIH-NLM-ThickBloodSmearsU" / "Uninfected Patients" / p / "tiled", True) for p in args.uninfected]
@@ -67,7 +70,8 @@ def main():
         for path in images:
             img = cv.imread(str(path)); h, w = img.shape[:2]
             prepared, mask, ox, oy = par._prepare(img, crop_to_fov=True, normalise_stain=True)
-            cands, _ = par.candidates(prepared, mask, features=False)
+            cands = par.heatmap_candidates(prepared, mask) if args.model == "heat-cnn" \
+                else par.candidates(prepared, mask, features=False)[0]
             if not cands:
                 continue
             scores = scorer.score(par.patches_at(prepared, cands))

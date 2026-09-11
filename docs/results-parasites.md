@@ -934,3 +934,56 @@ way section 13 looked at them, to decide whether their surplus is ours or
 the annotation's; then a threshold or a second stage that knows how sparse
 the slide is, which section 11 could not build on the top-hat's candidates
 and may be buildable on these.
+
+### 16e. The three sparse slides, opened with the chain-5 pair: rods, streaks and clumps the judge never saw
+
+11 September 2026, `eval/parasite_fp_look.py --model heat-cnn --threshold
+0.71`, two images each of TF70_Scr440, TF107_249 and TF81_W8B5 (held-out,
+looked at, nothing fitted). Figures `fp-look-worst3-heat5-false.png` and
+`-true.png`; the shipped pair at 0.53 on the same images,
+`fp-look-worst3-cnn-false.png`.
+
+| six images | detections | true | false |
+|---|---|---|---|
+| chain-5 pair, 0.71 | 77 | 16 | **61** |
+| shipped pair, 0.53 | 45 | 15 | 30 |
+
+Both find the same fifteen or sixteen parasites; the chain-5 pair reports
+twice the false alarms on top. What they look like, in the montage: at
+least half are **elongated purple rods and streaks**, several times longer
+than wide; a quarter are **clumps and heaps**, including two nucleus-sized
+dark masses; the rest are **pairs of dots** and a few **small solid
+magenta dots** with a faint halo. The true positives beside them all show
+the ring, a chromatin dot with a crescent of cytoplasm. The rods, streaks
+and clumps are ours to fix: no annotator would have marked them. The small
+solid dots are the only group where section 9's caveat, parasites the
+annotators did not mark on sparse fields, is plausible, and they are a
+minority here. The shipped pair's false alarms are the other way round:
+more of them are dot-plus-cytoplasm objects that could be unmarked
+parasites, and fewer are rods.
+
+Measured on the 77 detections with `boxes.box_at` (the top-hat component at
+half its peak, Alex's box rule): the false alarms' blobs are only a little
+more elongated than the hits' (median aspect ratio 1.27 against 1.17, 10%
+above 2.0 against none) and no larger (longest side 17 px against 22). The
+half-maximum blob sits on the chromatin-dense core of a rod, not along it,
+so a shape gate on that blob would not remove them; the shape the eye
+uses is the whole 48 px patch, which is the judge's job.
+
+**Why the chain-5 judge passes them, at 0.71 to 0.85.** Chain 5 mined its
+hard negatives with the chain-3 judge: a candidate was kept only if that
+judge scored it at 0.2 or above, or in the 10% easy sample. The chain-3
+judge had learned rods from the top-hat's candidates (section 9 named them,
+chain 3 mined them), so it scored the heat map's rods *below* 0.2, and they
+went into the easy pile, of which one in ten survived. Two thirds of the
+rest of the set were clean-field candidates, which are platelets. The
+chain-5 judge therefore learned "not a platelet" and never met a rod it
+was told was wrong. Mining with a judge that already rejects a look-alike
+hides that look-alike from the next judge.
+
+**Chain 6, the recipe that follows**: the same union of proposers, the
+hard negatives mined with the **chain-5 judge itself** (which passes the
+rods, so they are kept), every clean-field candidate at a 0.3 keep rate to
+restore the balance and the training time, same 20 epochs, same
+count-matching threshold. `MINER=../models/parasite_cnn_heat.onnx
+CLEAN_KEEP=0.3 MODEL=heat-cnn bash eval/chain.sh`.

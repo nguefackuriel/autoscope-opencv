@@ -43,9 +43,14 @@ elif [ "$SKIP_TRAIN" = "0" ] && [ "$MODEL" = "heat-cnn" ]; then
 # positive, 2 600 from clean fields, and the judge came out strict on
 # parasites and blind to clean-field look-alikes (results-parasites.md 16c).
 # Chain 5 proposes with both, keeps every clean-field candidate.
-step "patches: every fit image, candidates from the top-hat AND the heat map, hard negatives >= 0.2 under the chain-3 patch network, 10% of the easy ones, every clean-field candidate, 56 px cut; calibration patients 3 images each"
-$PY parasite_patches.py --mine --candidates both --per-patient 3 --patch 56 --hard-min 0.2 --easy-keep 0.1 --easy-keep-clean 1.0 \
-    --uninfected-images -1 --miner-model ../models/parasite_cnn.onnx --miner-size 48 --out parasite_patches_heat_56.npz
+# Chain 6 (11 September): mine with the judge being improved (MINER), because a
+# miner that already rejects a look-alike hides it from the next judge
+# (results-parasites.md 16e); CLEAN_KEEP thins the clean-field candidates.
+HEAT_MINER=${MINER:-../models/parasite_cnn.onnx}
+CLEAN_KEEP=${CLEAN_KEEP:-1.0}
+step "patches: every fit image, candidates from the top-hat AND the heat map, hard negatives >= 0.2 under $HEAT_MINER, 10% of the easy ones, clean-field candidates kept at $CLEAN_KEEP, 56 px cut; calibration patients 3 images each"
+$PY parasite_patches.py --mine --candidates both --per-patient 3 --patch 56 --hard-min 0.2 --easy-keep 0.1 --easy-keep-clean "$CLEAN_KEEP" \
+    --uninfected-images -1 --miner-model "$HEAT_MINER" --miner-size 48 --out parasite_patches_heat_56.npz
 
 step "train the judge for the heat map's candidates: 48 px, 20 epochs, validation = calibration_patients.json -> models/parasite_cnn_heat.onnx"
 $PYT parasite_cnn_train.py --patches parasite_patches_heat_56.npz --crop 48 --epochs 20 --val-file calibration_patients.json \
