@@ -34,6 +34,9 @@ COPY src ./src
 COPY models ./models
 COPY tests ./tests
 COPY bench ./bench
+# The eval scripts, not their results: tests/test_export_detection.py imports
+# one, and the chain has to be runnable from the image on a Graviton box.
+COPY eval/*.py eval/chain.sh ./eval/
 RUN pip install --no-cache-dir --no-deps .
 
 # The JPEG warning on a handful of NLM files is noise, not a failure.
