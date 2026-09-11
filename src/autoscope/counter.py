@@ -46,9 +46,13 @@ def count_field(
     cells = [replace(c, x=c.x + ox, y=c.y + oy) for c in cells]
 
     found: list[par.Parasite] = []
-    if model == "heatmap":
-        scorer = scorer or par._heatmap_scorer()
-        pts, scores = scorer.peaks(prepared, mask)
+    if model == "heatmap" or model in par.BOX_MODELS:
+        if model == "heatmap":
+            scorer = scorer or par._heatmap_scorer()
+            pts, scores = scorer.peaks(prepared, mask)
+        else:
+            scorer = scorer or par._box_scorer(model)
+            pts, scores = scorer.detections(prepared, mask)
         found = [par.Parasite(float(x) + ox, float(y) + oy, 0.0, float(s))
                  for (x, y), s in zip(pts, scores) if s >= threshold]
         return FieldCount(len(found), len(cells), found, cells)
@@ -75,9 +79,9 @@ def count_field(
     return FieldCount(len(found), len(cells), found, cells)
 
 
-def vision_counter(model: str = "cnn", threshold: float | None = None):
+def vision_counter(model: str = "cnn", threshold: float | None = None, weights=None):
     """A `Counter` for `agent.tools.Tools`, with the model loaded once."""
-    scorer = par.load_scorer(model)
+    scorer = par.load_scorer(model, weights)
 
     def count(image_bgr: np.ndarray) -> tuple[int, int]:
         return count_field(image_bgr, model=model, threshold=threshold, scorer=scorer).as_tuple()

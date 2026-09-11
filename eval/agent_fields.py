@@ -31,7 +31,8 @@ OUT = Path(__file__).resolve().parent / "results"
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--threshold", type=float, default=None, help="default: the model's own")
-    ap.add_argument("--model", default="cnn", choices=["cnn", "heatmap", "heat-cnn"])
+    ap.add_argument("--model", default="cnn", choices=["cnn", "heatmap", "heat-cnn", "yolo", "frcnn"])
+    ap.add_argument("--weights", default=None, help="box detectors: the weights file")
     ap.add_argument("--max-patients", type=int, default=None)
     ap.add_argument("--out", default="agent_fields.json")
     args = ap.parse_args()
@@ -43,7 +44,7 @@ def main():
         patients = patients[:args.max_patients]
     print(f"{len(patients)} held-out patients")
 
-    scorer = load_scorer(args.model)
+    scorer = load_scorer(args.model, args.weights)
     from autoscope.parasites import threshold_for
     args.threshold = threshold_for(args.model, args.threshold)
     rows, t0 = [], time.perf_counter()

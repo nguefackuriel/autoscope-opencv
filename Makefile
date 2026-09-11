@@ -1,4 +1,4 @@
-.PHONY: setup setup-train data data-tanzania data-uninfected data-vivax test bench docker docker-arm64 train-mlp train-cnn chain clean
+.PHONY: setup setup-train setup-detect data data-tanzania data-uninfected data-vivax test bench docker docker-arm64 train-mlp train-cnn chain export-detect train-yolo train-frcnn clean
 
 setup:                     ## create the venv and install pinned deps
 	uv venv --python 3.12
@@ -7,6 +7,10 @@ setup:                     ## create the venv and install pinned deps
 setup-train:               ## separate venv for training the patch network (torch needs numpy 1.x)
 	uv venv --python 3.12 .venv-train
 	uv pip install --python .venv-train/bin/python -r requirements-train.txt
+
+setup-detect:              ## separate venv for the box detectors (torch + ultralytics, ~3 GB)
+	uv venv --python 3.12 .venv-detect
+	uv pip install --python .venv-detect/bin/python -r requirements-detect.txt
 
 data:                      ## download the NLM thick smear set (3.9 GB, resumable)
 	.venv/bin/python data/download.py
@@ -35,6 +39,15 @@ train-cnn:                 ## parasite patch classifier: mined patches -> torch 
 chain:                     ## train-cnn, then every held-out and specificity number, about seven hours: caffeinate -dims make chain
 	bash eval/chain.sh
 
+export-detect:             ## tile the FIT patients into a YOLO + COCO detection set
+	.venv/bin/python eval/export_detection.py --images-per-patient 3
+
+train-yolo:                ## YOLO26 on the tiles, tracked in ClearML (needs a GPU)
+	.venv-detect/bin/python train/yolo26.py
+
+train-frcnn:               ## Faster R-CNN on the same tiles (needs a GPU)
+	.venv-detect/bin/python train/frcnn.py
+
 bench:                     ## run the COOL benchmark on this machine
 	.venv/bin/python bench/cool_bench.py --runs 100
 
@@ -47,4 +60,4 @@ docker-arm64:              ## same image for linux/arm64 under emulation: correc
 	docker run --rm --platform linux/arm64 autoscope:arm64
 
 clean:
-	rm -rf .venv .venv-train .pytest_cache **/__pycache__
+	rm -rf .venv .venv-train .venv-detect .pytest_cache **/__pycache__
