@@ -17,7 +17,7 @@ cd "$(dirname "$0")"
 PY=../.venv/bin/python
 PYT=../.venv-train/bin/python
 LOG=results/chain_$(date +%Y-%m-%d)_${MODEL:-cnn}.log
-MINER=../models/parasite_cnn_chain2_32px.onnx
+CNN_MINER=../models/parasite_cnn_chain2_32px.onnx   # chain 3's miner, 32 px; MINER (env) is the heat-cnn path's
 step() { echo; echo "===== $(date +%H:%M) $*"; }
 # SKIP_TRAIN=1 bash eval/chain.sh re-measures everything with the network as
 # it is: for a change to the white cells, the candidates or the rule.
@@ -61,7 +61,7 @@ $PY parasite_cnn_check.py --tag heat --model ../models/parasite_cnn_heat.onnx
 elif [ "$SKIP_TRAIN" = "0" ]; then
 step "patches: every fit image, hard negatives >= 0.2 under the chain-2 network, 10% of the easy ones, 56 px cut; all 569 clean fit-half fields; calibration patients 3 images each, every candidate"
 $PY parasite_patches.py --mine --per-patient 3 --patch 56 --hard-min 0.2 --easy-keep 0.1 \
-    --uninfected-images -1 --miner-model "$MINER" --miner-size 32 --out parasite_patches_mined_56.npz
+    --uninfected-images -1 --miner-model "$CNN_MINER" --miner-size 32 --out parasite_patches_mined_56.npz
 
 step "train the patch network: 48 px, 20 epochs, validation = calibration_patients.json"
 $PYT parasite_cnn_train.py --patches parasite_patches_mined_56.npz --crop 48 --epochs 20 --val-file calibration_patients.json
