@@ -14,7 +14,6 @@
 # control the report compares against.
 set -euo pipefail
 cd "$(dirname "$0")"
-PY=../.venv/bin/python
 PYT=../.venv-train/bin/python
 LOG=results/chain_$(date +%Y-%m-%d)_${MODEL:-cnn}.log
 MINER=../models/parasite_cnn_chain2_32px.onnx
@@ -27,6 +26,17 @@ step() { echo; echo "===== $(date +%H:%M) $*"; }
 # measures the pair.
 SKIP_TRAIN=${SKIP_TRAIN:-0}
 MODEL=${MODEL:-cnn}
+# MODEL=yolo or frcnn measures a box detector trained elsewhere (Colab, a GPU
+# box): SKIP_TRAIN=1 WEIGHTS=<file> PY=../.venv-detect/bin/python, because the
+# runtime venv has no torch. See docs/detectors.md.
+WEIGHTS=${WEIGHTS:-}
+PY=${PY:-../.venv/bin/python}
+W=()
+case "$MODEL" in yolo|frcnn)
+  [ "$SKIP_TRAIN" = "1" ] || { echo "MODEL=$MODEL: train it on a GPU (make train-$MODEL), then SKIP_TRAIN=1 WEIGHTS=<best> here"; exit 1; }
+  [ -n "$WEIGHTS" ] || { echo "MODEL=$MODEL needs WEIGHTS=<file>"; exit 1; }
+  W=(--weights "$WEIGHTS");;
+esac
 
 {
 if [ "$SKIP_TRAIN" = "0" ] && [ "$MODEL" = "heatmap" ]; then
@@ -68,8 +78,8 @@ step "measure only: network unchanged ($(git -C .. log --oneline -1))"
 fi
 
 step "rescore candidates: calibration, then held-out ($MODEL)"
-$PY parasite_scores.py --model "$MODEL" --group calibration
-$PY parasite_scores.py --model "$MODEL" --group holdout
+$PY parasite_scores.py --model "$MODEL" "${W[@]}" --group calibration
+$PY parasite_scores.py --model "$MODEL" "${W[@]}" --group holdout
 
 step "choose the threshold on the calibration patients"
 $PY choose_threshold.py
@@ -79,16 +89,16 @@ step "parasite_calibrate at $T"
 $PY parasite_calibrate.py --fixed "$T"
 
 step "parasite_eval held-out at $T"
-$PY parasite_eval.py --holdout --threshold "$T" --model "$MODEL" --tag "holdout_$MODEL"
+$PY parasite_eval.py --holdout --threshold "$T" --model "$MODEL" "${W[@]}" --tag "holdout_$MODEL"
 
 step "agent_fields at $T (609 fields)"
-$PY agent_fields.py --threshold "$T" --model "$MODEL"
+$PY agent_fields.py --threshold "$T" --model "$MODEL" "${W[@]}"
 
 step "agent_eval"
 $PY agent_eval.py
 
 step "negative_fields at $T (1141 fields, all 50 patients; the eval reports the frozen half)"
-$PY negative_fields.py --threshold "$T" --model "$MODEL"
+$PY negative_fields.py --threshold "$T" --model "$MODEL" "${W[@]}"
 
 step "negative_eval, frozen half"
 $PY negative_eval.py

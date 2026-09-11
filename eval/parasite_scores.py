@@ -36,8 +36,10 @@ def main():
                          "so its scores on them are honest and a calibration fitted there is not "
                          "fitted on its own training data")
     ap.add_argument("--per-patient", type=int, default=0, help="0 means every image")
-    ap.add_argument("--model", default="cnn", choices=["cnn", "heatmap", "heat-cnn"],
-                    help="heatmap: the learned detector's peaks above its floor are the candidates, its heights the scores")
+    ap.add_argument("--model", default="cnn", choices=["cnn", "heatmap", "heat-cnn", "yolo", "frcnn"],
+                    help="heatmap: the learned detector's peaks above its floor are the candidates, its heights the scores; "
+                         "yolo / frcnn: a box detector's detections above its floor, its confidences")
+    ap.add_argument("--weights", default=None, help="box detectors: the weights file")
     args = ap.parse_args()
 
     fitted = set(json.loads((OUT / "wbc_sweep.json").read_text())["fit_patients"])
@@ -49,7 +51,7 @@ def main():
         patients = [p for p in patients if (p.name in fitted) == (args.group == "fit")]
     print(f"{len(patients)} {args.group} patients")
 
-    scorer = par.load_scorer(args.model)
+    scorer = par.load_scorer(args.model, args.weights)
     rows, t0 = [], time.perf_counter()
     for i, patient in enumerate(patients, 1):
         images = sorted(patient.glob("*.jpg"))
@@ -66,6 +68,9 @@ def main():
             prepared, mask, ox, oy = par._prepare(img, True, True)
             if args.model == "heatmap":
                 pts_found, scores = scorer.peaks(prepared, mask)
+                cands = [par.Candidate(float(x), float(y), 0.0, None) for x, y in pts_found]
+            elif args.model in par.BOX_MODELS:
+                pts_found, scores = scorer.detections(prepared, mask)
                 cands = [par.Candidate(float(x), float(y), 0.0, None) for x, y in pts_found]
             elif args.model == "heat-cnn":
                 cands = par.heatmap_candidates(prepared, mask)

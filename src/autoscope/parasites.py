@@ -430,15 +430,44 @@ def _heatmap_scorer() -> HeatmapScorer:
     return _HEATMAP_SCORER
 
 
-def load_scorer(model: str):
-    """The scorer for a model name, loaded once: "cnn", "hybrid", "mlp", "heatmap"
-    or "heat-cnn" (the heat map proposes, the patch network scores; the
-    heat map itself is loaded on first use)."""
+def load_scorer(model: str, weights=None):
+    """The scorer for a model name, loaded once: "cnn", "hybrid", "mlp", "heatmap",
+    "heat-cnn" (the heat map proposes, the patch network scores; the heat map
+    itself is loaded on first use), "yolo" or "frcnn" (box detectors; `weights`
+    names the file)."""
+    if model in BOX_MODELS:
+        return _box_scorer(model, weights)
     return {"cnn": _patch_scorer, "hybrid": _hybrid_scorer, "mlp": _scorer, "heatmap": _heatmap_scorer,
             "heat-cnn": _heat_cnn_scorer}[model]()
 
 
 HEAT_CNN_THRESHOLD = 0.42   # chosen on the calibration patients, 6 September 2026 (-0.3%): threshold_fixedstats.json
+
+# Box detectors (Alex's branch, docs/detectors.md): YOLO26 or Faster R-CNN on
+# 640 px tiles at native resolution, run through autoscope.boxes.BoxScorer.
+# Weights come from --weights, the AUTOSCOPE_<KIND>_WEIGHTS environment
+# variable, or these defaults; their threshold is chosen on the calibration
+# patients like every other model's (choose_threshold.py). 0.25 is a
+# placeholder until one has been.
+import os
+BOX_WEIGHTS = {"yolo": Path(__file__).resolve().parents[2] / "models" / "yolo26" / "best.pt",
+               "frcnn": Path(__file__).resolve().parents[2] / "models" / "frcnn" / "best.pt"}
+BOX_THRESHOLD = 0.25
+BOX_MODELS = ("yolo", "frcnn")
+_BOX_SCORERS: dict = {}
+
+
+def _box_scorer(kind: str, weights=None):
+    """A BoxScorer for `kind`, loaded once per weights file."""
+    from autoscope.boxes import BoxScorer
+    weights = Path(weights or os.environ.get(f"AUTOSCOPE_{kind.upper()}_WEIGHTS") or BOX_WEIGHTS[kind])
+    key = (kind, str(weights))
+    if key not in _BOX_SCORERS:
+        if not weights.exists():
+            raise FileNotFoundError(f"{weights} is missing: pass --weights, set AUTOSCOPE_{kind.upper()}_WEIGHTS, "
+                                    f"or train one (make train-{kind if kind == 'yolo' else 'frcnn'})")
+        _BOX_SCORERS[key] = BoxScorer.load(kind, weights)
+    return _BOX_SCORERS[key]
 # The judge for the heat map's candidates. The patch network of chain 3
 # learned the top-hat's look-alikes; the heat map proposes others it never
 # saw, and on the sparse slides it lets them through (results-parasites.md
@@ -458,7 +487,8 @@ def _heat_cnn_scorer() -> "PatchScorer":
 def threshold_for(model: str, threshold: float | None) -> float:
     if threshold is not None:
         return threshold
-    return {"heatmap": HEATMAP_THRESHOLD, "heat-cnn": HEAT_CNN_THRESHOLD}.get(model, DEFAULT_THRESHOLD)
+    return {"heatmap": HEATMAP_THRESHOLD, "heat-cnn": HEAT_CNN_THRESHOLD,
+            "yolo": BOX_THRESHOLD, "frcnn": BOX_THRESHOLD}.get(model, DEFAULT_THRESHOLD)
 
 
 def _hybrid_scorer() -> PatchScorer:
@@ -494,15 +524,21 @@ def find_parasites(
 
     `model` is "cnn" (patch network, the default), "hybrid" (patch network
     plus the 19 context features), "mlp" (the feature network, kept as the
-    cheaper baseline and for the ablation in the report) or "heatmap" (the
-    learned detector, no candidate stage). `threshold` defaults to the
-    model's own.
+    cheaper baseline and for the ablation in the report), "heatmap" (the
+    learned detector, no candidate stage), "heat-cnn" (its peaks judged by
+    the patch network) or "yolo" / "frcnn" (a box detector, autoscope.boxes).
+    `threshold` defaults to the model's own.
     """
     threshold = threshold_for(model, threshold)
     img, mask, ox, oy = _prepare(image_bgr, crop_to_fov, normalise_stain)
     if model == "heatmap":
         scorer = scorer or _heatmap_scorer()
         pts, scores = scorer.peaks(img, mask)
+        return [Parasite(float(x) + ox, float(y) + oy, 0.0, float(s))
+                for (x, y), s in zip(pts, scores) if s >= threshold]
+    if model in BOX_MODELS:
+        scorer = scorer or _box_scorer(model)
+        pts, scores = scorer.detections(img, mask)
         return [Parasite(float(x) + ox, float(y) + oy, 0.0, float(s))
                 for (x, y), s in zip(pts, scores) if s >= threshold]
     if model == "heat-cnn":

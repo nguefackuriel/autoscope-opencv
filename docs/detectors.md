@@ -122,3 +122,61 @@ One layout trap worth knowing: `data/download.py` extracts to
 `data/raw/` directly. `splits.patient_root()` resolves either and raises if it
 finds neither, because the alternative is a run that reports a split of zero
 patients and an F1 of 0.000 without ever saying why.
+
+## 11 September: wired into the pipeline, and the target as it stands
+
+Merged with `develop` (chains 3 to 5, the white cell gate, the decision
+rule). Three things changed around the method above; the method itself did
+not.
+
+**The target moved.** On the same 50 held-out patients, 99 images, 2 per
+patient (`docs/results-parasites.md` §15b): the shipped pair reads
+precision 0.814, recall 0.783, **F1 0.798**, count bias −3.8%, at
+threshold 0.53; the heat-map pairs of §16 reach F1 0.852 to 0.862 and are
+not shipped, because a detector enters `develop` on four numbers at once:
+density error per slide through the WHO protocol (25.7%), parasite bias
+on the 1 000 to 10 000/µL band (+9.6%), false parasites per clean field
+(0.06, floor 19/µL) and the limit of detection by dilution (500/µL). F1
+is the first number, not the last.
+
+**The pipeline runs a box detector like any other model.** The tiling,
+the dedupe and the two backends moved from `detector_eval.py` into
+`autoscope.boxes` (`BoxScorer`), and `parasites.find_parasites` /
+`counter.count_field` take `model="yolo"` or `"frcnn"` with `--weights`
+(or `AUTOSCOPE_YOLO_WEIGHTS`). So the whole re-measure is one line, in a
+venv that has torch:
+
+```
+make setup-detect
+SKIP_TRAIN=1 MODEL=yolo WEIGHTS=models/yolo26/best.pt PY=../.venv-detect/bin/python bash eval/chain.sh
+```
+
+It rescores the calibration and held-out patients, chooses the threshold
+by the count-matching rule (`choose_threshold.py`, the count that equals
+every annotated parasite on the 20 calibration patients, not best F1),
+then the held-out detector table, the 609 held-out fields, the agent
+replay, the 1 141 clean fields, the decision rule, the design sweep and
+the dilution. Results land in the canonical files; keep them under a
+`_yolo` suffix if the shipped pair stays shipped (see
+`results-parasites.md` §16b for the convention).
+
+**Clean fields are in the export.** `export_detection.py` now cuts
+background tiles from the fit half of the uninfected set
+(`--uninfected-fields`, every field by default, `--clean-tiles` per field).
+Every negative tile before came from an infected image; on a clean field
+the platelets are the whole population, and the patch network's false
+alarms on clean fields fell by a factor of 22 the day they entered its
+training set. The frozen half is never read.
+
+**Validation set**: use the 20 calibration patients
+(`eval/results/calibration_patients.json`) rather than a fresh 80/20 cut,
+so the validation tables line up with the patch network's. `splits.train_val`
+still exists; `--val-file calibration_patients.json` is the convention
+elsewhere.
+
+**Runtime.** These models run in torch and ultralytics. The COOL benchmark
+and the "OpenCV 5" story need the count to run in `cv.dnn`; a YOLO ONNX
+export can, a Faster R-CNN cannot easily. Settle this before spending GPU
+hours on Faster R-CNN. On the laptop (Intel macOS) torch stops at 2.2, so
+`requirements-detect.txt` installs only on Linux or Colab; the pipeline
+side is tested with a fake backend (`tests/test_boxes_runtime.py`).

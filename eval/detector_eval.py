@@ -52,118 +52,13 @@ OUT = Path(__file__).resolve().parent / "results"
 TOLERANCE_PX = 15.0
 
 # Two detections closer than this are the same parasite seen in two overlapping
-# tiles. Parasites are rarely within 20 px of each other, and the chromatin dot
-# is ~10 px, so 12 merges duplicates without merging neighbours.
-DEDUPE_PX = 12.0
+# tiles; the tiling, the dedupe and the backends live in autoscope.boxes since
+# 11 September 2026, so the pipeline (parasites.find_parasites, the chain) runs
+# a detector exactly the way this scorer does.
+from autoscope.boxes import (DEDUPE_PX, Detection, FrcnnBackend, YoloBackend,  # noqa: E402,F401
+                             dedupe, detect_field, tile_origins)
 
 SWEEP = [0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60, 0.70]
-
-
-class Detection:
-    """Carries .x and .y so wbc_eval.match can consume it unchanged."""
-
-    __slots__ = ("x", "y", "score")
-
-    def __init__(self, x, y, score):
-        self.x = float(x)
-        self.y = float(y)
-        self.score = float(score)
-
-
-def tile_origins(size, tile, stride):
-    if size <= tile:
-        return [0]
-    starts = list(range(0, size - tile + 1, stride))
-    if starts[-1] != size - tile:
-        starts.append(size - tile)
-    return starts
-
-
-def dedupe(dets, min_sep=DEDUPE_PX):
-    """Greedy suppression by centre distance, strongest detection first.
-
-    Distance rather than IoU because the metric is a centre distance: a
-    duplicate 3 px away would otherwise score as one hit plus one false alarm
-    and quietly halve precision.
-    """
-    kept = []
-    for d in sorted(dets, key=lambda d: -d.score):
-        if all((d.x - k.x) ** 2 + (d.y - k.y) ** 2 > min_sep ** 2 for k in kept):
-            kept.append(d)
-    return kept
-
-
-class YoloBackend:
-    name = "yolo"
-
-    def __init__(self, weights):
-        from ultralytics import YOLO
-        self.model = YOLO(weights)
-
-    def __call__(self, tiles, conf):
-        out = self.model.predict(tiles, conf=conf, verbose=False)
-        results = []
-        for r in out:
-            b = r.boxes
-            if b is None or len(b) == 0:
-                results.append(np.zeros((0, 5), np.float32))
-                continue
-            xyxy = b.xyxy.cpu().numpy()
-            scores = b.conf.cpu().numpy().reshape(-1, 1)
-            results.append(np.hstack([xyxy, scores]).astype(np.float32))
-        return results
-
-
-class FrcnnBackend:
-    name = "frcnn"
-
-    def __init__(self, weights, device=None):
-        import torch
-        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "train"))
-        from frcnn_model import build_model
-        self.torch = torch
-        self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
-        self.model = build_model(num_classes=2)
-        state = torch.load(weights, map_location=self.device)
-        self.model.load_state_dict(state["model"] if "model" in state else state)
-        self.model.to(self.device).eval()
-
-    def __call__(self, tiles, conf):
-        torch = self.torch
-        batch = [torch.from_numpy(cv.cvtColor(t, cv.COLOR_BGR2RGB))
-                 .permute(2, 0, 1).float().div(255.0).to(self.device) for t in tiles]
-        with torch.no_grad():
-            preds = self.model(batch)
-        results = []
-        for p in preds:
-            keep = p["scores"] >= conf
-            xyxy = p["boxes"][keep].cpu().numpy()
-            scores = p["scores"][keep].cpu().numpy().reshape(-1, 1)
-            if len(xyxy) == 0:
-                results.append(np.zeros((0, 5), np.float32))
-            else:
-                results.append(np.hstack([xyxy, scores]).astype(np.float32))
-        return results
-
-
-def detect_field(backend, prepared, mask, tile, stride, conf, batch=8, min_fov=0.9):
-    """Run the detector over one whole field and return deduplicated centres."""
-    height, width = prepared.shape[:2]
-    crops, offsets = [], []
-    for oy in tile_origins(height, tile, stride):
-        for ox in tile_origins(width, tile, stride):
-            if float((mask[oy:oy + tile, ox:ox + tile] > 0).mean()) < min_fov:
-                continue
-            crops.append(prepared[oy:oy + tile, ox:ox + tile])
-            offsets.append((ox, oy))
-
-    dets = []
-    for i in range(0, len(crops), batch):
-        chunk, chunk_off = crops[i:i + batch], offsets[i:i + batch]
-        for arr, (ox, oy) in zip(backend(chunk, conf), chunk_off):
-            for x1, y1, x2, y2, score in arr:
-                dets.append(Detection((x1 + x2) / 2 + ox, (y1 + y2) / 2 + oy, score))
-    return dedupe(dets)
 
 
 def evaluate(backend, patients, per_patient, seed, tile, stride, thresholds):
@@ -280,10 +175,12 @@ def main():
     for t, r in sorted(report.items()):
         print(f"{t:>5} {r['precision']:>7.3f} {r['recall']:>7.3f} "
               f"{r['f1']:>7.3f} {r['count_bias_pct']:>+8.1f}")
-    print("\npatch CNN on the same held-out patients, at its shipped 0.75 threshold:")
-    print("  precision 0.790  recall 0.739  F1 0.763  count bias -6.4%")
+    print("\nthe shipped pair on the same held-out patients (docs/results-parasites.md 15b):")
+    print("  precision 0.814  recall 0.783  F1 0.798  count bias -3.8%  (99 images, 2 per patient)")
     print("  A better F1 with a worse count bias is not a better detector: the")
-    print("  count is the denominator of every density.")
+    print("  count is the denominator of every density. And F1 alone does not ship:")
+    print("  run SKIP_TRAIN=1 MODEL=yolo WEIGHTS=<best> bash eval/chain.sh for the")
+    print("  density per slide, the sparse band, the clean fields and the limit of detection.")
     print(f"written to {OUT / f'detector_eval_{tag}.json'}")
 
 

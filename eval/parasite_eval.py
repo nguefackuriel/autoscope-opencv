@@ -34,7 +34,7 @@ SWEEP = [0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85]
 
 
 def evaluate(per_patient: int, seed: int, holdout: bool, threshold: float,
-             max_patients: int | None = None, model: str = "cnn") -> dict:
+             max_patients: int | None = None, model: str = "cnn", weights=None) -> dict:
     rng = random.Random(seed)
     patients = sorted(p for p in RAW.iterdir() if p.is_dir() and p.name.startswith("TF"))
     if holdout:
@@ -45,7 +45,7 @@ def evaluate(per_patient: int, seed: int, holdout: bool, threshold: float,
         patients = patients[:max_patients]
 
     from autoscope.parasites import load_scorer
-    scorer = load_scorer(model)
+    scorer = load_scorer(model, weights)
     rows = []
     for patient in patients:
         candidates = sorted(patient.glob("*.jpg"))
@@ -128,10 +128,11 @@ def main():
     ap.add_argument("--holdout", action="store_true")
     ap.add_argument("--max-patients", type=int, default=None)
     ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--model", choices=["cnn", "hybrid", "mlp", "heatmap", "heat-cnn"], default="cnn")
+    ap.add_argument("--model", choices=["cnn", "hybrid", "mlp", "heatmap", "heat-cnn", "yolo", "frcnn"], default="cnn")
+    ap.add_argument("--weights", default=None, help="box detectors: the weights file")
     args = ap.parse_args()
 
-    report = evaluate(args.per_patient, args.seed, args.holdout, args.threshold, args.max_patients, args.model)
+    report = evaluate(args.per_patient, args.seed, args.holdout, args.threshold, args.max_patients, args.model, args.weights)
     OUT.mkdir(exist_ok=True)
     (OUT / f"parasite_eval_{args.tag}.json").write_text(json.dumps(report, indent=2))
     print(f"\n{report['images']} images, {report['patients']} patients, "

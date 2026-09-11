@@ -155,3 +155,167 @@ def boxes_for(top: np.ndarray, centres) -> tuple[list[Box], list[int]]:
             boxes.append(b)
             kept.append(i)
     return boxes, kept
+
+
+# ---------------------------------------------------------------------------
+# Running a trained box detector on a whole field, 11 September 2026.
+#
+# Moved here from eval/detector_eval.py so the pipeline can call a detector
+# the way it calls the patch network or the heat map: parasites.find_parasites
+# (model="yolo" or "frcnn") and counter.count_field take a BoxScorer, and
+# SKIP_TRAIN=1 MODEL=yolo WEIGHTS=... bash eval/chain.sh measures every number
+# a shipped detector is judged on. torch and ultralytics are imported inside
+# the backends, so the runtime venv never pays for them unless a box model is
+# asked for.
+# ---------------------------------------------------------------------------
+
+TILE_PX = 640        # what the detectors were trained on (export_detection.py)
+STRIDE_PX = 512      # 128 px of overlap, so a parasite cut by one tile edge is whole in the next
+DEDUPE_PX = 12.0     # two detections closer than this are the same parasite seen in two tiles
+DETECT_FLOOR = 0.05  # confidence below which a detection is not even a candidate
+MIN_FOV = 0.9        # a tile has to be this much inside the eyepiece disc
+
+
+class Detection:
+    """Carries .x and .y so wbc_eval.match can consume it unchanged."""
+
+    __slots__ = ("x", "y", "score")
+
+    def __init__(self, x, y, score):
+        self.x = float(x)
+        self.y = float(y)
+        self.score = float(score)
+
+
+def tile_origins(size: int, tile: int, stride: int) -> list[int]:
+    """Tile starts covering `size`, with the last one flush against the edge."""
+    if size <= tile:
+        return [0]
+    starts = list(range(0, size - tile + 1, stride))
+    if starts[-1] != size - tile:
+        starts.append(size - tile)
+    return starts
+
+
+def dedupe(dets: list[Detection], min_sep: float = DEDUPE_PX) -> list[Detection]:
+    """Greedy suppression by centre distance, strongest detection first.
+
+    Distance rather than IoU because the metric is a centre distance: a
+    duplicate 3 px away would otherwise score as one hit plus one false alarm
+    and quietly halve precision.
+    """
+    kept: list[Detection] = []
+    for d in sorted(dets, key=lambda d: -d.score):
+        if all((d.x - k.x) ** 2 + (d.y - k.y) ** 2 > min_sep ** 2 for k in kept):
+            kept.append(d)
+    return kept
+
+
+def detect_field(backend, prepared: np.ndarray, mask: np.ndarray, tile: int = TILE_PX,
+                 stride: int = STRIDE_PX, conf: float = DETECT_FLOOR, batch: int = 8,
+                 min_fov: float = MIN_FOV) -> list[Detection]:
+    """Run a detector over one whole field, tile by tile, and return
+    deduplicated centres in the field's own coordinates.
+
+    `backend(tiles, conf)` takes a list of BGR tiles and returns, per tile, an
+    (n, 5) array of x1, y1, x2, y2, score.
+    """
+    height, width = prepared.shape[:2]
+    crops, offsets = [], []
+    for oy in tile_origins(height, tile, stride):
+        for ox in tile_origins(width, tile, stride):
+            if float((mask[oy:oy + tile, ox:ox + tile] > 0).mean()) < min_fov:
+                continue
+            crops.append(prepared[oy:oy + tile, ox:ox + tile])
+            offsets.append((ox, oy))
+
+    dets: list[Detection] = []
+    for i in range(0, len(crops), batch):
+        chunk, chunk_off = crops[i:i + batch], offsets[i:i + batch]
+        for arr, (ox, oy) in zip(backend(chunk, conf), chunk_off):
+            for x1, y1, x2, y2, score in arr:
+                dets.append(Detection((x1 + x2) / 2 + ox, (y1 + y2) / 2 + oy, score))
+    return dedupe(dets)
+
+
+class YoloBackend:
+    name = "yolo"
+
+    def __init__(self, weights):
+        from ultralytics import YOLO   # only when a box model is asked for
+        self.model = YOLO(str(weights))
+
+    def __call__(self, tiles, conf):
+        out = self.model.predict(tiles, conf=conf, verbose=False)
+        results = []
+        for r in out:
+            b = r.boxes
+            if b is None or len(b) == 0:
+                results.append(np.zeros((0, 5), np.float32))
+                continue
+            xyxy = b.xyxy.cpu().numpy()
+            scores = b.conf.cpu().numpy().reshape(-1, 1)
+            results.append(np.hstack([xyxy, scores]).astype(np.float32))
+        return results
+
+
+class FrcnnBackend:
+    name = "frcnn"
+
+    def __init__(self, weights, device=None):
+        import sys
+        from pathlib import Path
+        import torch
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "train"))
+        from frcnn_model import build_model
+        self.torch = torch
+        self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
+        self.model = build_model(num_classes=2)
+        state = torch.load(weights, map_location=self.device)
+        self.model.load_state_dict(state["model"] if "model" in state else state)
+        self.model.to(self.device).eval()
+
+    def __call__(self, tiles, conf):
+        torch = self.torch
+        batch = [torch.from_numpy(cv.cvtColor(t, cv.COLOR_BGR2RGB))
+                 .permute(2, 0, 1).float().div(255.0).to(self.device) for t in tiles]
+        with torch.no_grad():
+            preds = self.model(batch)
+        results = []
+        for p in preds:
+            keep = p["scores"] >= conf
+            xyxy = p["boxes"][keep].cpu().numpy()
+            scores = p["scores"][keep].cpu().numpy().reshape(-1, 1)
+            if len(xyxy) == 0:
+                results.append(np.zeros((0, 5), np.float32))
+            else:
+                results.append(np.hstack([xyxy, scores]).astype(np.float32))
+        return results
+
+
+class BoxScorer:
+    """A trained box detector as the pipeline sees it: a field in, parasite
+    centres with a confidence out. Same shape as parasites.HeatmapScorer, so
+    find_parasites and count_field treat the two alike."""
+
+    BACKENDS = {"yolo": YoloBackend, "frcnn": FrcnnBackend}
+
+    def __init__(self, backend, tile: int = TILE_PX, stride: int = STRIDE_PX):
+        self.backend = backend
+        self.tile = tile
+        self.stride = stride
+
+    @classmethod
+    def load(cls, kind: str, weights, tile: int = TILE_PX, stride: int = STRIDE_PX) -> "BoxScorer":
+        if kind not in cls.BACKENDS:
+            raise ValueError(f"unknown box detector {kind!r}, expected one of {sorted(cls.BACKENDS)}")
+        return cls(cls.BACKENDS[kind](weights), tile, stride)
+
+    def detections(self, prepared: np.ndarray, mask: np.ndarray,
+                   floor: float = DETECT_FLOOR) -> tuple[np.ndarray, np.ndarray]:
+        """(n, 2) xy centres in `prepared`'s coordinates, and their confidences."""
+        dets = detect_field(self.backend, prepared, mask, self.tile, self.stride, floor)
+        if not dets:
+            return np.zeros((0, 2), np.float32), np.zeros(0, np.float32)
+        return (np.array([[d.x, d.y] for d in dets], np.float32),
+                np.array([d.score for d in dets], np.float32))

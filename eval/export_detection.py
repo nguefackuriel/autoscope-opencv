@@ -69,7 +69,8 @@ def boxes_in_tile(all_boxes, ox, oy, tile, edge=1):
     return kept
 
 
-def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov):
+def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
+           uninfected_fields=0, clean_tiles=2, max_patients=0):
     root = splits.patient_root()
     train_ids, val_ids = splits.train_val(seed=seed)
     wanted = {p: "train" for p in train_ids}
@@ -89,7 +90,9 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov)
     negatives_kept = Counter()
     sides = []
 
-    for patient in sorted(wanted):
+    for n_pat, patient in enumerate(sorted(wanted), 1):
+        if max_patients and n_pat > max_patients:
+            break
         # Belt and braces. The split says these are fit patients, but a bug
         # that leaked a held-out patient into training would silently
         # invalidate every number, so it is checked rather than trusted.
@@ -173,6 +176,43 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov)
         done = stats["tiles_train"] + stats["tiles_val"]
         print(f"  {patient} ({subset}): {done} tiles so far")
 
+    # Clean fields from the FIT half of the uninfected set, all background.
+    # Every negative above came from an infected image, where a platelet next
+    # to a parasite is rare and a platelet on its own is the whole population
+    # of a clean field. Chain 3 (docs/results-parasites.md section 15) divided
+    # the clean-field false alarms by 22 by adding them to the patch network's
+    # training set; a box detector needs the same lesson. Train subset only:
+    # the other 25 uninfected patients are the frozen specificity test and are
+    # never read here.
+    if uninfected_fields:
+        split = json.loads((Path(__file__).resolve().parent / "results" / "uninfected_split.json").read_text())
+        uroot = Path(__file__).resolve().parents[1] / "data" / "raw" / "NIH-NLM-ThickBloodSmearsU" / "Uninfected Patients"
+        n_clean = 0
+        for pat in split["fit"]:
+            for path in sorted((uroot / pat / "tiled").glob("*.tiff")):
+                if uninfected_fields > 0 and n_clean >= uninfected_fields:
+                    break
+                image = cv.imread(str(path), cv.IMREAD_COLOR)
+                if image is None:
+                    continue
+                n_clean += 1
+                prepared, mask, _, _ = par._prepare(image, True, True)
+                height, width = prepared.shape[:2]
+                origins = [(ox, oy) for oy in tile_origins(height, tile, stride)
+                           for ox in tile_origins(width, tile, stride)
+                           if float((mask[oy:oy + tile, ox:ox + tile] > 0).mean()) >= min_fov]
+                for ox, oy in rng.sample(origins, min(clean_tiles, len(origins))):
+                    crop = prepared[oy:oy + tile, ox:ox + tile]
+                    name = f"{pat}_{path.stem}_{ox}_{oy}.jpg"
+                    cv.imwrite(str(out / "images" / "train" / name), crop, [cv.IMWRITE_JPEG_QUALITY, 95])
+                    (out / "labels" / "train" / (name[:-4] + ".txt")).write_text("")
+                    coco["train"]["images"].append({"id": img_id, "file_name": name, "width": tile, "height": tile})
+                    img_id += 1
+                    stats["tiles_train"] += 1
+                    stats["tiles_clean"] += 1
+        stats["clean_fields"] = n_clean
+        print(f"  + {n_clean} clean fields from {len(split['fit'])} uninfected fit patients, {stats['tiles_clean']} background tiles")
+
     (out / "annotations").mkdir(exist_ok=True)
     for sub in ("train", "val"):
         (out / "annotations" / f"instances_{sub}.json").write_text(
@@ -202,6 +242,8 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov)
         "box_side_p10_px": float(np.percentile(sides, 10)) if sides else None,
         "box_side_p90_px": float(np.percentile(sides, 90)) if sides else None,
         "negative_tiles_kept": dict(negatives_kept),
+        "clean_fields": stats.get("clean_fields", 0),
+        "clean_tiles": stats.get("tiles_clean", 0),
         "counts": dict(stats),
     }
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2))
@@ -220,13 +262,18 @@ def main():
                     help="skip tiles less than this fraction inside the disc")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default="data/derived/detect")
+    ap.add_argument("--uninfected-fields", type=int, default=-1,
+                    help="clean fields from the fit half of the uninfected set, as background tiles; -1 = every field (569), 0 = none")
+    ap.add_argument("--clean-tiles", type=int, default=2, help="background tiles cut from each clean field")
+    ap.add_argument("--max-patients", type=int, default=0, help="smoke tests")
     args = ap.parse_args()
 
     out = Path(args.out)
     if not out.is_absolute():
         out = Path(__file__).resolve().parents[1] / out
     m = export(args.images_per_patient, args.tile, args.stride, out,
-               args.seed, args.negative_ratio, args.min_fov)
+               args.seed, args.negative_ratio, args.min_fov,
+               args.uninfected_fields, args.clean_tiles, args.max_patients)
 
     print(f"\ntrain {m['counts'].get('tiles_train', 0)} tiles, "
           f"{m['counts'].get('boxes_train', 0)} boxes")

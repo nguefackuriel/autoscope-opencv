@@ -15,6 +15,8 @@ make setup     # venv + pinned dependencies
 make test      # unit tests
 make bench     # time the OpenCV calls on this machine
 make chain     # retrain the parasite network and re-measure every number (about 7 h)
+               # SKIP_TRAIN=1 MODEL=yolo WEIGHTS=<best.pt> PY=../.venv-detect/bin/python bash eval/chain.sh
+               #   measures a box detector trained elsewhere (docs/detectors.md)
 ```
 
 Dependencies are pinned in `requirements.txt`. The competition asks for pinned
@@ -90,6 +92,8 @@ src/autoscope/
                               decision rule: negative on the noise floor, positive
                               when the interval clears it, settled in one band
   virtual_stage.py            the stage the agent moves around
+  boxes.py                    boxes from the stain for training, and a box
+                              detector (YOLO26, Faster R-CNN) run tile by tile
 src/autoscope/agent/          the seven tools, four policies, the loop
 models/                       the ONNX classifiers cv.dnn loads (committed;
                               `make train-mlp` / `make train-cnn` rebuild them;
