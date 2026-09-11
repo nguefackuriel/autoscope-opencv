@@ -2,32 +2,33 @@
   "out": "parasite_patches_heat_56.npz",
   "patch": 56,
   "mine": true,
-  "candidates": "heatmap",
+  "candidates": "both",
+  "easy_keep_clean": 1.0,
   "hard_min": 0.2,
   "easy_keep": 0.1,
   "miner_model": "parasite_cnn.onnx",
-  "candidate_recall_fit_images": 0.9246,
-  "patches": 72281,
-  "positives": 48692,
+  "candidate_recall_fit_images": 0.948,
+  "patches": 456712,
+  "positives": 49925,
   "by_source": {
     "fit": {
       "images": 986,
-      "candidates": 100386,
-      "kept": 66374,
-      "positives": 47249
+      "candidates": 508996,
+      "kept": 146391,
+      "positives": 48440
     },
     "calibration": {
       "images": 60,
-      "candidates": 3299,
-      "kept": 3299,
-      "positives": 1443
+      "candidates": 24546,
+      "kept": 24546,
+      "positives": 1485
     },
     "clean": {
       "images": 569,
-      "candidates": 23355,
-      "kept": 2608,
+      "candidates": 285779,
+      "kept": 285775,
       "positives": 0
     }
   },
-  "minutes": 32.9
+  "minutes": 58.3
 }

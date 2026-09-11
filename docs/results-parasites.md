@@ -879,3 +879,58 @@ proposers (a heat peak within 6 px of a top-hat peak is the same
 candidate), so the judge keeps the chain-3 balance and sees the heat
 map's look-alikes as well; and every clean-field candidate kept
 (`--easy-keep-clean 1.0`). Same 20 epochs, same rule for the threshold.
+
+### 16d. Chain 5: the judge trained on both proposers is nearly silent on clean fields and detects down to 200/µL, and still over-counts the sparse infected slides
+
+7 September (`chain_2026-09-06_heat-cnn.log` from 20:57 on the 6th;
+judge `models/parasite_cnn_heat_chain5.onnx`, results under
+`_heat-cnn3`). `--candidates both` and every clean-field candidate: 456 712
+patches, 11% positive, 285 775 from clean fields; 20 epochs took fourteen
+hours on the laptop (one sleep, then swapping under a browser).
+Threshold 0.71 on the calibration patients (+0.2%).
+
+| held-out | 15b, shipped | chain 4 judge (16c) | **chain 5 judge** |
+|---|---|---|---|
+| precision / recall / F1, 99 images | 0.814 / 0.783 / 0.798 | 0.899 / 0.828 / 0.862 | 0.864 / 0.840 / 0.852 |
+| 609 images: count bias / MAE | −1.9% / 6.70 | −6.9% / 6.13 | −1.7% / 7.02 |
+| density error, WHO protocol / limits | **25.7%**, −47% to +59% | 25.7%, −46% to +53% | 32.6%, −46% to +115% |
+| every field: error / within 25% | **19.3%** / 70% | 20.1% / 70% | 30.5% / 70% |
+| 1 000 to 10 000/µL: parasite bias | **+9.6%** | +7.4% | +37.0% (TF70 +334%, TF107 +172%, TF81 +205%) |
+| 10 000 to 100 000/µL: error, bias | 16.0%, −3.9% | 14.5%, −9.0% | **11.4%**, −6.8% |
+| agent, real counter (WHO / rule / decision) | **26.5 / 27.2 / 27.4%** | 26.8 / 26.9 / 27.4% | 32.6 / 33.9 / 34.1% |
+| frozen clean half: false parasites per field, fields at zero | 0.06, 95% | 1.01, 46% | **0.01, 99.5%** |
+| noise floor, frozen / fit p95 | 19 / 148/µL | 340 / 1 392/µL | **2 / 23/µL** |
+| limit of detection, 95% sensitivity | 500/µL | 2 000/µL | **200/µL** (82% at 100, 48% at 50) |
+| decision rule, N = 500 | 15/15 negative, 49/50 positive | 15/15, 49/50 | 15/15, 49/50 |
+| decision rule, N = 200, floor 23 to 30/µL (design, fit half) | | | spec 1.00, sens 0.98 |
+
+Two of the plan's hospital numbers moved by a factor of five: a clean
+slide reads two parasites per microlitre, and a 200/µL infection is found
+95 times in 100 where the shipped pair needs 500. And the sparse infected
+slides are the worst they have been: +37% on the band, three slides at
+two to four times their expert count. These are not clean-field
+look-alikes any more, since the clean fields are silent; they are things
+that exist only on infected slides, and section 9 already named the
+possibility that some of them are parasites the annotators did not mark
+on fields where there were few. The count-matching threshold, one number
+for every slide, then sits where the dense slides' under-count balances
+the sparse slides' surplus, and every judge so far has moved that balance
+rather than removed it.
+
+**Averaging judges on the heat map's candidates**, cached scores, held-out
+density error through the protocol: chain 3 + chain 4 judges 23.5%
+(threshold 0.29, limits −42% to +76%); chain 3 + chain 5 25.6%; chain 4 +
+chain 5 27.3%; all three 24.1% (0.43, MAE 5.78, limits −42% to +75%). A
+point or two on the shipped 25.7%, at the cost of two or three judges per
+field; not worth shipping on this margin (`heat_cnn_ensemble.log`).
+
+**Verdict: the top-hat pair of 15b stays shipped.** What the learned
+detector has established: the proposer is better (F1 0.85 to 0.86 with
+any judge), the dense slides are within reach (11.4%), a clean slide can
+be read at 2/µL, and 200/µL can be detected. What stands between that and
+a shipped pair is the sparse infected slides, and the next step is not a
+sixth judge but looking at TF70, TF107 and TF81 with the chain-5 pair the
+way section 13 looked at them, to decide whether their surplus is ours or
+the annotation's; then a threshold or a second stage that knows how sparse
+the slide is, which section 11 could not build on the top-hat's candidates
+and may be buildable on these.
