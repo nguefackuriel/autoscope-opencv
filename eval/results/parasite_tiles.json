@@ -1,0 +1,27 @@
+{
+  "out": "parasite_tiles.npz",
+  "scale": 0.5,
+  "tile": 288,
+  "per_image": 6,
+  "per_clean": 2,
+  "tiles": 8464,
+  "parasites": 25146,
+  "by_source": {
+    "fit": {
+      "images": 986,
+      "tiles": 5916,
+      "parasites": 22128
+    },
+    "calibration": {
+      "images": 235,
+      "tiles": 1410,
+      "parasites": 3018
+    },
+    "clean": {
+      "images": 569,
+      "tiles": 1138,
+      "parasites": 0
+    }
+  },
+  "minutes": 11.0
+}

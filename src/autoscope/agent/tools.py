@@ -13,7 +13,8 @@ from typing import Callable, Protocol
 
 import numpy as np
 
-from autoscope.density import Density, density, should_stop
+from autoscope.density import (FLOOR_PER_UL_DEFAULT, NEGATIVE_WBC_MIN, SETTLE_CI_WIDTH, Decision, Density,
+                               density, should_stop, should_stop_decision)
 from autoscope.quality import FieldQuality, assess_field
 from autoscope.virtual_stage import Frame, VirtualStage
 
@@ -38,6 +39,7 @@ class Tools:
         self.wbc = 0
         self.fields_read = 0
         self.escalation: str | None = None
+        self.decision: Decision | None = None   # set by the decision rule when it stops
         self._frame: Frame = stage.current()
 
     # --- the six that read OpenCV output ---
@@ -71,6 +73,19 @@ class Tools:
             target_ci_width=target_ci_width,
             min_fields=min_fields,
         )
+
+    def decide_call(self, floor_per_ul: float = FLOOR_PER_UL_DEFAULT,
+                    negative_wbc_min: int = NEGATIVE_WBC_MIN,
+                    target_ci_width: float = 0.20, min_fields: int = 5,
+                    settle_ci_width: float = SETTLE_CI_WIDTH) -> tuple[bool, str]:
+        """The decision-driven rule: negative on the noise floor, positive
+        when the interval clears it, settled when it sits in one band.
+        The call is kept on `self.decision` so the harness can score it."""
+        stop, why, decision = should_stop_decision(
+            self.estimate_parasitaemia(), self.fields_read, floor_per_ul, negative_wbc_min,
+            target_ci_width=target_ci_width, min_fields=min_fields, settle_ci_width=settle_ci_width)
+        self.decision = decision
+        return stop, why
 
     # --- the two that act ---
 

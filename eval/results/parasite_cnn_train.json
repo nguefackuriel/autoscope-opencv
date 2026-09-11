@@ -1,128 +1,152 @@
 {
-  "patches": 128432,
-  "positives": 10651,
-  "patients": 100,
+  "patches": 200868,
+  "positives": 47573,
+  "patients": 125,
   "epochs": 20,
   "folds": 5,
   "val_patients": 20,
-  "crop": 32,
+  "val_file": "calibration_patients.json",
+  "validation_patient_list": [
+    "TF103_235",
+    "TF109_258",
+    "TF112_CJ10",
+    "TF118_1532",
+    "TF120_1552",
+    "TF129_S535",
+    "TF131_S532",
+    "TF135_US14",
+    "TF13_C71P32",
+    "TF143_CT4",
+    "TF33_Sc570",
+    "TF39_CT2",
+    "TF3N_536",
+    "TF65_CS33",
+    "TF67_US14",
+    "TF71_Scr559",
+    "TF83_BD2_97",
+    "TF8_C58P19",
+    "TF91_15_9A",
+    "TF93_209"
+  ],
+  "crop": 48,
+  "stored_patch": 56,
   "validation_patients": [
     {
       "threshold": 0.2,
-      "precision": 0.4001,
-      "recall": 0.9484,
-      "f1": 0.5628,
-      "count_bias_pct": 137.07
+      "precision": 0.5345,
+      "recall": 0.9414,
+      "f1": 0.6818,
+      "count_bias_pct": 60.06
     },
     {
       "threshold": 0.25,
-      "precision": 0.4262,
-      "recall": 0.9444,
-      "f1": 0.5873,
-      "count_bias_pct": 121.6
+      "precision": 0.5636,
+      "recall": 0.9224,
+      "f1": 0.6997,
+      "count_bias_pct": 48.71
     },
     {
       "threshold": 0.3,
-      "precision": 0.4512,
-      "recall": 0.9355,
-      "f1": 0.6088,
-      "count_bias_pct": 107.33
+      "precision": 0.5903,
+      "recall": 0.8998,
+      "f1": 0.7129,
+      "count_bias_pct": 38.52
     },
     {
       "threshold": 0.35,
-      "precision": 0.4752,
-      "recall": 0.9275,
-      "f1": 0.6284,
-      "count_bias_pct": 95.17
+      "precision": 0.6171,
+      "recall": 0.8793,
+      "f1": 0.7253,
+      "count_bias_pct": 29.48
     },
     {
       "threshold": 0.4,
-      "precision": 0.4943,
-      "recall": 0.9154,
-      "f1": 0.642,
-      "count_bias_pct": 85.17
+      "precision": 0.6427,
+      "recall": 0.8567,
+      "f1": 0.7344,
+      "count_bias_pct": 21.14
     },
     {
       "threshold": 0.45,
-      "precision": 0.5112,
-      "recall": 0.9049,
-      "f1": 0.6533,
-      "count_bias_pct": 77.03
+      "precision": 0.673,
+      "recall": 0.825,
+      "f1": 0.7413,
+      "count_bias_pct": 11.39
     },
     {
       "threshold": 0.5,
-      "precision": 0.5332,
-      "recall": 0.892,
-      "f1": 0.6675,
-      "count_bias_pct": 67.28
+      "precision": 0.7089,
+      "recall": 0.7819,
+      "f1": 0.7436,
+      "count_bias_pct": 0.23
     },
     {
       "threshold": 0.55,
-      "precision": 0.5557,
-      "recall": 0.8759,
-      "f1": 0.68,
-      "count_bias_pct": 57.61
+      "precision": 0.744,
+      "recall": 0.7241,
+      "f1": 0.7339,
+      "count_bias_pct": -11.57
     },
     {
       "threshold": 0.6,
-      "precision": 0.5764,
-      "recall": 0.8574,
-      "f1": 0.6893,
-      "count_bias_pct": 48.75
+      "precision": 0.7899,
+      "recall": 0.6422,
+      "f1": 0.7084,
+      "count_bias_pct": -26.12
     },
     {
       "threshold": 0.65,
-      "precision": 0.6036,
-      "recall": 0.8308,
-      "f1": 0.6992,
-      "count_bias_pct": 37.63
+      "precision": 0.8235,
+      "recall": 0.5829,
+      "f1": 0.6826,
+      "count_bias_pct": -35.68
     },
     {
       "threshold": 0.7,
-      "precision": 0.6291,
-      "recall": 0.7969,
-      "f1": 0.7032,
-      "count_bias_pct": 26.67
+      "precision": 0.8488,
+      "recall": 0.5229,
+      "f1": 0.6472,
+      "count_bias_pct": -44.02
     },
     {
       "threshold": 0.75,
-      "precision": 0.6589,
-      "recall": 0.7317,
-      "f1": 0.6934,
-      "count_bias_pct": 11.04
+      "precision": 0.8745,
+      "recall": 0.4573,
+      "f1": 0.6006,
+      "count_bias_pct": -52.48
     },
     {
       "threshold": 0.8,
-      "precision": 0.6916,
-      "recall": 0.6793,
-      "f1": 0.6854,
-      "count_bias_pct": -1.77
+      "precision": 0.9085,
+      "recall": 0.3994,
+      "f1": 0.5549,
+      "count_bias_pct": -60.05
     },
     {
       "threshold": 0.85,
-      "precision": 0.7426,
-      "recall": 0.6044,
-      "f1": 0.6664,
-      "count_bias_pct": -18.61
+      "precision": 0.9231,
+      "recall": 0.3303,
+      "f1": 0.4865,
+      "count_bias_pct": -67.49
     },
     {
       "threshold": 0.9,
-      "precision": 0.7863,
-      "recall": 0.5012,
-      "f1": 0.6122,
-      "count_bias_pct": -36.26
+      "precision": 0.9403,
+      "recall": 0.2555,
+      "f1": 0.4018,
+      "count_bias_pct": -75.31
     }
   ],
   "input_mean_bgr": [
-    210.03542116645383,
-    172.2972359156986,
-    193.55739734353588
+    68.47843170166016,
+    68.47843170166016,
+    68.47843170166016
   ],
   "input_std_bgr": [
-    12.511801881958638,
-    28.03341898851651,
-    18.474192983080002
+    93.66190338134766,
+    92.32289123535156,
+    93.73968505859375
   ],
   "hybrid": false,
-  "patches_file": "parasite_patches_x3.npz"
+  "patches_file": "parasite_patches_mined_56.npz"
 }

@@ -57,9 +57,12 @@ fit set.
 
 ## Two hard rules that protect the results
 
-1. **The Tanzania set stays untouched.** No threshold fitted on it, no model
-   trained on it, no peeking at its numbers until the pipeline is frozen. The
-   generalisation claim in the final report depends on this.
+1. **The test sets stay untouched.** Tanzania, the NLM uninfected set and the
+   NLM *P. vivax* set: no threshold fitted on them, no model trained on them,
+   no peeking at their numbers until the pipeline is frozen. The
+   generalisation and specificity claims in the final report depend on this.
+   The 50 held-out NLM patients have already been consulted for model
+   choices, so they are a validation set now, and the report will say so.
 2. **Published numbers come from held-out patients.** The fit set flatters by
    construction; we quote it only next to the held-out figure, never alone.
 

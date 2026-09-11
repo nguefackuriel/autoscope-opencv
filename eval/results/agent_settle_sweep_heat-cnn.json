@@ -1,0 +1,170 @@
+[
+  {
+    "settle_ci": 1.0,
+    "arm": "decision/truth",
+    "patients": 50,
+    "fields_read_total": 282,
+    "fields_read_median": 5.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.3729,
+    "reached_target": 11,
+    "density_bias_pct": -0.73,
+    "density_loa_pct": [
+      -24.0,
+      29.6
+    ],
+    "density_mape_pct": 10.9,
+    "escalated": 6,
+    "compared_on": 50,
+    "called_positive": 49,
+    "called_negative": 0,
+    "band_settled": 43
+  },
+  {
+    "settle_ci": 1.0,
+    "arm": "decision/found",
+    "patients": 50,
+    "fields_read_total": 303,
+    "fields_read_median": 5.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.3863,
+    "reached_target": 11,
+    "density_bias_pct": -8.7,
+    "density_loa_pct": [
+      -49.4,
+      64.8
+    ],
+    "density_mape_pct": 30.6,
+    "escalated": 9,
+    "compared_on": 50,
+    "called_positive": 49,
+    "called_negative": 0,
+    "band_settled": 41
+  },
+  {
+    "settle_ci": 0.5,
+    "arm": "decision/truth",
+    "patients": 50,
+    "fields_read_total": 361,
+    "fields_read_median": 5.5,
+    "fields_available_total": 609,
+    "ci_width_median": 0.3729,
+    "reached_target": 11,
+    "density_bias_pct": -1.35,
+    "density_loa_pct": [
+      -19.1,
+      20.3
+    ],
+    "density_mape_pct": 7.7,
+    "escalated": 13,
+    "compared_on": 50,
+    "called_positive": 49,
+    "called_negative": 0,
+    "band_settled": 42
+  },
+  {
+    "settle_ci": 0.5,
+    "arm": "decision/found",
+    "patients": 50,
+    "fields_read_total": 353,
+    "fields_read_median": 5.5,
+    "fields_available_total": 609,
+    "ci_width_median": 0.3863,
+    "reached_target": 11,
+    "density_bias_pct": -8.48,
+    "density_loa_pct": [
+      -50.0,
+      67.4
+    ],
+    "density_mape_pct": 31.0,
+    "escalated": 13,
+    "compared_on": 50,
+    "called_positive": 49,
+    "called_negative": 0,
+    "band_settled": 41
+  },
+  {
+    "settle_ci": 0.3,
+    "arm": "decision/truth",
+    "patients": 50,
+    "fields_read_total": 440,
+    "fields_read_median": 8.5,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2939,
+    "reached_target": 11,
+    "density_bias_pct": -1.03,
+    "density_loa_pct": [
+      -14.0,
+      14.0
+    ],
+    "density_mape_pct": 4.7,
+    "escalated": 23,
+    "compared_on": 50,
+    "called_positive": 49,
+    "called_negative": 0,
+    "band_settled": 42
+  },
+  {
+    "settle_ci": 0.3,
+    "arm": "decision/found",
+    "patients": 50,
+    "fields_read_total": 448,
+    "fields_read_median": 9.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2947,
+    "reached_target": 11,
+    "density_bias_pct": -8.63,
+    "density_loa_pct": [
+      -49.2,
+      64.4
+    ],
+    "density_mape_pct": 29.6,
+    "escalated": 24,
+    "compared_on": 50,
+    "called_positive": 49,
+    "called_negative": 0,
+    "band_settled": 40
+  },
+  {
+    "settle_ci": 0.2,
+    "arm": "decision/truth",
+    "patients": 50,
+    "fields_read_total": 494,
+    "fields_read_median": 9.5,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2576,
+    "reached_target": 14,
+    "density_bias_pct": -0.63,
+    "density_loa_pct": [
+      -11.0,
+      11.0
+    ],
+    "density_mape_pct": 2.8,
+    "escalated": 37,
+    "compared_on": 50,
+    "called_positive": 49,
+    "called_negative": 0,
+    "band_settled": 41
+  },
+  {
+    "settle_ci": 0.2,
+    "arm": "decision/found",
+    "patients": 50,
+    "fields_read_total": 491,
+    "fields_read_median": 9.0,
+    "fields_available_total": 609,
+    "ci_width_median": 0.2684,
+    "reached_target": 14,
+    "density_bias_pct": -8.38,
+    "density_loa_pct": [
+      -49.2,
+      65.1
+    ],
+    "density_mape_pct": 29.6,
+    "escalated": 36,
+    "compared_on": 50,
+    "called_positive": 49,
+    "called_negative": 0,
+    "band_settled": 38
+  }
+]

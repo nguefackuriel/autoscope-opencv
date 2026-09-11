@@ -14,6 +14,7 @@ Needs Python 3.11 or newer, and [uv](https://docs.astral.sh/uv/).
 make setup     # venv + pinned dependencies
 make test      # unit tests
 make bench     # time the OpenCV calls on this machine
+make chain     # retrain the parasite network and re-measure every number (about 7 h)
 ```
 
 Dependencies are pinned in `requirements.txt`. The competition asks for pinned
@@ -52,6 +53,19 @@ fitted on it, no model gets trained on it, and nobody looks at its numbers until
 the pipeline is frozen. A held-out set you have already peeked at is not a
 held-out set, and the generalisation claim in the report depends on this.
 
+Two more NLM sets, same group, fetched by `data/download_nlm_extra.py`:
+
+```
+make data-uninfected  # thick smears from uninfected patients, 2.5 GB
+make data-vivax       # thick smears from 150 P. vivax patients, 5.0 GB
+```
+
+Every patient in the 150-patient set is infected, so nothing measured so far
+says what the pipeline does on a clean slide. The uninfected set is where
+specificity comes from; the P. vivax set is the other-species failure case.
+Both are frozen test material like Tanzania: run once, at the end, nothing
+fitted on them.
+
 A third option exists if we want more: the Lacuna Malaria datasets from Ghana
 and Uganda, `doi:10.7910/DVN/VEADSE`, CC BY 4.0, 7.2 GB in rar archives.
 
@@ -62,6 +76,7 @@ docs/proposal/                what we submitted, and what the data has since
                               contradicted
 docs/reference/               the WHO reports our numbers come from
 docs/data-notes.md            what the data actually is. Read before coding.
+docs/plan-2026-09-02.md       where we stand, what is wrong, the plan to 26 Oct
 src/autoscope/
   fov.py                      find the round eyepiece view. Runs first.
   quality.py         stage 1  is this field worth counting
@@ -71,12 +86,16 @@ src/autoscope/
   segmentation.py    stage 4  find the white cells (the denominator)
   parasites.py       stage 5  find the parasites (the numerator): top-hat
                               peaks, then an ONNX classifier through cv.dnn
-  density.py         stage 6  count to parasites/uL with an error bar
+  density.py         stage 6  count to parasites/uL with an error bar, and the
+                              decision rule: negative on the noise floor, positive
+                              when the interval clears it, settled in one band
   virtual_stage.py            the stage the agent moves around
-src/autoscope/agent/          the seven tools, three policies, the loop
+src/autoscope/agent/          the seven tools, four policies, the loop
 models/                       the ONNX classifiers cv.dnn loads (committed;
-                              `make train-mlp` / `make train-cnn` rebuild them)
+                              `make train-mlp` / `make train-cnn` rebuild them;
+                              parasite_cnn_chain2_32px.onnx is the 32 px control)
 bench/cool_bench.py           COOL against stock, medians and IQR
+bench/field_profile.py        the real pipeline, stage by stage, on real fields
 eval/                         surveys, sweeps, and held-out scoring. Every
                               number in docs/results-*.md comes from here.
 infra/                        Terraform for AWS                 (to write)
@@ -94,7 +113,9 @@ python bench/cool_bench.py --runs 100 --label c7i-stock    # x86, stock OpenCV 5
 
 Every result file records `kleidicv_in_build` and the CPU baseline, so a reader
 can tell which build produced the numbers. The COOL claim is worth exactly as
-much as that line.
+much as that line. Mind that the pinned pip wheel on aarch64 already ships KleidiCV
+(CI prints `Custom HAL: KleidiCV (ver 26.03)`), so "stock" on Arm means a
+build with KleidiCV switched off, not the wheel.
 
 Note for local work: both our laptops are x86, so nothing here can time Arm.
 Correctness on Arm can be checked with `docker buildx --platform linux/arm64`,

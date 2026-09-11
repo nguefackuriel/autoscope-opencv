@@ -1,0 +1,3106 @@
+{
+  "threshold": 0.71,
+  "uninfected_patients": 25,
+  "which": "frozen test half",
+  "infected_patients": 50,
+  "per_field": {
+    "fields": 572,
+    "clean_fields_pct": 99.5,
+    "false_parasites_mean": 0.01,
+    "false_parasites_median": 0.0,
+    "false_parasites_p90": 0.0,
+    "false_parasites_max": 1,
+    "false_per_200_wbc_pooled": 0.04,
+    "wbc_per_field_mean": 23.8
+  },
+  "arms": {
+    "who-200": {
+      "uninfected_per_ul_median": 0.0,
+      "uninfected_per_ul_p90": 0.0,
+      "uninfected_per_ul_max": 37.2,
+      "uninfected_called_negative_by_rule": 0,
+      "uninfected_escalated": 0,
+      "uninfected_fields_read": 220,
+      "uninfected_fields_available": 572,
+      "auc": 1.0,
+      "cutoffs": [
+        {
+          "cutoff_per_ul": 0,
+          "specificity": 0.92,
+          "sensitivity": 1.0
+        },
+        {
+          "cutoff_per_ul": 100,
+          "specificity": 1.0,
+          "sensitivity": 1.0
+        },
+        {
+          "cutoff_per_ul": 200,
+          "specificity": 1.0,
+          "sensitivity": 1.0
+        },
+        {
+          "cutoff_per_ul": 500,
+          "specificity": 1.0,
+          "sensitivity": 1.0
+        },
+        {
+          "cutoff_per_ul": 1000,
+          "specificity": 1.0,
+          "sensitivity": 0.96
+        },
+        {
+          "cutoff_per_ul": 2000,
+          "specificity": 1.0,
+          "sensitivity": 0.86
+        }
+      ],
+      "runs_uninfected": [
+        {
+          "patient": "TF203_HT9",
+          "policy": "who-200",
+          "fields_read": 9,
+          "fields_available": 25,
+          "wbc": 215,
+          "parasites": 1,
+          "per_ul": 37.2,
+          "stopped_because": "counted 215 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF205_HT16",
+          "policy": "who-200",
+          "fields_read": 12,
+          "fields_available": 33,
+          "wbc": 202,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 202 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF207_15_43",
+          "policy": "who-200",
+          "fields_read": 10,
+          "fields_available": 22,
+          "wbc": 212,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 212 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF209_15_39",
+          "policy": "who-200",
+          "fields_read": 11,
+          "fields_available": 26,
+          "wbc": 218,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 218 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF214_15_50",
+          "policy": "who-200",
+          "fields_read": 11,
+          "fields_available": 24,
+          "wbc": 217,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 217 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF217_15_54",
+          "policy": "who-200",
+          "fields_read": 11,
+          "fields_available": 23,
+          "wbc": 220,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 220 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF218_15_55",
+          "policy": "who-200",
+          "fields_read": 8,
+          "fields_available": 24,
+          "wbc": 213,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 213 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF219_15_57",
+          "policy": "who-200",
+          "fields_read": 7,
+          "fields_available": 18,
+          "wbc": 220,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 220 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF220_15_56",
+          "policy": "who-200",
+          "fields_read": 8,
+          "fields_available": 22,
+          "wbc": 201,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 201 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF223_15_59",
+          "policy": "who-200",
+          "fields_read": 7,
+          "fields_available": 18,
+          "wbc": 204,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 204 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF225_15_62",
+          "policy": "who-200",
+          "fields_read": 9,
+          "fields_available": 22,
+          "wbc": 213,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 213 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF226_15_63",
+          "policy": "who-200",
+          "fields_read": 9,
+          "fields_available": 22,
+          "wbc": 225,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 225 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF227_15_64",
+          "policy": "who-200",
+          "fields_read": 11,
+          "fields_available": 33,
+          "wbc": 209,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 209 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF230_15_67",
+          "policy": "who-200",
+          "fields_read": 4,
+          "fields_available": 11,
+          "wbc": 207,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 207 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF231_15_68",
+          "policy": "who-200",
+          "fields_read": 8,
+          "fields_available": 24,
+          "wbc": 201,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 201 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF232_15_69",
+          "policy": "who-200",
+          "fields_read": 9,
+          "fields_available": 24,
+          "wbc": 208,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 208 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF233_15_70",
+          "policy": "who-200",
+          "fields_read": 11,
+          "fields_available": 30,
+          "wbc": 201,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 201 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF236_15_75",
+          "policy": "who-200",
+          "fields_read": 12,
+          "fields_available": 33,
+          "wbc": 212,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 212 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF238_15_77",
+          "policy": "who-200",
+          "fields_read": 11,
+          "fields_available": 29,
+          "wbc": 208,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 208 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF240_15_79",
+          "policy": "who-200",
+          "fields_read": 8,
+          "fields_available": 22,
+          "wbc": 217,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 217 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF242_15_84",
+          "policy": "who-200",
+          "fields_read": 10,
+          "fields_available": 27,
+          "wbc": 215,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 215 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF243_15_78R",
+          "policy": "who-200",
+          "fields_read": 8,
+          "fields_available": 21,
+          "wbc": 223,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 223 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF245_W9B45",
+          "policy": "who-200",
+          "fields_read": 5,
+          "fields_available": 14,
+          "wbc": 224,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 224 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF246_W14B52",
+          "policy": "who-200",
+          "fields_read": 5,
+          "fields_available": 12,
+          "wbc": 218,
+          "parasites": 1,
+          "per_ul": 36.7,
+          "stopped_because": "counted 218 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF249_W9B63",
+          "policy": "who-200",
+          "fields_read": 6,
+          "fields_available": 13,
+          "wbc": 222,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "counted 222 white cells, target was 200",
+          "escalated": false,
+          "call": null,
+          "band": null
+        }
+      ]
+    },
+    "rule-based": {
+      "uninfected_per_ul_median": 0.0,
+      "uninfected_per_ul_p90": 0.0,
+      "uninfected_per_ul_max": 17.1,
+      "uninfected_called_negative_by_rule": 22,
+      "uninfected_escalated": 3,
+      "uninfected_fields_read": 239,
+      "uninfected_fields_available": 572,
+      "auc": 1.0,
+      "cutoffs": [
+        {
+          "cutoff_per_ul": 0,
+          "specificity": 0.92,
+          "sensitivity": 1.0
+        },
+        {
+          "cutoff_per_ul": 100,
+          "specificity": 1.0,
+          "sensitivity": 1.0
+        },
+        {
+          "cutoff_per_ul": 200,
+          "specificity": 1.0,
+          "sensitivity": 1.0
+        },
+        {
+          "cutoff_per_ul": 500,
+          "specificity": 1.0,
+          "sensitivity": 1.0
+        },
+        {
+          "cutoff_per_ul": 1000,
+          "specificity": 1.0,
+          "sensitivity": 0.96
+        },
+        {
+          "cutoff_per_ul": 2000,
+          "specificity": 1.0,
+          "sensitivity": 0.88
+        }
+      ],
+      "runs_uninfected": [
+        {
+          "patient": "TF203_HT9",
+          "policy": "rule-based",
+          "fields_read": 21,
+          "fields_available": 25,
+          "wbc": 468,
+          "parasites": 1,
+          "per_ul": 17.1,
+          "stopped_because": "ran out of slide before the error bar was tight enough",
+          "escalated": true,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF205_HT16",
+          "policy": "rule-based",
+          "fields_read": 12,
+          "fields_available": 33,
+          "wbc": 202,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 202 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF207_15_43",
+          "policy": "rule-based",
+          "fields_read": 10,
+          "fields_available": 22,
+          "wbc": 212,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 212 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF209_15_39",
+          "policy": "rule-based",
+          "fields_read": 11,
+          "fields_available": 26,
+          "wbc": 218,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 218 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF214_15_50",
+          "policy": "rule-based",
+          "fields_read": 11,
+          "fields_available": 24,
+          "wbc": 217,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 217 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF217_15_54",
+          "policy": "rule-based",
+          "fields_read": 11,
+          "fields_available": 23,
+          "wbc": 220,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 220 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF218_15_55",
+          "policy": "rule-based",
+          "fields_read": 8,
+          "fields_available": 24,
+          "wbc": 213,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 213 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF219_15_57",
+          "policy": "rule-based",
+          "fields_read": 7,
+          "fields_available": 18,
+          "wbc": 220,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 220 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF220_15_56",
+          "policy": "rule-based",
+          "fields_read": 8,
+          "fields_available": 22,
+          "wbc": 201,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 201 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF223_15_59",
+          "policy": "rule-based",
+          "fields_read": 7,
+          "fields_available": 18,
+          "wbc": 204,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 204 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF225_15_62",
+          "policy": "rule-based",
+          "fields_read": 9,
+          "fields_available": 22,
+          "wbc": 213,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 213 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF226_15_63",
+          "policy": "rule-based",
+          "fields_read": 9,
+          "fields_available": 22,
+          "wbc": 225,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 225 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF227_15_64",
+          "policy": "rule-based",
+          "fields_read": 11,
+          "fields_available": 33,
+          "wbc": 207,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 207 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF230_15_67",
+          "policy": "rule-based",
+          "fields_read": 5,
+          "fields_available": 11,
+          "wbc": 249,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 249 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF231_15_68",
+          "policy": "rule-based",
+          "fields_read": 8,
+          "fields_available": 24,
+          "wbc": 201,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 201 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF232_15_69",
+          "policy": "rule-based",
+          "fields_read": 9,
+          "fields_available": 24,
+          "wbc": 208,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 208 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF233_15_70",
+          "policy": "rule-based",
+          "fields_read": 11,
+          "fields_available": 30,
+          "wbc": 201,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 201 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF236_15_75",
+          "policy": "rule-based",
+          "fields_read": 12,
+          "fields_available": 33,
+          "wbc": 212,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 212 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF238_15_77",
+          "policy": "rule-based",
+          "fields_read": 11,
+          "fields_available": 29,
+          "wbc": 208,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 208 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF240_15_79",
+          "policy": "rule-based",
+          "fields_read": 8,
+          "fields_available": 22,
+          "wbc": 217,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 217 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF242_15_84",
+          "policy": "rule-based",
+          "fields_read": 10,
+          "fields_available": 27,
+          "wbc": 215,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 215 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF243_15_78R",
+          "policy": "rule-based",
+          "fields_read": 8,
+          "fields_available": 21,
+          "wbc": 223,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 223 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF245_W9B45",
+          "policy": "rule-based",
+          "fields_read": 4,
+          "fields_available": 14,
+          "wbc": 183,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "ran out of slide before the error bar was tight enough",
+          "escalated": true,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF246_W14B52",
+          "policy": "rule-based",
+          "fields_read": 12,
+          "fields_available": 12,
+          "wbc": 521,
+          "parasites": 1,
+          "per_ul": 15.4,
+          "stopped_because": "hit the 12 field ceiling, handing to a person",
+          "escalated": true,
+          "call": null,
+          "band": null
+        },
+        {
+          "patient": "TF249_W9B63",
+          "policy": "rule-based",
+          "fields_read": 6,
+          "fields_available": 13,
+          "wbc": 222,
+          "parasites": 0,
+          "per_ul": 0.0,
+          "stopped_because": "no parasites in 222 white cells, which meets the WHO threshold for a negative",
+          "escalated": false,
+          "call": null,
+          "band": null
+        }
+      ]
+    }
+  },
+  "decision": {
+    "floor_per_ul": 22.817427793987452,
+    "negative_wbc_min": 500,
+    "clean_slides": 25,
+    "specificity": 0.6,
+    "clean_called_positive": 0,
+    "clean_to_a_person": 10,
+    "clean_fields_read": 499,
+    "infected_slides": 50,
+    "sensitivity": 0.98,
+    "infected_called_negative": 0,
+    "infected_to_a_person": 1,
+    "infected_band_settled": 40,
+    "infected_fields_read": 444,
+    "sensitivity_by_expert_band": {
+      "0": {
+        "slides": 1,
+        "called_positive": 0
+      },
+      "1": {
+        "slides": 26,
+        "called_positive": 26
+      },
+      "2": {
+        "slides": 22,
+        "called_positive": 22
+      },
+      "3": {
+        "slides": 1,
+        "called_positive": 1
+      }
+    },
+    "runs_uninfected": [
+      {
+        "patient": "TF201_HT6",
+        "policy": "decision",
+        "fields_read": 21,
+        "fields_available": 23,
+        "wbc": 523,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "negative: 0 parasites in 523 white cells reads 0/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF202_HT7",
+        "policy": "decision",
+        "fields_read": 20,
+        "fields_available": 23,
+        "wbc": 517,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "negative: 0 parasites in 517 white cells reads 0/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF204_HT15",
+        "policy": "decision",
+        "fields_read": 25,
+        "fields_available": 26,
+        "wbc": 506,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "negative: 0 parasites in 506 white cells reads 0/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF206_15_27SA",
+        "policy": "decision",
+        "fields_read": 16,
+        "fields_available": 16,
+        "wbc": 534,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "hit the 16 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "undecided",
+        "band": null
+      },
+      {
+        "patient": "TF208_15_38",
+        "policy": "decision",
+        "fields_read": 19,
+        "fields_available": 19,
+        "wbc": 517,
+        "parasites": 1,
+        "per_ul": 15.5,
+        "stopped_because": "hit the 19 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "undecided",
+        "band": null
+      },
+      {
+        "patient": "TF210_15_40",
+        "policy": "decision",
+        "fields_read": 25,
+        "fields_available": 27,
+        "wbc": 510,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "negative: 0 parasites in 510 white cells reads 0/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF211_15_41",
+        "policy": "decision",
+        "fields_read": 28,
+        "fields_available": 31,
+        "wbc": 510,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "negative: 0 parasites in 510 white cells reads 0/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF212_15_44",
+        "policy": "decision",
+        "fields_read": 12,
+        "fields_available": 31,
+        "wbc": 241,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "ran out of slide while skipping unusable fields",
+        "escalated": true,
+        "call": "undecided",
+        "band": null
+      },
+      {
+        "patient": "TF213_15_49",
+        "policy": "decision",
+        "fields_read": 13,
+        "fields_available": 15,
+        "wbc": 473,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "ran out of slide before the error bar was tight enough",
+        "escalated": true,
+        "call": "undecided",
+        "band": null
+      },
+      {
+        "patient": "TF215_15_51",
+        "policy": "decision",
+        "fields_read": 16,
+        "fields_available": 17,
+        "wbc": 492,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "ran out of slide before the error bar was tight enough",
+        "escalated": true,
+        "call": "undecided",
+        "band": null
+      },
+      {
+        "patient": "TF216_15_53",
+        "policy": "decision",
+        "fields_read": 26,
+        "fields_available": 31,
+        "wbc": 504,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "negative: 0 parasites in 504 white cells reads 0/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF221_SE2",
+        "policy": "decision",
+        "fields_read": 11,
+        "fields_available": 17,
+        "wbc": 363,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "ran out of slide while skipping unusable fields",
+        "escalated": true,
+        "call": "undecided",
+        "band": null
+      },
+      {
+        "patient": "TF222_15_58",
+        "policy": "decision",
+        "fields_read": 20,
+        "fields_available": 20,
+        "wbc": 478,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "hit the 20 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "undecided",
+        "band": null
+      },
+      {
+        "patient": "TF224_15_61",
+        "policy": "decision",
+        "fields_read": 10,
+        "fields_available": 12,
+        "wbc": 543,
+        "parasites": 1,
+        "per_ul": 14.7,
+        "stopped_because": "negative: 1 parasites in 543 white cells reads 15/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF228_15_65",
+        "policy": "decision",
+        "fields_read": 23,
+        "fields_available": 24,
+        "wbc": 521,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "negative: 0 parasites in 521 white cells reads 0/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF229_15_66",
+        "policy": "decision",
+        "fields_read": 18,
+        "fields_available": 19,
+        "wbc": 511,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "negative: 0 parasites in 511 white cells reads 0/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF234_15_72",
+        "policy": "decision",
+        "fields_read": 18,
+        "fields_available": 19,
+        "wbc": 464,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "ran out of slide before the error bar was tight enough",
+        "escalated": true,
+        "call": "undecided",
+        "band": null
+      },
+      {
+        "patient": "TF235_15_74",
+        "policy": "decision",
+        "fields_read": 29,
+        "fields_available": 29,
+        "wbc": 539,
+        "parasites": 2,
+        "per_ul": 29.7,
+        "stopped_because": "hit the 29 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "undecided",
+        "band": null
+      },
+      {
+        "patient": "TF237_15_76",
+        "policy": "decision",
+        "fields_read": 23,
+        "fields_available": 25,
+        "wbc": 516,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "negative: 0 parasites in 516 white cells reads 0/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF239_15_78",
+        "policy": "decision",
+        "fields_read": 26,
+        "fields_available": 26,
+        "wbc": 507,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "hit the 26 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "undecided",
+        "band": null
+      },
+      {
+        "patient": "TF241_15_80",
+        "policy": "decision",
+        "fields_read": 31,
+        "fields_available": 33,
+        "wbc": 510,
+        "parasites": 1,
+        "per_ul": 15.7,
+        "stopped_because": "negative: 1 parasites in 510 white cells reads 16/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF244_C1",
+        "policy": "decision",
+        "fields_read": 17,
+        "fields_available": 21,
+        "wbc": 500,
+        "parasites": 1,
+        "per_ul": 16.0,
+        "stopped_because": "negative: 1 parasites in 500 white cells reads 16/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF247_W16B27",
+        "policy": "decision",
+        "fields_read": 8,
+        "fields_available": 11,
+        "wbc": 512,
+        "parasites": 0,
+        "per_ul": 0.0,
+        "stopped_because": "negative: 0 parasites in 512 white cells reads 0/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF248_W14B9A",
+        "policy": "decision",
+        "fields_read": 21,
+        "fields_available": 25,
+        "wbc": 500,
+        "parasites": 1,
+        "per_ul": 16.0,
+        "stopped_because": "negative: 1 parasites in 500 white cells reads 16/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      },
+      {
+        "patient": "TF250_W9B55",
+        "policy": "decision",
+        "fields_read": 23,
+        "fields_available": 29,
+        "wbc": 507,
+        "parasites": 1,
+        "per_ul": 15.8,
+        "stopped_because": "negative: 1 parasites in 507 white cells reads 16/uL, within the 23/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
+        "band": null
+      }
+    ],
+    "runs_infected": [
+      {
+        "patient": "TF101_233",
+        "policy": "decision",
+        "fields_read": 13,
+        "fields_available": 14,
+        "wbc": 203,
+        "parasites": 295,
+        "per_ul": 11625.6,
+        "stopped_because": "positive: 11,626/uL (10,337 to 13,031), above the 23/uL floor, 10 000 to 100 000/uL; error bar 23%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF107_249",
+        "policy": "decision",
+        "fields_read": 14,
+        "fields_available": 14,
+        "wbc": 216,
+        "parasites": 139,
+        "per_ul": 5148.1,
+        "stopped_because": "hit the 14 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF10_C65P26",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 11,
+        "wbc": 93,
+        "parasites": 788,
+        "per_ul": 67784.9,
+        "stopped_because": "positive: 67,785/uL (63,134 to 72,688), above the 23/uL floor, 10 000 to 100 000/uL; error bar 14%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF110_270",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 6,
+        "wbc": 204,
+        "parasites": 323,
+        "per_ul": 12666.7,
+        "stopped_because": "positive: 12,667/uL (11,323 to 14,126), above the 23/uL floor, 10 000 to 100 000/uL; error bar 22%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF111_238",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 12,
+        "wbc": 99,
+        "parasites": 698,
+        "per_ul": 56404.0,
+        "stopped_because": "positive: 56,404/uL (52,297 to 60,748), above the 23/uL floor, 10 000 to 100 000/uL; error bar 15%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF117_R1",
+        "policy": "decision",
+        "fields_read": 6,
+        "fields_available": 8,
+        "wbc": 183,
+        "parasites": 194,
+        "per_ul": 8480.9,
+        "stopped_because": "positive: 8,481/uL (7,329 to 9,762), above the 23/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "escalated": false,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF122_1533R",
+        "policy": "decision",
+        "fields_read": 14,
+        "fields_available": 14,
+        "wbc": 207,
+        "parasites": 74,
+        "per_ul": 2859.9,
+        "stopped_because": "hit the 14 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF123_1542",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 16,
+        "wbc": 82,
+        "parasites": 444,
+        "per_ul": 43317.1,
+        "stopped_because": "positive: 43,317/uL (39,381 to 47,540), above the 23/uL floor, 10 000 to 100 000/uL; error bar 19%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF124_S540",
+        "policy": "decision",
+        "fields_read": 8,
+        "fields_available": 10,
+        "wbc": 189,
+        "parasites": 200,
+        "per_ul": 8465.6,
+        "stopped_because": "positive: 8,466/uL (7,333 to 9,724), above the 23/uL floor, 1 000 to 10 000/uL; error bar 28%",
+        "escalated": false,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF130_S521",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 14,
+        "wbc": 92,
+        "parasites": 649,
+        "per_ul": 56434.8,
+        "stopped_because": "positive: 56,435/uL (52,176 to 60,949), above the 23/uL floor, 10 000 to 100 000/uL; error bar 16%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF132_S527",
+        "policy": "decision",
+        "fields_read": 16,
+        "fields_available": 16,
+        "wbc": 234,
+        "parasites": 311,
+        "per_ul": 10632.5,
+        "stopped_because": "hit the 16 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": null
+      },
+      {
+        "patient": "TF134_US28",
+        "policy": "decision",
+        "fields_read": 15,
+        "fields_available": 16,
+        "wbc": 229,
+        "parasites": 268,
+        "per_ul": 9362.4,
+        "stopped_because": "ran out of slide before the error bar was tight enough",
+        "escalated": true,
+        "call": "positive",
+        "band": null
+      },
+      {
+        "patient": "TF137_US8",
+        "policy": "decision",
+        "fields_read": 11,
+        "fields_available": 11,
+        "wbc": 218,
+        "parasites": 121,
+        "per_ul": 4440.4,
+        "stopped_because": "hit the 11 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF141_CT12",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 10,
+        "wbc": 110,
+        "parasites": 698,
+        "per_ul": 50763.6,
+        "stopped_because": "positive: 50,764/uL (47,067 to 54,673), above the 23/uL floor, 10 000 to 100 000/uL; error bar 15%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF147_R3",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 12,
+        "wbc": 93,
+        "parasites": 756,
+        "per_ul": 65032.3,
+        "stopped_because": "positive: 65,032/uL (60,479 to 69,838), above the 23/uL floor, 10 000 to 100 000/uL; error bar 14%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF150_R5",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 5,
+        "wbc": 306,
+        "parasites": 20,
+        "per_ul": 522.9,
+        "stopped_because": "hit the 5 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "undecided",
+        "band": null
+      },
+      {
+        "patient": "TF15_C87P48",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 21,
+        "wbc": 69,
+        "parasites": 384,
+        "per_ul": 44521.7,
+        "stopped_because": "positive: 44,522/uL (40,180 to 49,205), above the 23/uL floor, 10 000 to 100 000/uL; error bar 20%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF1N_1522",
+        "policy": "decision",
+        "fields_read": 12,
+        "fields_available": 12,
+        "wbc": 247,
+        "parasites": 55,
+        "per_ul": 1781.4,
+        "stopped_because": "hit the 12 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF22_C104P65",
+        "policy": "decision",
+        "fields_read": 11,
+        "fields_available": 11,
+        "wbc": 263,
+        "parasites": 29,
+        "per_ul": 882.1,
+        "stopped_because": "hit the 11 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": null
+      },
+      {
+        "patient": "TF24_C67P28",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 15,
+        "wbc": 81,
+        "parasites": 201,
+        "per_ul": 19851.9,
+        "stopped_because": "positive: 19,852/uL (17,202 to 22,794), above the 23/uL floor, 10 000 to 100 000/uL; error bar 28%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF28W13B15A",
+        "policy": "decision",
+        "fields_read": 10,
+        "fields_available": 10,
+        "wbc": 248,
+        "parasites": 83,
+        "per_ul": 2677.4,
+        "stopped_because": "hit the 10 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF29_15_1_36",
+        "policy": "decision",
+        "fields_read": 10,
+        "fields_available": 10,
+        "wbc": 530,
+        "parasites": 117,
+        "per_ul": 1766.0,
+        "stopped_because": "hit the 10 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF2N_159R",
+        "policy": "decision",
+        "fields_read": 6,
+        "fields_available": 14,
+        "wbc": 102,
+        "parasites": 185,
+        "per_ul": 14509.8,
+        "stopped_because": "positive: 14,510/uL (12,494 to 16,758), above the 23/uL floor, 10 000 to 100 000/uL; error bar 29%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF34_Sc520",
+        "policy": "decision",
+        "fields_read": 16,
+        "fields_available": 16,
+        "wbc": 283,
+        "parasites": 346,
+        "per_ul": 9780.9,
+        "stopped_because": "hit the 16 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": null
+      },
+      {
+        "patient": "TF35_Sc521",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 19,
+        "wbc": 90,
+        "parasites": 291,
+        "per_ul": 25866.7,
+        "stopped_because": "positive: 25,867/uL (22,980 to 29,016), above the 23/uL floor, 10 000 to 100 000/uL; error bar 23%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF36_Sc542",
+        "policy": "decision",
+        "fields_read": 13,
+        "fields_available": 13,
+        "wbc": 243,
+        "parasites": 174,
+        "per_ul": 5728.4,
+        "stopped_because": "hit the 13 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF37_Sc563",
+        "policy": "decision",
+        "fields_read": 11,
+        "fields_available": 14,
+        "wbc": 193,
+        "parasites": 181,
+        "per_ul": 7502.6,
+        "stopped_because": "positive: 7,503/uL (6,449 to 8,679), above the 23/uL floor, 1 000 to 10 000/uL; error bar 30%",
+        "escalated": false,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF38_CT1",
+        "policy": "decision",
+        "fields_read": 9,
+        "fields_available": 9,
+        "wbc": 205,
+        "parasites": 81,
+        "per_ul": 3161.0,
+        "stopped_because": "hit the 9 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF40_UT3",
+        "policy": "decision",
+        "fields_read": 17,
+        "fields_available": 17,
+        "wbc": 220,
+        "parasites": 280,
+        "per_ul": 10181.8,
+        "stopped_because": "hit the 17 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": null
+      },
+      {
+        "patient": "TF41_UT5",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 14,
+        "wbc": 77,
+        "parasites": 831,
+        "per_ul": 86337.7,
+        "stopped_because": "positive: 86,338/uL (80,567 to 92,413), above the 23/uL floor, 10 000 to 100 000/uL; error bar 14%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF46_UW23",
+        "policy": "decision",
+        "fields_read": 14,
+        "fields_available": 14,
+        "wbc": 243,
+        "parasites": 50,
+        "per_ul": 1646.1,
+        "stopped_because": "hit the 14 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF47_UW29",
+        "policy": "decision",
+        "fields_read": 12,
+        "fields_available": 12,
+        "wbc": 221,
+        "parasites": 70,
+        "per_ul": 2533.9,
+        "stopped_because": "hit the 12 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF48_UW31",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 6,
+        "wbc": 160,
+        "parasites": 755,
+        "per_ul": 37750.0,
+        "stopped_because": "positive: 37,750/uL (35,105 to 40,542), above the 23/uL floor, 10 000 to 100 000/uL; error bar 14%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF53_CW41",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 8,
+        "wbc": 153,
+        "parasites": 221,
+        "per_ul": 11555.6,
+        "stopped_because": "positive: 11,556/uL (10,082 to 13,184), above the 23/uL floor, 10 000 to 100 000/uL; error bar 27%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF55_CV4",
+        "policy": "decision",
+        "fields_read": 13,
+        "fields_available": 13,
+        "wbc": 255,
+        "parasites": 127,
+        "per_ul": 3984.3,
+        "stopped_because": "hit the 13 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF58_UT8",
+        "policy": "decision",
+        "fields_read": 12,
+        "fields_available": 18,
+        "wbc": 180,
+        "parasites": 184,
+        "per_ul": 8177.8,
+        "stopped_because": "positive: 8,178/uL (7,039 to 9,449), above the 23/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "escalated": false,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF61_CS20",
+        "policy": "decision",
+        "fields_read": 7,
+        "fields_available": 7,
+        "wbc": 261,
+        "parasites": 345,
+        "per_ul": 10574.7,
+        "stopped_because": "hit the 7 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": null
+      },
+      {
+        "patient": "TF64_US2",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 10,
+        "wbc": 107,
+        "parasites": 517,
+        "per_ul": 38654.2,
+        "stopped_because": "positive: 38,654/uL (35,394 to 42,134), above the 23/uL floor, 10 000 to 100 000/uL; error bar 17%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF6N_527",
+        "policy": "decision",
+        "fields_read": 11,
+        "fields_available": 16,
+        "wbc": 161,
+        "parasites": 235,
+        "per_ul": 11677.0,
+        "stopped_because": "positive: 11,677/uL (10,232 to 13,269), above the 23/uL floor, 10 000 to 100 000/uL; error bar 26%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF70_Scr440",
+        "policy": "decision",
+        "fields_read": 7,
+        "fields_available": 16,
+        "wbc": 111,
+        "parasites": 184,
+        "per_ul": 13261.3,
+        "stopped_because": "positive: 13,261/uL (11,414 to 15,322), above the 23/uL floor, 10 000 to 100 000/uL; error bar 29%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF73_Scr538",
+        "policy": "decision",
+        "fields_read": 16,
+        "fields_available": 16,
+        "wbc": 236,
+        "parasites": 130,
+        "per_ul": 4406.8,
+        "stopped_because": "hit the 16 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF75_CO7",
+        "policy": "decision",
+        "fields_read": 7,
+        "fields_available": 10,
+        "wbc": 174,
+        "parasites": 203,
+        "per_ul": 9333.3,
+        "stopped_because": "ran out of slide while skipping unusable fields",
+        "escalated": true,
+        "call": "positive",
+        "band": null
+      },
+      {
+        "patient": "TF77_CO15",
+        "policy": "decision",
+        "fields_read": 9,
+        "fields_available": 11,
+        "wbc": 211,
+        "parasites": 296,
+        "per_ul": 11222.7,
+        "stopped_because": "ran out of slide before the error bar was tight enough",
+        "escalated": true,
+        "call": "positive",
+        "band": null
+      },
+      {
+        "patient": "TF81_W8B5",
+        "policy": "decision",
+        "fields_read": 10,
+        "fields_available": 10,
+        "wbc": 249,
+        "parasites": 122,
+        "per_ul": 3919.7,
+        "stopped_because": "hit the 10 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF82_15_1_9",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 12,
+        "wbc": 97,
+        "parasites": 205,
+        "per_ul": 16907.2,
+        "stopped_because": "positive: 16,907/uL (14,672 to 19,387), above the 23/uL floor, 10 000 to 100 000/uL; error bar 28%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF89_CM5",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 7,
+        "wbc": 111,
+        "parasites": 680,
+        "per_ul": 49009.0,
+        "stopped_because": "positive: 49,009/uL (45,394 to 52,835), above the 23/uL floor, 10 000 to 100 000/uL; error bar 15%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF90_15_60",
+        "policy": "decision",
+        "fields_read": 9,
+        "fields_available": 9,
+        "wbc": 239,
+        "parasites": 37,
+        "per_ul": 1238.5,
+        "stopped_because": "hit the 9 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": null
+      },
+      {
+        "patient": "TF94_210",
+        "policy": "decision",
+        "fields_read": 7,
+        "fields_available": 7,
+        "wbc": 239,
+        "parasites": 62,
+        "per_ul": 2075.3,
+        "stopped_because": "hit the 7 field ceiling, handing to a person",
+        "escalated": true,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      },
+      {
+        "patient": "TF95_223",
+        "policy": "decision",
+        "fields_read": 5,
+        "fields_available": 14,
+        "wbc": 90,
+        "parasites": 215,
+        "per_ul": 19111.1,
+        "stopped_because": "positive: 19,111/uL (16,642 to 21,844), above the 23/uL floor, 10 000 to 100 000/uL; error bar 27%",
+        "escalated": false,
+        "call": "positive",
+        "band": "10 000 to 100 000/uL"
+      },
+      {
+        "patient": "TF97_CS31",
+        "policy": "decision",
+        "fields_read": 8,
+        "fields_available": 9,
+        "wbc": 185,
+        "parasites": 186,
+        "per_ul": 8043.2,
+        "stopped_because": "positive: 8,043/uL (6,929 to 9,286), above the 23/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "escalated": false,
+        "call": "positive",
+        "band": "1 000 to 10 000/uL"
+      }
+    ]
+  },
+  "decision_sweep": [
+    {
+      "floor_per_ul": 15,
+      "negative_wbc_min": 200,
+      "clean_slides": 25,
+      "specificity": 0.96,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 1,
+      "clean_fields_read": 269,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 23,
+      "negative_wbc_min": 200,
+      "clean_slides": 25,
+      "specificity": 1.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 0,
+      "clean_fields_read": 244,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 30,
+      "negative_wbc_min": 200,
+      "clean_slides": 25,
+      "specificity": 1.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 0,
+      "clean_fields_read": 232,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 300,
+      "negative_wbc_min": 200,
+      "clean_slides": 25,
+      "specificity": 1.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 0,
+      "clean_fields_read": 223,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 500,
+      "negative_wbc_min": 200,
+      "clean_slides": 25,
+      "specificity": 1.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 0,
+      "clean_fields_read": 223,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 800,
+      "negative_wbc_min": 200,
+      "clean_slides": 25,
+      "specificity": 1.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 0,
+      "clean_fields_read": 223,
+      "infected_slides": 50,
+      "sensitivity": 0.94,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 3,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 24
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 1000,
+      "negative_wbc_min": 200,
+      "clean_slides": 25,
+      "specificity": 1.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 0,
+      "clean_fields_read": 223,
+      "infected_slides": 50,
+      "sensitivity": 0.94,
+      "infected_called_negative": 1,
+      "infected_to_a_person": 2,
+      "infected_band_settled": 40,
+      "infected_fields_read": 442,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 24
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 1500,
+      "negative_wbc_min": 200,
+      "clean_slides": 25,
+      "specificity": 1.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 0,
+      "clean_fields_read": 223,
+      "infected_slides": 50,
+      "sensitivity": 0.86,
+      "infected_called_negative": 3,
+      "infected_to_a_person": 4,
+      "infected_band_settled": 36,
+      "infected_fields_read": 436,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 20
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 15,
+      "negative_wbc_min": 300,
+      "clean_slides": 25,
+      "specificity": 0.88,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 3,
+      "clean_fields_read": 362,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 23,
+      "negative_wbc_min": 300,
+      "clean_slides": 25,
+      "specificity": 0.92,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 2,
+      "clean_fields_read": 337,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 30,
+      "negative_wbc_min": 300,
+      "clean_slides": 25,
+      "specificity": 0.96,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 1,
+      "clean_fields_read": 320,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 300,
+      "negative_wbc_min": 300,
+      "clean_slides": 25,
+      "specificity": 0.96,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 1,
+      "clean_fields_read": 320,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 500,
+      "negative_wbc_min": 300,
+      "clean_slides": 25,
+      "specificity": 0.96,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 1,
+      "clean_fields_read": 320,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 800,
+      "negative_wbc_min": 300,
+      "clean_slides": 25,
+      "specificity": 0.96,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 1,
+      "clean_fields_read": 320,
+      "infected_slides": 50,
+      "sensitivity": 0.94,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 3,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 24
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 1000,
+      "negative_wbc_min": 300,
+      "clean_slides": 25,
+      "specificity": 0.96,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 1,
+      "clean_fields_read": 320,
+      "infected_slides": 50,
+      "sensitivity": 0.94,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 3,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 24
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 1500,
+      "negative_wbc_min": 300,
+      "clean_slides": 25,
+      "specificity": 0.96,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 1,
+      "clean_fields_read": 320,
+      "infected_slides": 50,
+      "sensitivity": 0.86,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 7,
+      "infected_band_settled": 36,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 20
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 15,
+      "negative_wbc_min": 400,
+      "clean_slides": 25,
+      "specificity": 0.8,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 5,
+      "clean_fields_read": 443,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 23,
+      "negative_wbc_min": 400,
+      "clean_slides": 25,
+      "specificity": 0.88,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 3,
+      "clean_fields_read": 416,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 30,
+      "negative_wbc_min": 400,
+      "clean_slides": 25,
+      "specificity": 0.88,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 3,
+      "clean_fields_read": 416,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 300,
+      "negative_wbc_min": 400,
+      "clean_slides": 25,
+      "specificity": 0.92,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 2,
+      "clean_fields_read": 409,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 500,
+      "negative_wbc_min": 400,
+      "clean_slides": 25,
+      "specificity": 0.92,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 2,
+      "clean_fields_read": 409,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 800,
+      "negative_wbc_min": 400,
+      "clean_slides": 25,
+      "specificity": 0.92,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 2,
+      "clean_fields_read": 409,
+      "infected_slides": 50,
+      "sensitivity": 0.94,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 3,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 24
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 1000,
+      "negative_wbc_min": 400,
+      "clean_slides": 25,
+      "specificity": 0.92,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 2,
+      "clean_fields_read": 409,
+      "infected_slides": 50,
+      "sensitivity": 0.94,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 3,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 24
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 1500,
+      "negative_wbc_min": 400,
+      "clean_slides": 25,
+      "specificity": 0.92,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 2,
+      "clean_fields_read": 409,
+      "infected_slides": 50,
+      "sensitivity": 0.86,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 7,
+      "infected_band_settled": 36,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 20
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 15,
+      "negative_wbc_min": 500,
+      "clean_slides": 25,
+      "specificity": 0.52,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 12,
+      "clean_fields_read": 507,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 23,
+      "negative_wbc_min": 500,
+      "clean_slides": 25,
+      "specificity": 0.6,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 10,
+      "clean_fields_read": 499,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 30,
+      "negative_wbc_min": 500,
+      "clean_slides": 25,
+      "specificity": 0.6,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 10,
+      "clean_fields_read": 499,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 300,
+      "negative_wbc_min": 500,
+      "clean_slides": 25,
+      "specificity": 0.64,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 9,
+      "clean_fields_read": 497,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 500,
+      "negative_wbc_min": 500,
+      "clean_slides": 25,
+      "specificity": 0.64,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 9,
+      "clean_fields_read": 497,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 800,
+      "negative_wbc_min": 500,
+      "clean_slides": 25,
+      "specificity": 0.64,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 9,
+      "clean_fields_read": 497,
+      "infected_slides": 50,
+      "sensitivity": 0.94,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 3,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 24
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 1000,
+      "negative_wbc_min": 500,
+      "clean_slides": 25,
+      "specificity": 0.64,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 9,
+      "clean_fields_read": 497,
+      "infected_slides": 50,
+      "sensitivity": 0.94,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 3,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 24
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 1500,
+      "negative_wbc_min": 500,
+      "clean_slides": 25,
+      "specificity": 0.64,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 9,
+      "clean_fields_read": 497,
+      "infected_slides": 50,
+      "sensitivity": 0.86,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 7,
+      "infected_band_settled": 36,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 20
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 15,
+      "negative_wbc_min": 1000,
+      "clean_slides": 25,
+      "specificity": 0.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 25,
+      "clean_fields_read": 538,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 23,
+      "negative_wbc_min": 1000,
+      "clean_slides": 25,
+      "specificity": 0.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 25,
+      "clean_fields_read": 538,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 30,
+      "negative_wbc_min": 1000,
+      "clean_slides": 25,
+      "specificity": 0.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 25,
+      "clean_fields_read": 538,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 300,
+      "negative_wbc_min": 1000,
+      "clean_slides": 25,
+      "specificity": 0.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 25,
+      "clean_fields_read": 538,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 500,
+      "negative_wbc_min": 1000,
+      "clean_slides": 25,
+      "specificity": 0.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 25,
+      "clean_fields_read": 538,
+      "infected_slides": 50,
+      "sensitivity": 0.98,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 1,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 26
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 800,
+      "negative_wbc_min": 1000,
+      "clean_slides": 25,
+      "specificity": 0.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 25,
+      "clean_fields_read": 538,
+      "infected_slides": 50,
+      "sensitivity": 0.94,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 3,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 24
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 1000,
+      "negative_wbc_min": 1000,
+      "clean_slides": 25,
+      "specificity": 0.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 25,
+      "clean_fields_read": 538,
+      "infected_slides": 50,
+      "sensitivity": 0.94,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 3,
+      "infected_band_settled": 40,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 24
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    },
+    {
+      "floor_per_ul": 1500,
+      "negative_wbc_min": 1000,
+      "clean_slides": 25,
+      "specificity": 0.0,
+      "clean_called_positive": 0,
+      "clean_to_a_person": 25,
+      "clean_fields_read": 538,
+      "infected_slides": 50,
+      "sensitivity": 0.86,
+      "infected_called_negative": 0,
+      "infected_to_a_person": 7,
+      "infected_band_settled": 36,
+      "infected_fields_read": 444,
+      "sensitivity_by_expert_band": {
+        "0": {
+          "slides": 1,
+          "called_positive": 0
+        },
+        "1": {
+          "slides": 26,
+          "called_positive": 20
+        },
+        "2": {
+          "slides": 22,
+          "called_positive": 22
+        },
+        "3": {
+          "slides": 1,
+          "called_positive": 1
+        }
+      }
+    }
+  ],
+  "floor": {
+    "fit_half_slides": 25,
+    "fit_half_per_ul": {
+      "median": 0.0,
+      "p90": 15.134424096266255,
+      "p95": 22.817427793987452,
+      "max": 29.68460111317254
+    }
+  },
+  "decision_scored_on": "fit half (design)",
+  "infected_expert_density_percentiles": {
+    "0": 282.9581993569132,
+    "10": 1731.7732439737847,
+    "25": 2965.2276354792125,
+    "50": 9076.961791720842
+  }
+}

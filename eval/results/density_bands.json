@@ -1,0 +1,525 @@
+{
+  "threshold": 0.53,
+  "slides": 50,
+  "mean_abs_density_error_pct": 19.3,
+  "within_25_pct": 70.0,
+  "within_50_pct": 90.0,
+  "bands": {
+    "under 1 000": {
+      "slides": 1,
+      "mean_abs_error_pct": 1.6,
+      "within_25_pct": 100.0,
+      "parasite_bias_pct": 0.0,
+      "wbc_bias_pct": -1.6
+    },
+    "1 000 to 10 000": {
+      "slides": 26,
+      "mean_abs_error_pct": 23.3,
+      "within_25_pct": 62.0,
+      "parasite_bias_pct": 9.6,
+      "wbc_bias_pct": 3.9
+    },
+    "10 000 to 100 000": {
+      "slides": 22,
+      "mean_abs_error_pct": 16.0,
+      "within_25_pct": 77.0,
+      "parasite_bias_pct": -3.9,
+      "wbc_bias_pct": 4.0
+    },
+    "over 100 000": {
+      "slides": 1,
+      "mean_abs_error_pct": 5.6,
+      "within_25_pct": 100.0,
+      "parasite_bias_pct": 0.7,
+      "wbc_bias_pct": 6.6
+    }
+  },
+  "worst": [
+    {
+      "patient": "TF70_Scr440",
+      "expert_per_ul": 3552,
+      "found_per_ul": 6578,
+      "density_error_pct": 85.2,
+      "parasite_error_pct": 124.2,
+      "wbc_error_pct": 21.1
+    },
+    {
+      "patient": "TF81_W8B5",
+      "expert_per_ul": 1373,
+      "found_per_ul": 2345,
+      "density_error_pct": 70.8,
+      "parasite_error_pct": 82.5,
+      "wbc_error_pct": 6.9
+    },
+    {
+      "patient": "TF37_Sc563",
+      "expert_per_ul": 4500,
+      "found_per_ul": 7320,
+      "density_error_pct": 62.7,
+      "parasite_error_pct": 75.6,
+      "wbc_error_pct": 7.9
+    },
+    {
+      "patient": "TF124_S540",
+      "expert_per_ul": 12203,
+      "found_per_ul": 5367,
+      "density_error_pct": -56.0,
+      "parasite_error_pct": -55.8,
+      "wbc_error_pct": 0.4
+    },
+    {
+      "patient": "TF134_US28",
+      "expert_per_ul": 13205,
+      "found_per_ul": 6525,
+      "density_error_pct": -50.6,
+      "parasite_error_pct": -47.4,
+      "wbc_error_pct": 6.6
+    },
+    {
+      "patient": "TF1N_1522",
+      "expert_per_ul": 2251,
+      "found_per_ul": 1296,
+      "density_error_pct": -42.4,
+      "parasite_error_pct": -38.5,
+      "wbc_error_pct": 6.9
+    },
+    {
+      "patient": "TF2N_159R",
+      "expert_per_ul": 15930,
+      "found_per_ul": 9195,
+      "density_error_pct": -42.3,
+      "parasite_error_pct": -44.5,
+      "wbc_error_pct": -3.9
+    },
+    {
+      "patient": "TF107_249",
+      "expert_per_ul": 1707,
+      "found_per_ul": 2370,
+      "density_error_pct": 38.9,
+      "parasite_error_pct": 25.5,
+      "wbc_error_pct": -9.6
+    }
+  ],
+  "clean_fields": {
+    "fit": {
+      "fields": 569,
+      "false_per_field_mean": 0.12,
+      "p90": 0.0,
+      "max": 3,
+      "zero_pct": 90.7,
+      "false_per_200_wbc": 0.9,
+      "noise_floor_per_ul": 38
+    },
+    "test": {
+      "fields": 572,
+      "false_per_field_mean": 0.06,
+      "p90": 0.0,
+      "max": 3,
+      "zero_pct": 94.8,
+      "false_per_200_wbc": 0.5,
+      "noise_floor_per_ul": 19
+    }
+  },
+  "per_slide": [
+    {
+      "patient": "TF101_233",
+      "expert_per_ul": 9168,
+      "found_per_ul": 9284,
+      "density_error_pct": 1.3,
+      "parasite_error_pct": -2.3,
+      "wbc_error_pct": -3.5
+    },
+    {
+      "patient": "TF107_249",
+      "expert_per_ul": 1707,
+      "found_per_ul": 2370,
+      "density_error_pct": 38.9,
+      "parasite_error_pct": 25.5,
+      "wbc_error_pct": -9.6
+    },
+    {
+      "patient": "TF10_C65P26",
+      "expert_per_ul": 76987,
+      "found_per_ul": 69806,
+      "density_error_pct": -9.3,
+      "parasite_error_pct": -7.0,
+      "wbc_error_pct": 2.6
+    },
+    {
+      "patient": "TF110_270",
+      "expert_per_ul": 13273,
+      "found_per_ul": 11175,
+      "density_error_pct": -15.8,
+      "parasite_error_pct": -18.0,
+      "wbc_error_pct": -2.7
+    },
+    {
+      "patient": "TF111_238",
+      "expert_per_ul": 56266,
+      "found_per_ul": 51922,
+      "density_error_pct": -7.7,
+      "parasite_error_pct": -1.6,
+      "wbc_error_pct": 6.6
+    },
+    {
+      "patient": "TF117_R1",
+      "expert_per_ul": 7370,
+      "found_per_ul": 7140,
+      "density_error_pct": -3.1,
+      "parasite_error_pct": -7.7,
+      "wbc_error_pct": -4.7
+    },
+    {
+      "patient": "TF122_1533R",
+      "expert_per_ul": 2565,
+      "found_per_ul": 2164,
+      "density_error_pct": -15.6,
+      "parasite_error_pct": -16.4,
+      "wbc_error_pct": -1.0
+    },
+    {
+      "patient": "TF123_1542",
+      "expert_per_ul": 60835,
+      "found_per_ul": 59051,
+      "density_error_pct": -2.9,
+      "parasite_error_pct": -0.4,
+      "wbc_error_pct": 2.6
+    },
+    {
+      "patient": "TF124_S540",
+      "expert_per_ul": 12203,
+      "found_per_ul": 5367,
+      "density_error_pct": -56.0,
+      "parasite_error_pct": -55.8,
+      "wbc_error_pct": 0.4
+    },
+    {
+      "patient": "TF130_S521",
+      "expert_per_ul": 83942,
+      "found_per_ul": 74991,
+      "density_error_pct": -10.7,
+      "parasite_error_pct": -4.2,
+      "wbc_error_pct": 7.2
+    },
+    {
+      "patient": "TF132_S527",
+      "expert_per_ul": 12255,
+      "found_per_ul": 11009,
+      "density_error_pct": -10.2,
+      "parasite_error_pct": -4.5,
+      "wbc_error_pct": 6.4
+    },
+    {
+      "patient": "TF134_US28",
+      "expert_per_ul": 13205,
+      "found_per_ul": 6525,
+      "density_error_pct": -50.6,
+      "parasite_error_pct": -47.4,
+      "wbc_error_pct": 6.6
+    },
+    {
+      "patient": "TF137_US8",
+      "expert_per_ul": 3103,
+      "found_per_ul": 4037,
+      "density_error_pct": 30.1,
+      "parasite_error_pct": 22.2,
+      "wbc_error_pct": -6.0
+    },
+    {
+      "patient": "TF141_CT12",
+      "expert_per_ul": 58505,
+      "found_per_ul": 54250,
+      "density_error_pct": -7.3,
+      "parasite_error_pct": -2.9,
+      "wbc_error_pct": 4.7
+    },
+    {
+      "patient": "TF147_R3",
+      "expert_per_ul": 68235,
+      "found_per_ul": 67692,
+      "density_error_pct": -0.8,
+      "parasite_error_pct": 1.1,
+      "wbc_error_pct": 2.0
+    },
+    {
+      "patient": "TF150_R5",
+      "expert_per_ul": 283,
+      "found_per_ul": 288,
+      "density_error_pct": 1.6,
+      "parasite_error_pct": 0.0,
+      "wbc_error_pct": -1.6
+    },
+    {
+      "patient": "TF15_C87P48",
+      "expert_per_ul": 50700,
+      "found_per_ul": 55248,
+      "density_error_pct": 9.0,
+      "parasite_error_pct": 33.6,
+      "wbc_error_pct": 22.6
+    },
+    {
+      "patient": "TF1N_1522",
+      "expert_per_ul": 2251,
+      "found_per_ul": 1296,
+      "density_error_pct": -42.4,
+      "parasite_error_pct": -38.5,
+      "wbc_error_pct": 6.9
+    },
+    {
+      "patient": "TF22_C104P65",
+      "expert_per_ul": 1106,
+      "found_per_ul": 700,
+      "density_error_pct": -36.7,
+      "parasite_error_pct": -32.4,
+      "wbc_error_pct": 6.9
+    },
+    {
+      "patient": "TF24_C67P28",
+      "expert_per_ul": 21808,
+      "found_per_ul": 24381,
+      "density_error_pct": 11.8,
+      "parasite_error_pct": 24.2,
+      "wbc_error_pct": 11.1
+    },
+    {
+      "patient": "TF28W13B15A",
+      "expert_per_ul": 3724,
+      "found_per_ul": 2806,
+      "density_error_pct": -24.6,
+      "parasite_error_pct": -19.4,
+      "wbc_error_pct": 6.9
+    },
+    {
+      "patient": "TF29_15_1_36",
+      "expert_per_ul": 2190,
+      "found_per_ul": 1947,
+      "density_error_pct": -11.1,
+      "parasite_error_pct": -10.4,
+      "wbc_error_pct": 0.8
+    },
+    {
+      "patient": "TF2N_159R",
+      "expert_per_ul": 15930,
+      "found_per_ul": 9195,
+      "density_error_pct": -42.3,
+      "parasite_error_pct": -44.5,
+      "wbc_error_pct": -3.9
+    },
+    {
+      "patient": "TF34_Sc520",
+      "expert_per_ul": 8292,
+      "found_per_ul": 8792,
+      "density_error_pct": 6.0,
+      "parasite_error_pct": 37.0,
+      "wbc_error_pct": 29.2
+    },
+    {
+      "patient": "TF35_Sc521",
+      "expert_per_ul": 31508,
+      "found_per_ul": 23823,
+      "density_error_pct": -24.4,
+      "parasite_error_pct": -2.1,
+      "wbc_error_pct": 29.5
+    },
+    {
+      "patient": "TF36_Sc542",
+      "expert_per_ul": 5357,
+      "found_per_ul": 5728,
+      "density_error_pct": 6.9,
+      "parasite_error_pct": 13.0,
+      "wbc_error_pct": 5.7
+    },
+    {
+      "patient": "TF37_Sc563",
+      "expert_per_ul": 4500,
+      "found_per_ul": 7320,
+      "density_error_pct": 62.7,
+      "parasite_error_pct": 75.6,
+      "wbc_error_pct": 7.9
+    },
+    {
+      "patient": "TF38_CT1",
+      "expert_per_ul": 2185,
+      "found_per_ul": 2380,
+      "density_error_pct": 8.9,
+      "parasite_error_pct": 3.4,
+      "wbc_error_pct": -5.1
+    },
+    {
+      "patient": "TF40_UT3",
+      "expert_per_ul": 8986,
+      "found_per_ul": 7964,
+      "density_error_pct": -11.4,
+      "parasite_error_pct": -7.6,
+      "wbc_error_pct": 4.3
+    },
+    {
+      "patient": "TF41_UT5",
+      "expert_per_ul": 100528,
+      "found_per_ul": 94938,
+      "density_error_pct": -5.6,
+      "parasite_error_pct": 0.7,
+      "wbc_error_pct": 6.6
+    },
+    {
+      "patient": "TF46_UW23",
+      "expert_per_ul": 1735,
+      "found_per_ul": 1152,
+      "density_error_pct": -33.6,
+      "parasite_error_pct": -28.6,
+      "wbc_error_pct": 7.5
+    },
+    {
+      "patient": "TF47_UW29",
+      "expert_per_ul": 2619,
+      "found_per_ul": 2534,
+      "density_error_pct": -3.3,
+      "parasite_error_pct": -5.4,
+      "wbc_error_pct": -2.2
+    },
+    {
+      "patient": "TF48_UW31",
+      "expert_per_ul": 43586,
+      "found_per_ul": 37118,
+      "density_error_pct": -14.8,
+      "parasite_error_pct": -22.0,
+      "wbc_error_pct": -8.4
+    },
+    {
+      "patient": "TF53_CW41",
+      "expert_per_ul": 12529,
+      "found_per_ul": 11544,
+      "density_error_pct": -7.9,
+      "parasite_error_pct": -9.8,
+      "wbc_error_pct": -2.1
+    },
+    {
+      "patient": "TF55_CV4",
+      "expert_per_ul": 2949,
+      "found_per_ul": 2604,
+      "density_error_pct": -11.7,
+      "parasite_error_pct": -4.6,
+      "wbc_error_pct": 8.1
+    },
+    {
+      "patient": "TF58_UT8",
+      "expert_per_ul": 7360,
+      "found_per_ul": 7810,
+      "density_error_pct": 6.1,
+      "parasite_error_pct": 19.3,
+      "wbc_error_pct": 12.4
+    },
+    {
+      "patient": "TF61_CS20",
+      "expert_per_ul": 10891,
+      "found_per_ul": 10973,
+      "density_error_pct": 0.8,
+      "parasite_error_pct": -4.0,
+      "wbc_error_pct": -4.7
+    },
+    {
+      "patient": "TF64_US2",
+      "expert_per_ul": 42362,
+      "found_per_ul": 44808,
+      "density_error_pct": 5.8,
+      "parasite_error_pct": 4.8,
+      "wbc_error_pct": -1.0
+    },
+    {
+      "patient": "TF6N_527",
+      "expert_per_ul": 9849,
+      "found_per_ul": 10222,
+      "density_error_pct": 3.8,
+      "parasite_error_pct": 7.9,
+      "wbc_error_pct": 4.0
+    },
+    {
+      "patient": "TF70_Scr440",
+      "expert_per_ul": 3552,
+      "found_per_ul": 6578,
+      "density_error_pct": 85.2,
+      "parasite_error_pct": 124.2,
+      "wbc_error_pct": 21.1
+    },
+    {
+      "patient": "TF73_Scr538",
+      "expert_per_ul": 3013,
+      "found_per_ul": 3729,
+      "density_error_pct": 23.7,
+      "parasite_error_pct": 31.0,
+      "wbc_error_pct": 5.8
+    },
+    {
+      "patient": "TF75_CO7",
+      "expert_per_ul": 8215,
+      "found_per_ul": 8175,
+      "density_error_pct": -0.5,
+      "parasite_error_pct": 2.2,
+      "wbc_error_pct": 2.7
+    },
+    {
+      "patient": "TF77_CO15",
+      "expert_per_ul": 11420,
+      "found_per_ul": 8448,
+      "density_error_pct": -26.0,
+      "parasite_error_pct": -27.5,
+      "wbc_error_pct": -2.0
+    },
+    {
+      "patient": "TF81_W8B5",
+      "expert_per_ul": 1373,
+      "found_per_ul": 2345,
+      "density_error_pct": 70.8,
+      "parasite_error_pct": 82.5,
+      "wbc_error_pct": 6.9
+    },
+    {
+      "patient": "TF82_15_1_9",
+      "expert_per_ul": 14744,
+      "found_per_ul": 9763,
+      "density_error_pct": -33.8,
+      "parasite_error_pct": -35.4,
+      "wbc_error_pct": -2.5
+    },
+    {
+      "patient": "TF89_CM5",
+      "expert_per_ul": 55783,
+      "found_per_ul": 55227,
+      "density_error_pct": -1.0,
+      "parasite_error_pct": -5.3,
+      "wbc_error_pct": -4.3
+    },
+    {
+      "patient": "TF90_15_60",
+      "expert_per_ul": 1176,
+      "found_per_ul": 803,
+      "density_error_pct": -31.7,
+      "parasite_error_pct": -31.4,
+      "wbc_error_pct": 0.4
+    },
+    {
+      "patient": "TF94_210",
+      "expert_per_ul": 2009,
+      "found_per_ul": 1305,
+      "density_error_pct": -35.0,
+      "parasite_error_pct": -33.9,
+      "wbc_error_pct": 1.7
+    },
+    {
+      "patient": "TF95_223",
+      "expert_per_ul": 13670,
+      "found_per_ul": 14090,
+      "density_error_pct": 3.1,
+      "parasite_error_pct": 20.1,
+      "wbc_error_pct": 16.5
+    },
+    {
+      "patient": "TF97_CS31",
+      "expert_per_ul": 5427,
+      "found_per_ul": 5333,
+      "density_error_pct": -1.7,
+      "parasite_error_pct": -0.7,
+      "wbc_error_pct": 1.0
+    }
+  ]
+}

@@ -112,3 +112,39 @@ The split-and-merge behaviour, on evidence:
   sank the clump attempt;
 - look at the unmatched detections before assuming they are wrong. Precision is
   0.657, and some of that third may be real cells the annotator passed over.
+
+## 2 September: the statistics were wrong, and the fix is also 10x faster
+
+`measure()` copied the masked pixels into a float32 array and took NumPy's
+mean and standard deviation along axis 0. For a strided reduction over 15
+million values NumPy accumulates naively in float32, and the result was off
+by **0.8 to 6.5 Lab units, by a different amount on every image** (ten
+images checked against a float64 reduction; `cv.meanStdDev` agrees with
+float64 to the third decimal). So the map each image was sent through
+carried a random offset of several units in every channel: the
+"normalisation" was adding noise. The table above, 65 to 89% narrowing, was
+limited by that error, not by the method.
+
+Fixed by taking the statistics with `cv.meanStdDev`, which accumulates in
+float64, and applying the per-channel affine map through a 256-entry
+`cv.LUT` (pixel-identical to the float32 expression, checked by a test).
+Per 2 680 px crop: 1.49 s to 0.14 s. The reference was re-measured with the
+corrected statistics, same 150 patients, one image each:
+
+`mean=(197.8, 139.3, 115.2), std=(24.3, 9.0, 9.7)` (was 194.7, 134.6, 118.8
+/ 24.4, 10.1, 10.0).
+
+| statistic | spread before (IQR) | after | narrowed |
+|---|---|---|---|
+| mean L | 21.90 | 0.15 | **99%** |
+| mean a | 9.93 | 0.16 | **98%** |
+| mean b | 10.00 | 0.11 | **99%** |
+| std L | 6.79 | 0.95 | **86%** |
+| std a | 3.88 | 0.84 | **78%** |
+| std b | 2.98 | 0.54 | **82%** |
+
+The means now land on the reference to a tenth of a unit, which is what a
+colour transfer is supposed to do. Every downstream number (white cells,
+parasites, the agent, specificity) is being re-measured with the corrected
+pipeline; the results files carry the tag `fixedstats` until the docs are
+updated.

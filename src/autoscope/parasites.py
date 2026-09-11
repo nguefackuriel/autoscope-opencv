@@ -85,9 +85,36 @@ CNN_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_cnn.onnx"
 # parasites that never become candidates were missing from both sides and the
 # threshold looked unbiased while under-counting by 12%. See
 # docs/results-parasites.md section 11 and eval/parasite_calibrate.py.
-DEFAULT_THRESHOLD = 0.75
+# Chosen on the 20 calibration patients, never on held-out ones, as the
+# threshold where the count matches every annotated parasite (candidates
+# missed by the top-hat included). 0.80 was first chosen against candidates
+# only and under-counted by 12% (results-parasites.md, section 11); 0.75 and
+# then 0.76 were right for the pipeline as it stood on 2 and 3 September.
+# With clean fields in the training set (section 14) the network is stricter
+# and the same rule gives 0.80 again, this time against every annotated
+# parasite (-1.0% on the calibration patients;
+# eval/results/threshold_fixedstats.json, chain2_2026-09-03.log).
+DEFAULT_THRESHOLD = 0.80
 HYBRID_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_hybrid.onnx"
-PATCH_PX = 32             # the patch network's input, centred on the peak
+
+# The learned detector (6 September 2026, docs/plan-2026-09-05-hospital-grade.md
+# step 4): a small U-Net on the half-resolution field whose peaks are the
+# parasites. No candidate stage in front of it, so no 7 px merge, no white
+# cell exclusion zone and no rim margin; trained by eval/parasite_heatmap_train.py
+# from the point annotations. Its threshold is chosen like the patch
+# network's, on the calibration patients (choose_threshold.py).
+HEATMAP_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_heatmap.onnx"
+HEATMAP_SCALE = 0.5
+HEATMAP_NMS_PX = 4        # half-resolution px: two peaks closer than this are one parasite
+HEATMAP_FLOOR = 0.05      # peaks below this are not even reported
+HEATMAP_THRESHOLD = 0.56  # chosen on the calibration patients, 6 September 2026; the heights bunch at 0.5 to 0.65, see results-parasites.md section 16
+# The patch network's input, centred on the peak. 32 up to chain 2; 48 from
+# chain 3 (5 September 2026): the rods and platelet pairs that passed at 32 px
+# are 30 to 40 px long, and the ring of cytoplasm that says "parasite" sits
+# outside a 32 px window. Must match the exported model; parasite_cnn_check.py
+# fails if it does not. models/parasite_cnn_chain2_32px.onnx is the 32 px
+# control, loadable with PatchScorer.load(path) and patches_at(size=32).
+PATCH_PX = 48
 
 
 @dataclass(frozen=True)
@@ -103,7 +130,7 @@ class Candidate:
     x: float
     y: float
     area: float
-    features: np.ndarray
+    features: np.ndarray | None   # None when candidates() was asked not to compute them
 
 
 def _prepare(image_bgr: np.ndarray, crop_to_fov: bool, normalise_stain: bool):
@@ -157,11 +184,21 @@ def peaks(top: np.ndarray, allowed: np.ndarray) -> np.ndarray:
     return np.stack([xs, ys], axis=1)
 
 
-def candidates(image_bgr: np.ndarray, mask: np.ndarray) -> tuple[list[Candidate], np.ndarray]:
+def candidates(image_bgr: np.ndarray, mask: np.ndarray,
+               features: bool = True) -> tuple[list[Candidate], np.ndarray]:
     """Purple peaks inside the field and outside white cells.
 
     Returns the candidates and the white-cell exclusion mask (for callers that
     want to draw it).
+
+    `features=False` returns the same peaks, at the same positions, without
+    the nineteen hand-crafted features (and with `area` left at 0, since the
+    half-peak region is one of them). The patch network never reads the
+    features, and computing them is a Python loop over 400 to 1 000 peaks
+    with a connected-components pass, a contour and an ellipse fit each: about
+    a second per field, or a third of the whole pipeline, for numbers that
+    were thrown away. Measured on 2 September 2026. The MLP and hybrid paths
+    still ask for them.
     """
     top, stain, lab = tophat(image_bgr)
     L, a, b = lab[:, :, 0], lab[:, :, 1], lab[:, :, 2]
@@ -175,6 +212,8 @@ def candidates(image_bgr: np.ndarray, mask: np.ndarray) -> tuple[list[Candidate]
     pts = peaks(top, allowed)
     if len(pts) == 0:
         return [], wbc
+    if not features:
+        return [Candidate(float(x), float(y), 0.0, None) for x, y in pts], wbc
 
     wbc_dist = cv.distanceTransform(cv.bitwise_not(wbc), cv.DIST_L2, 3)
     field_L = cv.GaussianBlur(L, (0, 0), 25)
@@ -306,6 +345,67 @@ class PatchScorer:
         return np.concatenate(out).astype(np.float32)
 
 
+class HeatmapScorer:
+    """The learned detector, run by cv.dnn from an ONNX file.
+
+    Input  the prepared field (cropped, stain-normalised BGR uint8), any size.
+    Output a heat map at HEATMAP_SCALE with a peak on every parasite, or the
+           peaks themselves in the field's own pixel coordinates.
+    Pixel normalisation is inside the graph.
+    """
+
+    def __init__(self, net: "cv.dnn.Net"):
+        self.net = net
+
+    @classmethod
+    def load(cls, path: str | Path = HEATMAP_PATH) -> "HeatmapScorer":
+        path = Path(path)
+        if not path.exists():
+            raise FileNotFoundError(f"{path} is missing. Train it with `MODEL=heatmap make chain`.")
+        return cls(cv.dnn.readNetFromONNX(str(path)))
+
+    def heat(self, image_bgr: np.ndarray, scale: float = 1.0) -> np.ndarray:
+        """Heat map of `image_bgr` resized by `scale`. The network pools three
+        times, so the input is padded to a multiple of 8 and the output cut back."""
+        small = image_bgr if scale == 1.0 else cv.resize(image_bgr, None, fx=scale, fy=scale, interpolation=cv.INTER_AREA)
+        h, w = small.shape[:2]
+        ph, pw = (-h) % 8, (-w) % 8
+        if ph or pw:
+            small = cv.copyMakeBorder(small, 0, ph, 0, pw, cv.BORDER_REFLECT_101)
+        blob = np.ascontiguousarray(small.transpose(2, 0, 1)[None], dtype=np.float32)
+        self.net.setInput(blob)
+        return self.net.forward()[0, 0, :h, :w].astype(np.float32)
+
+    def peaks(self, image_bgr: np.ndarray, mask: np.ndarray | None = None,
+              floor: float = HEATMAP_FLOOR) -> tuple[np.ndarray, np.ndarray]:
+        """Local maxima of the heat map above `floor`, inside `mask`, as
+        (n, 2) xy in `image_bgr`'s coordinates, with their heights."""
+        heat = self.heat(image_bgr, HEATMAP_SCALE)
+        k = cv.getStructuringElement(cv.MORPH_ELLIPSE, (2 * HEATMAP_NMS_PX + 1,) * 2)
+        is_peak = (heat >= cv.dilate(heat, k)) & (heat > floor)
+        if mask is not None:
+            small_mask = cv.resize(mask, (heat.shape[1], heat.shape[0]), interpolation=cv.INTER_NEAREST)
+            is_peak &= small_mask > 0
+        ys, xs = np.nonzero(is_peak)
+        pts = np.stack([xs, ys], axis=1).astype(np.float32) / HEATMAP_SCALE
+        return pts, heat[ys, xs]
+
+
+def heatmap_candidates(image_bgr: np.ndarray, mask: np.ndarray, scorer: "HeatmapScorer | None" = None,
+                       floor: float = HEATMAP_FLOOR) -> list[Candidate]:
+    """The heat map's peaks as candidates for the patch network ("heat-cnn").
+
+    The learned detector proposes better than the top-hat (recall 0.938
+    against 0.913 on the calibration patients, no 7 px merge, no exclusion
+    zone) but its peak heights bunch between 0.5 and 0.65, so a threshold
+    on them sits on a cliff. The patch network's scores do not. So: its
+    peaks, the patch network's judgement. 6 September 2026.
+    """
+    scorer = scorer or _heatmap_scorer()
+    pts, _ = scorer.peaks(image_bgr, mask, floor)
+    return [Candidate(float(x), float(y), 0.0, None) for x, y in pts]
+
+
 def patches_at(image_bgr: np.ndarray, cands: list[Candidate], size: int = PATCH_PX) -> np.ndarray:
     """Cut a size x size patch around each candidate; edge candidates are padded."""
     half = size // 2
@@ -320,6 +420,45 @@ def patches_at(image_bgr: np.ndarray, cands: list[Candidate], size: int = PATCH_
 _SCORER: Scorer | None = None
 _PATCH_SCORER: PatchScorer | None = None
 _HYBRID_SCORER: PatchScorer | None = None
+_HEATMAP_SCORER: HeatmapScorer | None = None
+
+
+def _heatmap_scorer() -> HeatmapScorer:
+    global _HEATMAP_SCORER
+    if _HEATMAP_SCORER is None:
+        _HEATMAP_SCORER = HeatmapScorer.load()
+    return _HEATMAP_SCORER
+
+
+def load_scorer(model: str):
+    """The scorer for a model name, loaded once: "cnn", "hybrid", "mlp", "heatmap"
+    or "heat-cnn" (the heat map proposes, the patch network scores; the
+    heat map itself is loaded on first use)."""
+    return {"cnn": _patch_scorer, "hybrid": _hybrid_scorer, "mlp": _scorer, "heatmap": _heatmap_scorer,
+            "heat-cnn": _heat_cnn_scorer}[model]()
+
+
+HEAT_CNN_THRESHOLD = 0.42   # chosen on the calibration patients, 6 September 2026 (-0.3%): threshold_fixedstats.json
+# The judge for the heat map's candidates. The patch network of chain 3
+# learned the top-hat's look-alikes; the heat map proposes others it never
+# saw, and on the sparse slides it lets them through (results-parasites.md
+# section 16b). Chain 4 trains a judge on the heat map's own candidates and
+# writes it here; until then heat-cnn uses the plain patch network.
+HEAT_CNN_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_cnn_heat.onnx"
+_HEAT_CNN_SCORER: "PatchScorer | None" = None
+
+
+def _heat_cnn_scorer() -> "PatchScorer":
+    global _HEAT_CNN_SCORER
+    if _HEAT_CNN_SCORER is None:
+        _HEAT_CNN_SCORER = PatchScorer.load(HEAT_CNN_PATH if HEAT_CNN_PATH.exists() else CNN_PATH)
+    return _HEAT_CNN_SCORER
+
+
+def threshold_for(model: str, threshold: float | None) -> float:
+    if threshold is not None:
+        return threshold
+    return {"heatmap": HEATMAP_THRESHOLD, "heat-cnn": HEAT_CNN_THRESHOLD}.get(model, DEFAULT_THRESHOLD)
 
 
 def _hybrid_scorer() -> PatchScorer:
@@ -347,22 +486,33 @@ def find_parasites(
     image_bgr: np.ndarray,
     crop_to_fov: bool = True,
     normalise_stain: bool = True,
-    threshold: float = DEFAULT_THRESHOLD,
+    threshold: float | None = None,
     model: str = "cnn",
-    scorer: "Scorer | PatchScorer | None" = None,
+    scorer: "Scorer | PatchScorer | HeatmapScorer | None" = None,
 ) -> list[Parasite]:
     """Locate parasites. Coordinates are in the input image's frame.
 
     `model` is "cnn" (patch network, the default), "hybrid" (patch network
-    plus the 19 context features) or "mlp" (the feature network, kept as the
-    cheaper baseline and for the ablation in the report).
+    plus the 19 context features), "mlp" (the feature network, kept as the
+    cheaper baseline and for the ablation in the report) or "heatmap" (the
+    learned detector, no candidate stage). `threshold` defaults to the
+    model's own.
     """
+    threshold = threshold_for(model, threshold)
     img, mask, ox, oy = _prepare(image_bgr, crop_to_fov, normalise_stain)
-    cands, _ = candidates(img, mask)
+    if model == "heatmap":
+        scorer = scorer or _heatmap_scorer()
+        pts, scores = scorer.peaks(img, mask)
+        return [Parasite(float(x) + ox, float(y) + oy, 0.0, float(s))
+                for (x, y), s in zip(pts, scores) if s >= threshold]
+    if model == "heat-cnn":
+        cands = heatmap_candidates(img, mask)
+    else:
+        cands, _ = candidates(img, mask, features=(model != "cnn"))
     if not cands:
         return []
-    if model == "cnn":
-        scorer = scorer or _patch_scorer()
+    if model in ("cnn", "heat-cnn"):
+        scorer = scorer or (_heat_cnn_scorer() if model == "heat-cnn" else _patch_scorer())
         scores = scorer.score(patches_at(img, cands))
     elif model == "hybrid":
         scorer = scorer or _hybrid_scorer()

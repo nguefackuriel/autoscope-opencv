@@ -115,3 +115,24 @@ def test_who_protocol_stops_at_two_hundred_white_cells():
     assert tools.wbc - 30 < 200, "read a field it did not need"
     assert tools.fields_read == 7               # ceil(200 / 30)
     assert "200" in trace.stopped_because
+
+
+def test_decision_rule_calls_a_clean_slide_negative_and_a_heavy_one_positive():
+    """The old rule needed zero parasites for a negative; this one needs the
+    count to sit within what a clean slide produces, after enough cells."""
+    from autoscope.agent.policy import DecisionRule
+
+    def noisy_clean(cols=12, rows=4):
+        return {(x, y): (1, 30) for x in range(cols) for y in range(rows)}   # one false parasite a field: 267/uL
+
+    tools, policy = build(DecisionRule(floor_per_ul=425, negative_wbc_min=300), noisy_clean())
+    trace = read_slide(tools, policy, slide="clean")
+    assert tools.decision.call == "negative"
+    assert "negative" in trace.stopped_because
+    assert tools.wbc >= 300
+
+    tools, policy = build(DecisionRule(floor_per_ul=425), heavy_truth())
+    trace = read_slide(tools, policy, slide="heavy")
+    assert tools.decision.call == "positive"
+    assert tools.decision.band_name is not None
+    assert trace.fields_read < 100

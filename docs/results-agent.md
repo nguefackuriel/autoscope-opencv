@@ -162,3 +162,115 @@ argument, defaulting to 5, and swept in `agent_sweep.json`:
 
 The floor buys accuracy at a predictable price in fields, which is the trade a
 lab should be allowed to set rather than one we bury in a constant.
+
+## Re-measured on 3 September with the corrected pipeline
+
+Same 50 patients, same 609 fields, same loop and policies. Three things
+changed underneath: the stain statistics were fixed and the white cell and
+parasite stages refit and retrained on them (`results-parasites.md` §12),
+the sharpness score no longer counts noise (`data-notes.md`), and the
+classifier threshold is 0.76. Fields are now 1.34 s each, from 2.65 s.
+
+| arm | fields read | median | error bar | density bias | mean abs. error | flagged |
+|---|---|---|---|---|---|---|
+| who-200 / truth | 556 | 11 | 27% | -1.1% | 4.0% | 11 |
+| **rule-based / truth** | **494** | **10** | 26% | **-0.6%** | **2.8%** | 37 |
+| who-200 / found | 503 | 10 | 26% | +1.1% | 42.5% | 13 |
+| rule-based / found | 490 | 9 | 24% | +1.9% | 43.5% | 36 |
+
+The agent reads 11% fewer fields than the protocol (494 against 556) with a
+smaller error (2.8% against 4.0%). It reads more than in August (470) for a
+good reason: the old sharpness score was rejecting fields for their JPEG
+grain, and the gate now passes 587 of 609 fields instead of skipping them.
+Refocus calls fell from 25 to 1 for the same reason.
+
+By density band, expert counts:
+
+| slide | patients | WHO fields | agent fields | saving | agent error bar |
+|---|---|---|---|---|---|
+| under 1 000 /µL | 1 | 4 | 5 | -25% | 129% |
+| 1 000 to 10 000 /µL | 26 | 294 | 318 | -8% | 41% |
+| over 10 000 /µL | 23 | 258 | **171** | **+34%** | 19% |
+
+Same shape as before: the saving is on the heavy slides, and on the middling
+ones the agent keeps reading past the 200-cell protocol because the error
+bar is still wide. The two `found` rows say what they said in August, more
+sharply: with the real counter the agent's decisions barely move (490
+against 494 fields) and the answer's error is 43.5% against 2.8%. The
+vision, not the policy, is what stands between this and a useful number.
+
+## 4 September, chain 2
+
+Same replay after the dark-nucleus white cell rule and the classifier
+retrained with clean fields (threshold 0.80). The expert-count arms are
+unchanged by construction; the real-counter arms:
+
+| arm | fields read | density bias | mean abs. error |
+|---|---|---|---|
+| who-200 / found | 518 | -5.0% | **38.4%** (was 42.5%) |
+| rule-based / found | 491 | -3.9% | **38.3%** (was 43.5%) |
+
+The agent's decisions did not move (491 against 490 fields); the answer got
+better. Fields now take 1.26 s.
+
+
+## 6 September: chain 3, and the decision rule as a third policy
+
+Same replay after the chain-3 network (`results-parasites.md` section 15,
+threshold 0.53, 1.54 s per field). The **decision** arm is
+`policy.DecisionRule` (`results-negatives.md`, 6 September): negative on
+the noise floor after 500 white cells, positive when the interval clears
+it, settled when it sits in one band within 30%. With expert counts the
+floor is 0, there being no false alarms to clear.
+
+| arm | fields read | median | error bar | density bias | mean abs. error | flagged | positive | negative | band settled |
+|---|---|---|---|---|---|---|---|---|---|
+| who-200 / truth | 556 | 11 | 27% | -1.1% | 4.0% | 11 | | | |
+| rule-based / truth | 494 | 10 | 26% | -0.6% | 2.8% | 37 | | | |
+| **decision / truth** | **440** | 8 | 29% | -1.0% | 4.7% | 23 | 49 | 0 | 42 |
+| who-200 / found | 518 | 10 | 28% | -8.9% | **29.1%** (was 38.4%) | 11 | | | |
+| rule-based / found | 491 | 9 | 27% | -8.4% | **29.6%** (was 38.3%) | 36 | | | |
+| **decision / found** | **448** | 9 | 29% | -8.6% | 29.6% | 24 | 49 | 0 | 40 |
+
+Nine points off the density error with the real counter, from the vision.
+The decision arm reads 11% fewer fields than the rule-based one with expert
+counts (440 against 494) and 21% fewer than the protocol, for 4.7% error
+against 2.8% and 4.0%; with the real counter, 448 fields for the same
+29.6%. It calls all 49 positives positive and settles a band on 40 of
+them; the 24 flagged are slides that ran out before the band was settled,
+and TF150_R5 at 283/µL, which it will not call either way. The -8.6% bias
+of the real-counter arms is now the white cell count (+6%), not the
+parasites (-1.1%): `results-wbc.md`, 6 September.
+
+How tight a positive has to be before a settled band is enough to stop
+(`--sweep-settle`, expert counts):
+
+| settle width | fields | error bar | mean abs. error | flagged |
+|---|---|---|---|---|
+| band alone | 282 | 37% | 10.9% | 6 |
+| 50% | 361 | 37% | 7.7% | 13 |
+| **30%, shipped** | **440** | 29% | **4.7%** | 23 |
+| 20% | 494 | 26% | 2.8% | 37 |
+
+Band alone stopped every dense slide after five fields with the band right
+and the number wrong; 20% is the old rule again. 30% is the compromise
+shipped: a clinic monitoring a patient on day 0, 2 and 3 needs the number
+as well as the call.
+
+### With the white cell gate (6 September, afternoon)
+
+Same replay after the white cell gate (`results-wbc.md`), network
+unchanged. Expert-count arms identical by construction; real counter:
+who-200 26.5% (from 29.1%), rule-based 27.2% (from 29.6%), decision 27.4%
+(from 29.6%) mean absolute density error, decision arm 450 fields, 49
+positive, 40 banded.
+
+### heat-cnn (6 September, evening)
+
+Same replay with the heat map proposing and the patch network judging
+(`results-parasites.md` 16b), threshold 0.42: WHO 25.7%, rule-based
+27.1%, decision 27.3% mean absolute density error with the real counter,
+against 26.5 / 27.2 / 27.4 for the plain pair; the density bias of the
+real-counter arms goes from −8.4% to +1.6%, and the decision arm reads
+451 fields, 49 positive, 40 banded. The heat map alone: 43.8 / 45.7 /
+45.5%, with +5 to +6.5% bias (`agent_eval_heatmap.json`).

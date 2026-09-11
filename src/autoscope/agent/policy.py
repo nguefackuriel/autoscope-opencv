@@ -7,6 +7,10 @@ Three policies, same tools, so we can measure what the agent is worth:
                  this is what the WHO manual actually asks a technician to do.
   RuleBased      thresholds and a stopping rule. No model, no cost. The honest
                  control, and what the agent has to beat to be worth anything.
+  DecisionRule   the same, stopping on a decision instead of an error bar:
+                 negative on the measured noise floor, positive when the
+                 interval clears it, settled when it sits in one density band.
+                 What a technician actually does (5 September 2026).
   Bedrock        the real agent.                                    (to write)
 
 If the model policy cannot beat RuleBased, the agent is decoration, and the
@@ -17,6 +21,7 @@ what makes that claim checkable.
 from typing import Protocol
 
 from autoscope.agent.tools import Tools
+from autoscope.density import FLOOR_PER_UL_DEFAULT, NEGATIVE_WBC_MIN, SETTLE_CI_WIDTH
 from autoscope.quality import FieldQuality
 
 # What a policy asks for next.
@@ -27,10 +32,12 @@ Move = tuple[str, dict]
 # the stage limits alone will not save it.
 MAX_REFOCUS_TRIES = 4
 
-# Below this, two sharpness readings are the same measurement. Laplacian
-# variance on these tiles sits around 17 and moves by whole units when the
-# focus really changes, so 0.5 is well inside the noise floor.
-FOCUS_NOISE = 0.5
+# Below this, two sharpness readings are the same measurement. The smoothed
+# Laplacian variance sits around 3.1 on a real field (p5 2.4, p95 4.4) and
+# moves by tenths when the focus really changes, so 0.1, about 3% of a
+# typical reading, is inside the noise floor. It was 0.5 on the raw scale,
+# where the median was 17: the same fraction.
+FOCUS_NOISE = 0.1
 
 
 class Policy(Protocol):
@@ -113,7 +120,7 @@ class RuleBased:
         self._last_focus: float | None = None
 
     def next_move(self, quality: FieldQuality, tools: Tools) -> Move:
-        stop, why = tools.decide_stop(self.target_ci_width, self.min_fields)
+        stop, why = self._stop(tools)
         if stop:
             return ("stop", {"reason": why})
 
@@ -140,6 +147,9 @@ class RuleBased:
         self._reset()
         return ("skip", {"reason": problem})
 
+    def _stop(self, tools: Tools) -> tuple[bool, str]:
+        return tools.decide_stop(self.target_ci_width, self.min_fields)
+
     def _search_step(self) -> int:
         """+s, -2s, +3s, -4s: widen the hunt and alternate side each time."""
         n = self._tries + 1
@@ -150,3 +160,29 @@ class RuleBased:
         self._tries = 0
         self._best_seen = 0.0
         self._last_focus = None
+
+
+class DecisionRule(RuleBased):
+    """RuleBased's focus handling with the decision-driven stopping rule.
+
+    `floor_per_ul` is the noise floor: what a clean slide reads at through
+    this pipeline, measured on the fit half of the uninfected set. It belongs
+    to the vision, not to the policy, and is re-measured whenever the
+    classifier changes (eval/negative_eval.py). `negative_wbc_min` is how
+    many white cells must go by before a negative can be called.
+    """
+
+    name = "decision"
+
+    def __init__(self, floor_per_ul: float = FLOOR_PER_UL_DEFAULT,
+                 negative_wbc_min: int = NEGATIVE_WBC_MIN,
+                 target_ci_width: float = 0.20, step: int = 2, min_fields: int = 5,
+                 settle_ci_width: float = SETTLE_CI_WIDTH) -> None:
+        super().__init__(target_ci_width, step, min_fields)
+        self.floor_per_ul = floor_per_ul
+        self.negative_wbc_min = negative_wbc_min
+        self.settle_ci_width = settle_ci_width
+
+    def _stop(self, tools: Tools) -> tuple[bool, str]:
+        return tools.decide_call(self.floor_per_ul, self.negative_wbc_min,
+                                 self.target_ci_width, self.min_fields, self.settle_ci_width)

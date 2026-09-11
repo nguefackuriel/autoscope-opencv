@@ -1,0 +1,178 @@
+
+===== 19:05 waiting for the white cell sweep on 100 fit patients
+best F1 0.879 at stain_min=65 seed_fraction=0.75 close_px=24 (bias -6.7%)
+least biased: +0.3% at seed_fraction=0.75 close_px=24 (F1 0.872)
+exit=0
+
+===== 20:01 apply_sweep: parameters into segmentation.py, white cells held-out
+holdout: 50 patients the fit never saw
+
+144 images, 50 patients, 3046 annotated white cells
+
+  precision      0.844
+  recall         0.859
+  F1             0.851
+  count bias     +0.36 cells per image (+1.7%)
+  count MAE      3.65 cells per image
+chosen: stain_min=60.0 seed_fraction=0.75 close_px=24
+  fit-set F1 0.872, bias +0.3%
+passed over: F1 0.879 at bias -6.7% (seed=0.75, close=24)
+
+wrote parameters into segmentation.py
+
+scoring on held-out patients, normalisation on:
+
+===== 20:02 candidate recall on 100 fit images (feeds the trainer's bias column)
+  ]
+}
+
+===== 20:04 patches, 3 images per patient, corrected normalisation
+  280 images, 123601 patches, candidate recall 0.883
+saved (131456, 40, 40, 3) patches, 10840 positives, 298 images
+
+===== 20:13 train the patch network: 20 epochs, 20 validation patients
+
+validation patients (candidate level):
+  thr   precision  recall   F1    count bias
+  0.20   0.417      0.945   0.579   +102.0%
+  0.25   0.441      0.939   0.600   +89.8%
+  0.30   0.464      0.931   0.619   +78.9%
+  0.35   0.486      0.919   0.636   +68.6%
+  0.40   0.508      0.910   0.652   +59.7%
+  0.45   0.526      0.898   0.663   +52.1%
+  0.50   0.543      0.883   0.672   +44.9%
+  0.55   0.562      0.873   0.683   +38.5%
+  0.60   0.583      0.855   0.694   +30.6%
+  0.65   0.610      0.834   0.705   +21.8%
+  0.70   0.639      0.803   0.712   +12.0%
+  0.75   0.673      0.756   0.712   +0.1%
+  0.80   0.705      0.691   0.698   -12.7%
+  0.85   0.737      0.619   0.673   -25.1%
+  0.90   0.777      0.527   0.628   -39.6%
+
+exported parasite_cnn.onnx
+
+===== 21:41 cv.dnn agrees with torch?
+    assert err < 1e-3, "cv.dnn does not reproduce the exported network"
+           ^^^^^^^^^^
+AssertionError: cv.dnn does not reproduce the exported network
+
+===== 21:41 rescore candidates: calibration, then held-out
+21:42 cv.dnn check re-run against parasite_patches_x3.npz (the file the trainer used): see above
+cv.dnn vs torch on 512 patches: max abs diff 3.58e-07
+235 images, 84194 candidates, 6.7 min
+609 images, 312486 candidates, 29.9 min
+
+===== 05:32 choose the threshold on the calibration patients: count matches every annotated parasite
+calibration: 5855 annotated parasites, candidate recall 0.898
+ threshold   count  vs all annotated
+      0.50    8602           +46.9%
+      0.55    8196           +40.0%
+      0.60    7779           +32.9%
+      0.65    7234           +23.6%
+      0.70    6648           +13.5%
+      0.75    5999            +2.5%
+      0.80    5302            -9.4%
+      0.85    4569           -22.0%
+      0.90    3669           -37.3%
+chosen: 0.76 (bias +0.1%)
+threshold for everything downstream: 0.76
+
+===== 05:32 parasite_calibrate at 0.76 (the four-method table)
+
+held-out, 609 images, 50 slides
+
+method                    count bias  count MAE  density bias  |density err|             95% limits
+fixed 0.76 (shipped)           -0.6%       9.05         +2.3%          43.3%          -56% to +137%
+expected count                -11.8%      12.16         +3.2%          52.2%          -59% to +160%
+expected / recall              -1.8%      10.89        +14.9%          54.1%          -54% to +189%
+per-slide threshold            -5.7%       8.98         -4.8%          44.3%          -59% to +122%
+
+===== 05:33 parasite_eval held-out at 0.76
+  25 images
+  75 images
+
+99 images, 50 patients, 4731 annotated parasites, model cnn, threshold 0.76
+
+  precision      0.799
+  recall         0.768
+  F1             0.784
+  count bias     -1.85 per image (-3.9%)
+  count MAE      8.09 per image
+
+  parasites per white cell, ours vs truth on 97 images:
+    bias           +4.0%
+    95% limits     -62.8% .. +190.9%
+    rank corr.     0.947
+
+  sensitivity to the threshold (information only, the threshold is chosen on the fit set):
+    thr   precision  recall   F1    count bias
+    0.50   0.625      0.847   0.719   +35.6%
+    0.60   0.673      0.830   0.743   +23.3%
+    0.65   0.704      0.817   0.756   +16.1%
+    0.70   0.740      0.800   0.769   +8.1%
+    0.75   0.790      0.775   0.783   -2.0%
+    0.80   0.838      0.736   0.783   -12.2%
+    0.85   0.880      0.667   0.759   -24.2%
+
+===== 08:25 agent_fields at 0.76 (609 fields)
+
+609 fields from 50 patients, 1.34 s per field
+
+===== 08:41 agent_eval
+50 held-out patients, 609 annotated fields, 609 fields available
+
+target error bar 20%, minimum 5 fields
+
+arm                 fields  median  err bar     bias   |err|  at target  flagged
+who-200/truth          556      11     27%    -1.1%    4.0%      15/50       11
+rule-based/truth       494      10     26%    -0.6%    2.8%      14/50       37
+who-200/found          503      10     26%    +1.1%   42.5%      14/50       13
+rule-based/found       490       9     24%    +1.9%   43.5%      14/50       36
+   0.20    3  rule-based/truth     479     26%    -0.7%    3.4%      14/50
+   0.20    3  rule-based/found     475     24%    +2.1%   42.5%      14/50
+   0.20    5  rule-based/truth     494     26%    -0.6%    2.8%      14/50
+   0.20    5  rule-based/found     490     24%    +1.9%   43.5%      14/50
+   0.20    8  rule-based/truth     524     26%    +0.1%    1.8%      14/50
+   0.20    8  rule-based/found     520     24%    +2.6%   43.4%      14/50
+   0.30    3  rule-based/truth     405     30%    -1.3%    6.7%      30/50
+   0.30    3  rule-based/found     386     30%    +1.1%   42.2%      30/50
+   0.30    5  rule-based/truth     433     30%    -1.3%    4.9%      30/50
+   0.30    5  rule-based/found     413     30%    +1.1%   42.8%      30/50
+   0.30    8  rule-based/truth     484     30%    -0.7%    2.9%      30/50
+   0.30    8  rule-based/found     460     30%    +1.5%   42.0%      30/50
+
+===== 08:41 negative_fields at 0.76 (1141 fields)
+
+1141 fields from 50 patients, 1.66 s per field
+
+===== 09:17 negative_eval
+50 uninfected patients, 1141 fields; 50 infected held-out patients, 609 fields; threshold 0.76 / 0.76
+
+per clean field:
+  22.3% of fields report zero parasites; mean 3.32, median 2, p90 8, max 56
+  pooled: 25.36 false parasites per 200 white cells = 1,014/uL noise floor
+
+who-200: clean slides read at median 544/uL, p90 2,451, max 5,698; 0/50 called negative by the stopping rule, 0 escalated; fields read 406/1141
+  rank AUC infected vs uninfected: 0.935
+   cut-off /uL  specificity  sensitivity
+             0         0.02         1.00
+           100         0.02         1.00
+           200         0.08         1.00
+           500         0.46         0.98
+          1000         0.74         0.94
+          2000         0.86         0.84
+
+rule-based: clean slides read at median 585/uL, p90 2,252, max 7,224; 0/50 called negative by the stopping rule, 49 escalated; fields read 1089/1141
+  rank AUC infected vs uninfected: 0.938
+   cut-off /uL  specificity  sensitivity
+             0         0.00         1.00
+           100         0.04         1.00
+           200         0.12         1.00
+           500         0.40         0.96
+          1000         0.80         0.94
+          2000         0.88         0.84
+
+infected held-out patients by expert density: min 283, p10 1,732, median 9,077/uL
+
+===== 09:17 done

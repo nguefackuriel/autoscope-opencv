@@ -54,12 +54,35 @@ SCALE = 0.25
 # bias on the 50 held-out patients.
 #
 # Optimise the number that reaches the clinician, not the metric that looks best.
-STAIN_MIN = 55.0        # a - b inside a nucleus, in Lab units
-AREA_MIN_FULL = 1800    # px^2 at full resolution
+STAIN_MIN = 65.0        # a - b inside a nucleus, in Lab units
+AREA_MIN_FULL = 1200    # px^2 at full resolution
+
+# A nucleus is also DARK, and that is the criterion that survives an
+# overstained slide. Measured on 3 September 2026 (eval/results/
+# nucleus_contrast_fit.json, 98 fit patients): after normalisation the field
+# sits at L 200 and nuclei at L 29 to 96 (p5 to p95), a gap of at least 100
+# on every slide, while the nucleus a - b ranges from 37 to 140 and on the
+# pinkest slides falls under STAIN_MIN. On two held-out slides of that kind
+# the purple rule alone found 0 of 19 and 6 of 39 annotated nuclei; adding
+# "dark and at least faintly purple" found 17 and 38, and changed nothing on
+# normal slides. The a - b floor keeps dark dirt, which is not purple, out.
+# L_DARK_MAX = 130.0 switches the dark path off; the sweep chooses.
+L_DARK_MAX = 130.0      # L below this, and
+STAIN_MIN_DARK = 30.0   # a - b above this, counts as nucleus too
+# A blob has to be MOSTLY dark to be a nucleus, not just touch the dark
+# rule somewhere. Measured on 197 fit images on 6 September 2026
+# (eval/wbc_fp_look.py): the false alarms, 9.7% of detections, have a
+# median brightness of L 135 against 83 for the hits, and a median 34% of
+# their pixels under L_DARK_MAX against 94%. They are the purple clumps
+# (parasite clusters, platelet heaps, debris) the colour rules admit through
+# the area gate, and they are why the held-out count read +6% and three
+# slides +26 to +30%. At 0.3 the gate drops 48% of them and 0.7% of the
+# hits; the sweep chooses. 0 switches it off.
+DARK_FRACTION_MIN = 0.3
 AREA_MAX_FULL = 30000
 CLOSE_KERNEL_FULL = 24  # px at full resolution, to rejoin nucleus lobes
 MIN_SOLIDITY = 0.55
-SEED_FRACTION = 0.45    # of each blob's own distance maximum, never the image's
+SEED_FRACTION = 0.75    # of each blob's own distance maximum, never the image's
 
 
 @dataclass(frozen=True)
@@ -68,6 +91,13 @@ class Cell:
     y: float
     area: float
     solidity: float
+    # What the blob looks like, for the shape and colour gates and for looking
+    # at false alarms (eval/wbc_fp_look.py, 6 September 2026). Lab units on
+    # the normalised image; 0 when the caller rebuilt the Cell without them.
+    l_mean: float = 0.0       # brightness: a nucleus is dark
+    l_min: float = 0.0
+    stain_mean: float = 0.0   # a - b: a nucleus is purple
+    dark_fraction: float = 0.0  # share of the blob's pixels under L_DARK_MAX
 
 
 def stain_map(image_bgr: np.ndarray) -> np.ndarray:
@@ -80,7 +110,11 @@ def stain_map(image_bgr: np.ndarray) -> np.ndarray:
 
 def _nucleus_mask(small_bgr: np.ndarray, mask: np.ndarray | None, close_px: int) -> np.ndarray:
     stain = stain_map(small_bgr)
-    binary = (stain > STAIN_MIN).astype(np.uint8) * 255
+    nucleus = stain > STAIN_MIN
+    if L_DARK_MAX > 0:
+        L = cv.cvtColor(small_bgr, cv.COLOR_BGR2Lab)[:, :, 0]
+        nucleus |= (L < L_DARK_MAX) & (stain > STAIN_MIN_DARK)
+    binary = nucleus.astype(np.uint8) * 255
     if mask is not None:
         binary = cv.bitwise_and(binary, mask)
 
@@ -171,6 +205,9 @@ def find_white_cells(
     close_px = max(int(CLOSE_KERNEL_FULL * scale) | 1, 3)
     binary = _nucleus_mask(small, small_mask, close_px)
     labels = _split_touching(binary)
+    lab = cv.cvtColor(small, cv.COLOR_BGR2Lab)
+    L = lab[:, :, 0]
+    stain = lab[:, :, 1].astype(np.int16) - lab[:, :, 2].astype(np.int16)
 
     area_min = AREA_MIN_FULL * scale * scale
     area_max = AREA_MAX_FULL * scale * scale
@@ -197,7 +234,14 @@ def find_white_cells(
             continue
         cx = moments["m10"] / moments["m00"] / scale + offset_x
         cy = moments["m01"] / moments["m00"] / scale + offset_y
-        cells.append(Cell(cx, cy, area / (scale * scale), solidity))
+        inside = blob > 0
+        Lb = L[inside]
+        dark_fraction = float((Lb < L_DARK_MAX).mean()) if L_DARK_MAX > 0 else 0.0
+        if L_DARK_MAX > 0 and dark_fraction < DARK_FRACTION_MIN:
+            continue
+        cells.append(Cell(cx, cy, area / (scale * scale), solidity,
+                          l_mean=float(Lb.mean()), l_min=float(Lb.min()),
+                          stain_mean=float(stain[inside].mean()), dark_fraction=dark_fraction))
 
     return cells
 
