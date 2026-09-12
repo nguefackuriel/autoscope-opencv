@@ -36,14 +36,22 @@ def count_field(
     model: str = "cnn",
     threshold: float | None = None,
     scorer=None,
+    scale: float = 1.0,
 ) -> FieldCount:
     """Count one field. Coordinates are reported in the input image's frame.
-    `threshold` defaults to the model's own."""
+    `threshold` defaults to the model's own. `scale` is a site calibration
+    (autoscope.site): the image is brought to NLM scale first, everything
+    runs there, and coordinates and areas are mapped back to the caller's
+    pixels."""
     threshold = par.threshold_for(model, threshold)
+    if scale != 1.0:
+        from autoscope.site import rescale
+        image_bgr = rescale(image_bgr, scale)
     prepared, mask, ox, oy = par._prepare(image_bgr, crop_to_fov=True, normalise_stain=True)
+    ox, oy = ox / scale, oy / scale
 
     cells = find_white_cells(prepared, crop_to_fov=False, normalise_stain=False)
-    cells = [replace(c, x=c.x + ox, y=c.y + oy) for c in cells]
+    cells = [replace(c, x=c.x / scale + ox, y=c.y / scale + oy, area=c.area / scale ** 2) for c in cells]
 
     found: list[par.Parasite] = []
     if model == "heatmap" or model in par.BOX_MODELS:
@@ -53,7 +61,7 @@ def count_field(
         else:
             scorer = scorer or par._box_scorer(model)
             pts, scores = scorer.detections(prepared, mask)
-        found = [par.Parasite(float(x) + ox, float(y) + oy, 0.0, float(s))
+        found = [par.Parasite(float(x) / scale + ox, float(y) / scale + oy, 0.0, float(s))
                  for (x, y), s in zip(pts, scores) if s >= threshold]
         return FieldCount(len(found), len(cells), found, cells)
 
@@ -73,7 +81,7 @@ def count_field(
             scores = scorer.score(np.stack([c.features for c in cands]))
         else:
             raise ValueError(f"unknown model {model!r}")
-        found = [par.Parasite(c.x + ox, c.y + oy, c.area, float(s))
+        found = [par.Parasite(c.x / scale + ox, c.y / scale + oy, c.area / scale ** 2, float(s))
                  for c, s in zip(cands, scores) if s >= threshold]
 
     return FieldCount(len(found), len(cells), found, cells)
