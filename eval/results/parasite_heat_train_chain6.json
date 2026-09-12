@@ -1,0 +1,152 @@
+{
+  "patches": 294214,
+  "positives": 49925,
+  "patients": 125,
+  "epochs": 20,
+  "folds": 5,
+  "val_patients": 20,
+  "val_file": "calibration_patients.json",
+  "validation_patient_list": [
+    "TF103_235",
+    "TF109_258",
+    "TF112_CJ10",
+    "TF118_1532",
+    "TF120_1552",
+    "TF129_S535",
+    "TF131_S532",
+    "TF135_US14",
+    "TF13_C71P32",
+    "TF143_CT4",
+    "TF33_Sc570",
+    "TF39_CT2",
+    "TF3N_536",
+    "TF65_CS33",
+    "TF67_US14",
+    "TF71_Scr559",
+    "TF83_BD2_97",
+    "TF8_C58P19",
+    "TF91_15_9A",
+    "TF93_209"
+  ],
+  "crop": 48,
+  "stored_patch": 56,
+  "validation_patients": [
+    {
+      "threshold": 0.2,
+      "precision": 0.4343,
+      "recall": 0.9387,
+      "f1": 0.5938,
+      "count_bias_pct": 104.92
+    },
+    {
+      "threshold": 0.25,
+      "precision": 0.4586,
+      "recall": 0.9253,
+      "f1": 0.6133,
+      "count_bias_pct": 91.26
+    },
+    {
+      "threshold": 0.3,
+      "precision": 0.4836,
+      "recall": 0.9037,
+      "f1": 0.63,
+      "count_bias_pct": 77.15
+    },
+    {
+      "threshold": 0.35,
+      "precision": 0.5058,
+      "recall": 0.8842,
+      "f1": 0.6435,
+      "count_bias_pct": 65.72
+    },
+    {
+      "threshold": 0.4,
+      "precision": 0.5327,
+      "recall": 0.862,
+      "f1": 0.6584,
+      "count_bias_pct": 53.4
+    },
+    {
+      "threshold": 0.45,
+      "precision": 0.5548,
+      "recall": 0.8323,
+      "f1": 0.6658,
+      "count_bias_pct": 42.23
+    },
+    {
+      "threshold": 0.5,
+      "precision": 0.5916,
+      "recall": 0.7939,
+      "f1": 0.678,
+      "count_bias_pct": 27.23
+    },
+    {
+      "threshold": 0.55,
+      "precision": 0.6438,
+      "recall": 0.7387,
+      "f1": 0.688,
+      "count_bias_pct": 8.78
+    },
+    {
+      "threshold": 0.6,
+      "precision": 0.6819,
+      "recall": 0.6842,
+      "f1": 0.683,
+      "count_bias_pct": -4.88
+    },
+    {
+      "threshold": 0.65,
+      "precision": 0.7201,
+      "recall": 0.6323,
+      "f1": 0.6734,
+      "count_bias_pct": -16.75
+    },
+    {
+      "threshold": 0.7,
+      "precision": 0.748,
+      "recall": 0.5778,
+      "f1": 0.652,
+      "count_bias_pct": -26.78
+    },
+    {
+      "threshold": 0.75,
+      "precision": 0.7736,
+      "recall": 0.5017,
+      "f1": 0.6087,
+      "count_bias_pct": -38.52
+    },
+    {
+      "threshold": 0.8,
+      "precision": 0.8081,
+      "recall": 0.4054,
+      "f1": 0.5399,
+      "count_bias_pct": -52.44
+    },
+    {
+      "threshold": 0.85,
+      "precision": 0.8413,
+      "recall": 0.2714,
+      "f1": 0.4104,
+      "count_bias_pct": -69.42
+    },
+    {
+      "threshold": 0.9,
+      "precision": 0.8588,
+      "recall": 0.1475,
+      "f1": 0.2517,
+      "count_bias_pct": -83.72
+    }
+  ],
+  "input_mean_bgr": [
+    68.47843170166016,
+    68.47843170166016,
+    68.47843170166016
+  ],
+  "input_std_bgr": [
+    93.65420532226562,
+    93.03958129882812,
+    93.73197937011719
+  ],
+  "hybrid": false,
+  "patches_file": "parasite_patches_heat_56.npz"
+}

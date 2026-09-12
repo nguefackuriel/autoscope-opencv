@@ -987,3 +987,72 @@ rods, so they are kept), every clean-field candidate at a 0.3 keep rate to
 restore the balance and the training time, same 20 epochs, same
 count-matching threshold. `MINER=../models/parasite_cnn_heat.onnx
 CLEAN_KEEP=0.3 MODEL=heat-cnn bash eval/chain.sh`.
+
+### 16f. Chain 6: mined with the chain-5 judge, the rods are learned and the platelets come back; and what four judges say together
+
+12 September (`chain_2026-09-11_heat-cnn.log`, judge
+`models/parasite_cnn_heat_chain6.onnx`, results under `_heat-cnn4`).
+Union of proposers, hard negatives mined with the chain-5 judge, clean
+fields kept at 0.3: 294 214 patches, 18% positive, 7 h 26 of training.
+Threshold 0.51 (−0.2%).
+
+| held-out | shipped | chain 5 judge | **chain 6 judge** |
+|---|---|---|---|
+| precision / recall / F1, 99 images | 0.814 / 0.783 / 0.798 | 0.864 / 0.840 / 0.852 | **0.880 / 0.851 / 0.865** |
+| 609 images: count bias / MAE | −1.9% / 6.70 | −1.7% / 7.02 | −2.2% / **5.75** |
+| density error, WHO protocol / limits | 25.7%, −47% to +59% | 32.6%, −46% to +115% | **24.3%**, −42% to +77% |
+| every field: error / within 25% / within 50% | **19.3%** / 70% / 90% | 30.5% / 70% / 90% | 21.8% / **82%** / 90% |
+| 1 000 to 10 000/µL: parasite bias | **+9.6%** | +37.0% | +22.8% |
+| 10 000 to 100 000/µL: error | 16.0% | 11.4% | **11.0%** |
+| agent, real counter (WHO / rule / decision) | 26.5 / 27.2 / 27.4% | 32.6 / 33.9 / 34.1% | **24.4 / 25.8 / 25.0%** |
+| frozen clean half: false parasites per field, at zero | 0.06, 95% | **0.01, 99.5%** | 0.66, 60% |
+| noise floor, frozen / fit p95 | 19 / 148/µL | **2 / 23/µL** | 222 / 1 057/µL |
+| AUC | 1.000 | 1.000 | 0.998 |
+| limit of detection | 500/µL | **200/µL** | 2 000/µL |
+
+The best object-level, dense-band, within-25% and agent numbers of any
+pipeline, the best protocol number by a point and a half, and the clean
+fields worse by a factor of ten than the shipped pair. The rods went into
+the training set, as intended, and the platelets went out: the chain-5
+judge was near-silent on clean fields, so it scored the clean-field
+candidates below 0.2, they became easy negatives, and seven in ten were
+thinned away. The same mechanism as 16e, on the other side. **A miner
+hides what it already rejects**, whichever side that is.
+
+**Four judges averaged on the heat map's candidates**, cached scores,
+held-out density error through the protocol (`heat_cnn_ensemble.log`):
+
+| judges | threshold | count MAE | density error | limits |
+|---|---|---|---|---|
+| 3 + 4 | 0.29 | 5.67 | **23.5%** | −42% to +76% |
+| 4 + 6 | 0.33 | 5.64 | 23.6% | −41% to +77% |
+| 3 + 6 | 0.46 | 5.81 | 24.0% | −42% to +78% |
+| 3 + 4 + 5 + 6 | 0.44 | 5.71 | 24.2% | −41% to +79% |
+| 3 + 5 + 6 | 0.54 | 5.80 | 24.6% | −42% to +78% |
+| 5 + 6 | 0.59 | 5.89 | 25.8% | −42% to +87% |
+| shipped pair, one judge on the top-hat's candidates | 0.53 | 6.70 | 25.7% | −47% to +59% |
+
+Every combination lands between 23.5% and 25.8%. That is the number this
+family reaches under one global threshold: the sparse slides' surplus and
+the dense slides' deficit meet in the middle whatever the judge, and
+averaging judges buys a point or two, not five.
+
+**What ships: still the top-hat pair.** It loses the object level, the
+dense band and the agent to chain 6, and it wins the sparse band, the
+clean fields and the limit of detection outright; a split result is not a
+win, and on a screening tool the clean side is not the side to lose.
+
+**What the four chains have established.** The proposer is settled: the
+heat map's candidates carry F1 0.85 to 0.87 with any judge. The judge is
+not: each recipe fixes the look-alikes its miner kept and loses the ones
+its miner rejected. The recipe that follows from that is not a fifth
+miner but all of them at once: **chain 7 keeps a candidate as a hard
+negative if any of the chain-3, chain-5 and chain-6 judges scores it at
+0.2 or above** (`--miner-model a.onnx,b.onnx,c.onnx`, the maximum of the
+three), clean fields at 0.5. And beyond the recipe, the two things a
+global threshold cannot do remain the sparse slides' rods and the dense
+slides' merged parasites; the honest next steps for those are a judge
+with a wider context (a second, 96 px input at half resolution) and a
+threshold that knows how sparse the slide is, both after the Tanzania
+calibration and the *P. vivax* run, which nobody has started and the
+report needs more.

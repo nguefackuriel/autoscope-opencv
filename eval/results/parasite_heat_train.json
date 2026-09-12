@@ -1,5 +1,5 @@
 {
-  "patches": 456712,
+  "patches": 294214,
   "positives": 49925,
   "patients": 125,
   "epochs": 20,
@@ -33,108 +33,108 @@
   "validation_patients": [
     {
       "threshold": 0.2,
-      "precision": 0.3041,
-      "recall": 0.9912,
-      "f1": 0.4654,
-      "count_bias_pct": 209.04
+      "precision": 0.4343,
+      "recall": 0.9387,
+      "f1": 0.5938,
+      "count_bias_pct": 104.92
     },
     {
       "threshold": 0.25,
-      "precision": 0.3282,
-      "recall": 0.9886,
-      "f1": 0.4928,
-      "count_bias_pct": 185.55
+      "precision": 0.4586,
+      "recall": 0.9253,
+      "f1": 0.6133,
+      "count_bias_pct": 91.26
     },
     {
       "threshold": 0.3,
-      "precision": 0.3504,
-      "recall": 0.9818,
-      "f1": 0.5165,
-      "count_bias_pct": 165.63
+      "precision": 0.4836,
+      "recall": 0.9037,
+      "f1": 0.63,
+      "count_bias_pct": 77.15
     },
     {
       "threshold": 0.35,
-      "precision": 0.3738,
-      "recall": 0.9724,
-      "f1": 0.54,
-      "count_bias_pct": 146.61
+      "precision": 0.5058,
+      "recall": 0.8842,
+      "f1": 0.6435,
+      "count_bias_pct": 65.72
     },
     {
       "threshold": 0.4,
-      "precision": 0.3998,
-      "recall": 0.9596,
-      "f1": 0.5645,
-      "count_bias_pct": 127.52
+      "precision": 0.5327,
+      "recall": 0.862,
+      "f1": 0.6584,
+      "count_bias_pct": 53.4
     },
     {
       "threshold": 0.45,
-      "precision": 0.4287,
-      "recall": 0.9394,
-      "f1": 0.5887,
-      "count_bias_pct": 107.73
+      "precision": 0.5548,
+      "recall": 0.8323,
+      "f1": 0.6658,
+      "count_bias_pct": 42.23
     },
     {
       "threshold": 0.5,
-      "precision": 0.457,
-      "recall": 0.9172,
-      "f1": 0.6101,
-      "count_bias_pct": 90.24
+      "precision": 0.5916,
+      "recall": 0.7939,
+      "f1": 0.678,
+      "count_bias_pct": 27.23
     },
     {
       "threshold": 0.55,
-      "precision": 0.4874,
-      "recall": 0.8855,
-      "f1": 0.6287,
-      "count_bias_pct": 72.24
+      "precision": 0.6438,
+      "recall": 0.7387,
+      "f1": 0.688,
+      "count_bias_pct": 8.78
     },
     {
       "threshold": 0.6,
-      "precision": 0.5257,
-      "recall": 0.8458,
-      "f1": 0.6484,
-      "count_bias_pct": 52.51
-    },
-    {
-      "threshold": 0.65,
-      "precision": 0.5782,
-      "recall": 0.7966,
-      "f1": 0.6701,
-      "count_bias_pct": 30.61
-    },
-    {
-      "threshold": 0.7,
-      "precision": 0.6322,
-      "recall": 0.7488,
-      "f1": 0.6856,
-      "count_bias_pct": 12.29
-    },
-    {
-      "threshold": 0.75,
-      "precision": 0.6765,
-      "recall": 0.6788,
-      "f1": 0.6776,
+      "precision": 0.6819,
+      "recall": 0.6842,
+      "f1": 0.683,
       "count_bias_pct": -4.88
     },
     {
+      "threshold": 0.65,
+      "precision": 0.7201,
+      "recall": 0.6323,
+      "f1": 0.6734,
+      "count_bias_pct": -16.75
+    },
+    {
+      "threshold": 0.7,
+      "precision": 0.748,
+      "recall": 0.5778,
+      "f1": 0.652,
+      "count_bias_pct": -26.78
+    },
+    {
+      "threshold": 0.75,
+      "precision": 0.7736,
+      "recall": 0.5017,
+      "f1": 0.6087,
+      "count_bias_pct": -38.52
+    },
+    {
       "threshold": 0.8,
-      "precision": 0.7218,
-      "recall": 0.5993,
-      "f1": 0.6549,
-      "count_bias_pct": -21.29
+      "precision": 0.8081,
+      "recall": 0.4054,
+      "f1": 0.5399,
+      "count_bias_pct": -52.44
     },
     {
       "threshold": 0.85,
-      "precision": 0.757,
-      "recall": 0.4721,
-      "f1": 0.5815,
-      "count_bias_pct": -40.89
+      "precision": 0.8413,
+      "recall": 0.2714,
+      "f1": 0.4104,
+      "count_bias_pct": -69.42
     },
     {
       "threshold": 0.9,
-      "precision": 0.7964,
-      "recall": 0.2976,
-      "f1": 0.4333,
-      "count_bias_pct": -64.57
+      "precision": 0.8588,
+      "recall": 0.1475,
+      "f1": 0.2517,
+      "count_bias_pct": -83.72
     }
   ],
   "input_mean_bgr": [
@@ -143,9 +143,9 @@
     68.47843170166016
   ],
   "input_std_bgr": [
-    93.63936614990234,
-    93.62372589111328,
-    93.66187286376953
+    93.65420532226562,
+    93.03958129882812,
+    93.73197937011719
   ],
   "hybrid": false,
   "patches_file": "parasite_patches_heat_56.npz"
