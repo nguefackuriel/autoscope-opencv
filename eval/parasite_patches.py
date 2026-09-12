@@ -63,16 +63,25 @@ PATCH = 40
 
 
 class Miner:
-    """Scores candidates with the previous network so the hard ones can be kept."""
+    """Scores candidates with the previous network(s) so the hard ones can be kept.
 
-    def __init__(self, model: Path, size: int):
-        self.scorer = par.PatchScorer.load(model)
+    Several models, comma-separated, score every candidate and the maximum
+    counts: a miner hides what it already rejects (results-parasites.md
+    16e, 16f: chain 5 lost the rods its chain-3 miner rejected, chain 6
+    lost the platelets its chain-5 miner rejected), so chain 7 mines with
+    all of them at once. All must take the same patch size.
+    """
+
+    def __init__(self, models: str | Path, size: int):
+        paths = [Path(m) for m in str(models).split(",") if m]
+        self.scorers = [par.PatchScorer.load(m) for m in paths]
         self.size = size
 
     def __call__(self, prepared, cands) -> np.ndarray:
         if not cands:
             return np.zeros(0, np.float32)
-        return self.scorer.score(par.patches_at(prepared, cands, size=self.size))
+        patches = par.patches_at(prepared, cands, size=self.size)
+        return np.max(np.stack([s.score(patches) for s in self.scorers]), axis=0)
 
 
 def keep_mask(y: np.ndarray, scores: np.ndarray, hard_min: float, easy_keep: float,
@@ -133,7 +142,8 @@ def main():
                     help="every fit image; keep positives, hard negatives (>= --hard-min under --miner-model) and --easy-keep of the rest")
     ap.add_argument("--hard-min", type=float, default=0.2)
     ap.add_argument("--easy-keep", type=float, default=0.1)
-    ap.add_argument("--miner-model", default=str(par.CNN_PATH), help="the network that scores candidates for mining")
+    ap.add_argument("--miner-model", default=str(par.CNN_PATH),
+                    help="the network that scores candidates for mining; several, comma-separated, keep the maximum")
     ap.add_argument("--miner-size", type=int, default=32, help="that network's input size")
     ap.add_argument("--features", action="store_true",
                     help="also compute the 19 hand-made features (hybrid path); a second per image")
@@ -154,7 +164,7 @@ def main():
     calibration = set(json.loads((OUT / "calibration_patients.json").read_text()))
     half = args.patch // 2
     rng = random.Random(args.seed)
-    miner = Miner(Path(args.miner_model), args.miner_size) if args.mine else None
+    miner = Miner(args.miner_model, args.miner_size) if args.mine else None
     features = (args.features or not args.mine) and args.candidates == "tophat"   # the old recipe always computed them
 
     def propose(prepared, mask):
@@ -259,7 +269,7 @@ def main():
     summary = {
         "out": args.out, "patch": args.patch, "mine": args.mine, "candidates": args.candidates, "easy_keep_clean": args.easy_keep_clean,
         "hard_min": args.hard_min if args.mine else None, "easy_keep": args.easy_keep if args.mine else None,
-        "miner_model": Path(args.miner_model).name if args.mine else None,
+        "miner_model": ",".join(Path(m).name for m in args.miner_model.split(",")) if args.mine else None,
         "candidate_recall_fit_images": round(total_hit / max(total_truth, 1), 4),
         "patches": int(len(P)), "positives": int(sum(labels)),
         "by_source": {k: {"images": v[0], "candidates": v[1], "kept": v[2], "positives": v[3]} for k, v in stats.items()},

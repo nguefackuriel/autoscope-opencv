@@ -149,7 +149,7 @@ Report sensitivity per level. It is how a laboratory validates a new
 method, it fits nothing, and it is the only way this data yields a number
 below 1 000/µL.
 
-### 4. A learned detector (two weeks) — built 6–7 Sept: alone a negative result at the slide level; as the proposer under a patch network F1 0.85 to 0.86, dense band 11.4%, clean fields 0.01 false per field, limit of detection 200/µL (chain 5), but the sparse infected slides +37%; not shipped, next: open TF70/TF107/TF81 with the chain-5 pair, then a sparsity-aware threshold or second stage (`results-parasites.md` §16 to 16d)
+### 4. A learned detector (two weeks) — built 6–12 Sept, chains 3 to 7: the proposer is settled (F1 0.85 to 0.87 with any judge), the judge is not; each mining recipe fixes the look-alikes its miner kept and loses the ones it rejected (rods in chain 5, platelets in chain 6), one global threshold saturates at 23.5 to 25.8% density error whatever the judge; the shipped pair stays; chain 7 mines with all judges at once; then a wider-context judge and a sparsity-aware threshold, after steps 5 and 6 (`results-parasites.md` §16 to 16f)
 
 A small fully convolutional network through `cv.dnn` on the normalised
 crop at half resolution, trained from the point annotations as Gaussian
