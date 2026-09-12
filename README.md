@@ -88,6 +88,8 @@ src/autoscope/
   segmentation.py    stage 4  find the white cells (the denominator)
   parasites.py       stage 5  find the parasites (the numerator): top-hat
                               peaks, then an ONNX classifier through cv.dnn
+  site.py                     calibration for another microscope: the scale
+                              from the nuclei of ten slides (results-tanzania.md)
   density.py         stage 6  count to parasites/uL with an error bar, and the
                               decision rule: negative on the noise floor, positive
                               when the interval clears it, settled in one band

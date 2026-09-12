@@ -160,6 +160,12 @@ in the pipeline transfers without (a) a pixel scale factor and (b) stain
 normalisation onto the NLM reference. Measure the white cell diameter here
 before setting either; do not eyeball it.
 
+**Measured on 12 September 2026** (`docs/results-tanzania.md`): round single
+nuclei are 370.8 px across against 77.2 px on NLM by the same function, so
+the scale is 0.2082; stain goes through the per-image normalisation
+unchanged. The first ten images of each folder are the calibration set, the
+rest were run once.
+
 ## The NLM uninfected set, downloaded 2 September 2026
 
 `make data-uninfected`, `NIH-NLM-ThickBloodSmearsU.zip`, 2.45 GB, same group

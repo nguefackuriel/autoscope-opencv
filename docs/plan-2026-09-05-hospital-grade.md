@@ -32,7 +32,7 @@ and `results-agent.md`, 6 September):
 | limit of detection, 95% sensitivity | | above 2 000/µL | **500/µL** by dilution |
 | counts within 25% | ≥ 50% | 58% | **64%** (every field), 92% within 50%; **70% / 90% with the white cell gate, 6 Sept afternoon** |
 | species | ≥ 90% | nothing | nothing |
-| another microscope, camera, stain | | nothing | nothing |
+| another microscope, camera, stain | | nothing | nothing; **12 Sept, Tanzania, run once: 99.3% of clean fields report no parasite, 70% of infected fields at least one, AUC 0.85 (field level, no positions)** |
 
 The white cell gate of 6 September afternoon (`results-wbc.md`) took the
 density error per slide from 28.3% to 25.7% on top of this. The table
@@ -159,7 +159,7 @@ under-count and the last of the sparse-field false alarms both live. The
 patch network stays as the control. Target: object F1 at least 0.85 on
 the held-out patients, dense band bias within ±10%.
 
-### 5. Site calibration for another microscope (one week, after 4)
+### 5. Site calibration for another microscope (one week, after 4) — done 12 Sept: `autoscope.site`, scale 0.2082 from the nuclei of 20 calibration images, Tanzania run once (`docs/results-tanzania.md`)
 
 A hospital will not own the NLM phone-through-eyepiece rig. Two
 measurements turn a new site's slides into NLM scale: the white cell
