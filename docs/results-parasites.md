@@ -1056,3 +1056,51 @@ with a wider context (a second, 96 px input at half resolution) and a
 threshold that knows how sparse the slide is, both after the Tanzania
 calibration and the *P. vivax* run, which nobody has started and the
 report needs more.
+
+### 16g. Chain 7: mined with all three judges at once, the platelets come back half way; the family's ceiling holds
+
+14 September (`chain_2026-09-12_heat-cnn.log`, judge
+`models/parasite_cnn_heat_chain7.onnx`, results under `_heat-cnn5`).
+Union of proposers; a candidate is a hard negative if the chain-3,
+chain-5 **or** chain-6 judge scores it at 0.2 or above
+(`--miner-model a,b,c`, the maximum); clean-field candidates kept at 0.5.
+354 342 patches, 14.7% positive. Training ran from the 12th to the 14th:
+the laptop slept through most of the 13th, again. Threshold 0.55 (+0.2%).
+
+| held-out | shipped | chain 5 | chain 6 | **chain 7** |
+|---|---|---|---|---|
+| F1, 99 images | 0.798 | 0.852 | 0.865 | **0.865** |
+| count MAE per image | 6.15 | 6.27 | 5.50 | 5.51 |
+| density error, WHO protocol | 25.7% | 32.6% | **24.3%** | 25.8% |
+| every field: error / within 25% | **19.3%** / 70% | 30.5% / 70% | 21.8% / **82%** | 23.3% / 76% |
+| 1 000 to 10 000/µL: parasite bias | **+9.6%** | +37.0% | +22.8% | +25.6% |
+| 10 000 to 100 000/µL: error | 16.0% | 11.4% | 11.0% | **10.9%** |
+| frozen clean half: false parasites per field | 0.06 | **0.01** | 0.66 | 0.15 |
+| noise floor, frozen / fit p95 | 19 / 148/µL | **2 / 23/µL** | 222 / 1 057/µL | 49 / 335/µL |
+| limit of detection | 500/µL | **200/µL** | 2 000/µL | 1 000/µL |
+| decision rule, N = 500 | 15/15, 49/50 | 15/15, 49/50 | 15/15, 49/50 | 15/15, 49/50 |
+
+Mining with every judge brought the platelets back into the training set:
+the clean fields go from chain 6's 0.66 false parasites per field to
+0.15, a factor of four, and not to the shipped pair's 0.06 or chain 5's
+0.01. The sparse slides do not move (TF70 +232% parasites, TF81 +178%,
+TF107 +96%), and the dense band is as good as it has been. Averaging
+judges again (`heat_cnn_ensemble.log`): all five 24.1%, chain 3 + chain 7
+24.6%, chain 4 + chain 7 25.0%; every combination of the seven chains
+has landed between 23.5% and 25.8%.
+
+**Verdict: the top-hat pair stays shipped**, and the judge recipe is
+closed as a line of work. Seven chains in, the heat map's candidates with
+any judge carry F1 0.85 to 0.87 and a dense band near 11%, and every
+judge trades the sparse infected slides against the clean fields under
+one global threshold; mining changes which side pays, not the total.
+What would change the total is information the judge does not have: how
+sparse the slide is (a threshold per density band, which section 11
+could not build on the top-hat's candidates but which the agent's own
+running estimate now provides), or a wider view (a second input at half
+resolution). Both are designs, not recipes, and they come after the
+report's missing pieces: *P. vivax*, the product surface and AWS.
+
+`parasites.HEAT_CNN_THRESHOLD` follows the judge at `HEAT_CNN_PATH`: 0.55
+for chain 7's. It had been left at chain 3's 0.42 since chain 4, the same
+drift as `DEFAULT_THRESHOLD`.

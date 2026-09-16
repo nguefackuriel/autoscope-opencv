@@ -448,7 +448,11 @@ def load_scorer(model: str, weights=None):
             "heat-cnn": _heat_cnn_scorer}[model]()
 
 
-HEAT_CNN_THRESHOLD = 0.42   # chosen on the calibration patients, 6 September 2026 (-0.3%): threshold_fixedstats.json
+# The threshold for the judge at HEAT_CNN_PATH, chosen on the calibration
+# patients by the count-matching rule. 0.55 for chain 7's judge (14 September,
+# threshold_fixedstats_heat-cnn5.json); it stayed at chain 3's 0.42 through
+# chains 4 to 6, which only matters to a caller using the default.
+HEAT_CNN_THRESHOLD = 0.55
 
 # Box detectors (Alex's branch, docs/detectors.md): YOLO26 or Faster R-CNN on
 # 640 px tiles at native resolution, run through autoscope.boxes.BoxScorer.

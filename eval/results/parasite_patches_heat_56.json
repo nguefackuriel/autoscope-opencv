@@ -3,18 +3,18 @@
   "patch": 56,
   "mine": true,
   "candidates": "both",
-  "easy_keep_clean": 0.3,
+  "easy_keep_clean": 0.5,
   "hard_min": 0.2,
   "easy_keep": 0.1,
-  "miner_model": "parasite_cnn_heat.onnx",
+  "miner_model": "parasite_cnn.onnx,parasite_cnn_heat_chain5.onnx,parasite_cnn_heat_chain6.onnx",
   "candidate_recall_fit_images": 0.948,
-  "patches": 294214,
+  "patches": 354342,
   "positives": 49925,
   "by_source": {
     "fit": {
       "images": 986,
       "candidates": 508996,
-      "kept": 183870,
+      "kept": 185691,
       "positives": 48440
     },
     "calibration": {
@@ -26,9 +26,9 @@
     "clean": {
       "images": 569,
       "candidates": 285779,
-      "kept": 85798,
+      "kept": 144105,
       "positives": 0
     }
   },
-  "minutes": 61.6
+  "minutes": 89.4
 }
