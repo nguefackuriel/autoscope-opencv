@@ -4,3 +4,7 @@ opencv-python==5.0.0.93
 numpy==2.3.4
 scipy==1.16.3
 pytest==8.4.2
+
+# The cloud entrypoints (autoscope.cloud) and the Lambdas talk to AWS.
+# Not needed to run the pipeline or the tests on a laptop.
+boto3==1.35.36

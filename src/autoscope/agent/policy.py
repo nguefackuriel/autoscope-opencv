@@ -11,7 +11,10 @@ Three policies, same tools, so we can measure what the agent is worth:
                  negative on the measured noise floor, positive when the
                  interval clears it, settled when it sits in one density band.
                  What a technician actually does (5 September 2026).
-  Bedrock        the real agent.                                    (to write)
+  BedrockPolicy  the real agent: Claude on Bedrock, one call per field, the
+                 five moves given as tools. In agent/bedrock.py, behind this
+                 same protocol, so agent_eval.py replays it against the three
+                 above on the same cached field table (16 September 2026).
 
 If the model policy cannot beat RuleBased, the agent is decoration, and the
 report should say so rather than bury it. Keeping the control in the repo is
