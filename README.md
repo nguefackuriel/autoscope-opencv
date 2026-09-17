@@ -96,15 +96,31 @@ src/autoscope/
   virtual_stage.py            the stage the agent moves around
   boxes.py                    boxes from the stain for training, and a box
                               detector (YOLO26, Faster R-CNN) run tile by tile
-src/autoscope/agent/          the seven tools, four policies, the loop
+src/autoscope/agent/          the seven tools, five policies, the loop
+                              policy.py   fixed, WHO-200, rule-based, decision
+                              bedrock.py  the agent: Claude on Bedrock, the five
+                                          moves as tools, behind the same Policy
+                              moves.py    the prompt and the moves, no OpenCV, so
+                                          the Lambda ships 300 kB not 60 MB
+src/autoscope/cloud/          what runs on AWS: read_field.py is one Batch job,
+                              one field, stages 1 to 4 and 6 on Graviton
 models/                       the ONNX classifiers cv.dnn loads (committed;
                               `make train-mlp` / `make train-cnn` rebuild them;
                               parasite_cnn_chain2_32px.onnx is the 32 px control)
 bench/cool_bench.py           COOL against stock, medians and IQR
-bench/field_profile.py        the real pipeline, stage by stage, on real fields
+bench/field_profile.py        the real pipeline, stage by stage, on real fields,
+                              and slides/hour
+bench/cost_model.py           dollars per 1,000 slides, from measured field time
+                              and real prices. Refuses to invent a price.
+bench/Dockerfile.kleidicv-off the honest Arm control: OpenCV 5 built from source
+                              with KleidiCV off, since the pip wheel has it on
 eval/                         surveys, sweeps, and held-out scoring. Every
                               number in docs/results-*.md comes from here.
-infra/                        Terraform for AWS                 (to write)
+infra/terraform/              the stack of proposal section 6: S3, EventBridge,
+                              Step Functions, Batch on Graviton Spot, Bedrock,
+                              DynamoDB, API Gateway, CloudFront, Budgets
+infra/lambda/                 the agent and the API, and build.sh which makes
+                              their packages. Read docs/aws-setup.md first.
 ```
 
 ## Running the benchmark
@@ -112,9 +128,22 @@ infra/                        Terraform for AWS                 (to write)
 Same script, three machines, then diff the JSON:
 
 ```
-python bench/cool_bench.py --runs 100 --label c8g-cool     # Graviton4 + COOL AMI
-python bench/cool_bench.py --runs 100 --label c8g-stock    # Graviton4, stock OpenCV 5
-python bench/cool_bench.py --runs 100 --label c7i-stock    # x86, stock OpenCV 5
+python bench/cool_bench.py --runs 100 --label c8g-cool          # Graviton4 + COOL AMI
+python bench/cool_bench.py --runs 100 --label c8g-stock         # Graviton4, the pip wheel
+python bench/cool_bench.py --runs 100 --label c8g-no-kleidicv   # Graviton4, KleidiCV off
+python bench/cool_bench.py --runs 100 --label c7i-stock         # x86, the pip wheel
+```
+
+Four arms, not three, and the reason is in the next paragraph. The third is
+built by `bench/Dockerfile.kleidicv-off`, which fails the build if the
+acceleration is still linked: a control that quietly has KleidiCV in it would
+report a 1.0x speedup as a finding.
+
+Then the two numbers a lab reads, on each machine:
+
+```
+python bench/field_profile.py --label c8g-cool    # slides/hour, stage by stage
+python bench/cost_model.py --fetch --markdown     # $/1000 slides, all arms
 ```
 
 Every result file records `kleidicv_in_build` and the CPU baseline, so a reader

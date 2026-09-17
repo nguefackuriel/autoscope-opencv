@@ -1,0 +1,18 @@
+{
+  "_comment": "Copy to pricing.json. Either run `python bench/cost_model.py --fetch` against a real account, which overwrites this file and sets verified to true, or fill the numbers in by hand from the AWS pricing page and set verified yourself. Until then every cost line prints UNVERIFIED, because an invented price in a cost table looks exactly like a measured one.",
+  "region": "us-east-1",
+  "fetched": null,
+  "verified": false,
+  "instances": {
+    "c8g.8xlarge": {
+      "vcpu": 32,
+      "on_demand_usd_hour": null,
+      "spot_usd_hour_median_7d": null
+    },
+    "c7i.8xlarge": {
+      "vcpu": 32,
+      "on_demand_usd_hour": null,
+      "spot_usd_hour_median_7d": null
+    }
+  }
+}
