@@ -21,3 +21,16 @@ eval/results/*.pt
 # of them. The chosen weights go to ClearML artifacts, never into git.
 models/frcnn/
 models/yolo26/
+
+# Terraform
+infra/terraform/.terraform/
+infra/terraform/.build/
+infra/terraform/*.tfstate*
+infra/terraform/terraform.tfvars
+infra/terraform/.terraform.lock.hcl
+
+# Built Lambda packages, never committed
+infra/lambda/layers/python/*
+!infra/lambda/layers/python/.gitkeep
+infra/lambda/layers/*.zip
+infra/lambda/agent/moves.py

@@ -160,6 +160,12 @@ in the pipeline transfers without (a) a pixel scale factor and (b) stain
 normalisation onto the NLM reference. Measure the white cell diameter here
 before setting either; do not eyeball it.
 
+**Measured on 12 September 2026** (`docs/results-tanzania.md`): round single
+nuclei are 370.8 px across against 77.2 px on NLM by the same function, so
+the scale is 0.2082; stain goes through the per-image normalisation
+unchanged. The first ten images of each folder are the calibration set, the
+rest were run once.
+
 ## The NLM uninfected set, downloaded 2 September 2026
 
 `make data-uninfected`, `NIH-NLM-ThickBloodSmearsU.zip`, 2.45 GB, same group
@@ -195,3 +201,36 @@ nothing is fitted on it, and `eval/negative_eval.py` reports what it says.
 The companion set, `NIH-NLM-ThickBloodSmearsPV.zip` (4.98 GB, 150 *P. vivax*
 patients, `make data-vivax`), is the other-species failure case and is held
 to the same rule.
+
+## Citing it
+
+The NLM sets are public and free to use, and the group that made them asks to
+be credited. This is what goes in the report and in any paper that comes out
+of this, added 16 September 2026 after reading `ReadMe_new_2021.docx` that
+ships with the thick smear set:
+
+> Thick blood smear images and expert annotations: US National Library of
+> Medicine, Lister Hill National Center for Biomedical Communications (NLM /
+> LHNCBC), National Institutes of Health.
+> <https://lhncbc.nlm.nih.gov/LHC-downloads/dataset.html>
+> Slides were prepared and read at the Mahidol-Oxford Tropical Medicine
+> Research Unit (MORU), Bangkok; the images are de-identified.
+
+> Yang F, Poostchi M, Yu H, Zhou Z, Silamut K, Yu J, Maude RJ, Jaeger S,
+> Antani S. *Deep learning for smartphone-based malaria parasite detection in
+> thick blood smears.* IEEE Journal of Biomedical and Health Informatics,
+> 24(5):1427-1438, 2020. doi:10.1109/JBHI.2019.2939121
+
+Yang et al. is the paper that goes with this dataset and the number every
+result here is read against: 92.6% sensitivity and 94.3% precision at the
+candidate level on the same 150 patients.
+
+**One thing the ReadMe changes about how our numbers read.** Annotation stops
+at roughly 200 white blood cells per slide, by design — it is the WHO counting
+protocol, not the end of the slide. The held-out median is 230 annotated white
+cells. So when the agent reports "ran out of slide", it has usually reached
+the end of the *annotation*, not the end of the smear, and the field ceiling
+we hit on sparse slides is a property of the dataset rather than of the
+method. Any report that quotes fields-read has to say this.
+
+The Tanzania set is CC0 and carries its own citation in `download_tanzania.py`.

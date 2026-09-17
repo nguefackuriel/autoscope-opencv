@@ -1,0 +1,167 @@
+{
+  "model": "cnn",
+  "threshold": 0.53,
+  "scale": 0.2082,
+  "rows": [
+    {
+      "label": "infected",
+      "image": "Image01.jpg",
+      "parasites": 7,
+      "wbc": 1,
+      "per_ul": 56000.0,
+      "seconds": 0.2
+    },
+    {
+      "label": "infected",
+      "image": "Image02.jpg",
+      "parasites": 6,
+      "wbc": 3,
+      "per_ul": 16000.0,
+      "seconds": 0.2
+    },
+    {
+      "label": "infected",
+      "image": "Image03.jpg",
+      "parasites": 10,
+      "wbc": 1,
+      "per_ul": 80000.0,
+      "seconds": 0.22
+    },
+    {
+      "label": "infected",
+      "image": "Image04.jpg",
+      "parasites": 0,
+      "wbc": 2,
+      "per_ul": 0.0,
+      "seconds": 0.22
+    },
+    {
+      "label": "infected",
+      "image": "Image05.jpg",
+      "parasites": 8,
+      "wbc": 2,
+      "per_ul": 32000.0,
+      "seconds": 0.21
+    },
+    {
+      "label": "infected",
+      "image": "Image06.jpg",
+      "parasites": 9,
+      "wbc": 2,
+      "per_ul": 36000.0,
+      "seconds": 0.24
+    },
+    {
+      "label": "infected",
+      "image": "Image07.jpg",
+      "parasites": 10,
+      "wbc": 2,
+      "per_ul": 40000.0,
+      "seconds": 0.21
+    },
+    {
+      "label": "infected",
+      "image": "Image08.jpg",
+      "parasites": 0,
+      "wbc": 2,
+      "per_ul": 0.0,
+      "seconds": 0.16
+    },
+    {
+      "label": "infected",
+      "image": "Image09.jpg",
+      "parasites": 0,
+      "wbc": 1,
+      "per_ul": 0.0,
+      "seconds": 0.17
+    },
+    {
+      "label": "infected",
+      "image": "Image10.jpg",
+      "parasites": 0,
+      "wbc": 1,
+      "per_ul": 0.0,
+      "seconds": 0.18
+    },
+    {
+      "label": "uninfected",
+      "image": "Image01240.jpg",
+      "parasites": 0,
+      "wbc": 2,
+      "per_ul": 0.0,
+      "seconds": 0.19
+    },
+    {
+      "label": "uninfected",
+      "image": "Image11241.jpg",
+      "parasites": 0,
+      "wbc": 3,
+      "per_ul": 0.0,
+      "seconds": 0.14
+    },
+    {
+      "label": "uninfected",
+      "image": "Image1140.jpg",
+      "parasites": 0,
+      "wbc": 0,
+      "per_ul": null,
+      "seconds": 0.13
+    },
+    {
+      "label": "uninfected",
+      "image": "Image1141.jpg",
+      "parasites": 0,
+      "wbc": 0,
+      "per_ul": null,
+      "seconds": 0.18
+    },
+    {
+      "label": "uninfected",
+      "image": "Image1142.jpg",
+      "parasites": 0,
+      "wbc": 4,
+      "per_ul": 0.0,
+      "seconds": 0.12
+    },
+    {
+      "label": "uninfected",
+      "image": "Image1143.jpg",
+      "parasites": 0,
+      "wbc": 4,
+      "per_ul": 0.0,
+      "seconds": 0.12
+    },
+    {
+      "label": "uninfected",
+      "image": "Image1144.jpg",
+      "parasites": 0,
+      "wbc": 0,
+      "per_ul": null,
+      "seconds": 0.16
+    },
+    {
+      "label": "uninfected",
+      "image": "Image1145.jpg",
+      "parasites": 0,
+      "wbc": 1,
+      "per_ul": 0.0,
+      "seconds": 0.12
+    },
+    {
+      "label": "uninfected",
+      "image": "Image1146.jpg",
+      "parasites": 0,
+      "wbc": 1,
+      "per_ul": 0.0,
+      "seconds": 0.2
+    },
+    {
+      "label": "uninfected",
+      "image": "Image1147.jpg",
+      "parasites": 0,
+      "wbc": 2,
+      "per_ul": 0.0,
+      "seconds": 0.13
+    }
+  ]
+}

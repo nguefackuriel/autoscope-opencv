@@ -94,7 +94,14 @@ CNN_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_cnn.onnx"
 # and the same rule gives 0.80 again, this time against every annotated
 # parasite (-1.0% on the calibration patients;
 # eval/results/threshold_fixedstats.json, chain2_2026-09-03.log).
-DEFAULT_THRESHOLD = 0.80
+# Chain 3 (6 September, the 48 px network trained on mined negatives) gave
+# 0.53 (-1.0%), and every number published since was measured at 0.53
+# because the chain passes --threshold explicitly; this constant stayed at
+# 0.80 until 12 September, so anything that used the default (the agent's
+# vision_counter, a script run without --threshold) counted with the chain-2
+# threshold on the chain-3 network. tests/test_parasites.py now pins it to
+# the canonical threshold_fixedstats.json.
+DEFAULT_THRESHOLD = 0.53
 HYBRID_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_hybrid.onnx"
 
 # The learned detector (6 September 2026, docs/plan-2026-09-05-hospital-grade.md

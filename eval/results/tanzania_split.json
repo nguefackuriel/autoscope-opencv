@@ -1,0 +1,33 @@
+{
+  "calibration": {
+    "infected": [
+      "Image01.jpg",
+      "Image02.jpg",
+      "Image03.jpg",
+      "Image04.jpg",
+      "Image05.jpg",
+      "Image06.jpg",
+      "Image07.jpg",
+      "Image08.jpg",
+      "Image09.jpg",
+      "Image10.jpg"
+    ],
+    "uninfected": [
+      "Image01240.jpg",
+      "Image11241.jpg",
+      "Image1140.jpg",
+      "Image1141.jpg",
+      "Image1142.jpg",
+      "Image1143.jpg",
+      "Image1144.jpg",
+      "Image1145.jpg",
+      "Image1146.jpg",
+      "Image1147.jpg"
+    ]
+  },
+  "test": {
+    "infected": 1129,
+    "uninfected": 1061
+  },
+  "rule": "first 10 images of each folder in sorted order calibrate the site (scale, stain); the rest are run once with the pipeline fixed. 12 September 2026."
+}

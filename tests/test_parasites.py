@@ -90,3 +90,15 @@ def test_vision_counter_matches_the_agent_protocol():
     counter = vision_counter(model="mlp", threshold=0.0)
     p, w = counter(img)
     assert (p, w) == result.as_tuple()
+
+
+def test_the_default_threshold_is_the_shipped_one():
+    """The code's default and the canonical results must describe the same
+    model: the canonical eval/results files are the shipped pipeline's
+    (results-parasites.md 16b), and threshold_fixedstats.json is where its
+    threshold is chosen. They drifted apart from 6 to 12 September 2026."""
+    import json
+    f = Path(__file__).resolve().parents[1] / "eval" / "results" / "threshold_fixedstats.json"
+    if not f.exists():
+        pytest.skip("no canonical threshold file")
+    assert par.DEFAULT_THRESHOLD == json.loads(f.read_text())["threshold"]

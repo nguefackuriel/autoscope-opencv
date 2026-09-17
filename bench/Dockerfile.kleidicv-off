@@ -1,0 +1,99 @@
+# The third arm of the COOL comparison: OpenCV 5 on Arm with KleidiCV OFF.
+#
+# Why this file exists at all. The pinned pip wheel already ships KleidiCV on
+# aarch64 — our own arm64 CI prints
+#
+#   Custom HAL: YES (carotene (ver 0.0.1) KleidiCV (ver 26.03))
+#
+# and COOL describes itself as KleidiCV-powered. So "COOL against the pip
+# wheel" compares two KleidiCV builds and measures close to nothing. The honest
+# control is a build of the same OpenCV version with the acceleration switched
+# off, which is what this builds. The three arms in the report are then:
+#
+#   c8g + COOL AMI      the claim
+#   c8g + pip wheel     KleidiCV as anybody gets it
+#   c8g + this image    the same code with KleidiCV off, the control
+#   (c7i + pip wheel    x86, so the claim can lose)
+#
+# Build it ON the Graviton box, not under emulation. A timing taken under QEMU
+# is not a timing.
+#
+#   docker build -f bench/Dockerfile.kleidicv-off -t autoscope:no-kleidicv .
+#   docker run --rm autoscope:no-kleidicv python bench/cool_bench.py \
+#       --runs 100 --label c8g-no-kleidicv
+#
+# It compiles OpenCV from source: about 40 minutes on a c8g.8xlarge.
+
+FROM python:3.12-slim AS build
+
+ARG OPENCV_VERSION=5.0.0
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential cmake git ninja-build pkg-config \
+      libgl1 libglib2.0-0 \
+      libjpeg-dev libpng-dev libtiff-dev \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir "numpy==2.3.4"
+
+WORKDIR /src
+RUN git clone --depth 1 --branch ${OPENCV_VERSION} https://github.com/opencv/opencv.git
+
+# WITH_KLEIDICV=OFF is the whole point of the image. CAROTENE too: it is the
+# other Arm HAL in the same build line, and leaving it on would mean the
+# control still carries hand-written NEON kernels and the comparison would
+# understate what the acceleration is worth.
+#
+# Everything else is kept as close to the wheel's configuration as it can be:
+# the same version, the same Python, the same numpy. A control that differs in
+# two ways measures neither of them.
+RUN cmake -G Ninja -S opencv -B build \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DWITH_KLEIDICV=OFF \
+      -DWITH_CAROTENE=OFF \
+      -DBUILD_opencv_python3=ON \
+      -DOPENCV_GENERATE_PKGCONFIG=ON \
+      -DBUILD_LIST=core,imgproc,imgcodecs,dnn,python3 \
+      -DBUILD_TESTS=OFF -DBUILD_PERF_TESTS=OFF -DBUILD_EXAMPLES=OFF \
+      -DBUILD_DOCS=OFF -DWITH_FFMPEG=OFF -DWITH_GTK=OFF \
+      -DPYTHON3_PACKAGES_PATH=/usr/local/lib/python3.12/site-packages \
+ && cmake --build build --parallel \
+ && cmake --install build
+
+# The build is only a control if it really has the acceleration off. A typo in
+# a cmake flag produces a working OpenCV that quietly still has KleidiCV, and
+# the benchmark would then compare a build against itself and report a 1.0x
+# speedup as a finding. Fail here instead.
+RUN python -c "\
+import cv2 as cv, sys; \
+info = cv.getBuildInformation(); \
+bad = [w for w in ('kleidicv', 'carotene') if w in info.lower()]; \
+print(cv.__version__); \
+sys.exit(f'control build still has: {bad}') if bad else print('control build is clean')"
+
+FROM python:3.12-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      libgl1 libglib2.0-0 libjpeg62-turbo libpng16-16 \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=build /usr/local/lib/libopencv* /usr/local/lib/
+RUN ldconfig
+
+WORKDIR /app
+RUN pip install --no-cache-dir numpy==2.3.4 scipy==1.16.3 pytest==8.4.2
+
+COPY src ./src
+COPY models ./models
+COPY tests ./tests
+COPY bench ./bench
+COPY pyproject.toml ./
+RUN pip install --no-cache-dir --no-deps .
+
+ENV OPENCV_LOG_LEVEL=ERROR \
+    PYTHONUNBUFFERED=1
+
+# The same check again at runtime, so a result file from this image cannot
+# claim to be the control unless it is.
+CMD ["python", "bench/cool_bench.py", "--runs", "100", "--label", "c8g-no-kleidicv"]

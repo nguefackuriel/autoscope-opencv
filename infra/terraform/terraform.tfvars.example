@@ -1,0 +1,16 @@
+# Copy to terraform.tfvars and fill in. terraform.tfvars is gitignored.
+
+alert_email = "nguefackuriel@gmail.com"
+
+# From the AWS Marketplace subscription (docs/aws-setup.md §2c). Leave empty
+# until it comes through: the stack still applies and the Batch fleet runs the
+# stock-OpenCV control arm, which is a working pipeline and an honest number.
+cool_ami_id = ""
+
+# Confirm against the account before applying:
+#   aws bedrock list-foundation-models --by-provider anthropic \
+#     --query 'modelSummaries[].modelId' --output table
+bedrock_model_id = "anthropic.claude-opus-5"
+
+# Ask Service Quotas for at least this many Spot vCPU first.
+batch_max_vcpus = 64

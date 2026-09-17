@@ -31,8 +31,8 @@ and `results-agent.md`, 6 September):
 | positives called positive | ≥ 90% | no call existed | **49 of 50**, none called negative (TF150_R5 at 283/µL sent to a person) |
 | limit of detection, 95% sensitivity | | above 2 000/µL | **500/µL** by dilution |
 | counts within 25% | ≥ 50% | 58% | **64%** (every field), 92% within 50%; **70% / 90% with the white cell gate, 6 Sept afternoon** |
-| species | ≥ 90% | nothing | nothing |
-| another microscope, camera, stain | | nothing | nothing |
+| species | ≥ 90% | nothing | **measured and failed, 17 Sept**: on *P. vivax* the falciparum detector reads F1 0.292 (0.800 on falciparum), and detections the annotator never marked score *higher* than real ones, so the planned morphology flag cannot be built from the score. `results-vivax.md` |
+| another microscope, camera, stain | | nothing | nothing; **12 Sept, Tanzania, run once: 99.3% of clean fields report no parasite, 70% of infected fields at least one, AUC 0.85 (field level, no positions)** |
 
 The white cell gate of 6 September afternoon (`results-wbc.md`) took the
 density error per slide from 28.3% to 25.7% on top of this. The table
@@ -159,7 +159,7 @@ under-count and the last of the sparse-field false alarms both live. The
 patch network stays as the control. Target: object F1 at least 0.85 on
 the held-out patients, dense band bias within ±10%.
 
-### 5. Site calibration for another microscope (one week, after 4)
+### 5. Site calibration for another microscope (one week, after 4) — done 12 Sept: `autoscope/site.py`, scale 0.2082 from ten Tanzania slides, Tanzania run once (99.3% of clean fields at zero, 70.2% of infected fields with a detection, AUC 0.850, `docs/results-tanzania.md`) — done 12 Sept: `autoscope.site`, scale 0.2082 from the nuclei of 20 calibration images, Tanzania run once (`docs/results-tanzania.md`)
 
 A hospital will not own the NLM phone-through-eyepiece rig. Two
 measurements turn a new site's slides into NLM scale: the white cell
@@ -169,14 +169,14 @@ reference. Then Tanzania is run once, image-level AUC, as the
 generalisation number. Any deployment starts with this ten-slide
 calibration, and the report says so.
 
-### 6. *P. vivax*, run once
+### 6. *P. vivax*, run once — set downloaded and read 16 Sept, frozen run 17 Sept (`eval/vivax_eval.py`). The set is not shaped like the infected one: label `Parasitized`, annotations in `All_annotations/`, **no white cell annotations at all** so there is no true denominator and no density error to report, and the rotation is counter-clockwise, the opposite of the infected set. That last one was measured against random points inside the lit disc, not assumed
 
 Does the detector count vivax, and at what recall. If the scores differ
 from falciparum, add a "non-falciparum morphology, confirm species" flag.
 Species identification proper is out of scope for 26 October and the
 report has to say it: that is the one ECAMM row we will not have.
 
-### 7. The product
+### 7. The product — started 16-17 Sept: `infra/terraform/` is the whole of section 6 as code and validates; `infra/site/index.html` is the page, with the call, the audit trail and a verification grid, working offline against a real replayed session; `src/autoscope/agent/bedrock.py` is the agent behind the same Policy protocol; `bench/` has the third COOL build, slides/hour and a cost model. Nothing is deployed: three things need a person in a browser first (`docs/aws-setup.md`)
 
 Verification page: every detection as a crop the technician accepts or
 rejects, the count and density recomputed from the corrections, and the
