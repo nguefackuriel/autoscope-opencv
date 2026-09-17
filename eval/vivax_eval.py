@@ -352,18 +352,38 @@ def run(model: str, threshold: float | None, limit_patients: int, per_patient: i
 
 
 def summarise(rows: list[dict], model: str, threshold: float) -> dict:
-    total_annotated = sum(r["annotated_parasites"] for r in rows)
-    total_matched = sum(r["matched"] for r in rows)
-    total_found = sum(r["found_parasites"] for r in rows)
-    all_scores = [s for r in rows for s in r["matched_scores"]]
+    """Aggregate, counting only patients that have ground truth.
 
-    # Per patient, so one heavily-annotated slide cannot carry the number.
+    60 of the 150 patient folders carry NO annotation file at all (1 210 of the
+    3 014 images). Those images still produce detections — 17 028 of them — and
+    including them in the "found" total against an annotated total of 25 706
+    makes the detector look like it over-counts by 58% when on the annotated
+    patients it slightly under-counts. Precision computed over them would be
+    dividing by a denominator that has no truth behind it. So every rate here
+    is over the 90 annotated patients, and the unannotated ones are reported
+    separately as what they are: images we cannot score.
+    """
+    scored = [r for r in rows if r["annotated_parasites"] > 0
+              or _patient_has_truth(rows, r["patient"])]
+    unscored = [r for r in rows if r not in scored]
+
+    total_annotated = sum(r["annotated_parasites"] for r in scored)
+    total_matched = sum(r["matched"] for r in scored)
+    total_found = sum(r["found_parasites"] for r in scored)
+    all_scores = [s for r in scored for s in r["matched_scores"]]
+    false_scores = [s for r in scored for s in r["false_scores"]]
+
     by_patient: dict[str, list[int]] = {}
-    for r in rows:
+    for r in scored:
         acc = by_patient.setdefault(r["patient"], [0, 0])
         acc[0] += r["matched"]
         acc[1] += r["annotated_parasites"]
     patient_recall = [m / a for m, a in by_patient.values() if a > 0]
+
+    precision = total_matched / total_found if total_found else None
+    recall = total_matched / total_annotated if total_annotated else None
+    f1 = (2 * total_matched / (total_annotated + total_found)
+          if total_annotated + total_found else None)
 
     return {
         "set": "NIH-NLM-ThickBloodSmearsPV",
@@ -371,22 +391,32 @@ def summarise(rows: list[dict], model: str, threshold: float) -> dict:
         "detector_trained_on": "P. falciparum only",
         "model": model,
         "threshold": threshold,
-        "images": len(rows),
-        "patients": len(by_patient),
+        "images_scored": len(scored),
+        "images_without_ground_truth": len(unscored),
+        "patients_scored": len(by_patient),
         "annotated_parasites": total_annotated,
         "matched": total_matched,
         "found": total_found,
-        "recall_overall": round(total_matched / total_annotated, 4) if total_annotated else None,
+        "recall_overall": round(recall, 4) if recall is not None else None,
+        "precision_overall": round(precision, 4) if precision is not None else None,
+        "f1_overall": round(f1, 4) if f1 is not None else None,
         "recall_per_patient_median": round(float(np.median(patient_recall)), 4) if patient_recall else None,
         "recall_per_patient_p10": round(float(np.percentile(patient_recall, 10)), 4) if patient_recall else None,
-        "score_median": round(float(np.median(all_scores)), 4) if all_scores else None,
-        "score_p10": round(float(np.percentile(all_scores, 10)), 4) if all_scores else None,
-        # No density error: this set annotates no white cells, so there is no
-        # true denominator to compare ours against (see the note at the top).
+        "recall_per_patient_p90": round(float(np.percentile(patient_recall, 90)), 4) if patient_recall else None,
+        "patients_under_10pc_recall": int(sum(1 for r in patient_recall if r < 0.10)),
+        # The number that kills the planned species flag: if a detection the
+        # annotator did not mark scores as high as one they did, no threshold on
+        # the score can tell vivax morphology from falciparum morphology.
+        "score_median_matched": round(float(np.median(all_scores)), 4) if all_scores else None,
+        "score_median_unmatched": round(float(np.median(false_scores)), 4) if false_scores else None,
         "density_error_median": None,
         "density_error_note": "not measurable: no white cell annotations in this set",
         "rows": rows,
     }
+
+
+def _patient_has_truth(rows: list[dict], patient: str) -> bool:
+    return any(r["annotated_parasites"] > 0 for r in rows if r["patient"] == patient)
 
 
 def main() -> None:
@@ -402,17 +432,27 @@ def main() -> None:
     ap.add_argument("--threshold", type=float, default=None)
     ap.add_argument("--patients", type=int, default=0, help="smoke tests only")
     ap.add_argument("--per-patient", type=int, default=0, help="smoke tests only")
+    ap.add_argument("--resummarise", action="store_true",
+                    help="recompute the summary from the rows already written. "
+                         "Not a second look: no image is opened.")
     args = ap.parse_args()
 
     if args.layout:
         layout(args.layout_samples)
         return
 
-    if not args.run:
-        ap.error("--layout or --run")
+    if not args.run and not args.resummarise:
+        ap.error("--layout, --run or --resummarise")
 
     OUT.mkdir(exist_ok=True)
     prior = OUT / "vivax_eval.json"
+
+    if args.resummarise:
+        previous = json.loads(prior.read_text())
+        summary = summarise(previous["rows"], previous["model"], previous["threshold"])
+        prior.write_text(json.dumps(summary, indent=2))
+        print(json.dumps({k: v for k, v in summary.items() if k != "rows"}, indent=2))
+        return
     smoke = args.patients or args.per_patient
 
     if prior.exists() and not args.again and not smoke:
