@@ -1,0 +1,521 @@
+{
+  "session_id": "TF101_233",
+  "source": "replayed from eval/results/agent_fields.json, the cached field table",
+  "policy": "decision-rule",
+  "steps": [
+    {
+      "step": 0,
+      "observation": {
+        "field": {
+          "index": 0,
+          "focus_score": 3.2,
+          "focus_needed": 2.2,
+          "illumination_uniformity": 0.953,
+          "debris_ratio": 0.812,
+          "usable": true,
+          "problem": null
+        },
+        "totals": {
+          "fields_counted": 1,
+          "parasites": 23,
+          "white_cells": 16
+        },
+        "estimate": {
+          "per_ul": 0.0,
+          "ci_low_per_ul": 0.0,
+          "ci_high_per_ul": 29511.0,
+          "ci_relative_width": null
+        },
+        "reference": {
+          "noise_floor_per_ul": 150.0,
+          "white_cells_for_a_negative": 500,
+          "density_bands_per_ul": [
+            1000,
+            10000,
+            100000
+          ],
+          "who_protocol_white_cells": 200
+        }
+      },
+      "move": {
+        "action": "count_then_move"
+      },
+      "model": "decision-rule (replayed)",
+      "counted": {
+        "parasites": 23,
+        "wbc": 16
+      }
+    },
+    {
+      "step": 1,
+      "observation": {
+        "field": {
+          "index": 1,
+          "focus_score": 3.02,
+          "focus_needed": 2.2,
+          "illumination_uniformity": 0.962,
+          "debris_ratio": 0.771,
+          "usable": true,
+          "problem": null
+        },
+        "totals": {
+          "fields_counted": 2,
+          "parasites": 38,
+          "white_cells": 30
+        },
+        "estimate": {
+          "per_ul": 11500.0,
+          "ci_low_per_ul": 7290.0,
+          "ci_high_per_ul": 17255.6,
+          "ci_relative_width": 0.867
+        },
+        "reference": {
+          "noise_floor_per_ul": 150.0,
+          "white_cells_for_a_negative": 500,
+          "density_bands_per_ul": [
+            1000,
+            10000,
+            100000
+          ],
+          "who_protocol_white_cells": 200
+        }
+      },
+      "move": {
+        "action": "count_then_move"
+      },
+      "model": "decision-rule (replayed)",
+      "counted": {
+        "parasites": 15,
+        "wbc": 14
+      }
+    },
+    {
+      "step": 2,
+      "observation": {
+        "field": {
+          "index": 2,
+          "focus_score": 4.15,
+          "focus_needed": 2.2,
+          "illumination_uniformity": 0.966,
+          "debris_ratio": 0.755,
+          "usable": true,
+          "problem": null
+        },
+        "totals": {
+          "fields_counted": 3,
+          "parasites": 53,
+          "white_cells": 49
+        },
+        "estimate": {
+          "per_ul": 10133.3,
+          "ci_low_per_ul": 7170.9,
+          "ci_high_per_ul": 13908.8,
+          "ci_relative_width": 0.665
+        },
+        "reference": {
+          "noise_floor_per_ul": 150.0,
+          "white_cells_for_a_negative": 500,
+          "density_bands_per_ul": [
+            1000,
+            10000,
+            100000
+          ],
+          "who_protocol_white_cells": 200
+        }
+      },
+      "move": {
+        "action": "count_then_move"
+      },
+      "model": "decision-rule (replayed)",
+      "counted": {
+        "parasites": 15,
+        "wbc": 19
+      }
+    },
+    {
+      "step": 3,
+      "observation": {
+        "field": {
+          "index": 3,
+          "focus_score": 4.13,
+          "focus_needed": 2.2,
+          "illumination_uniformity": 0.952,
+          "debris_ratio": 0.759,
+          "usable": true,
+          "problem": null
+        },
+        "totals": {
+          "fields_counted": 4,
+          "parasites": 74,
+          "white_cells": 67
+        },
+        "estimate": {
+          "per_ul": 8653.1,
+          "ci_low_per_ul": 6481.7,
+          "ci_high_per_ul": 11318.4,
+          "ci_relative_width": 0.559
+        },
+        "reference": {
+          "noise_floor_per_ul": 150.0,
+          "white_cells_for_a_negative": 500,
+          "density_bands_per_ul": [
+            1000,
+            10000,
+            100000
+          ],
+          "who_protocol_white_cells": 200
+        }
+      },
+      "move": {
+        "action": "count_then_move"
+      },
+      "model": "decision-rule (replayed)",
+      "counted": {
+        "parasites": 21,
+        "wbc": 18
+      }
+    },
+    {
+      "step": 4,
+      "observation": {
+        "field": {
+          "index": 4,
+          "focus_score": 3.53,
+          "focus_needed": 2.2,
+          "illumination_uniformity": 0.968,
+          "debris_ratio": 0.769,
+          "usable": true,
+          "problem": null
+        },
+        "totals": {
+          "fields_counted": 5,
+          "parasites": 96,
+          "white_cells": 86
+        },
+        "estimate": {
+          "per_ul": 8835.8,
+          "ci_low_per_ul": 6938.0,
+          "ci_high_per_ul": 11092.6,
+          "ci_relative_width": 0.47
+        },
+        "reference": {
+          "noise_floor_per_ul": 150.0,
+          "white_cells_for_a_negative": 500,
+          "density_bands_per_ul": [
+            1000,
+            10000,
+            100000
+          ],
+          "who_protocol_white_cells": 200
+        }
+      },
+      "move": {
+        "action": "count_then_move"
+      },
+      "model": "decision-rule (replayed)",
+      "counted": {
+        "parasites": 22,
+        "wbc": 19
+      }
+    },
+    {
+      "step": 5,
+      "observation": {
+        "field": {
+          "index": 5,
+          "focus_score": 3.55,
+          "focus_needed": 2.2,
+          "illumination_uniformity": 0.968,
+          "debris_ratio": 0.737,
+          "usable": true,
+          "problem": null
+        },
+        "totals": {
+          "fields_counted": 6,
+          "parasites": 112,
+          "white_cells": 104
+        },
+        "estimate": {
+          "per_ul": 8930.2,
+          "ci_low_per_ul": 7233.5,
+          "ci_high_per_ul": 10905.3,
+          "ci_relative_width": 0.411
+        },
+        "reference": {
+          "noise_floor_per_ul": 150.0,
+          "white_cells_for_a_negative": 500,
+          "density_bands_per_ul": [
+            1000,
+            10000,
+            100000
+          ],
+          "who_protocol_white_cells": 200
+        }
+      },
+      "move": {
+        "action": "count_then_move"
+      },
+      "model": "decision-rule (replayed)",
+      "counted": {
+        "parasites": 16,
+        "wbc": 18
+      }
+    },
+    {
+      "step": 6,
+      "observation": {
+        "field": {
+          "index": 6,
+          "focus_score": 3.41,
+          "focus_needed": 2.2,
+          "illumination_uniformity": 0.979,
+          "debris_ratio": 0.795,
+          "usable": true,
+          "problem": null
+        },
+        "totals": {
+          "fields_counted": 7,
+          "parasites": 130,
+          "white_cells": 118
+        },
+        "estimate": {
+          "per_ul": 8615.4,
+          "ci_low_per_ul": 7093.9,
+          "ci_high_per_ul": 10366.5,
+          "ci_relative_width": 0.38
+        },
+        "reference": {
+          "noise_floor_per_ul": 150.0,
+          "white_cells_for_a_negative": 500,
+          "density_bands_per_ul": [
+            1000,
+            10000,
+            100000
+          ],
+          "who_protocol_white_cells": 200
+        }
+      },
+      "move": {
+        "action": "count_then_move"
+      },
+      "model": "decision-rule (replayed)",
+      "counted": {
+        "parasites": 18,
+        "wbc": 14
+      }
+    },
+    {
+      "step": 7,
+      "observation": {
+        "field": {
+          "index": 7,
+          "focus_score": 3.68,
+          "focus_needed": 2.2,
+          "illumination_uniformity": 0.969,
+          "debris_ratio": 0.798,
+          "usable": true,
+          "problem": null
+        },
+        "totals": {
+          "fields_counted": 8,
+          "parasites": 143,
+          "white_cells": 133
+        },
+        "estimate": {
+          "per_ul": 8813.6,
+          "ci_low_per_ul": 7363.7,
+          "ci_high_per_ul": 10465.4,
+          "ci_relative_width": 0.352
+        },
+        "reference": {
+          "noise_floor_per_ul": 150.0,
+          "white_cells_for_a_negative": 500,
+          "density_bands_per_ul": [
+            1000,
+            10000,
+            100000
+          ],
+          "who_protocol_white_cells": 200
+        }
+      },
+      "move": {
+        "action": "count_then_move"
+      },
+      "model": "decision-rule (replayed)",
+      "counted": {
+        "parasites": 13,
+        "wbc": 15
+      }
+    },
+    {
+      "step": 8,
+      "observation": {
+        "field": {
+          "index": 8,
+          "focus_score": 3.84,
+          "focus_needed": 2.2,
+          "illumination_uniformity": 0.974,
+          "debris_ratio": 0.785,
+          "usable": true,
+          "problem": null
+        },
+        "totals": {
+          "fields_counted": 9,
+          "parasites": 157,
+          "white_cells": 150
+        },
+        "estimate": {
+          "per_ul": 8601.5,
+          "ci_low_per_ul": 7249.5,
+          "ci_high_per_ul": 10132.4,
+          "ci_relative_width": 0.335
+        },
+        "reference": {
+          "noise_floor_per_ul": 150.0,
+          "white_cells_for_a_negative": 500,
+          "density_bands_per_ul": [
+            1000,
+            10000,
+            100000
+          ],
+          "who_protocol_white_cells": 200
+        }
+      },
+      "move": {
+        "action": "count_then_move"
+      },
+      "model": "decision-rule (replayed)",
+      "counted": {
+        "parasites": 14,
+        "wbc": 17
+      }
+    },
+    {
+      "step": 9,
+      "observation": {
+        "field": {
+          "index": 9,
+          "focus_score": 4.3,
+          "focus_needed": 2.2,
+          "illumination_uniformity": 0.978,
+          "debris_ratio": 0.8,
+          "usable": true,
+          "problem": null
+        },
+        "totals": {
+          "fields_counted": 10,
+          "parasites": 176,
+          "white_cells": 165
+        },
+        "estimate": {
+          "per_ul": 8373.3,
+          "ci_low_per_ul": 7114.8,
+          "ci_high_per_ul": 9790.4,
+          "ci_relative_width": 0.32
+        },
+        "reference": {
+          "noise_floor_per_ul": 150.0,
+          "white_cells_for_a_negative": 500,
+          "density_bands_per_ul": [
+            1000,
+            10000,
+            100000
+          ],
+          "who_protocol_white_cells": 200
+        }
+      },
+      "move": {
+        "action": "count_then_move"
+      },
+      "model": "decision-rule (replayed)",
+      "counted": {
+        "parasites": 19,
+        "wbc": 15
+      }
+    },
+    {
+      "step": 10,
+      "observation": {
+        "field": {
+          "index": 10,
+          "focus_score": 3.63,
+          "focus_needed": 2.2,
+          "illumination_uniformity": 0.978,
+          "debris_ratio": 0.798,
+          "usable": true,
+          "problem": null
+        },
+        "totals": {
+          "fields_counted": 11,
+          "parasites": 184,
+          "white_cells": 179
+        },
+        "estimate": {
+          "per_ul": 8533.3,
+          "ci_low_per_ul": 7319.2,
+          "ci_high_per_ul": 9891.4,
+          "ci_relative_width": 0.301
+        },
+        "reference": {
+          "noise_floor_per_ul": 150.0,
+          "white_cells_for_a_negative": 500,
+          "density_bands_per_ul": [
+            1000,
+            10000,
+            100000
+          ],
+          "who_protocol_white_cells": 200
+        }
+      },
+      "move": {
+        "action": "count_then_move"
+      },
+      "model": "decision-rule (replayed)",
+      "counted": {
+        "parasites": 8,
+        "wbc": 14
+      }
+    },
+    {
+      "step": 11,
+      "observation": {
+        "field": {
+          "index": 11,
+          "focus_score": 3.99,
+          "focus_needed": 2.2,
+          "illumination_uniformity": 0.978,
+          "debris_ratio": 0.786,
+          "usable": true,
+          "problem": null
+        },
+        "totals": {
+          "fields_counted": 11,
+          "parasites": 184,
+          "white_cells": 179
+        },
+        "estimate": {
+          "per_ul": 8223.5,
+          "ci_low_per_ul": 7078.1,
+          "ci_high_per_ul": 9501.3,
+          "ci_relative_width": 0.295
+        },
+        "reference": {
+          "noise_floor_per_ul": 150.0,
+          "white_cells_for_a_negative": 500,
+          "density_bands_per_ul": [
+            1000,
+            10000,
+            100000
+          ],
+          "who_protocol_white_cells": 200
+        }
+      },
+      "move": {
+        "action": "stop",
+        "reason": "positive: 8,223/uL (7,078 to 9,501), above the 150/uL floor, 1 000 to 10 000/uL; error bar 29%"
+      },
+      "model": "decision-rule (replayed)"
+    }
+  ],
+  "disclaimer": "Screening aid, not a diagnostic device. Every result is reviewed by a person."
+}
