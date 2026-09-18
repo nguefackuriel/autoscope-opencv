@@ -102,6 +102,10 @@ src/autoscope/agent/          the seven tools, five policies, the loop
                                           moves as tools, behind the same Policy
                               moves.py    the prompt and the moves, no OpenCV, so
                                           the Lambda ships 300 kB not 60 MB
+                              replay.py   every model call the experiment made,
+                                          on disk: recorded once, replayed for
+                                          ever, so the agent comparison costs
+                                          nothing and needs no AWS account
 src/autoscope/cloud/          what runs on AWS: read_field.py is one Batch job,
                               one field, stages 1 to 4 and 6 on Graviton
 models/                       the ONNX classifiers cv.dnn loads (committed;

@@ -274,3 +274,58 @@ against 26.5 / 27.2 / 27.4 for the plain pair; the density bias of the
 real-counter arms goes from −8.4% to +1.6%, and the decision arm reads
 451 fields, 49 positive, 40 banded. The heat map alone: 43.8 / 45.7 /
 45.5%, with +5 to +6.5% bias (`agent_eval_heatmap.json`).
+
+
+## The agent arm, and how to reproduce it without paying for it
+
+18 September 2026. `BedrockPolicy` is now a fifth arm of this comparison, run
+by the same `read_slide` over the same cached field table as the other four.
+Two things about how it is scored, because both are choices and neither is
+obvious.
+
+**The agent chooses when to stop. `density.decide()` says what the counts
+mean.** The model's `stop` tool answers with a `call` of positive, negative or
+settled, and that answer is *not* what appears in the call column. The call is
+derived from the counts it had accumulated, by the same function that serves
+the rule. Otherwise the column would mean "the interval cleared the measured
+noise floor" for one arm and "the model asserted a word" for another, and
+comparing them would be a category error: a model that said positive on every
+slide would score 49/50 and look like it had beaten the rule.
+
+It is also the safety property claimed elsewhere in this repo — *it picks where
+to look and when to stop, never the diagnosis* — and this is the line of code
+where that is true or false.
+
+The model's own answer is kept as `agent_call` and scored as an agreement rate.
+How often a model's self-assessment matches what its own counts say is a number
+worth having, and it costs nothing to collect.
+
+**Every arm now carries `derived_call` and `derived_band`,** computed from the
+counts where that arm stopped. The older `call`/`band` columns are unchanged
+and still blank for who-200 and rule-based: they are policy-set, they are what
+the table above publishes, and redefining a published column in place would
+move numbers with nothing to show for it.
+
+**Reproducing it costs nothing.** `eval/results/agent_bedrock_calls.jsonl`
+holds every model call the experiment made, keyed by a hash of what the model
+saw *and* of the prompt and tool definitions that asked it. A judge runs
+
+```
+python eval/agent_eval.py --policies who,rule,decision,bedrock
+```
+
+with no AWS account and no `anthropic` package installed, and gets the same
+table. There is a test asserting that a replayed run never imports the SDK.
+
+Two consequences worth stating rather than discovering later. **A cache miss is
+an error, not a quiet live call** — a run advertised as replayed must not be
+partly live, and a miss almost always means the observation stream diverged, so
+falling through would silently re-run and re-pay for the whole experiment.
+**And the noise floor is inside the observation**, so re-measuring it after a
+chain run invalidates the recording by design; re-record, or run the agent at
+the recorded floor and say which.
+
+**The recording makes the agent deterministic, and a live model is not.** The
+claim this artefact supports is "this recorded session, which anyone can replay
+exactly, reads N fields", not "any live run reads N fields". Sampling variance
+across live runs is unmeasured and this document does not imply otherwise.

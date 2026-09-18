@@ -131,6 +131,13 @@ class BedrockPolicy:
         # Every call and everything it saw, for the audit trail and for replay.
         self.calls: list[dict[str, Any]] = []
         self.on_call = on_call
+        # What the model said its own verdict was, when it stopped: "positive",
+        # "negative" or "settled". It is NOT the call that gets reported — that
+        # comes from density.decide() on the counts, because the model chooses
+        # when to stop and never what the answer is. Kept so the two can be
+        # compared, which is the only way to find out whether the model's
+        # self-assessment is worth anything.
+        self.last_call: str | None = None
         self._tries = 0
 
     @property
@@ -153,7 +160,13 @@ class BedrockPolicy:
 
         response = self.client.messages.create(
             model=self.model,
-            max_tokens=1024,
+            # 8k, not 1k. Thinking is on by default on this model family, and
+            # max_tokens is a hard ceiling the model does not see: a call that
+            # thinks past it returns no tool_use block at all, _move_from
+            # raises, and a paid recording run dies in the middle. You are
+            # billed for tokens generated, never for the ceiling, so a high
+            # ceiling costs nothing and removes the failure.
+            max_tokens=8192,
             system=SYSTEM,
             tools=MOVES,
             tool_choice={"type": "any"},
@@ -207,6 +220,13 @@ class BedrockPolicy:
             args["dz"] = max(-8, min(8, int(args.get("dz", 2))))
 
         if block.name == "stop":
-            args["reason"] = f"{args.get('call', 'settled')}: {args.get('reason', '')}"
+            # The prose is for the log; `call` stays a field. Flattening it
+            # into the sentence, which is what this did until 17 September,
+            # meant the only machine-readable record of what the model
+            # concluded was a string somebody would have to parse back out.
+            # `last_call` is what the evaluation reads to ask how often the
+            # model's own verdict agrees with what its counts actually say.
+            self.last_call = args.get("call", "settled")
+            args["reason"] = f"{self.last_call}: {args.get('reason', '')}"
 
         return (block.name, args)

@@ -32,14 +32,18 @@ recovering a soft field is out of reach on this data and is not made.
 
 import argparse
 import json
+import os
 from pathlib import Path
 
 import numpy as np
 
 from autoscope.agent.loop import read_slide
+from autoscope.agent.bedrock import DEFAULT_MODEL, BedrockPolicy
 from autoscope.agent.policy import DecisionRule, RuleBased, WhoProtocol
+from autoscope.agent.replay import RecordingClient, ReplayClient, cost_of
 from autoscope.agent.tools import Tools
-from autoscope.density import FLOOR_PER_UL_DEFAULT, NEGATIVE_WBC_MIN, SETTLE_CI_WIDTH, WBC_PER_UL_DEFAULT, density
+from autoscope.density import (FLOOR_PER_UL_DEFAULT, NEGATIVE_WBC_MIN, SETTLE_CI_WIDTH,
+                               WBC_PER_UL_DEFAULT, decide, density)
 from autoscope.quality import FieldQuality
 from autoscope.virtual_stage import Frame
 
@@ -116,11 +120,27 @@ def reference(fields: list[dict]) -> float:
     return p / w * WBC_PER_UL_DEFAULT if w else 0.0
 
 
-def run_one(fields: list[dict], policy, source: str) -> dict:
+def run_one(fields: list[dict], policy, source: str,
+            floor: float = 0.0, negative_wbc: int = NEGATIVE_WBC_MIN) -> dict:
     stage = CachedStage(fields)
     tools = CachedTools(stage, source)
     trace = read_slide(tools, policy, slide=fields[0]["patient"], max_fields=len(fields))
     d = density(tools.parasites, max(tools.wbc, 1))
+
+    # THE CALL IS DERIVED, NOT TAKEN FROM THE POLICY.
+    #
+    # `decide` reads the counts and nothing else, so every arm gets its call
+    # from the same function and the arms are comparable. A policy chooses when
+    # to stop; what the numbers then say is not its to decide. For the agent
+    # that is also the safety property we claim in writing — it picks where to
+    # look and when to stop, never the diagnosis.
+    #
+    # `call`/`band` below stay exactly as they were: policy-set, None for every
+    # arm but the decision rule. They are what results-agent.md already
+    # publishes (49 positives, 40 settled bands), and redefining a published
+    # column in place would move those numbers with nothing to show for it.
+    derived = decide(d, floor, negative_wbc)
+
     return {
         "patient": fields[0]["patient"], "policy": policy.name, "source": source,
         "fields_read": tools.fields_read, "fields_available": len(fields),
@@ -131,6 +151,28 @@ def run_one(fields: list[dict], policy, source: str) -> dict:
         "escalated": tools.escalation is not None,
         "call": tools.decision.call if tools.decision else None,
         "band": tools.decision.band_name if tools.decision else None,
+        "derived_call": derived.call,
+        "derived_band": derived.band_name,
+        # What the model said its own verdict was, when it stopped. None for
+        # every policy that is not a model. Kept so the two can be compared.
+        "agent_call": getattr(policy, "last_call", None),
+        # Token counts come off the recorded calls, so a run dict is identical
+        # whether it was recorded or replayed. That is what makes "replay is
+        # byte-identical to the recording" a testable claim.
+        **_model_cost(policy),
+    }
+
+
+def _model_cost(policy) -> dict:
+    """Empty for a policy that is not a model, so the rule arms' run dicts keep
+    exactly the shape already committed in eval/results/agent_eval.json."""
+    calls = getattr(policy, "calls", None)
+    if not calls:
+        return {}
+    return {
+        "model_calls": len(calls),
+        "input_tokens": sum((c["usage"].get("input_tokens") or 0) for c in calls),
+        "output_tokens": sum((c["usage"].get("output_tokens") or 0) for c in calls),
     }
 
 
@@ -157,7 +199,33 @@ def summarise(runs: list[dict], refs: dict[str, float], target: float) -> dict:
         "called_positive": int(sum(r.get("call") == "positive" for r in runs)),
         "called_negative": int(sum(r.get("call") == "negative" for r in runs)),
         "band_settled": int(sum(r.get("band") is not None for r in runs)),
+        # Derived from the counts where each arm stopped, so every arm has one
+        # and they can be compared with each other.
+        "derived_positive": int(sum(r.get("derived_call") == "positive" for r in runs)),
+        "derived_negative": int(sum(r.get("derived_call") == "negative" for r in runs)),
+        "derived_undecided": int(sum(r.get("derived_call") == "undecided" for r in runs)),
+        "derived_band_settled": int(sum(r.get("derived_band") is not None for r in runs)),
+        # Only meaningful for a model arm: how often its own verdict matches
+        # what its own counts say. A gap is a finding, not a bug to hide.
+        "agent_calls_given": int(sum(r.get("agent_call") is not None for r in runs)),
+        "agent_call_agreed": int(sum(
+            r.get("agent_call") is not None
+            and _same_call(r["agent_call"], r.get("derived_call"))
+            for r in runs)),
+        "model_calls": int(sum(r.get("model_calls", 0) for r in runs)),
+        "input_tokens": int(sum(r.get("input_tokens", 0) for r in runs)),
+        "output_tokens": int(sum(r.get("output_tokens", 0) for r in runs)),
     }
+
+
+def _same_call(agent: str, derived: str | None) -> bool:
+    """The model answers positive / negative / settled; `decide` answers
+    positive / negative / undecided. "settled" is the model saying the interval
+    sits in one band, which is a positive that has converged, so it counts as
+    agreement with a positive and never with a negative."""
+    if agent == "settled":
+        return derived == "positive"
+    return agent == derived
 
 
 def main():
@@ -173,10 +241,61 @@ def main():
     ap.add_argument("--settle-ci", type=float, default=SETTLE_CI_WIDTH,
                     help="a positive with a settled band stops once its error bar is within this")
     ap.add_argument("--sweep-settle", action="store_true", help="sweep the settle width for the decision arms")
+    ap.add_argument("--policies", default="who,rule,decision",
+                    help="comma-separated: who, rule, decision, bedrock. The default is the "
+                         "three that cost nothing; bedrock is opt-in because it calls a model.")
+    ap.add_argument("--bedrock-cache", default="agent_bedrock_calls.jsonl",
+                    help="the recorded model calls, under eval/results/")
+    ap.add_argument("--record", action="store_true",
+                    help="CALLS BEDROCK AND SPENDS MONEY. Records every call to the cache. "
+                         "Without this the bedrock arm replays from the cache and costs nothing.")
+    ap.add_argument("--allow-live", action="store_true",
+                    help="with --record, let a cache miss make a live call; on its own, extend "
+                         "an existing recording instead of failing on a miss")
+    ap.add_argument("--bedrock-model", default=DEFAULT_MODEL)
+    ap.add_argument("--bedrock-effort", default="low")
     args = ap.parse_args()
+
+    args.policies = [p.strip() for p in args.policies.split(",") if p.strip()]
+    known = {"who", "rule", "decision", "bedrock"}
+    unknown = set(args.policies) - known
+    if unknown:
+        ap.error(f"unknown policies {sorted(unknown)}; pick from {sorted(known)}")
+
+    # Two guards against buying something nobody asked for.
+    if args.record and "bedrock" not in args.policies:
+        ap.error("--record only means anything with bedrock in --policies")
+    if args.record and (args.sweep or args.sweep_settle):
+        ap.error("--record with a sweep would pay for the same experiment nine times over, "
+                 "and the sweep varies two knobs the agent never reads. Record once, then sweep "
+                 "the rule arms.")
     if args.floor is None:
         rule_path = OUT / "decision_rule.json"
         args.floor = json.loads(rule_path.read_text())["floor_per_ul"] if rule_path.exists() else FLOOR_PER_UL_DEFAULT
+
+    cache = None
+    if "bedrock" in args.policies:
+        cache_path = OUT / args.bedrock_cache
+        if args.record:
+            from anthropic import AnthropicBedrockMantle
+            live = AnthropicBedrockMantle(aws_region=os.environ.get("AWS_REGION_NAME", "us-east-1"))
+            cache = RecordingClient(live, cache_path)
+            print(f"RECORDING to {cache_path.name}: this calls Bedrock and spends money.\n"
+                  f"{len(cache._seen)} calls already on disk will be reused.\n")  # noqa: SLF001
+        else:
+            live = None
+            if args.allow_live:
+                from anthropic import AnthropicBedrockMantle
+                live = AnthropicBedrockMantle(aws_region=os.environ.get("AWS_REGION_NAME", "us-east-1"))
+            try:
+                cache = ReplayClient(cache_path, allow_live=live)
+            except FileNotFoundError as missing:
+                # The first thing a judge with no recording will see. A
+                # traceback here would read as a broken repository rather than
+                # as a missing artefact.
+                raise SystemExit(str(missing)) from None
+            print(f"replaying {len(cache.rows)} recorded model calls from {cache_path.name}, "
+                  f"no network and no cost\n")
 
     table = json.loads((OUT / args.fields).read_text())
     by_patient: dict[str, list[dict]] = {}
@@ -184,19 +303,29 @@ def main():
         by_patient.setdefault(row["patient"], []).append(row)
     refs = {p: reference(f) for p, f in by_patient.items()}
 
-    def arms(target: float, min_fields: int, settle: float | None = None) -> dict:
+    def arms(target: float, min_fields: int, settle: float | None = None,
+             names: tuple[str, ...] | None = None) -> dict:
         settle = args.settle_ci if settle is None else settle
+        names = tuple(args.policies) if names is None else names
         out = {}
         for source in ("truth", "found"):
             # With expert counts there are no false alarms to clear, so the
             # decision rule's floor is 0 there; with the real counter it is
             # the measured noise floor (negative_eval.py, fit half).
             floor = 0.0 if source == "truth" else args.floor
-            for make in (lambda: WhoProtocol(200),
-                         lambda: RuleBased(target, min_fields=min_fields),
-                         lambda: DecisionRule(floor, args.negative_wbc, target, min_fields=min_fields,
-                                              settle_ci_width=settle)):
-                runs = [run_one(f, make(), source) for _, f in sorted(by_patient.items())]
+            builders = {
+                "who": lambda: WhoProtocol(200),
+                "rule": lambda: RuleBased(target, min_fields=min_fields),
+                "decision": lambda: DecisionRule(floor, args.negative_wbc, target,
+                                                 min_fields=min_fields, settle_ci_width=settle),
+                "bedrock": lambda: BedrockPolicy(client=cache, model=args.bedrock_model,
+                                                 effort=args.bedrock_effort,
+                                                 floor_per_ul=floor,
+                                                 negative_wbc_min=args.negative_wbc),
+            }
+            for name in names:
+                runs = [run_one(f, builders[name](), source, floor, args.negative_wbc)
+                        for _, f in sorted(by_patient.items())]
                 out[f"{runs[0]['policy']}/{source}"] = {"summary": summarise(runs, refs, target),
                                                         "runs": runs}
         return out
@@ -208,12 +337,20 @@ def main():
         print(f"{'target':>7s} {'min':>4s}  {'arm':<16s} {'fields':>7s} {'err bar':>8s} "
               f"{'bias':>8s} {'|err|':>7s} {'at target':>10s}")
         sweep = []
+        # Bedrock is excluded here, not merely skipped when printing. arms()
+        # RUNS every policy it is handed at each of the nine grid points, so
+        # leaving it in would mean nine agent runs — and the two knobs being
+        # swept, target error bar and minimum fields, are read by the rule
+        # policies and not by the model.
+        swept = tuple(n for n in args.policies if n != "bedrock")
+        if not swept:
+            ap.error("nothing to sweep: the sweep varies knobs only the rule policies read")
         for target in (0.15, 0.20, 0.30):
             for min_fields in (3, 5, 8):
-                a = arms(target, min_fields)
+                a = arms(target, min_fields, names=swept)
                 for name, arm in a.items():
                     s = arm["summary"]
-                    if name.startswith("who") and (target, min_fields) != (0.15, 3):
+                    if name.startswith("who-200") and (target, min_fields) != (0.15, 3):
                         continue    # the baseline does not depend on these
                     sweep.append({"target_ci": target, "min_fields": min_fields,
                                   "arm": name, **s})
@@ -245,6 +382,17 @@ def main():
               "decision_settle_ci": args.settle_ci,
               "arms": {k: v["summary"] for k, v in a.items()},
               "runs": {k: v["runs"] for k, v in a.items()}}
+
+    if cache is not None:
+        report["bedrock"] = {
+            "cache": args.bedrock_cache,
+            "mode": "record" if args.record else "replay",
+            "model": args.bedrock_model,
+            "effort": args.bedrock_effort,
+            "recorded_this_run": getattr(cache, "recorded", 0),
+            "served_from_cache": getattr(cache, "served_from_cache", 0) + getattr(cache, "hits", 0),
+            "live_calls": getattr(cache, "live", 0) + getattr(cache, "recorded", 0),
+        }
     (OUT / args.out).write_text(json.dumps(report, indent=2))
 
     print(f"target error bar {args.target_ci:.0%}, minimum {args.min_fields} fields; "
@@ -254,7 +402,7 @@ def main():
     for name, arm in a.items():
         s = arm["summary"]
         calls = (f"{s['called_positive']:>9d} {s['called_negative']:>9d} {s['band_settled']:>5d}"
-                 if name.startswith("decision") else f"{'':>9s} {'':>9s} {'':>5s}")
+                 if name.startswith(("decision", "bedrock")) else f"{'':>9s} {'':>9s} {'':>5s}")
         print(f"{name:<18s} {s['fields_read_total']:>7d} {s['fields_read_median']:>7.0f} "
               f"{s['ci_width_median']:>7.0%} {s['density_bias_pct']:>+7.1f}% "
               f"{s['density_mape_pct']:>6.1f}% {s['reached_target']:>7d}/{s['patients']} "

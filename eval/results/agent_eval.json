@@ -4,7 +4,7 @@
   "patients": 50,
   "fields_total": 609,
   "threshold": 0.53,
-  "decision_floor_per_ul": 150.19681795712089,
+  "decision_floor_per_ul": 148.05007075743845,
   "decision_negative_wbc": 500,
   "decision_settle_ci": 0.3,
   "arms": {
@@ -25,7 +25,16 @@
       "compared_on": 50,
       "called_positive": 0,
       "called_negative": 0,
-      "band_settled": 0
+      "band_settled": 0,
+      "derived_positive": 50,
+      "derived_negative": 0,
+      "derived_undecided": 0,
+      "derived_band_settled": 44,
+      "agent_calls_given": 0,
+      "agent_call_agreed": 0,
+      "model_calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
     },
     "rule-based/truth": {
       "patients": 50,
@@ -44,7 +53,16 @@
       "compared_on": 50,
       "called_positive": 0,
       "called_negative": 0,
-      "band_settled": 0
+      "band_settled": 0,
+      "derived_positive": 50,
+      "derived_negative": 0,
+      "derived_undecided": 0,
+      "derived_band_settled": 41,
+      "agent_calls_given": 0,
+      "agent_call_agreed": 0,
+      "model_calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
     },
     "decision/truth": {
       "patients": 50,
@@ -63,7 +81,16 @@
       "compared_on": 50,
       "called_positive": 49,
       "called_negative": 0,
-      "band_settled": 42
+      "band_settled": 42,
+      "derived_positive": 50,
+      "derived_negative": 0,
+      "derived_undecided": 0,
+      "derived_band_settled": 43,
+      "agent_calls_given": 0,
+      "agent_call_agreed": 0,
+      "model_calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
     },
     "who-200/found": {
       "patients": 50,
@@ -82,7 +109,16 @@
       "compared_on": 50,
       "called_positive": 0,
       "called_negative": 0,
-      "band_settled": 0
+      "band_settled": 0,
+      "derived_positive": 50,
+      "derived_negative": 0,
+      "derived_undecided": 0,
+      "derived_band_settled": 39,
+      "agent_calls_given": 0,
+      "agent_call_agreed": 0,
+      "model_calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
     },
     "rule-based/found": {
       "patients": 50,
@@ -101,7 +137,16 @@
       "compared_on": 50,
       "called_positive": 0,
       "called_negative": 0,
-      "band_settled": 0
+      "band_settled": 0,
+      "derived_positive": 49,
+      "derived_negative": 0,
+      "derived_undecided": 1,
+      "derived_band_settled": 39,
+      "agent_calls_given": 0,
+      "agent_call_agreed": 0,
+      "model_calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
     },
     "decision/found": {
       "patients": 50,
@@ -120,7 +165,16 @@
       "compared_on": 50,
       "called_positive": 49,
       "called_negative": 0,
-      "band_settled": 40
+      "band_settled": 40,
+      "derived_positive": 49,
+      "derived_negative": 0,
+      "derived_undecided": 1,
+      "derived_band_settled": 40,
+      "agent_calls_given": 0,
+      "agent_call_agreed": 0,
+      "model_calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
     }
   },
   "runs": {
@@ -139,7 +193,10 @@
         "stopped_because": "counted 202 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF107_249",
@@ -155,7 +212,10 @@
         "stopped_because": "counted 222 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF10_C65P26",
@@ -171,7 +231,10 @@
         "stopped_because": "counted 206 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF110_270",
@@ -187,7 +250,10 @@
         "stopped_because": "counted 210 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF111_238",
@@ -203,7 +269,10 @@
         "stopped_because": "counted 214 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF117_R1",
@@ -219,7 +288,10 @@
         "stopped_because": "counted 225 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF122_1533R",
@@ -235,7 +307,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF123_1542",
@@ -251,7 +326,10 @@
         "stopped_because": "counted 200 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF124_S540",
@@ -267,7 +345,10 @@
         "stopped_because": "counted 215 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF130_S521",
@@ -283,7 +364,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF132_S527",
@@ -299,7 +383,10 @@
         "stopped_because": "counted 209 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF134_US28",
@@ -315,7 +402,10 @@
         "stopped_because": "counted 200 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF137_US8",
@@ -331,7 +421,10 @@
         "stopped_because": "counted 214 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF141_CT12",
@@ -347,7 +440,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF147_R3",
@@ -363,7 +459,10 @@
         "stopped_because": "hit the 12 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF150_R5",
@@ -379,7 +478,10 @@
         "stopped_because": "counted 234 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "under 1 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF15_C87P48",
@@ -395,7 +497,10 @@
         "stopped_because": "counted 200 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF1N_1522",
@@ -411,7 +516,10 @@
         "stopped_because": "counted 215 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF22_C104P65",
@@ -427,7 +535,10 @@
         "stopped_because": "counted 217 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF24_C67P28",
@@ -443,7 +554,10 @@
         "stopped_because": "hit the 15 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF28W13B15A",
@@ -459,7 +573,10 @@
         "stopped_because": "counted 212 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF29_15_1_36",
@@ -475,7 +592,10 @@
         "stopped_because": "counted 230 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF2N_159R",
@@ -491,7 +611,10 @@
         "stopped_because": "counted 209 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF34_Sc520",
@@ -507,7 +630,10 @@
         "stopped_because": "counted 207 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF35_Sc521",
@@ -523,7 +649,10 @@
         "stopped_because": "counted 213 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF36_Sc542",
@@ -539,7 +668,10 @@
         "stopped_because": "counted 207 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF37_Sc563",
@@ -555,7 +687,10 @@
         "stopped_because": "counted 217 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF38_CT1",
@@ -571,7 +706,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF40_UT3",
@@ -587,7 +725,10 @@
         "stopped_because": "counted 201 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF41_UT5",
@@ -603,7 +744,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF46_UW23",
@@ -619,7 +763,10 @@
         "stopped_because": "counted 207 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF47_UW29",
@@ -635,7 +782,10 @@
         "stopped_because": "counted 211 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF48_UW31",
@@ -651,7 +801,10 @@
         "stopped_because": "hit the 6 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF53_CW41",
@@ -667,7 +820,10 @@
         "stopped_because": "counted 208 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF55_CV4",
@@ -683,7 +839,10 @@
         "stopped_because": "counted 213 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF58_UT8",
@@ -699,7 +858,10 @@
         "stopped_because": "counted 205 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF61_CS20",
@@ -715,7 +877,10 @@
         "stopped_because": "counted 210 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF64_US2",
@@ -731,7 +896,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF6N_527",
@@ -747,7 +915,10 @@
         "stopped_because": "counted 208 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF70_Scr440",
@@ -763,7 +934,10 @@
         "stopped_because": "counted 208 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF73_Scr538",
@@ -779,7 +953,10 @@
         "stopped_because": "counted 211 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF75_CO7",
@@ -795,7 +972,10 @@
         "stopped_because": "counted 206 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF77_CO15",
@@ -811,7 +991,10 @@
         "stopped_because": "counted 216 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF81_W8B5",
@@ -827,7 +1010,10 @@
         "stopped_because": "counted 215 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF82_15_1_9",
@@ -843,7 +1029,10 @@
         "stopped_because": "counted 226 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF89_CM5",
@@ -859,7 +1048,10 @@
         "stopped_because": "hit the 7 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF90_15_60",
@@ -875,7 +1067,10 @@
         "stopped_because": "counted 217 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF94_210",
@@ -891,7 +1086,10 @@
         "stopped_because": "counted 207 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF95_223",
@@ -907,7 +1105,10 @@
         "stopped_because": "counted 200 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF97_CS31",
@@ -923,7 +1124,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       }
     ],
     "rule-based/truth": [
@@ -941,7 +1145,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF107_249",
@@ -957,7 +1164,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF10_C65P26",
@@ -973,7 +1183,10 @@
         "stopped_because": "86,452/uL, error bar 12% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF110_270",
@@ -989,7 +1202,10 @@
         "stopped_because": "hit the 6 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF111_238",
@@ -1005,7 +1221,10 @@
         "stopped_because": "50,383/uL, error bar 16% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF117_R1",
@@ -1021,7 +1240,10 @@
         "stopped_because": "hit the 8 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF122_1533R",
@@ -1037,7 +1259,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF123_1542",
@@ -1053,7 +1278,10 @@
         "stopped_because": "48,198/uL, error bar 18% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF124_S540",
@@ -1069,7 +1297,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF130_S521",
@@ -1085,7 +1316,10 @@
         "stopped_because": "71,429/uL, error bar 14% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF132_S527",
@@ -1101,7 +1335,10 @@
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF134_US28",
@@ -1117,7 +1354,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF137_US8",
@@ -1133,7 +1373,10 @@
         "stopped_because": "hit the 11 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF141_CT12",
@@ -1149,7 +1392,10 @@
         "stopped_because": "53,840/uL, error bar 15% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF147_R3",
@@ -1165,7 +1411,10 @@
         "stopped_because": "65,689/uL, error bar 15% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF150_R5",
@@ -1181,7 +1430,10 @@
         "stopped_because": "hit the 5 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "under 1 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF15_C87P48",
@@ -1197,7 +1449,10 @@
         "stopped_because": "54,644/uL, error bar 20% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF1N_1522",
@@ -1213,7 +1468,10 @@
         "stopped_because": "hit the 12 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF22_C104P65",
@@ -1229,7 +1487,10 @@
         "stopped_because": "hit the 11 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF24_C67P28",
@@ -1245,7 +1506,10 @@
         "stopped_because": "21,644/uL, error bar 20% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF28W13B15A",
@@ -1261,7 +1525,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF29_15_1_36",
@@ -1277,7 +1544,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF2N_159R",
@@ -1293,7 +1563,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF34_Sc520",
@@ -1309,7 +1582,10 @@
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF35_Sc521",
@@ -1325,7 +1601,10 @@
         "stopped_because": "33,385/uL, error bar 19% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF36_Sc542",
@@ -1341,7 +1620,10 @@
         "stopped_because": "hit the 13 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF37_Sc563",
@@ -1357,7 +1639,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF38_CT1",
@@ -1373,7 +1658,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF40_UT3",
@@ -1389,7 +1677,10 @@
         "stopped_because": "hit the 17 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF41_UT5",
@@ -1405,7 +1696,10 @@
         "stopped_because": "101,070/uL, error bar 13% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF46_UW23",
@@ -1421,7 +1715,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF47_UW29",
@@ -1437,7 +1734,10 @@
         "stopped_because": "hit the 12 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF48_UW31",
@@ -1453,7 +1753,10 @@
         "stopped_because": "39,773/uL, error bar 13% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF53_CW41",
@@ -1469,7 +1772,10 @@
         "stopped_because": "hit the 8 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF55_CV4",
@@ -1485,7 +1791,10 @@
         "stopped_because": "hit the 13 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF58_UT8",
@@ -1501,7 +1810,10 @@
         "stopped_because": "hit the 18 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF61_CS20",
@@ -1517,7 +1829,10 @@
         "stopped_because": "hit the 7 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF64_US2",
@@ -1533,7 +1848,10 @@
         "stopped_because": "43,055/uL, error bar 16% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF6N_527",
@@ -1549,7 +1867,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF70_Scr440",
@@ -1565,7 +1886,10 @@
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF73_Scr538",
@@ -1581,7 +1905,10 @@
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF75_CO7",
@@ -1597,7 +1924,10 @@
         "stopped_because": "ran out of slide while skipping unusable fields",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF77_CO15",
@@ -1613,7 +1943,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF81_W8B5",
@@ -1629,7 +1962,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF82_15_1_9",
@@ -1645,7 +1981,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF89_CM5",
@@ -1661,7 +2000,10 @@
         "stopped_because": "51,757/uL, error bar 15% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF90_15_60",
@@ -1677,7 +2019,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF94_210",
@@ -1693,7 +2038,10 @@
         "stopped_because": "hit the 7 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF95_223",
@@ -1709,7 +2057,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF97_CS31",
@@ -1725,7 +2076,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       }
     ],
     "decision/truth": [
@@ -1743,7 +2097,10 @@
         "stopped_because": "positive: 8,090/uL (6,949 to 9,366), above the 0/uL floor, 1 000 to 10 000/uL; error bar 30%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF107_249",
@@ -1759,7 +2116,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF10_C65P26",
@@ -1775,7 +2135,10 @@
         "stopped_because": "positive: 86,452/uL (81,189 to 91,966), above the 0/uL floor, 10 000 to 100 000/uL; error bar 12%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF110_270",
@@ -1791,7 +2154,10 @@
         "stopped_because": "positive: 14,057/uL (12,659 to 15,567), above the 0/uL floor, 10 000 to 100 000/uL; error bar 21%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF111_238",
@@ -1807,7 +2173,10 @@
         "stopped_because": "positive: 50,383/uL (46,406 to 54,610), above the 0/uL floor, 10 000 to 100 000/uL; error bar 16%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF117_R1",
@@ -1823,7 +2192,10 @@
         "stopped_because": "positive: 7,040/uL (6,094 to 8,092), above the 0/uL floor, 1 000 to 10 000/uL; error bar 28%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF122_1533R",
@@ -1839,7 +2211,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF123_1542",
@@ -1855,7 +2230,10 @@
         "stopped_because": "positive: 48,198/uL (44,016 to 52,670), above the 0/uL floor, 10 000 to 100 000/uL; error bar 18%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF124_S540",
@@ -1871,7 +2249,10 @@
         "stopped_because": "positive: 14,817/uL (12,894 to 16,947), above the 0/uL floor, 10 000 to 100 000/uL; error bar 27%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF130_S521",
@@ -1887,7 +2268,10 @@
         "stopped_because": "positive: 71,429/uL (66,407 to 76,729), above the 0/uL floor, 10 000 to 100 000/uL; error bar 14%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF132_S527",
@@ -1903,7 +2287,10 @@
         "stopped_because": "positive: 11,938/uL (10,304 to 13,756), above the 0/uL floor, 10 000 to 100 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF134_US28",
@@ -1919,7 +2306,10 @@
         "stopped_because": "positive: 11,901/uL (10,226 to 13,772), above the 0/uL floor, 10 000 to 100 000/uL; error bar 30%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF137_US8",
@@ -1935,7 +2325,10 @@
         "stopped_because": "hit the 11 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF141_CT12",
@@ -1951,7 +2344,10 @@
         "stopped_because": "positive: 53,840/uL (49,849 to 58,066), above the 0/uL floor, 10 000 to 100 000/uL; error bar 15%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF147_R3",
@@ -1967,7 +2363,10 @@
         "stopped_because": "positive: 65,689/uL (61,038 to 70,601), above the 0/uL floor, 10 000 to 100 000/uL; error bar 15%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF150_R5",
@@ -1983,7 +2382,10 @@
         "stopped_because": "hit the 5 field ceiling, handing to a person",
         "escalated": true,
         "call": "undecided",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "under 1 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF15_C87P48",
@@ -1999,7 +2401,10 @@
         "stopped_because": "positive: 54,644/uL (49,439 to 60,249), above the 0/uL floor, 10 000 to 100 000/uL; error bar 20%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF1N_1522",
@@ -2015,7 +2420,10 @@
         "stopped_because": "hit the 12 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF22_C104P65",
@@ -2031,7 +2439,10 @@
         "stopped_because": "hit the 11 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF24_C67P28",
@@ -2047,7 +2458,10 @@
         "stopped_because": "positive: 20,778/uL (17,906 to 23,979), above the 0/uL floor, 10 000 to 100 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF28W13B15A",
@@ -2063,7 +2477,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF29_15_1_36",
@@ -2079,7 +2496,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF2N_159R",
@@ -2095,7 +2515,10 @@
         "stopped_because": "positive: 15,216/uL (13,150 to 17,514), above the 0/uL floor, 10 000 to 100 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF34_Sc520",
@@ -2111,7 +2534,10 @@
         "stopped_because": "positive: 7,871/uL (6,772 to 9,098), above the 0/uL floor, 1 000 to 10 000/uL; error bar 30%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF35_Sc521",
@@ -2127,7 +2553,10 @@
         "stopped_because": "positive: 36,000/uL (31,962 to 40,407), above the 0/uL floor, 10 000 to 100 000/uL; error bar 23%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF36_Sc542",
@@ -2143,7 +2572,10 @@
         "stopped_because": "hit the 13 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF37_Sc563",
@@ -2159,7 +2591,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF38_CT1",
@@ -2175,7 +2610,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF40_UT3",
@@ -2191,7 +2629,10 @@
         "stopped_because": "positive: 8,575/uL (7,365 to 9,927), above the 0/uL floor, 1 000 to 10 000/uL; error bar 30%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF41_UT5",
@@ -2207,7 +2648,10 @@
         "stopped_because": "positive: 101,070/uL (94,564 to 107,907), above the 0/uL floor, between 10 000 to 100 000/uL and over 100 000/uL; error bar 13% within the 20% target",
         "escalated": false,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF46_UW23",
@@ -2223,7 +2667,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF47_UW29",
@@ -2239,7 +2686,10 @@
         "stopped_because": "hit the 12 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF48_UW31",
@@ -2255,7 +2705,10 @@
         "stopped_because": "positive: 39,773/uL (37,181 to 42,498), above the 0/uL floor, 10 000 to 100 000/uL; error bar 13%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF53_CW41",
@@ -2271,7 +2724,10 @@
         "stopped_because": "positive: 11,850/uL (10,389 to 13,459), above the 0/uL floor, 10 000 to 100 000/uL; error bar 26%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF55_CV4",
@@ -2287,7 +2743,10 @@
         "stopped_because": "hit the 13 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF58_UT8",
@@ -2303,7 +2762,10 @@
         "stopped_because": "positive: 7,298/uL (6,289 to 8,422), above the 0/uL floor, 1 000 to 10 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF61_CS20",
@@ -2319,7 +2781,10 @@
         "stopped_because": "hit the 7 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF64_US2",
@@ -2335,7 +2800,10 @@
         "stopped_because": "positive: 43,055/uL (39,656 to 46,667), above the 0/uL floor, 10 000 to 100 000/uL; error bar 16%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF6N_527",
@@ -2351,7 +2819,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF70_Scr440",
@@ -2367,7 +2838,10 @@
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF73_Scr538",
@@ -2383,7 +2857,10 @@
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF75_CO7",
@@ -2399,7 +2876,10 @@
         "stopped_because": "ran out of slide while skipping unusable fields",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF77_CO15",
@@ -2415,7 +2895,10 @@
         "stopped_because": "positive: 11,429/uL (10,129 to 12,849), above the 0/uL floor, 10 000 to 100 000/uL; error bar 24%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF81_W8B5",
@@ -2431,7 +2914,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF82_15_1_9",
@@ -2447,7 +2933,10 @@
         "stopped_because": "positive: 17,293/uL (15,053 to 19,772), above the 0/uL floor, 10 000 to 100 000/uL; error bar 27%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF89_CM5",
@@ -2463,7 +2952,10 @@
         "stopped_because": "positive: 51,757/uL (48,104 to 55,613), above the 0/uL floor, 10 000 to 100 000/uL; error bar 15%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF90_15_60",
@@ -2479,7 +2971,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF94_210",
@@ -2495,7 +2990,10 @@
         "stopped_because": "hit the 7 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF95_223",
@@ -2511,7 +3009,10 @@
         "stopped_because": "positive: 14,056/uL (12,119 to 16,215), above the 0/uL floor, 10 000 to 100 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF97_CS31",
@@ -2527,7 +3028,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       }
     ],
     "who-200/found": [
@@ -2545,7 +3049,10 @@
         "stopped_because": "counted 203 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF107_249",
@@ -2561,7 +3068,10 @@
         "stopped_because": "counted 202 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF10_C65P26",
@@ -2577,7 +3087,10 @@
         "stopped_because": "counted 210 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF110_270",
@@ -2593,7 +3106,10 @@
         "stopped_because": "counted 204 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF111_238",
@@ -2609,7 +3125,10 @@
         "stopped_because": "counted 209 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF117_R1",
@@ -2625,7 +3144,10 @@
         "stopped_because": "counted 217 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF122_1533R",
@@ -2641,7 +3163,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF123_1542",
@@ -2657,7 +3182,10 @@
         "stopped_because": "counted 209 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF124_S540",
@@ -2673,7 +3201,10 @@
         "stopped_because": "counted 216 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF130_S521",
@@ -2689,7 +3220,10 @@
         "stopped_because": "counted 206 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF132_S527",
@@ -2705,7 +3239,10 @@
         "stopped_because": "counted 207 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF134_US28",
@@ -2721,7 +3258,10 @@
         "stopped_because": "counted 201 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF137_US8",
@@ -2737,7 +3277,10 @@
         "stopped_because": "counted 200 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF141_CT12",
@@ -2753,7 +3296,10 @@
         "stopped_because": "counted 201 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF147_R3",
@@ -2769,7 +3315,10 @@
         "stopped_because": "hit the 12 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF150_R5",
@@ -2785,7 +3334,10 @@
         "stopped_because": "counted 233 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "under 1 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF15_C87P48",
@@ -2801,7 +3353,10 @@
         "stopped_because": "counted 215 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF1N_1522",
@@ -2817,7 +3372,10 @@
         "stopped_because": "counted 211 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF22_C104P65",
@@ -2833,7 +3391,10 @@
         "stopped_because": "counted 209 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF24_C67P28",
@@ -2849,7 +3410,10 @@
         "stopped_because": "counted 201 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF28W13B15A",
@@ -2865,7 +3429,10 @@
         "stopped_because": "counted 205 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF29_15_1_36",
@@ -2881,7 +3448,10 @@
         "stopped_because": "counted 224 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF2N_159R",
@@ -2897,7 +3467,10 @@
         "stopped_because": "counted 201 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF34_Sc520",
@@ -2913,7 +3486,10 @@
         "stopped_because": "counted 212 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF35_Sc521",
@@ -2929,7 +3505,10 @@
         "stopped_because": "counted 205 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF36_Sc542",
@@ -2945,7 +3524,10 @@
         "stopped_because": "counted 201 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF37_Sc563",
@@ -2961,7 +3543,10 @@
         "stopped_because": "counted 214 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF38_CT1",
@@ -2977,7 +3562,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF40_UT3",
@@ -2993,7 +3581,10 @@
         "stopped_because": "counted 210 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF41_UT5",
@@ -3009,7 +3600,10 @@
         "stopped_because": "counted 213 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF46_UW23",
@@ -3025,7 +3619,10 @@
         "stopped_because": "counted 211 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF47_UW29",
@@ -3041,7 +3638,10 @@
         "stopped_because": "counted 207 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF48_UW31",
@@ -3057,7 +3657,10 @@
         "stopped_because": "hit the 6 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF53_CW41",
@@ -3073,7 +3676,10 @@
         "stopped_because": "counted 204 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF55_CV4",
@@ -3089,7 +3695,10 @@
         "stopped_because": "counted 202 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF58_UT8",
@@ -3105,7 +3714,10 @@
         "stopped_because": "counted 206 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF61_CS20",
@@ -3121,7 +3733,10 @@
         "stopped_because": "counted 225 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF64_US2",
@@ -3137,7 +3752,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF6N_527",
@@ -3153,7 +3771,10 @@
         "stopped_because": "counted 216 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF70_Scr440",
@@ -3169,7 +3790,10 @@
         "stopped_because": "counted 214 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF73_Scr538",
@@ -3185,7 +3809,10 @@
         "stopped_because": "counted 210 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF75_CO7",
@@ -3201,7 +3828,10 @@
         "stopped_because": "counted 212 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF77_CO15",
@@ -3217,7 +3847,10 @@
         "stopped_because": "counted 205 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF81_W8B5",
@@ -3233,7 +3866,10 @@
         "stopped_because": "counted 208 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF82_15_1_9",
@@ -3249,7 +3885,10 @@
         "stopped_because": "counted 220 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF89_CM5",
@@ -3265,7 +3904,10 @@
         "stopped_because": "hit the 7 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF90_15_60",
@@ -3281,7 +3923,10 @@
         "stopped_because": "counted 218 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF94_210",
@@ -3297,7 +3942,10 @@
         "stopped_because": "counted 209 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF95_223",
@@ -3313,7 +3961,10 @@
         "stopped_because": "counted 205 white cells, target was 200",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF97_CS31",
@@ -3329,7 +3980,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       }
     ],
     "rule-based/found": [
@@ -3347,7 +4001,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF107_249",
@@ -3363,7 +4020,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF10_C65P26",
@@ -3379,7 +4039,10 @@
         "stopped_because": "82,151/uL, error bar 13% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF110_270",
@@ -3395,7 +4058,10 @@
         "stopped_because": "hit the 6 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF111_238",
@@ -3411,7 +4077,10 @@
         "stopped_because": "52,121/uL, error bar 16% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF117_R1",
@@ -3427,7 +4096,10 @@
         "stopped_because": "hit the 8 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF122_1533R",
@@ -3443,7 +4115,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF123_1542",
@@ -3459,7 +4134,10 @@
         "stopped_because": "45,659/uL, error bar 18% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF124_S540",
@@ -3475,7 +4153,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF130_S521",
@@ -3491,7 +4172,10 @@
         "stopped_because": "60,087/uL, error bar 15% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF132_S527",
@@ -3507,7 +4191,10 @@
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF134_US28",
@@ -3523,7 +4210,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF137_US8",
@@ -3539,7 +4229,10 @@
         "stopped_because": "hit the 11 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF141_CT12",
@@ -3555,7 +4248,10 @@
         "stopped_because": "48,582/uL, error bar 15% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF147_R3",
@@ -3571,7 +4267,10 @@
         "stopped_because": "64,774/uL, error bar 14% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF150_R5",
@@ -3587,7 +4286,10 @@
         "stopped_because": "hit the 5 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "undecided",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF15_C87P48",
@@ -3603,7 +4305,10 @@
         "stopped_because": "64,348/uL, error bar 17% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF1N_1522",
@@ -3619,7 +4324,10 @@
         "stopped_because": "hit the 12 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF22_C104P65",
@@ -3635,7 +4343,10 @@
         "stopped_because": "hit the 11 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF24_C67P28",
@@ -3651,7 +4362,10 @@
         "stopped_because": "24,851/uL, error bar 19% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF28W13B15A",
@@ -3667,7 +4381,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF29_15_1_36",
@@ -3683,7 +4400,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF2N_159R",
@@ -3699,7 +4419,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF34_Sc520",
@@ -3715,7 +4438,10 @@
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF35_Sc521",
@@ -3731,7 +4457,10 @@
         "stopped_because": "22,575/uL, error bar 20% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF36_Sc542",
@@ -3747,7 +4476,10 @@
         "stopped_because": "hit the 13 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF37_Sc563",
@@ -3763,7 +4495,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF38_CT1",
@@ -3779,7 +4514,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF40_UT3",
@@ -3795,7 +4533,10 @@
         "stopped_because": "hit the 17 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF41_UT5",
@@ -3811,7 +4552,10 @@
         "stopped_because": "93,506/uL, error bar 13% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF46_UW23",
@@ -3827,7 +4571,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF47_UW29",
@@ -3843,7 +4590,10 @@
         "stopped_because": "hit the 12 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF48_UW31",
@@ -3859,7 +4609,10 @@
         "stopped_because": "33,500/uL, error bar 15% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF53_CW41",
@@ -3875,7 +4628,10 @@
         "stopped_because": "hit the 8 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF55_CV4",
@@ -3891,7 +4647,10 @@
         "stopped_because": "hit the 13 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF58_UT8",
@@ -3907,7 +4666,10 @@
         "stopped_because": "hit the 18 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF61_CS20",
@@ -3923,7 +4685,10 @@
         "stopped_because": "hit the 7 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF64_US2",
@@ -3939,7 +4704,10 @@
         "stopped_because": "44,112/uL, error bar 16% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF6N_527",
@@ -3955,7 +4723,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF70_Scr440",
@@ -3971,7 +4742,10 @@
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF73_Scr538",
@@ -3987,7 +4761,10 @@
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF75_CO7",
@@ -4003,7 +4780,10 @@
         "stopped_because": "ran out of slide while skipping unusable fields",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF77_CO15",
@@ -4019,7 +4799,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF81_W8B5",
@@ -4035,7 +4818,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF82_15_1_9",
@@ -4051,7 +4837,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF89_CM5",
@@ -4067,7 +4856,10 @@
         "stopped_because": "48,432/uL, error bar 15% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF90_15_60",
@@ -4083,7 +4875,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF94_210",
@@ -4099,7 +4894,10 @@
         "stopped_because": "hit the 7 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF95_223",
@@ -4115,7 +4913,10 @@
         "stopped_because": "14,052/uL, error bar 20% is within the 20% target",
         "escalated": false,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF97_CS31",
@@ -4131,7 +4932,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": null,
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       }
     ],
     "decision/found": [
@@ -4146,10 +4950,13 @@
         "per_ul": 8223.5,
         "ci_width": 0.2947,
         "refocus_calls": 0,
-        "stopped_because": "positive: 8,223/uL (7,078 to 9,501), above the 150/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "stopped_because": "positive: 8,223/uL (7,078 to 9,501), above the 148/uL floor, 1 000 to 10 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF107_249",
@@ -4165,7 +4972,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF10_C65P26",
@@ -4178,10 +4988,13 @@
         "per_ul": 82150.5,
         "ci_width": 0.1279,
         "refocus_calls": 0,
-        "stopped_because": "positive: 82,151/uL (77,022 to 87,531), above the 150/uL floor, 10 000 to 100 000/uL; error bar 13%",
+        "stopped_because": "positive: 82,151/uL (77,022 to 87,531), above the 148/uL floor, 10 000 to 100 000/uL; error bar 13%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF110_270",
@@ -4194,10 +5007,13 @@
         "per_ul": 11882.4,
         "ci_width": 0.2286,
         "refocus_calls": 0,
-        "stopped_because": "positive: 11,882/uL (10,582 to 13,298), above the 150/uL floor, 10 000 to 100 000/uL; error bar 23%",
+        "stopped_because": "positive: 11,882/uL (10,582 to 13,298), above the 148/uL floor, 10 000 to 100 000/uL; error bar 23%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF111_238",
@@ -4210,10 +5026,13 @@
         "per_ul": 52121.2,
         "ci_width": 0.1559,
         "refocus_calls": 0,
-        "stopped_because": "positive: 52,121/uL (48,176 to 56,303), above the 150/uL floor, 10 000 to 100 000/uL; error bar 16%",
+        "stopped_because": "positive: 52,121/uL (48,176 to 56,303), above the 148/uL floor, 10 000 to 100 000/uL; error bar 16%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF117_R1",
@@ -4226,10 +5045,13 @@
         "per_ul": 6635.9,
         "ci_width": 0.298,
         "refocus_calls": 0,
-        "stopped_because": "positive: 6,636/uL (5,702 to 7,679), above the 150/uL floor, 1 000 to 10 000/uL; error bar 30%",
+        "stopped_because": "positive: 6,636/uL (5,702 to 7,679), above the 148/uL floor, 1 000 to 10 000/uL; error bar 30%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF122_1533R",
@@ -4245,7 +5067,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF123_1542",
@@ -4258,10 +5083,13 @@
         "per_ul": 45658.5,
         "ci_width": 0.1834,
         "refocus_calls": 0,
-        "stopped_because": "positive: 45,659/uL (41,615 to 49,989), above the 150/uL floor, 10 000 to 100 000/uL; error bar 18%",
+        "stopped_because": "positive: 45,659/uL (41,615 to 49,989), above the 148/uL floor, 10 000 to 100 000/uL; error bar 18%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF124_S540",
@@ -4277,7 +5105,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF130_S521",
@@ -4290,10 +5121,13 @@
         "per_ul": 60087.0,
         "ci_width": 0.1506,
         "refocus_calls": 0,
-        "stopped_because": "positive: 60,087/uL (55,690 to 64,739), above the 150/uL floor, 10 000 to 100 000/uL; error bar 15%",
+        "stopped_because": "positive: 60,087/uL (55,690 to 64,739), above the 148/uL floor, 10 000 to 100 000/uL; error bar 15%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF132_S527",
@@ -4309,7 +5143,10 @@
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF134_US28",
@@ -4325,7 +5162,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF137_US8",
@@ -4341,7 +5181,10 @@
         "stopped_because": "hit the 11 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF141_CT12",
@@ -4354,10 +5197,13 @@
         "per_ul": 48581.8,
         "ci_width": 0.1532,
         "refocus_calls": 0,
-        "stopped_because": "positive: 48,582/uL (44,967 to 52,410), above the 150/uL floor, 10 000 to 100 000/uL; error bar 15%",
+        "stopped_because": "positive: 48,582/uL (44,967 to 52,410), above the 148/uL floor, 10 000 to 100 000/uL; error bar 15%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF147_R3",
@@ -4370,10 +5216,13 @@
         "per_ul": 64774.2,
         "ci_width": 0.1442,
         "refocus_calls": 0,
-        "stopped_because": "positive: 64,774/uL (60,230 to 69,571), above the 150/uL floor, 10 000 to 100 000/uL; error bar 14%",
+        "stopped_because": "positive: 64,774/uL (60,230 to 69,571), above the 148/uL floor, 10 000 to 100 000/uL; error bar 14%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF150_R5",
@@ -4389,7 +5238,10 @@
         "stopped_because": "hit the 5 field ceiling, handing to a person",
         "escalated": true,
         "call": "undecided",
-        "band": null
+        "band": null,
+        "derived_call": "undecided",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF15_C87P48",
@@ -4402,10 +5254,13 @@
         "per_ul": 64347.8,
         "ci_width": 0.1682,
         "refocus_calls": 0,
-        "stopped_because": "positive: 64,348/uL (59,105 to 69,931), above the 150/uL floor, 10 000 to 100 000/uL; error bar 17%",
+        "stopped_because": "positive: 64,348/uL (59,105 to 69,931), above the 148/uL floor, 10 000 to 100 000/uL; error bar 17%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF1N_1522",
@@ -4421,7 +5276,10 @@
         "stopped_because": "hit the 12 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF22_C104P65",
@@ -4437,7 +5295,10 @@
         "stopped_because": "hit the 11 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF24_C67P28",
@@ -4450,10 +5311,13 @@
         "per_ul": 22716.0,
         "ci_width": 0.263,
         "refocus_calls": 0,
-        "stopped_because": "positive: 22,716/uL (19,875 to 25,849), above the 150/uL floor, 10 000 to 100 000/uL; error bar 26%",
+        "stopped_because": "positive: 22,716/uL (19,875 to 25,849), above the 148/uL floor, 10 000 to 100 000/uL; error bar 26%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF28W13B15A",
@@ -4469,7 +5333,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF29_15_1_36",
@@ -4485,7 +5352,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF2N_159R",
@@ -4501,7 +5371,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF34_Sc520",
@@ -4514,10 +5387,13 @@
         "per_ul": 8293.2,
         "ci_width": 0.2839,
         "refocus_calls": 0,
-        "stopped_because": "positive: 8,293/uL (7,178 to 9,532), above the 150/uL floor, 1 000 to 10 000/uL; error bar 28%",
+        "stopped_because": "positive: 8,293/uL (7,178 to 9,532), above the 148/uL floor, 1 000 to 10 000/uL; error bar 28%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF35_Sc521",
@@ -4530,10 +5406,13 @@
         "per_ul": 23644.4,
         "ci_width": 0.2443,
         "refocus_calls": 0,
-        "stopped_because": "positive: 23,644/uL (20,888 to 26,663), above the 150/uL floor, 10 000 to 100 000/uL; error bar 24%",
+        "stopped_because": "positive: 23,644/uL (20,888 to 26,663), above the 148/uL floor, 10 000 to 100 000/uL; error bar 24%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF36_Sc542",
@@ -4549,7 +5428,10 @@
         "stopped_because": "hit the 13 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF37_Sc563",
@@ -4562,10 +5444,13 @@
         "per_ul": 7668.4,
         "ci_width": 0.2939,
         "refocus_calls": 0,
-        "stopped_because": "positive: 7,668/uL (6,603 to 8,857), above the 150/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "stopped_because": "positive: 7,668/uL (6,603 to 8,857), above the 148/uL floor, 1 000 to 10 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF38_CT1",
@@ -4581,7 +5466,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF40_UT3",
@@ -4594,10 +5482,13 @@
         "per_ul": 7740.5,
         "ci_width": 0.2988,
         "refocus_calls": 0,
-        "stopped_because": "positive: 7,741/uL (6,648 to 8,961), above the 150/uL floor, 1 000 to 10 000/uL; error bar 30%",
+        "stopped_because": "positive: 7,741/uL (6,648 to 8,961), above the 148/uL floor, 1 000 to 10 000/uL; error bar 30%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF41_UT5",
@@ -4610,10 +5501,13 @@
         "per_ul": 93506.5,
         "ci_width": 0.1318,
         "refocus_calls": 0,
-        "stopped_because": "positive: 93,506/uL (87,497 to 99,821), above the 150/uL floor, 10 000 to 100 000/uL; error bar 13%",
+        "stopped_because": "positive: 93,506/uL (87,497 to 99,821), above the 148/uL floor, 10 000 to 100 000/uL; error bar 13%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF46_UW23",
@@ -4629,7 +5523,10 @@
         "stopped_because": "hit the 14 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF47_UW29",
@@ -4645,7 +5542,10 @@
         "stopped_because": "hit the 12 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF48_UW31",
@@ -4658,10 +5558,13 @@
         "per_ul": 33500.0,
         "ci_width": 0.153,
         "refocus_calls": 0,
-        "stopped_because": "positive: 33,500/uL (31,011 to 36,136), above the 150/uL floor, 10 000 to 100 000/uL; error bar 15%",
+        "stopped_because": "positive: 33,500/uL (31,011 to 36,136), above the 148/uL floor, 10 000 to 100 000/uL; error bar 15%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF53_CW41",
@@ -4674,10 +5577,13 @@
         "per_ul": 11657.1,
         "ci_width": 0.2496,
         "refocus_calls": 0,
-        "stopped_because": "positive: 11,657/uL (10,270 to 13,179), above the 150/uL floor, 10 000 to 100 000/uL; error bar 25%",
+        "stopped_because": "positive: 11,657/uL (10,270 to 13,179), above the 148/uL floor, 10 000 to 100 000/uL; error bar 25%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF55_CV4",
@@ -4693,7 +5599,10 @@
         "stopped_because": "hit the 13 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF58_UT8",
@@ -4706,10 +5615,13 @@
         "per_ul": 7425.6,
         "ci_width": 0.2972,
         "refocus_calls": 0,
-        "stopped_because": "positive: 7,426/uL (6,383 to 8,590), above the 150/uL floor, 1 000 to 10 000/uL; error bar 30%",
+        "stopped_because": "positive: 7,426/uL (6,383 to 8,590), above the 148/uL floor, 1 000 to 10 000/uL; error bar 30%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF61_CS20",
@@ -4725,7 +5637,10 @@
         "stopped_because": "hit the 7 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF64_US2",
@@ -4738,10 +5653,13 @@
         "per_ul": 44112.1,
         "ci_width": 0.1631,
         "refocus_calls": 0,
-        "stopped_because": "positive: 44,112/uL (40,624 to 47,820), above the 150/uL floor, 10 000 to 100 000/uL; error bar 16%",
+        "stopped_because": "positive: 44,112/uL (40,624 to 47,820), above the 148/uL floor, 10 000 to 100 000/uL; error bar 16%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF6N_527",
@@ -4757,7 +5675,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF70_Scr440",
@@ -4770,10 +5691,13 @@
         "per_ul": 6468.1,
         "ci_width": 0.2899,
         "refocus_calls": 0,
-        "stopped_because": "positive: 6,468/uL (5,581 to 7,456), above the 150/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "stopped_because": "positive: 6,468/uL (5,581 to 7,456), above the 148/uL floor, 1 000 to 10 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF73_Scr538",
@@ -4789,7 +5713,10 @@
         "stopped_because": "hit the 16 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF75_CO7",
@@ -4802,10 +5729,13 @@
         "per_ul": 8321.8,
         "ci_width": 0.2972,
         "refocus_calls": 0,
-        "stopped_because": "positive: 8,322/uL (7,154 to 9,626), above the 150/uL floor, 1 000 to 10 000/uL; error bar 30%",
+        "stopped_because": "positive: 8,322/uL (7,154 to 9,626), above the 148/uL floor, 1 000 to 10 000/uL; error bar 30%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF77_CO15",
@@ -4818,10 +5748,13 @@
         "per_ul": 8302.7,
         "ci_width": 0.2883,
         "refocus_calls": 0,
-        "stopped_because": "positive: 8,303/uL (7,170 to 9,564), above the 150/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "stopped_because": "positive: 8,303/uL (7,170 to 9,564), above the 148/uL floor, 1 000 to 10 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF81_W8B5",
@@ -4837,7 +5770,10 @@
         "stopped_because": "hit the 10 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF82_15_1_9",
@@ -4853,7 +5789,10 @@
         "stopped_because": "ran out of slide before the error bar was tight enough",
         "escalated": true,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF89_CM5",
@@ -4866,10 +5805,13 @@
         "per_ul": 48432.4,
         "ci_width": 0.1527,
         "refocus_calls": 0,
-        "stopped_because": "positive: 48,432/uL (44,839 to 52,237), above the 150/uL floor, 10 000 to 100 000/uL; error bar 15%",
+        "stopped_because": "positive: 48,432/uL (44,839 to 52,237), above the 148/uL floor, 10 000 to 100 000/uL; error bar 15%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF90_15_60",
@@ -4885,7 +5827,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF94_210",
@@ -4901,7 +5846,10 @@
         "stopped_because": "hit the 7 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": null
+        "band": null,
+        "derived_call": "positive",
+        "derived_band": null,
+        "agent_call": null
       },
       {
         "patient": "TF95_223",
@@ -4914,10 +5862,13 @@
         "per_ul": 16355.6,
         "ci_width": 0.2947,
         "refocus_calls": 0,
-        "stopped_because": "positive: 16,356/uL (14,078 to 18,897), above the 150/uL floor, 10 000 to 100 000/uL; error bar 29%",
+        "stopped_because": "positive: 16,356/uL (14,078 to 18,897), above the 148/uL floor, 10 000 to 100 000/uL; error bar 29%",
         "escalated": false,
         "call": "positive",
-        "band": "10 000 to 100 000/uL"
+        "band": "10 000 to 100 000/uL",
+        "derived_call": "positive",
+        "derived_band": "10 000 to 100 000/uL",
+        "agent_call": null
       },
       {
         "patient": "TF97_CS31",
@@ -4933,7 +5884,10 @@
         "stopped_because": "hit the 9 field ceiling, handing to a person",
         "escalated": true,
         "call": "positive",
-        "band": "1 000 to 10 000/uL"
+        "band": "1 000 to 10 000/uL",
+        "derived_call": "positive",
+        "derived_band": "1 000 to 10 000/uL",
+        "agent_call": null
       }
     ]
   }
