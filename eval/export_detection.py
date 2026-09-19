@@ -139,17 +139,20 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
             top, _, _ = par.tophat(prepared)
             centres = [(p.x - ox_fov, p.y - oy_fov) for p in truth.parasites]
             radii = [p.radius for p in truth.parasites]
-            # fallback=True: one box per annotation. An annotated parasite left
-            # without a box is not omitted from the tile, it becomes background
-            # in the loss, which teaches the detector that a parasite is nothing.
-            found, _kept, provenance = bx.boxes_for(top, centres, radii, fallback=True)
+            # fallback=False: never invent a box. Fabricating one where the
+            # stain shows nothing would be altering the ground truth, and a
+            # dataset altered that way would need per-image verification we are
+            # not in a position to do. Instead the tiles containing an
+            # unboxable annotation are dropped below, so nothing is invented
+            # and no real parasite is left labelled as background.
+            found, kept, provenance = bx.boxes_for(top, centres, radii, fallback=False)
+            unboxable = [centres[i] for i in range(len(centres)) if i not in set(kept)]
 
             stats["images"] += 1
             stats["annotated_parasites"] += len(centres)
             stats["boxes_derived"] += len(found)
             stats["boxes_from_stain"] += sum(1 for s in provenance if s == "stain")
-            stats["boxes_from_fallback"] += sum(1 for s in provenance if s == "fallback")
-            stats["boxes_off_image"] += len(centres) - len(found)
+            stats["annotations_unboxable"] += len(unboxable)
             for b in found:
                 sides.append(b.w)
                 sides.append(b.h)
@@ -162,6 +165,14 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
                     sub_mask = mask[oy:oy + tile, ox:ox + tile]
                     if float((sub_mask > 0).mean()) < min_fov:
                         stats["tiles_outside_fov"] += 1
+                        continue
+                    # A tile holding an annotation we could not box is not
+                    # usable either way: keep it and a real parasite is labelled
+                    # background, invent a box and we have altered the ground
+                    # truth. Declining the tile does neither.
+                    if any(ox <= ux < ox + tile and oy <= uy < oy + tile
+                           for ux, uy in unboxable):
+                        stats["tiles_with_unboxable"] += 1
                         continue
                     inside = boxes_in_tile(found, ox, oy, tile)
                     if inside:
@@ -233,8 +244,9 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
         # annotation sits off the edge of the cropped field entirely.
         "box_drop_rate": round(1 - derived / max(annotated, 1), 4),
         "boxes_from_stain": stats["boxes_from_stain"],
-        "boxes_from_fallback": stats["boxes_from_fallback"],
-        "fallback_rate": round(stats["boxes_from_fallback"] / max(derived, 1), 4),
+        "boxes_invented": 0,
+        "annotations_unboxable": stats["annotations_unboxable"],
+        "tiles_dropped_unboxable": stats["tiles_with_unboxable"],
         # Derived boxes that reached a tile. The rest fell in tiles skipped for
         # sitting outside the eyepiece disc, or straddled a tile edge in every
         # tile covering them. Rim parasites are excluded from counting
@@ -281,9 +293,9 @@ def main():
           f"{m['counts'].get('boxes_val', 0)} boxes")
     print(f"\n{m['boxes_derived']} boxes from {m['annotated_parasites']} "
           f"annotations ({m['box_drop_rate'] * 100:.2f}% unboxed)")
-    print(f"  {m['boxes_from_stain']} contoured from the stain, "
-          f"{m['boxes_from_fallback']} sized from the annotator radius "
-          f"({m['fallback_rate'] * 100:.2f}%)")
+    print(f"  every box contoured from the stain; none invented")
+    print(f"  {m['annotations_unboxable']} annotations had no stain peak; the "
+          f"{m['tiles_dropped_unboxable']} tiles containing them were dropped")
     print(f"box side px: p10 {m['box_side_p10_px']}, "
           f"median {m['box_side_median_px']}, p90 {m['box_side_p90_px']}")
     print(f"{m['boxes_in_tiles']} of those reached a tile "
