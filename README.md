@@ -20,6 +20,14 @@ Dependencies are pinned in `requirements.txt`. The competition asks for pinned
 dependencies in the final submission, so we pin from the start and bump on
 purpose, never by accident.
 
+`make setup` installs the package editable, which is what normally puts `src/`
+on `sys.path`. Remote runners that execute a code snapshot without installing
+it -- Azure ML does this -- have no such install, so every entry point in
+`eval/`, `train/` and `bench/` carries a short `--- repo paths` preamble that
+derives the paths from `__file__` alone. It costs nothing when the package is
+installed, and it is the reason those scripts run anywhere. If you add a script
+that imports `autoscope` or a sibling module, copy the preamble into it.
+
 ## Data
 
 Two sets. We fit on the first and only ever test on the second.
