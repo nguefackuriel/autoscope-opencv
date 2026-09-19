@@ -182,7 +182,13 @@ def evaluate(backend, patients, per_patient, seed, tile, stride, thresholds):
     lowest = min(thresholds)
 
     for n, patient in enumerate(sorted(patients), 1):
-        candidates = sorted((root / patient).glob("*.jpg"))
+        # Data cleaning: an image with no ground truth cannot score a detection
+        # right or wrong, so it is excluded from the evaluation set rather than
+        # sampled and then skipped. Sampling first would silently return fewer
+        # images than asked for, and the shortfall would fall entirely on the
+        # 37 patients that have unannotated fields.
+        candidates = [p for p in sorted((root / patient).glob("*.jpg"))
+                      if ann.gt_path(p).exists()]
         if not candidates:
             continue
         for path in rng.sample(candidates, min(per_patient, len(candidates))):

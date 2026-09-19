@@ -43,9 +43,16 @@ So `src/autoscope/boxes.py` takes the box from the pixels instead: threshold
 the component. The search allows ±12 px for the click, because the annotated
 centre is a median 7.9 px from the most purple pixel.
 
-An annotation whose stain shows no peak yields **no box at all**. That is a real
-answer, not a gap to paper over, and the export reports the drop rate so it can
-be argued with.
+An annotation whose stain shows no peak yields **no box at all**, and the tile
+containing it is dropped from the export. Keeping the tile would label a real
+parasite as background; inventing a box would alter the ground truth, which is
+a re-annotation and would need per-image verification this project cannot do.
+Dropping the tile costs a patch of image and does neither. Measured, this
+affects about 0.5% of annotations.
+
+The full measurement behind all of this — where the annotation sits against the
+pixels, how big the annotator's circle really is, and what error the annotation
+itself contributes — is in [annotation-quality.md](annotation-quality.md).
 
 ### The trap this creates
 
@@ -86,10 +93,14 @@ the data.
 
 ## What could make this fail, honestly
 
-- **The drop rate could be high.** If `boxes.py` refuses a large share of
-  annotations, the detectors train on a biased subset — the parasites with
-  clean stain — and will look better in training than they are. The export
-  prints this number; read it before reading anything else.
+- ~~**The drop rate could be high.**~~ **Measured: it is not.** 99.5% of
+  annotations yield a contoured box, so the biased-subset worry does not
+  apply. What replaced it is smaller and known: the tiles holding the
+  remaining 0.5% are dropped, so a little image is lost rather than a little
+  truth invented.
+- **Annotation jitter sets a ceiling.** A perfect detector would still be
+  scored a miss on 1.6% of parasites, because the click sits beyond the 15 px
+  tolerance. Small, but it is a floor no model beats.
 - **Tiling multiplies the dataset.** 36 tiles per field at 3 images per patient
   over 100 fit patients is on the order of 10⁴ tiles. That is fine for a GPU and
   hopeless on a laptop.
