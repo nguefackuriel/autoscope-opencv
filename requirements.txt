@@ -8,3 +8,9 @@ pytest==8.4.2
 # The cloud entrypoints (autoscope.cloud) and the Lambdas talk to AWS.
 # Not needed to run the pipeline or the tests on a laptop.
 boto3==1.35.36
+
+# Only to RECORD the agent's Bedrock calls. Replaying a recording needs none of
+# this, which is the point: a judge reproduces the agent comparison with a
+# clone and a venv, no AWS account and no SDK. Install it by hand when you are
+# about to spend money:  uv pip install --python .venv/bin/python 'anthropic[bedrock]'
+# anthropic[bedrock]

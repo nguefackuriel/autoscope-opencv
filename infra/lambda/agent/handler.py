@@ -69,7 +69,13 @@ def handler(event, context):  # noqa: ARG001
 
     response = client().messages.create(
         model=MODEL,
-        max_tokens=1024,
+    # 8k, not 1k. Thinking is on by default on this model family, and
+            # max_tokens is a hard ceiling the model does not see: a call that
+            # thinks past it returns no tool_use block at all, _move_from
+            # raises, and a paid recording run dies in the middle. You are
+            # billed for tokens generated, never for the ceiling, so a high
+            # ceiling costs nothing and removes the failure.
+            max_tokens=8192,
         system=SYSTEM,
         tools=MOVES,
         tool_choice={"type": "any"},
