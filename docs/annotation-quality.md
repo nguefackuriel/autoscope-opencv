@@ -196,8 +196,18 @@ to reach an image limit, which is a different job from sampling within one.
 The held-out figures in `docs/results-parasites.md` and `docs/results-wbc.md`
 should be re-run before the final report.
 
-**Tile loss.** Separately from anything above, about 26% of derived boxes never
-reach a tile, lost to the eyepiece disc edge and tile boundaries. That is a
-property of tiling rather than of annotation, and it is consistent with how the
-pipeline ignores the rim elsewhere, but it is a far larger number than anything
-in this document and is the one worth attacking if coverage turns out to matter.
+**Tile loss — found and fixed.** This section previously recorded that about
+26% of derived boxes never reached a tile, and attributed it to the geometry of
+the disc edge. That was wrong. It was a threshold: `MIN_FOV = 0.9` kept only
+the tiles lying almost entirely inside the eyepiece disc, 10.2 of 29.6 per
+image.
+
+The same constant was used at inference, so the detector was never shown 34.8%
+of the parasites it was then scored against, and recall could not exceed 0.652
+however good the model was. The first YOLO26 validation sweep read F1 0.452 at
+its best, against a ceiling it could not see.
+
+`MIN_FOV = 0.2` covers 99.9% of parasites at 27.8 tiles per image. Both the
+export and `detector_eval.py` now take it from `autoscope/tiling.py`, so they
+cannot drift apart again, and a test fails if it is raised back above 0.5.
+After the change, 2.2% of boxes are never covered rather than 26%.

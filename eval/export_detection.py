@@ -44,21 +44,12 @@ _sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
 # ----------------------------------------------------------------------------
 
 from autoscope import annotations as ann, boxes as bx, parasites as par
+from autoscope.tiling import MIN_FOV, STRIDE_PX, TILE_PX, covered_tiles, tile_origins
 import splits
 
 # Patient images: resolved via splits.patient_root(), not assumed to sit
 # directly under data/raw -- download.py may nest them one level down.
 CATEGORY = {"id": 1, "name": "parasite", "supercategory": "cell"}
-
-
-def tile_origins(size: int, tile: int, stride: int) -> list[int]:
-    """Tile starts covering `size`, with the last one flush against the edge."""
-    if size <= tile:
-        return [0]
-    starts = list(range(0, size - tile + 1, stride))
-    if starts[-1] != size - tile:
-        starts.append(size - tile)
-    return starts
 
 
 def boxes_in_tile(all_boxes, ox, oy, tile, edge=1):
@@ -179,6 +170,19 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
                     else:
                         empties.append((ox, oy, inside))
 
+            # How many DISTINCT boxes reached at least one kept tile. Counting
+            # label lines instead would double-count: the tiles overlap by
+            # 128 px, so a box near a seam is written into several of them and
+            # the total can exceed the number of boxes that exist.
+            covered = set()
+            for ox, oy, _ in positives:
+                for i, b in enumerate(found):
+                    if (ox + 1 <= b.x and b.y >= oy + 1
+                            and b.x + b.w <= ox + tile - 1
+                            and b.y + b.h <= oy + tile - 1):
+                        covered.add(i)
+            stats["boxes_covered"] += len(covered)
+
             # Background tiles teach the detector what is not a parasite, but a
             # dataset that is mostly background trains a detector that says no.
             n_neg = int(round(len(positives) * negative_ratio))
@@ -251,9 +255,10 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
         # tile covering them. Rim parasites are excluded from counting
         # elsewhere in the pipeline too, so this is consistent -- but it is a
         # second, larger shrinkage than the drop rate and must not be invisible.
-        "boxes_in_tiles": stats["boxes_train"] + stats["boxes_val"],
+        "box_instances_written": stats["boxes_train"] + stats["boxes_val"],
+        "boxes_covered": stats["boxes_covered"],
         "box_tile_loss_rate": round(
-            1 - (stats["boxes_train"] + stats["boxes_val"]) / max(derived, 1), 4),
+            1 - stats["boxes_covered"] / max(derived, 1), 4),
         "box_side_median_px": float(np.median(sides)) if sides else None,
         "box_side_p10_px": float(np.percentile(sides, 10)) if sides else None,
         "box_side_p90_px": float(np.percentile(sides, 90)) if sides else None,
@@ -268,11 +273,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--images-per-patient", type=int, default=3,
                     help="3 is what the patch network's best held-out run used")
-    ap.add_argument("--tile", type=int, default=640)
-    ap.add_argument("--stride", type=int, default=512,
+    ap.add_argument("--tile", type=int, default=TILE_PX)
+    ap.add_argument("--stride", type=int, default=STRIDE_PX,
                     help="640 minus 512 gives 128 px of overlap")
     ap.add_argument("--negative-ratio", type=float, default=0.2)
-    ap.add_argument("--min-fov", type=float, default=0.9,
+    ap.add_argument("--min-fov", type=float, default=MIN_FOV,
                     help="skip tiles less than this fraction inside the disc")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--max-patients", type=int, default=0,
@@ -297,9 +302,9 @@ def main():
           f"{m['tiles_dropped_unboxable']} tiles containing them were dropped")
     print(f"box side px: p10 {m['box_side_p10_px']}, "
           f"median {m['box_side_median_px']}, p90 {m['box_side_p90_px']}")
-    print(f"{m['boxes_in_tiles']} of those reached a tile "
-          f"({m['box_tile_loss_rate'] * 100:.1f}% lost to the disc edge and "
-          f"tile boundaries)")
+    print(f"{m['boxes_covered']} of those reached a tile "
+          f"({m['box_tile_loss_rate'] * 100:.1f}% never covered), written as "
+          f"{m['box_instances_written']} label lines across overlapping tiles")
     print(f"\nheld-out patients untouched: {m['holdout_patients_untouched']}")
     print(f"written to {out}")
 

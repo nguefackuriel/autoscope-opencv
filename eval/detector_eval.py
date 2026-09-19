@@ -49,6 +49,7 @@ _sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
 # ----------------------------------------------------------------------------
 
 from autoscope import annotations as ann, parasites as par
+from autoscope.tiling import MIN_FOV, STRIDE_PX, TILE_PX, covered_tiles
 from wbc_eval import match
 import splits
 
@@ -77,15 +78,6 @@ class Detection:
         self.x = float(x)
         self.y = float(y)
         self.score = float(score)
-
-
-def tile_origins(size, tile, stride):
-    if size <= tile:
-        return [0]
-    starts = list(range(0, size - tile + 1, stride))
-    if starts[-1] != size - tile:
-        starts.append(size - tile)
-    return starts
 
 
 def dedupe(dets, min_sep=DEDUPE_PX):
@@ -154,16 +146,16 @@ class FrcnnBackend:
         return results
 
 
-def detect_field(backend, prepared, mask, tile, stride, conf, batch=8, min_fov=0.9):
-    """Run the detector over one whole field and return deduplicated centres."""
-    height, width = prepared.shape[:2]
-    crops, offsets = [], []
-    for oy in tile_origins(height, tile, stride):
-        for ox in tile_origins(width, tile, stride):
-            if float((mask[oy:oy + tile, ox:ox + tile] > 0).mean()) < min_fov:
-                continue
-            crops.append(prepared[oy:oy + tile, ox:ox + tile])
-            offsets.append((ox, oy))
+def detect_field(backend, prepared, mask, tile, stride, conf, batch=8,
+                 min_fov=MIN_FOV):
+    """Run the detector over one whole field and return deduplicated centres.
+
+    Coverage is not a detail. At min_fov=0.9 the detector never saw 34.8% of
+    the parasites it was then scored against, so recall could not exceed 0.652
+    however good the model was. See autoscope/tiling.py.
+    """
+    offsets = covered_tiles(mask, tile, stride, min_fov)
+    crops = [prepared[oy:oy + tile, ox:ox + tile] for ox, oy in offsets]
 
     dets = []
     for i in range(0, len(crops), batch):
@@ -250,8 +242,8 @@ def main():
     ap.add_argument("--allow-holdout-sweep", action="store_true",
                     help=argparse.SUPPRESS)
     ap.add_argument("--per-patient", type=int, default=3)
-    ap.add_argument("--tile", type=int, default=640)
-    ap.add_argument("--stride", type=int, default=512)
+    ap.add_argument("--tile", type=int, default=TILE_PX)
+    ap.add_argument("--stride", type=int, default=STRIDE_PX)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--tag", default=None)
     args = ap.parse_args()

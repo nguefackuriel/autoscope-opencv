@@ -101,9 +101,14 @@ the data.
 - **Annotation jitter sets a ceiling.** A perfect detector would still be
   scored a miss on 1.6% of parasites, because the click sits beyond the 15 px
   tolerance. Small, but it is a floor no model beats.
-- **Tiling multiplies the dataset.** 36 tiles per field at 3 images per patient
-  over 100 fit patients is on the order of 10⁴ tiles. That is fine for a GPU and
-  hopeless on a laptop.
+- **Tiling multiplies the dataset.** About 28 usable tiles per field at 3
+  images per patient over 100 fit patients is on the order of 10⁴ tiles. That is
+  fine for a GPU and hopeless on a laptop.
+- **Coverage is set by one constant and it bit us once.** `MIN_FOV` in
+  `autoscope/tiling.py` decides how much of the slide is tiled at all. At 0.9 it
+  kept a third of the tiles and capped inference recall at 0.652; at 0.2 it
+  covers 99.9% of parasites. Export and inference read the same value on
+  purpose.
 - **Point matching at 15 px is generous to a box detector** in one direction: a
   box roughly the right place scores a hit even if its size is wrong. That is
   intentional, since size has no ground truth, but it means these models are not
