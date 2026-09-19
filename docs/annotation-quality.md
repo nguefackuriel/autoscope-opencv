@@ -157,16 +157,44 @@ anything was wrong with them. They are simply unusable for measurement.
 
 ## 6. Still open
 
-**The older eval scripts sample before filtering.** `wbc_eval.py`,
-`parasite_eval.py`, `eval_helpers.py` and `focus_survey.py` still draw from
-every jpg and skip the unannotated ones afterwards. At `--per-patient 3` that
-silently drops 6 of 150 sampled held-out images, affecting 5 patients, which
-then contribute two images instead of three. `export_detection.py`,
-`detector_eval.py` and `annotation_gap.py` filter first.
+**Published numbers need re-measuring.** Two changes to sampling have landed
+together, and both move which images an evaluation reads.
 
-Fixing the others would change which images are sampled and therefore **move
-published numbers**, so it is deliberately not done here. It belongs to whoever
-owns those results.
+*Filtering before sampling.* Every sampling site in `eval/` now goes through
+`splits.annotated_images()`, so an unscoreable image is excluded rather than
+drawn and then skipped. `tests/test_splits.py` fails if any script globs images
+directly.
+
+*Per-patient seeding.* The loops used to share one `random.Random(seed)`, so
+every draw depended on every draw before it. `splits.image_rng(seed, patient)`
+keys the generator on the patient instead.
+
+The effect is smaller than the raw diff suggests. On the held-out 50 at
+`--per-patient 2`, the old and new samples share 77 of 100 images. Of the 23
+that left, **exactly one is an unannotated image**; the other 22 are perfectly
+good annotated images that the reshuffled draw did not pick. So the substantive
+change is one image in a hundred, and the rest is the draw landing elsewhere.
+Expect F1 to move by sampling noise, in the third decimal, not by bias.
+
+What per-patient seeding buys, measured on the held-out 50:
+
+| | draw changed | of those, with no unannotated image |
+|---|---|---|
+| shared RNG | 20 of 50 | **9** |
+| per-patient RNG | 10 of 50 | **0** |
+
+and the loop becomes order-independent: reversing the iteration order used to
+change 49 of 50 samples, and now changes none. That makes the patient loop safe
+to parallelise, which matters because these evals take about ten minutes and
+splitting them across cores is the obvious speedup — today that would have
+silently produced different numbers.
+
+`eval_helpers.py` keeps a shared generator on purpose: it shuffles *patients*
+to reach an image limit, which is a different job from sampling within one.
+
+**Anything quoted from before these changes will not reproduce bit-for-bit.**
+The held-out figures in `docs/results-parasites.md` and `docs/results-wbc.md`
+should be re-run before the final report.
 
 **Tile loss.** Separately from anything above, about 26% of derived boxes never
 reach a tile, lost to the eyepiece disc edge and tile boundaries. That is a

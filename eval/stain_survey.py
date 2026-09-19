@@ -25,6 +25,8 @@ _sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
                  for _d in ("src", "eval", "train")]
 # ----------------------------------------------------------------------------
 
+import splits
+
 from autoscope import fov, photometry
 
 RAW = Path(__file__).resolve().parents[1] / "data" / "raw"
@@ -38,7 +40,7 @@ def survey(per_patient: int = 1, limit: int | None = None) -> dict:
         patients = patients[:limit]
 
     for i, patient in enumerate(patients, 1):
-        for path in sorted(patient.glob("*.jpg"))[:per_patient]:
+        for path in splits.annotated_images(patient)[:per_patient]:
             img = cv.imread(str(path))
             if img is None:
                 continue
@@ -55,7 +57,7 @@ def survey(per_patient: int = 1, limit: int | None = None) -> dict:
 
     # Second pass: normalise to that reference and re-measure.
     for i, patient in enumerate(patients, 1):
-        for path in sorted(patient.glob("*.jpg"))[:per_patient]:
+        for path in splits.annotated_images(patient)[:per_patient]:
             img = cv.imread(str(path))
             if img is None:
                 continue

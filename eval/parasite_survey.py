@@ -27,6 +27,8 @@ _sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
                  for _d in ("src", "eval", "train")]
 # ----------------------------------------------------------------------------
 
+import splits
+
 from autoscope import annotations as ann, fov, photometry
 from autoscope.segmentation import stain_map
 
@@ -53,7 +55,7 @@ def main():
     n_images = 0
     for name in fit[:40]:
         patient = RAW / name
-        paths = sorted(patient.glob("*.jpg"))
+        paths = splits.annotated_images(patient)
         if not paths:
             continue
         path = rng.choice(paths)

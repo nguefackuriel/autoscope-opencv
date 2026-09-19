@@ -97,7 +97,6 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
         (out / "images" / sub).mkdir(parents=True, exist_ok=True)
         (out / "labels" / sub).mkdir(parents=True, exist_ok=True)
 
-    rng = random.Random(seed)
     coco = {s: {"images": [], "annotations": [], "categories": [CATEGORY]}
             for s in ("train", "val")}
     img_id = 0
@@ -117,10 +116,10 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
         # stops once 200 white cells are counted. Sampling first and skipping
         # afterwards would quietly return fewer images than asked for, and the
         # shortfall would land on whichever patients were annotated least.
-        candidates = [p for p in sorted((root / patient).glob("*.jpg"))
-                      if ann.gt_path(p).exists()]
-        stats["images_without_truth"] += (
-            len(list((root / patient).glob("*.jpg"))) - len(candidates))
+        candidates = splits.annotated_images(root / patient)
+        rng = splits.image_rng(seed, patient)
+        stats["images_reserved_for_inference"] += len(
+            splits.unannotated_images(root / patient))
         if not candidates:
             continue
 

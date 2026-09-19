@@ -29,6 +29,8 @@ _sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
                  for _d in ("src", "eval", "train")]
 # ----------------------------------------------------------------------------
 
+import splits
+
 from autoscope import annotations as ann
 from autoscope.counter import count_field
 from autoscope.parasites import PatchScorer
@@ -55,7 +57,7 @@ def main():
     scorer = PatchScorer.load()
     rows, t0 = [], time.perf_counter()
     for i, patient in enumerate(patients, 1):
-        for path in sorted(patient.glob("*.jpg")):
+        for path in splits.annotated_images(patient):
             img = cv.imread(str(path))
             if img is None:
                 continue

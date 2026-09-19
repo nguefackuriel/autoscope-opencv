@@ -24,6 +24,8 @@ _sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
                  for _d in ("src", "eval", "train")]
 # ----------------------------------------------------------------------------
 
+import splits
+
 from autoscope import fov
 from autoscope.quality import assess_field
 
@@ -46,12 +48,12 @@ def ground_truth(txt: Path) -> tuple[int, int]:
 
 
 def survey(per_patient: int, seed: int = 0) -> list[dict]:
-    rng = random.Random(seed)
     rows = []
     patients = sorted(p for p in RAW.iterdir() if p.is_dir() and p.name.startswith("TF"))
 
     for i, patient in enumerate(patients, 1):
-        images = sorted(patient.glob("*.jpg"))
+        images = splits.annotated_images(patient)
+        rng = splits.image_rng(seed, patient)
         if not images:
             continue
         for img_path in rng.sample(images, min(per_patient, len(images))):

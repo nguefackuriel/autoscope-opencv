@@ -177,7 +177,6 @@ def detect_field(backend, prepared, mask, tile, stride, conf, batch=8, min_fov=0
 def evaluate(backend, patients, per_patient, seed, tile, stride, thresholds):
     """Score at every threshold in one pass, so the field is read once."""
     root = splits.patient_root()
-    rng = random.Random(seed)
     rows = {t: [] for t in thresholds}
     lowest = min(thresholds)
 
@@ -187,8 +186,8 @@ def evaluate(backend, patients, per_patient, seed, tile, stride, thresholds):
         # sampled and then skipped. Sampling first would silently return fewer
         # images than asked for, and the shortfall would fall entirely on the
         # 37 patients that have unannotated fields.
-        candidates = [p for p in sorted((root / patient).glob("*.jpg"))
-                      if ann.gt_path(p).exists()]
+        candidates = splits.annotated_images(root / patient)
+        rng = splits.image_rng(seed, patient)
         if not candidates:
             continue
         for path in rng.sample(candidates, min(per_patient, len(candidates))):

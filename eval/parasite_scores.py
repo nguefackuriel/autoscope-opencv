@@ -30,6 +30,8 @@ _sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
                  for _d in ("src", "eval", "train")]
 # ----------------------------------------------------------------------------
 
+import splits
+
 from autoscope import annotations as ann, parasites as par
 from autoscope.segmentation import find_white_cells
 from parasite_candidates import MATCH_PX, label_candidates
@@ -59,7 +61,7 @@ def main():
     scorer = par.PatchScorer.load()
     rows, t0 = [], time.perf_counter()
     for i, patient in enumerate(patients, 1):
-        images = sorted(patient.glob("*.jpg"))
+        images = splits.annotated_images(patient)
         if args.per_patient:
             images = images[:args.per_patient]
         for path in images:

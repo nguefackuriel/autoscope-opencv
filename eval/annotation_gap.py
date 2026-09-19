@@ -159,12 +159,11 @@ def refine_white_cell(cells, cx, cy):
 
 def collect(patients, per_patient, seed):
     root = splits.patient_root()
-    rng = random.Random(seed)
     par_rows, wbc_rows = [], []
 
     for n, patient in enumerate(sorted(patients), 1):
-        candidates = [p for p in sorted((root / patient).glob("*.jpg"))
-                      if ann.gt_path(p).exists()]
+        candidates = splits.annotated_images(root / patient)
+        rng = splits.image_rng(seed, patient)
         if not candidates:
             continue
         for path in rng.sample(candidates, min(per_patient, len(candidates))):

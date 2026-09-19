@@ -32,6 +32,8 @@ _sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
                  for _d in ("src", "eval", "train")]
 # ----------------------------------------------------------------------------
 
+import splits
+
 from autoscope import annotations as ann
 from autoscope.parasites import HYBRID_PATH, PatchScorer, Scorer, find_parasites
 from autoscope.segmentation import find_white_cells
@@ -45,7 +47,6 @@ SWEEP = [0.5, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85]
 
 def evaluate(per_patient: int, seed: int, holdout: bool, threshold: float,
              max_patients: int | None = None, model: str = "cnn") -> dict:
-    rng = random.Random(seed)
     patients = sorted(p for p in RAW.iterdir() if p.is_dir() and p.name.startswith("TF"))
     if holdout:
         fitted = set(json.loads((OUT / "wbc_sweep.json").read_text())["fit_patients"])
@@ -58,7 +59,8 @@ def evaluate(per_patient: int, seed: int, holdout: bool, threshold: float,
               "mlp": lambda: Scorer.load()}[model]()
     rows = []
     for patient in patients:
-        candidates = sorted(patient.glob("*.jpg"))
+        candidates = splits.annotated_images(patient)
+        rng = splits.image_rng(seed, patient)
         if not candidates:
             continue
         for path in rng.sample(candidates, min(per_patient, len(candidates))):

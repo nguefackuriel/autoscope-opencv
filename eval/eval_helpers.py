@@ -15,6 +15,8 @@ _sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
                  for _d in ("src", "eval", "train")]
 # ----------------------------------------------------------------------------
 
+import splits
+
 from autoscope import annotations as ann, photometry
 
 RAW = Path(__file__).resolve().parents[1] / "data" / "raw"
@@ -33,7 +35,7 @@ def load_pairs(limit: int, seed: int = 0, per_patient: int = 1, normalise: bool 
 
     pairs = []
     for patient in patients:
-        candidates = sorted(patient.glob("*.jpg"))
+        candidates = splits.annotated_images(patient)
         if not candidates:
             continue
         for path in rng.sample(candidates, min(per_patient, len(candidates))):
