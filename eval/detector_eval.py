@@ -37,9 +37,20 @@ from pathlib import Path
 import cv2 as cv
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+# --- repo paths: run from anywhere, installed or not -------------------------
+# A remote runner executes the code snapshot without `pip install -e .`, so the
+# editable install that normally puts src/ on sys.path is absent and every
+# `from autoscope import ...` fails. True of AWS Batch and SageMaker as much as
+# of the GPU box the detectors are trained on. This depends on __file__ alone,
+# so it survives any working directory, any launch style, and a missing install.
+import sys as _sys, pathlib as _pl
+_sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
+                 for _d in ("src", "eval", "train")]
+# ----------------------------------------------------------------------------
 
 from autoscope import annotations as ann, parasites as par
+from autoscope.tiling import MIN_FOV, STRIDE_PX, TILE_PX, covered_tiles
 from wbc_eval import match
 import splits
 
@@ -64,12 +75,17 @@ SWEEP = [0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60, 0.70]
 def evaluate(backend, patients, per_patient, seed, tile, stride, thresholds):
     """Score at every threshold in one pass, so the field is read once."""
     root = splits.patient_root()
-    rng = random.Random(seed)
     rows = {t: [] for t in thresholds}
     lowest = min(thresholds)
 
     for n, patient in enumerate(sorted(patients), 1):
-        candidates = sorted((root / patient).glob("*.jpg"))
+        # Data cleaning: an image with no ground truth cannot score a detection
+        # right or wrong, so it is excluded from the evaluation set rather than
+        # sampled and then skipped. Sampling first would silently return fewer
+        # images than asked for, and the shortfall would fall entirely on the
+        # 37 patients that have unannotated fields.
+        candidates = splits.annotated_images(root / patient)
+        rng = splits.image_rng(seed, patient)
         if not candidates:
             continue
         for path in rng.sample(candidates, min(per_patient, len(candidates))):
@@ -132,8 +148,8 @@ def main():
     ap.add_argument("--allow-holdout-sweep", action="store_true",
                     help=argparse.SUPPRESS)
     ap.add_argument("--per-patient", type=int, default=3)
-    ap.add_argument("--tile", type=int, default=640)
-    ap.add_argument("--stride", type=int, default=512)
+    ap.add_argument("--tile", type=int, default=TILE_PX)
+    ap.add_argument("--stride", type=int, default=STRIDE_PX)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--tag", default=None)
     args = ap.parse_args()

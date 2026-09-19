@@ -1,8 +1,32 @@
-# Training-time only, in its own venv (.venv-train, `make setup-train`).
-# The runtime venv never imports these. Kept apart because the last torch
-# wheel for macOS x86_64 (2.2.2) is built against NumPy 1 and will not load
-# next to the NumPy 2 the pipeline pins. The feature MLP (parasite_train.py)
-# needs only `onnx`, which also works in the runtime venv.
+# Training-time only, for the parasite patch network (parasite_cnn_train.py),
+# in its own venv (.venv-train, `make setup-train`). The runtime venv never
+# imports these.
+#
+# WHY THIS PINS AN OLD TORCH, AND WHY THAT IS NOT THE PROBLEM IT LOOKS LIKE
+#
+# 2.2.2 is the last torch wheel built for macOS x86_64 and it is compiled
+# against NumPy 1. Alex measured, on 19 September, that this makes the three
+# requirement files impossible to resolve together:
+#
+#     uv pip compile requirements.txt requirements-train.txt
+#     x No solution found: you require numpy==2.3.4 and numpy<2
+#
+# That observation is correct, and it is not a defect: these files are never
+# installed together. `make setup-train` builds .venv-train from this file
+# alone, exactly so the NumPy 1 that torch needs cannot meet the NumPy 2 that
+# opencv-python 5 requires. Adding `-r requirements.txt` here is what would
+# create the conflict, not what resolves it.
+#
+# The reason to keep the old pin is whose machine this is. Chains 1 to 7 were
+# all trained on an Intel Mac, which is the only machine the team owns that
+# runs `make chain` end to end. Moving this file to torch 2.14 would make the
+# laptop unable to retrain the shipped network at all, to remove a conflict
+# that a deliberately separate venv already prevents.
+#
+# GPU TRAINING ALREADY HAS A FILE. requirements-detect.txt pins torch 2.14.0,
+# torchvision 0.29.0 and numpy 2.3.4 for Linux GPU, and resolves with
+# requirements.txt. Train on a remote GPU from that environment; it is the same
+# torch Alex's notebook wants, and it is already there.
 torch==2.2.2
 numpy<2
 onnx>=1.16,<1.19

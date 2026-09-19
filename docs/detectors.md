@@ -43,9 +43,16 @@ So `src/autoscope/boxes.py` takes the box from the pixels instead: threshold
 the component. The search allows ±12 px for the click, because the annotated
 centre is a median 7.9 px from the most purple pixel.
 
-An annotation whose stain shows no peak yields **no box at all**. That is a real
-answer, not a gap to paper over, and the export reports the drop rate so it can
-be argued with.
+An annotation whose stain shows no peak yields **no box at all**, and the tile
+containing it is dropped from the export. Keeping the tile would label a real
+parasite as background; inventing a box would alter the ground truth, which is
+a re-annotation and would need per-image verification this project cannot do.
+Dropping the tile costs a patch of image and does neither. Measured, this
+affects about 0.5% of annotations.
+
+The full measurement behind all of this — where the annotation sits against the
+pixels, how big the annotator's circle really is, and what error the annotation
+itself contributes — is in [annotation-quality.md](annotation-quality.md).
 
 ### The trap this creates
 
@@ -86,13 +93,30 @@ the data.
 
 ## What could make this fail, honestly
 
-- **The drop rate could be high.** If `boxes.py` refuses a large share of
-  annotations, the detectors train on a biased subset — the parasites with
-  clean stain — and will look better in training than they are. The export
-  prints this number; read it before reading anything else.
-- **Tiling multiplies the dataset.** 36 tiles per field at 3 images per patient
-  over 100 fit patients is on the order of 10⁴ tiles. That is fine for a GPU and
-  hopeless on a laptop.
+- ~~**The drop rate could be high.**~~ **Measured: it is not.** 99.5% of
+  annotations yield a contoured box, so the biased-subset worry does not
+  apply. What replaced it is smaller and known: the tiles holding the
+  remaining 0.5% are dropped, so a little image is lost rather than a little
+  truth invented.
+- **Annotation jitter sets a ceiling.** A perfect detector would still be
+  scored a miss on 1.6% of parasites, because the click sits beyond the 15 px
+  tolerance. Small, but it is a floor no model beats.
+- **Tiling does NOT multiply the dataset as much as it looks.** About 28 tiles
+  per field are inside the disc, but the export keeps only those containing a
+  parasite plus 20% negatives, so roughly 7.5 tiles per image survive. Measured
+  on a real run: 22.6 tiles per patient at `--images-per-patient 3`, which is
+  about **2 250 tiles over the 100 fit patients**, not the 10⁴ this document
+  previously claimed.
+
+  That is a small training set for a detector, and it shows: the first YOLO26
+  run stopped early with its best epoch at 5, which is what a model does when it
+  has memorised a small set immediately. The lever is `--images-per-patient`;
+  there are about 12 annotated images per patient and only 3 were being used.
+- **Coverage is set by one constant and it bit us once.** `MIN_FOV` in
+  `autoscope/tiling.py` decides how much of the slide is tiled at all. At 0.9 it
+  kept a third of the tiles and capped inference recall at 0.652; at 0.2 it
+  covers 99.9% of parasites. Export and inference read the same value on
+  purpose.
 - **Point matching at 15 px is generous to a box detector** in one direction: a
   box roughly the right place scores a hit even if its size is wrong. That is
   intentional, since size has no ground truth, but it means these models are not

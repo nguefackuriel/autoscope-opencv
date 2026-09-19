@@ -1,0 +1,57 @@
+{
+  "parasites": {
+    "annotations": 2215,
+    "refined": 2209,
+    "refine_rate": 0.9973,
+    "offset_to_stain_peak_px": {
+      "n": 2209,
+      "median": 7.009279563550087,
+      "p90": 12.279678083431783,
+      "mean": 7.376243868305305
+    },
+    "offset_to_contour_centroid_px": {
+      "n": 2209,
+      "median": 6.588556882210626,
+      "p90": 12.51313808142662,
+      "mean": 7.1453200010950475
+    },
+    "mean_offset_vector_px": [
+      0.05799004074241755,
+      -0.3226120416478057
+    ],
+    "mean_vector_length_px": 0.32778251057900076,
+    "median_offset_length_px": 7.009279563550087,
+    "systematic_fraction": 0.047,
+    "annotated_radius_px": {
+      "median": 20.810153771656758
+    },
+    "contour_equivalent_radius_px": {
+      "median": 4.686510657907603
+    },
+    "radius_ratio_contour_over_annotated": {
+      "median": 0.2291341035675073,
+      "p90": 0.3570058378479329
+    }
+  },
+  "white_cells": {
+    "annotations": 1007,
+    "refined": 999,
+    "click_within_nucleus_radius_fraction": 0.9119,
+    "offset_to_nucleus_centroid_px": {
+      "n": 999,
+      "median": 13.487227637275113,
+      "p90": 64.25915288777188,
+      "mean": 24.641451550469395
+    },
+    "mean_offset_vector_px": [
+      -3.3527788948765442,
+      -1.4581656473436417
+    ],
+    "mean_vector_length_px": 3.656141869925548,
+    "nucleus_equivalent_radius_px": {
+      "median": 41.55132756797165
+    }
+  },
+  "patients": 20,
+  "per_patient": 2
+}
