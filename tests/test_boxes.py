@@ -94,7 +94,7 @@ def test_boxes_for_reports_which_annotations_were_dropped():
     top = tophat(cv.GaussianBlur(img, (3, 3), 0))[0]
 
     centres = [(60, 60), (100, 30), (140, 140)]   # the middle one has no stain
-    found, kept = bx.boxes_for(top, centres)
+    found, kept, prov = bx.boxes_for(top, centres, fallback=False)
     assert kept == [0, 2]
     assert len(found) == 2
 
@@ -132,6 +132,59 @@ def test_boxes_for_applies_the_radius_per_annotation():
 
     centres = [(60, 60), (140, 140)]
     # generous for the first, impossibly tight for the second
-    found, kept = bx.boxes_for(top, centres, radii=[20, 3])
+    found, kept, prov = bx.boxes_for(top, centres, radii=[20, 3], fallback=False)
     assert kept == [0]
     assert len(found) == 1
+
+
+def test_every_annotation_gets_a_box():
+    """300 annotated parasites must yield 300 boxes, in order.
+
+    A dropped annotation is not a neutral omission. The parasite is still in
+    the tile, so with no box on it the detection loss counts it as background
+    and the model is taught that a real parasite is nothing there. One
+    slightly wrong box beats one confident false negative label.
+    """
+    top = top_of(5)
+    centres = [(CENTRE, CENTRE), (30, 30), (CENTRE + 40, CENTRE)]  # only the 1st has stain
+    found, kept, prov = bx.boxes_for(top, centres, radii=[20, 20, 20])
+    assert len(found) == len(centres) == 3
+    assert kept == [0, 1, 2]
+    assert prov[0] == "stain"
+    assert prov[1] == "fallback" and prov[2] == "fallback"
+
+
+def test_fallback_box_is_sized_from_the_annotator_radius():
+    """Measured: the contour radius is 0.23 of the annotated one, so a 20 px
+    annotated radius should fall back to roughly a 10 px box, not a 40 px one."""
+    b = bx.fallback_box(100, 100, radius=20, w=400, h=400)
+    assert b is not None
+    assert 8 <= b.w <= 12, f"fallback side {b.w} does not match the measured ratio"
+
+
+def test_fallback_can_be_turned_off_for_measurement():
+    """Measuring the true derivation rate needs the un-padded answer."""
+    top = top_of(5)
+    centres = [(CENTRE, CENTRE), (30, 30)]
+    found, kept, prov = bx.boxes_for(top, centres, radii=[20, 20], fallback=False)
+    assert len(found) == 1 and kept == [0] and prov == ["stain"]
+
+
+def test_white_cell_clicks_get_one_box_each_from_the_mask():
+    """White cells carry no radius, so the mask is the only source of extent."""
+    import numpy as np
+    labels = np.ones((300, 300), np.int32)          # 1 == background
+    labels[100:160, 100:170] = 5                    # one nucleus
+    found, kept, prov = bx.nucleus_boxes_for(labels, [(130, 130), (250, 250)])
+    assert len(found) == 2 and kept == [0, 1]
+    assert prov[0] == "mask" and prov[1] == "fallback"
+    assert (found[0].x, found[0].y, found[0].w, found[0].h) == (100, 100, 70, 60)
+
+
+def test_a_click_just_outside_a_nucleus_still_finds_it():
+    import numpy as np
+    labels = np.ones((300, 300), np.int32)
+    labels[100:160, 100:170] = 5
+    found, _, prov = bx.nucleus_boxes_for(labels, [(175, 130)])   # 5 px outside
+    assert prov == ["mask"]
+    assert found[0].w == 70

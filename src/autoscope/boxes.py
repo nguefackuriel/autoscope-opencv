@@ -77,6 +77,25 @@ LEVEL = 0.5
 MIN_SIDE_PX = 6
 MAX_SIDE_PX = 40
 
+# Fallback geometry, for an annotation the stain refuses.
+#
+# WHY A FALLBACK EXISTS AT ALL
+#
+# Silently dropping an annotation is not neutral in detection training: the
+# object is still in the tile, so with no box on it the loss treats it as
+# background and the model is actively taught that a real parasite is nothing.
+# One slightly wrong box is a smaller error than one confident false negative
+# label, so every annotation gets a box and the provenance is recorded instead.
+#
+# The size is measured, not invented. Across 2209 parasites the contour radius
+# is 0.23 of the annotator's radius, so a side of 2 x 0.23 x radius reproduces
+# the median 10 px box from the annotator's median 20.8 px circle.
+FALLBACK_RADIUS_RATIO = 0.23
+FALLBACK_SIDE_PX = 10          # when the annotation carries no radius at all
+
+# Measured median nucleus radius, for a white cell click the mask refuses.
+NUCLEUS_FALLBACK_RADIUS_PX = 42
+
 
 @dataclass(frozen=True)
 class Box:
@@ -172,23 +191,128 @@ def box_at(top: np.ndarray, cx: float, cy: float,
     return Box(bx, by, bw, bh)
 
 
-def boxes_for(top: np.ndarray, centres, radii=None) -> tuple[list[Box], list[int]]:
-    """Boxes for every annotated centre. Returns the boxes and the indices kept.
+def _square(cx: float, cy: float, side: float, w: int, h: int) -> Box | None:
+    """A square of `side` centred on (cx, cy), clipped to the image."""
+    side = max(int(round(side)), MIN_SIDE_PX)
+    x = int(round(cx - side / 2.0))
+    y = int(round(cy - side / 2.0))
+    x, y = max(x, 0), max(y, 0)
+    bw, bh = min(side, w - x), min(side, h - y)
+    if bw < MIN_SIDE_PX or bh < MIN_SIDE_PX:
+        return None
+    return Box(x, y, bw, bh)
 
-    `radii` is an optional per-centre sequence of annotator circle radii, used
-    as the per-annotation upper bound described in `box_at`. Pass None for
-    annotations that carry no radius, such as white cells, which the ReadMe
-    stores as a bare Point.
 
-    The indices matter: a caller writing a label file needs to know which
-    annotations produced a box and which the stain refused, so the drop rate can
-    be reported rather than silently absorbed.
+def fallback_box(cx: float, cy: float, radius: float | None,
+                 w: int, h: int) -> Box | None:
+    """The box to use when the stain gives nothing, sized from the annotation."""
+    side = (2.0 * radius * FALLBACK_RADIUS_RATIO) if radius else FALLBACK_SIDE_PX
+    return _square(cx, cy, side, w, h)
+
+
+def boxes_for(top: np.ndarray, centres, radii=None,
+              fallback: bool = True) -> tuple[list[Box], list[int], list[str]]:
+    """A box for every annotated centre. Returns (boxes, indices, provenance).
+
+    With `fallback=True` (the default) the result is **one box per annotation**,
+    in order, so a set of 300 annotated parasites yields exactly 300 boxes. That
+    matters for more than tidiness: an annotation left without a box does not
+    vanish from the tile, it becomes background in the detection loss, and the
+    model is taught that a real parasite is nothing there.
+
+    `provenance` says where each box came from -- "stain" for a contoured one,
+    "fallback" for one sized from the annotator's radius -- so the share that
+    is measured rather than inferred stays visible instead of being absorbed
+    into a total. Measured on real fit patients, "fallback" is about 0.5%.
+
+    With `fallback=False` the old behaviour returns: only contoured boxes, and
+    `indices` tells the caller which annotations they belong to.
     """
-    boxes, kept = [], []
+    h, w = top.shape
+    boxes, kept, provenance = [], [], []
     for i, (cx, cy) in enumerate(centres):
         r = radii[i] if radii is not None else None
         b = box_at(top, cx, cy, r)
-        if b is not None:
-            boxes.append(b)
-            kept.append(i)
-    return boxes, kept
+        source = "stain"
+        if b is None:
+            if not fallback:
+                continue
+            b = fallback_box(cx, cy, r, w, h)
+            source = "fallback"
+            if b is None:
+                # Off the edge of the image: no box can exist here at all.
+                continue
+        boxes.append(b)
+        kept.append(i)
+        provenance.append(source)
+    return boxes, kept, provenance
+
+
+def nucleus_box_at(labels: np.ndarray, cx: float, cy: float,
+                   search_px: int = 60) -> Box | None:
+    """Box for the white cell a click lands on, from a segmented label image.
+
+    White cells are stored as a bare `Point` with no size, so unlike a parasite
+    there is no annotated radius to fall back on and the pixels are the only
+    source of extent. `labels` is the watershed-split nucleus labelling at full
+    resolution, as `segmentation._split_touching` produces.
+
+    Takes the label under the click; if the click landed just outside a
+    nucleus, takes the nearest label within `search_px`.
+    """
+    h, w = labels.shape
+    cxi, cyi = int(round(cx)), int(round(cy))
+    if not (0 <= cxi < w and 0 <= cyi < h):
+        return None
+
+    label = int(labels[cyi, cxi])
+    if label <= 1:                       # 0 is unknown, 1 is background
+        y0, y1 = max(cyi - search_px, 0), min(cyi + search_px + 1, h)
+        x0, x1 = max(cxi - search_px, 0), min(cxi + search_px + 1, w)
+        win = labels[y0:y1, x0:x1]
+        candidates = np.unique(win[win > 1])
+        if candidates.size == 0:
+            return None
+        ys, xs = np.mgrid[y0:y1, x0:x1]
+        best, best_d = None, 1e18
+        for c in candidates:
+            m = win == c
+            d = float(np.min((xs[m] - cxi) ** 2 + (ys[m] - cyi) ** 2))
+            if d < best_d:
+                best, best_d = int(c), d
+        label = best
+
+    ys, xs = np.nonzero(labels == label)
+    if ys.size == 0:
+        return None
+    return Box(int(xs.min()), int(ys.min()),
+               int(xs.max() - xs.min() + 1), int(ys.max() - ys.min() + 1))
+
+
+def nucleus_boxes_for(labels: np.ndarray, centres,
+                      fallback: bool = True) -> tuple[list[Box], list[int], list[str]]:
+    """One box per white cell click, in order. Same contract as `boxes_for`.
+
+    This is a per-annotation derivation, not a segmentation of the whole field.
+    Segmenting independently and counting what comes out is a different
+    question with a different answer: on real fields it returns 14 nuclei where
+    12 were annotated, or 39 where 55 were, because annotation stops once 200
+    white cells have been counted. Anchoring on the click keeps the generated
+    set the same size as the ground truth.
+    """
+    h, w = labels.shape
+    boxes, kept, provenance = [], [], []
+    for i, (cx, cy) in enumerate(centres):
+        b = nucleus_box_at(labels, cx, cy)
+        source = "mask"
+        if b is None:
+            if not fallback:
+                continue
+            b = _square(cx, cy, 2 * NUCLEUS_FALLBACK_RADIUS_PX, w, h)
+            source = "fallback"
+            if b is None:
+                continue
+        boxes.append(b)
+        kept.append(i)
+        provenance.append(source)
+    return boxes, kept, provenance
