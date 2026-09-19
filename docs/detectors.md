@@ -101,9 +101,17 @@ the data.
 - **Annotation jitter sets a ceiling.** A perfect detector would still be
   scored a miss on 1.6% of parasites, because the click sits beyond the 15 px
   tolerance. Small, but it is a floor no model beats.
-- **Tiling multiplies the dataset.** About 28 usable tiles per field at 3
-  images per patient over 100 fit patients is on the order of 10⁴ tiles. That is
-  fine for a GPU and hopeless on a laptop.
+- **Tiling does NOT multiply the dataset as much as it looks.** About 28 tiles
+  per field are inside the disc, but the export keeps only those containing a
+  parasite plus 20% negatives, so roughly 7.5 tiles per image survive. Measured
+  on a real run: 22.6 tiles per patient at `--images-per-patient 3`, which is
+  about **2 250 tiles over the 100 fit patients**, not the 10⁴ this document
+  previously claimed.
+
+  That is a small training set for a detector, and it shows: the first YOLO26
+  run stopped early with its best epoch at 5, which is what a model does when it
+  has memorised a small set immediately. The lever is `--images-per-patient`;
+  there are about 12 annotated images per patient and only 3 were being used.
 - **Coverage is set by one constant and it bit us once.** `MIN_FOV` in
   `autoscope/tiling.py` decides how much of the slide is tiled at all. At 0.9 it
   kept a third of the tiles and capped inference recall at 0.652; at 0.2 it
