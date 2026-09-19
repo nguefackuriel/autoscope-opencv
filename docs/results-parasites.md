@@ -1104,3 +1104,43 @@ report's missing pieces: *P. vivax*, the product surface and AWS.
 `parasites.HEAT_CNN_THRESHOLD` follows the judge at `HEAT_CNN_PATH`: 0.55
 for chain 7's. It had been left at chain 3's 0.42 since chain 4, the same
 drift as `DEFAULT_THRESHOLD`.
+
+## 19 September: the held-out sample changed, and the number moved with it
+
+Alex's branch changes *which images within a patient* get drawn. Two changes,
+both defensible on their own:
+
+- images with no ground truth file are excluded before sampling
+  (`splits.annotated_images()`), because a detection on one cannot be scored;
+- the sampling RNG is seeded per patient rather than shared across the loop,
+  so reversing the iteration order no longer changes the sample.
+
+The patient split is untouched — `fit_patients()` is byte-identical, held-out is
+still the complement — so no patient moves between fit and held-out. But on the
+held-out 50 at two images each, the old and new draws share 77 of 100 images.
+
+Re-measured on the merged tree, shipped model at threshold 0.53:
+
+| | published (chain 3) | 19 Sept, new draw |
+|---|---|---|
+| precision | 0.813 | 0.805 |
+| recall | 0.787 | 0.776 |
+| **F1** | **0.800** | **0.790** |
+| count bias | −3.8% | −3.6% |
+| images scored | 99 | 100 |
+
+**This is the second decimal, not the third that was predicted.** It is a
+−0.010 move in F1 on a sample where 23 of 100 images changed, which is
+consistent with sampling noise and not evidence of a regression: nothing about
+the detector changed between these two rows. The image count went from 99 to
+100 because an unannotated image, which could only ever contribute a miss, was
+replaced by one that can be scored.
+
+The new draw is the more defensible of the two — it is reproducible from the
+seed and contains only images that can be scored — so it is the one to carry
+forward. Every held-out figure in this document and in `results-wbc.md` predates
+it and should be re-run before the final report rather than quoted as-is. Until
+then, quote 0.790 and say which draw it came from.
+
+What this does **not** license is picking whichever of the two reads better.
+They are the same measurement on two samples; the difference is the sample.
