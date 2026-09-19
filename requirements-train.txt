@@ -1,8 +1,24 @@
-# Training-time only, in its own venv (.venv-train, `make setup-train`).
-# The runtime venv never imports these. Kept apart because the last torch
-# wheel for macOS x86_64 (2.2.2) is built against NumPy 1 and will not load
-# next to the NumPy 2 the pipeline pins. The feature MLP (parasite_train.py)
-# needs only `onnx`, which also works in the runtime venv.
-torch==2.2.2
-numpy<2
+# Training-time only, for the parasite patch network (parasite_cnn_train.py).
+#
+# NumPy 2, deliberately. This file used to pin torch==2.2.2 with numpy<2,
+# because 2.2.2 was the last torch wheel built for macOS x86_64 and it is
+# compiled against NumPy 1. That pin made this file impossible to install
+# beside requirements.txt, which pins numpy==2.3.4, and opencv-python 5
+# requires numpy>=2 outright:
+#
+#     uv pip compile requirements.txt requirements-train.txt
+#     x No solution found: you require numpy==2.3.4 and numpy<2
+#
+# The training now runs on Linux GPU (Azure ML), where a current torch exists
+# and works with NumPy 2, so the constraint that forced the split is gone and
+# all three requirement files resolve together. Held at the same torch as
+# requirements-detect.txt so one environment can serve both.
+#
+# If you are on an Intel Mac, this file will not install. Use torch==2.2.2 with
+# numpy<2 in a venv of its own and do not put opencv-python 5 in it.
+torch==2.14.0
 onnx>=1.16,<1.19
+
+# Inherited from requirements.txt rather than repeated, so the two cannot drift
+# apart and produce arrays the runtime venv cannot read.
+-r requirements.txt

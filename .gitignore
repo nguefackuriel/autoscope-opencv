@@ -19,3 +19,5 @@ eval/results/*.log
 # of them. The chosen weights go to ClearML artifacts, never into git.
 models/frcnn/
 models/yolo26/
+eval/results/run_env.json
+eval/results/colab_env.json
