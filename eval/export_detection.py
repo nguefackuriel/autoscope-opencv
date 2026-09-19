@@ -69,12 +69,20 @@ def boxes_in_tile(all_boxes, ox, oy, tile, edge=1):
     return kept
 
 
-def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov):
+def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
+           max_patients=0):
     root = splits.patient_root()
     train_ids, val_ids = splits.train_val(seed=seed)
     wanted = {p: "train" for p in train_ids}
     wanted.update({p: "val" for p in val_ids})
     holdout = set(splits.holdout_patients())
+
+    if max_patients:
+        # Smoke test only. Keeps both subsets represented so the run still
+        # exercises the train/val paths rather than silently testing one.
+        keep = set(train_ids[:max_patients]) | set(val_ids[:max(1, max_patients // 4)])
+        wanted = {p: s for p, s in wanted.items() if p in keep}
+        print(f"SMOKE TEST: {len(wanted)} patients, not the full fit set")
 
     for sub in ("train", "val"):
         (out / "images" / sub).mkdir(parents=True, exist_ok=True)
@@ -95,7 +103,15 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov)
         # invalidate every number, so it is checked rather than trusted.
         assert patient not in holdout, f"{patient} is held out, never export it"
         subset = wanted[patient]
-        candidates = sorted((root / patient).glob("*.jpg"))
+        # Only images that actually carry ground truth are candidates. 53 of
+        # the 1883 images have none, because the dataset ReadMe says annotation
+        # stops once 200 white cells are counted. Sampling first and skipping
+        # afterwards would quietly return fewer images than asked for, and the
+        # shortfall would land on whichever patients were annotated least.
+        candidates = [p for p in sorted((root / patient).glob("*.jpg"))
+                      if ann.gt_path(p).exists()]
+        stats["images_without_truth"] += (
+            len(list((root / patient).glob("*.jpg"))) - len(candidates))
         if not candidates:
             continue
 
@@ -113,7 +129,8 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov)
             prepared, mask, ox_fov, oy_fov = par._prepare(image, True, True)
             top, _, _ = par.tophat(prepared)
             centres = [(p.x - ox_fov, p.y - oy_fov) for p in truth.parasites]
-            found, _kept = bx.boxes_for(top, centres)
+            radii = [p.radius for p in truth.parasites]
+            found, _kept = bx.boxes_for(top, centres, radii)
 
             stats["images"] += 1
             stats["annotated_parasites"] += len(centres)
@@ -198,6 +215,14 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov)
         "annotated_parasites": annotated,
         "boxes_derived": derived,
         "box_drop_rate": round(1 - derived / max(annotated, 1), 4),
+        # Derived boxes that reached a tile. The rest fell in tiles skipped for
+        # sitting outside the eyepiece disc, or straddled a tile edge in every
+        # tile covering them. Rim parasites are excluded from counting
+        # elsewhere in the pipeline too, so this is consistent -- but it is a
+        # second, larger shrinkage than the drop rate and must not be invisible.
+        "boxes_in_tiles": stats["boxes_train"] + stats["boxes_val"],
+        "box_tile_loss_rate": round(
+            1 - (stats["boxes_train"] + stats["boxes_val"]) / max(derived, 1), 4),
         "box_side_median_px": float(np.median(sides)) if sides else None,
         "box_side_p10_px": float(np.percentile(sides, 10)) if sides else None,
         "box_side_p90_px": float(np.percentile(sides, 90)) if sides else None,
@@ -219,6 +244,8 @@ def main():
     ap.add_argument("--min-fov", type=float, default=0.9,
                     help="skip tiles less than this fraction inside the disc")
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--max-patients", type=int, default=0,
+                    help="smoke test on a few patients instead of the fit set")
     ap.add_argument("--out", default="data/derived/detect")
     args = ap.parse_args()
 
@@ -226,7 +253,7 @@ def main():
     if not out.is_absolute():
         out = Path(__file__).resolve().parents[1] / out
     m = export(args.images_per_patient, args.tile, args.stride, out,
-               args.seed, args.negative_ratio, args.min_fov)
+               args.seed, args.negative_ratio, args.min_fov, args.max_patients)
 
     print(f"\ntrain {m['counts'].get('tiles_train', 0)} tiles, "
           f"{m['counts'].get('boxes_train', 0)} boxes")
@@ -236,6 +263,9 @@ def main():
           f"annotations ({m['box_drop_rate'] * 100:.1f}% dropped, no stain peak)")
     print(f"box side px: p10 {m['box_side_p10_px']}, "
           f"median {m['box_side_median_px']}, p90 {m['box_side_p90_px']}")
+    print(f"{m['boxes_in_tiles']} of those reached a tile "
+          f"({m['box_tile_loss_rate'] * 100:.1f}% lost to the disc edge and "
+          f"tile boundaries)")
     print(f"\nheld-out patients untouched: {m['holdout_patients_untouched']}")
     print(f"written to {out}")
 

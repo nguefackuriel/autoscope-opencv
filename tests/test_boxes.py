@@ -102,3 +102,36 @@ def test_boxes_for_reports_which_annotations_were_dropped():
 def test_box_centre_helpers_agree_with_the_corner():
     b = bx.Box(10, 20, 30, 40)
     assert (b.cx, b.cy) == (25.0, 40.0)
+
+
+def test_the_annotated_circle_bounds_the_box():
+    """The ReadMe defines the second stored point as on the circumference, so
+    2 x radius is the annotator's own claim about how big the object can be.
+
+    A component that grows past it has bled into a neighbour. Measured on real
+    data this rejects a further 0.3% on top of the 1.0% with no stain peak.
+    """
+    top = top_of(8)                       # ~16 px of stain
+    assert bx.box_at(top, CENTRE, CENTRE, radius=20) is not None   # limit 40
+    assert bx.box_at(top, CENTRE, CENTRE, radius=4) is None        # limit 8
+
+
+def test_without_a_radius_the_global_clamp_still_applies():
+    """White cells are stored as a bare Point and carry no radius at all."""
+    assert bx.box_at(top_of(5), CENTRE, CENTRE, radius=None) is not None
+    assert bx.box_at(top_of(25), CENTRE, CENTRE, radius=None) is None
+
+
+def test_boxes_for_applies_the_radius_per_annotation():
+    import cv2 as cv
+    import numpy as np
+    img = np.full((SIZE, SIZE, 3), BACKGROUND, np.uint8)
+    cv.circle(img, (60, 60), 8, PURPLE, -1)
+    cv.circle(img, (140, 140), 8, PURPLE, -1)
+    top = tophat(cv.GaussianBlur(img, (3, 3), 0))[0]
+
+    centres = [(60, 60), (140, 140)]
+    # generous for the first, impossibly tight for the second
+    found, kept = bx.boxes_for(top, centres, radii=[20, 3])
+    assert kept == [0]
+    assert len(found) == 1

@@ -113,8 +113,22 @@ def read(path: str | Path, width: int, height: int) -> GroundTruth:
     return GroundTruth(path=path, width=width, height=height, items=items)
 
 
+def gt_path(image_path: str | Path) -> Path:
+    """Where the ground truth for an image lives, whether or not it exists.
+
+    53 of the 1883 images (2.8%) have no file here, and that is meaningful
+    rather than missing data: the dataset ReadMe says annotation stops once
+    200 white cells have been counted, because that is enough to compute a
+    parasitaemia. An image with no .txt was captured after the count stopped.
+    Callers that sample images should skip those before sampling, not after,
+    or they quietly get fewer images than they asked for.
+    """
+    image_path = Path(image_path)
+    return (image_path.parents[1] / "GT_updated" / image_path.parent.name
+            / f"{image_path.stem}.txt")
+
+
 def for_image(image_path: str | Path, width: int, height: int) -> GroundTruth | None:
     """Find and read the ground truth that goes with an image, or None."""
-    image_path = Path(image_path)
-    gt = image_path.parents[1] / "GT_updated" / image_path.parent.name / f"{image_path.stem}.txt"
+    gt = gt_path(image_path)
     return read(gt, width, height) if gt.exists() else None

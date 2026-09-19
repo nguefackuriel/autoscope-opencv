@@ -26,6 +26,7 @@ import cv2 as cv
 import numpy as np
 import torch
 from torch.utils.data import DataLoader, Dataset
+from eval import splits
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from frcnn_model import build_model, describe

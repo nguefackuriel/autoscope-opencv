@@ -16,6 +16,26 @@ centre we threshold that map relative to its own local peak and bound the
 component that results. The box is then as big as the stain says the parasite
 is.
 
+WHAT THE DATA SAYS, MEASURED
+
+On 953 annotated parasites across 20 fit patients, with the dataset in hand:
+
+    boxes derived                        99.0%  (10 of 953 refused)
+    box side px                          p10 8, median 11, p90 17, max 39
+    annotator circle radius px           median 20, p90 25
+    derived box side / circle diameter   p50 0.30, p90 0.52, max 1.33
+
+So the annotated circle is about 3.3x the parasite across. Drawing the box
+from it would have made every target roughly eleven times too large in area,
+and the median derived box lands at 11 px, which is the chromatin dot the
+ReadMe and annotations.py both describe. The 1% refusal rate is low enough
+that dropping those annotations costs nothing worth recovering.
+
+The circle is still a real bound. The dataset ReadMe states the second point
+is "a random point on the circumference", so 2 x radius is the annotator's own
+claim about how big the object could be, and a component growing past it has
+bled into something else. That rejects a further 0.3%.
+
 WHAT THIS IS AND IS NOT GOOD FOR
 
 These boxes are training targets, not ground truth. They are an algorithm's
@@ -50,8 +70,10 @@ WINDOW_PX = 26
 # the local peak. Half-maximum is the usual way to size a blob with soft edges.
 LEVEL = 0.5
 
-# Sanity clamps. The chromatin dot is about 10 px; anything under 6 px is noise
-# and anything over 40 px is a stain artefact or two parasites merged.
+# Sanity clamps. Measured median box side is 11 px and p90 is 17, so 6 px is
+# below anything real and 40 px is beyond every legitimate box in the sample
+# (max 39). MAX_SIDE_PX only applies when the annotation carries no radius;
+# when it does, the annotator's own circle is the tighter and better bound.
 MIN_SIDE_PX = 6
 MAX_SIDE_PX = 40
 
@@ -85,13 +107,21 @@ def _local_peak(top: np.ndarray, cx: int, cy: int, radius: int) -> tuple[int, in
     return x0 + int(ix), y0 + int(iy), float(patch[iy, ix])
 
 
-def box_at(top: np.ndarray, cx: float, cy: float) -> Box | None:
+def box_at(top: np.ndarray, cx: float, cy: float,
+           radius: float | None = None) -> Box | None:
     """Box for the parasite annotated at (cx, cy), or None if the stain has none.
 
     `top` is the top-hat map from `parasites.tophat()`. Returning None is a real
     answer, not a failure to handle: if there is no stain peak near the click
     then no box drawn here would describe a parasite, and a detector trained on
     an invented one would be learning noise.
+
+    `radius` is the annotator's circle radius when the annotation carries one.
+    It is not the size of the parasite -- measured, the circle is about 3.3x
+    across what the stain says the object is -- but the ReadMe defines the
+    second stored point as lying on the circumference, so 2 x radius is the
+    annotator's own upper bound and a component that grows past it has bled
+    into a neighbour. Without a radius the global MAX_SIDE_PX applies instead.
     """
     h, w = top.shape
     cxi, cyi = int(round(cx)), int(round(cy))
@@ -122,7 +152,8 @@ def box_at(top: np.ndarray, cx: float, cy: float) -> Box | None:
     bw = int(stats[label, cv.CC_STAT_WIDTH])
     bh = int(stats[label, cv.CC_STAT_HEIGHT])
 
-    if bw > MAX_SIDE_PX or bh > MAX_SIDE_PX:
+    limit = 2.0 * radius if radius else MAX_SIDE_PX
+    if bw > limit or bh > limit:
         return None
 
     # Grow a box that is merely small up to the floor, keeping it centred, so a
@@ -141,8 +172,13 @@ def box_at(top: np.ndarray, cx: float, cy: float) -> Box | None:
     return Box(bx, by, bw, bh)
 
 
-def boxes_for(top: np.ndarray, centres) -> tuple[list[Box], list[int]]:
+def boxes_for(top: np.ndarray, centres, radii=None) -> tuple[list[Box], list[int]]:
     """Boxes for every annotated centre. Returns the boxes and the indices kept.
+
+    `radii` is an optional per-centre sequence of annotator circle radii, used
+    as the per-annotation upper bound described in `box_at`. Pass None for
+    annotations that carry no radius, such as white cells, which the ReadMe
+    stores as a bare Point.
 
     The indices matter: a caller writing a label file needs to know which
     annotations produced a box and which the stain refused, so the drop rate can
@@ -150,7 +186,8 @@ def boxes_for(top: np.ndarray, centres) -> tuple[list[Box], list[int]]:
     """
     boxes, kept = [], []
     for i, (cx, cy) in enumerate(centres):
-        b = box_at(top, cx, cy)
+        r = radii[i] if radii is not None else None
+        b = box_at(top, cx, cy, r)
         if b is not None:
             boxes.append(b)
             kept.append(i)
