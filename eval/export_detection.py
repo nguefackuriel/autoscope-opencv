@@ -32,24 +32,25 @@ from pathlib import Path
 import cv2 as cv
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+# --- repo paths: run from anywhere, installed or not -------------------------
+# A remote runner executes the code snapshot without `pip install -e .`, so the
+# editable install that normally puts src/ on sys.path is absent and every
+# `from autoscope import ...` fails. True of AWS Batch and SageMaker as much as
+# of the GPU box the detectors are trained on. This depends on __file__ alone,
+# so it survives any working directory, any launch style, and a missing install.
+import sys as _sys, pathlib as _pl
+_sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
+                 for _d in ("src", "eval", "train")]
+# ----------------------------------------------------------------------------
 
 from autoscope import annotations as ann, boxes as bx, parasites as par
+from autoscope.tiling import MIN_FOV, STRIDE_PX, TILE_PX, covered_tiles, tile_origins
 import splits
 
 # Patient images: resolved via splits.patient_root(), not assumed to sit
 # directly under data/raw -- download.py may nest them one level down.
 CATEGORY = {"id": 1, "name": "parasite", "supercategory": "cell"}
-
-
-def tile_origins(size: int, tile: int, stride: int) -> list[int]:
-    """Tile starts covering `size`, with the last one flush against the edge."""
-    if size <= tile:
-        return [0]
-    starts = list(range(0, size - tile + 1, stride))
-    if starts[-1] != size - tile:
-        starts.append(size - tile)
-    return starts
 
 
 def boxes_in_tile(all_boxes, ox, oy, tile, edge=1):
@@ -77,11 +78,17 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
     wanted.update({p: "val" for p in val_ids})
     holdout = set(splits.holdout_patients())
 
+    if max_patients:
+        # Smoke test only. Keeps both subsets represented so the run still
+        # exercises the train/val paths rather than silently testing one.
+        keep = set(train_ids[:max_patients]) | set(val_ids[:max(1, max_patients // 4)])
+        wanted = {p: s for p, s in wanted.items() if p in keep}
+        print(f"SMOKE TEST: {len(wanted)} patients, not the full fit set")
+
     for sub in ("train", "val"):
         (out / "images" / sub).mkdir(parents=True, exist_ok=True)
         (out / "labels" / sub).mkdir(parents=True, exist_ok=True)
 
-    rng = random.Random(seed)
     coco = {s: {"images": [], "annotations": [], "categories": [CATEGORY]}
             for s in ("train", "val")}
     img_id = 0
@@ -98,7 +105,15 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
         # invalidate every number, so it is checked rather than trusted.
         assert patient not in holdout, f"{patient} is held out, never export it"
         subset = wanted[patient]
-        candidates = sorted((root / patient).glob("*.jpg"))
+        # Only images that actually carry ground truth are candidates. 53 of
+        # the 1883 images have none, because the dataset ReadMe says annotation
+        # stops once 200 white cells are counted. Sampling first and skipping
+        # afterwards would quietly return fewer images than asked for, and the
+        # shortfall would land on whichever patients were annotated least.
+        candidates = splits.annotated_images(root / patient)
+        rng = splits.image_rng(seed, patient)
+        stats["images_reserved_for_inference"] += len(
+            splits.unannotated_images(root / patient))
         if not candidates:
             continue
 
@@ -116,11 +131,21 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
             prepared, mask, ox_fov, oy_fov = par._prepare(image, True, True)
             top, _, _ = par.tophat(prepared)
             centres = [(p.x - ox_fov, p.y - oy_fov) for p in truth.parasites]
-            found, _kept = bx.boxes_for(top, centres)
+            radii = [p.radius for p in truth.parasites]
+            # fallback=False: never invent a box. Fabricating one where the
+            # stain shows nothing would be altering the ground truth, and a
+            # dataset altered that way would need per-image verification we are
+            # not in a position to do. Instead the tiles containing an
+            # unboxable annotation are dropped below, so nothing is invented
+            # and no real parasite is left labelled as background.
+            found, kept, provenance = bx.boxes_for(top, centres, radii, fallback=False)
+            unboxable = [centres[i] for i in range(len(centres)) if i not in set(kept)]
 
             stats["images"] += 1
             stats["annotated_parasites"] += len(centres)
             stats["boxes_derived"] += len(found)
+            stats["boxes_from_stain"] += sum(1 for s in provenance if s == "stain")
+            stats["annotations_unboxable"] += len(unboxable)
             for b in found:
                 sides.append(b.w)
                 sides.append(b.h)
@@ -134,11 +159,32 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
                     if float((sub_mask > 0).mean()) < min_fov:
                         stats["tiles_outside_fov"] += 1
                         continue
+                    # A tile holding an annotation we could not box is not
+                    # usable either way: keep it and a real parasite is labelled
+                    # background, invent a box and we have altered the ground
+                    # truth. Declining the tile does neither.
+                    if any(ox <= ux < ox + tile and oy <= uy < oy + tile
+                           for ux, uy in unboxable):
+                        stats["tiles_with_unboxable"] += 1
+                        continue
                     inside = boxes_in_tile(found, ox, oy, tile)
                     if inside:
                         positives.append((ox, oy, inside))
                     else:
                         empties.append((ox, oy, inside))
+
+            # How many DISTINCT boxes reached at least one kept tile. Counting
+            # label lines instead would double-count: the tiles overlap by
+            # 128 px, so a box near a seam is written into several of them and
+            # the total can exceed the number of boxes that exist.
+            covered = set()
+            for ox, oy, _ in positives:
+                for i, b in enumerate(found):
+                    if (ox + 1 <= b.x and b.y >= oy + 1
+                            and b.x + b.w <= ox + tile - 1
+                            and b.y + b.h <= oy + tile - 1):
+                        covered.add(i)
+            stats["boxes_covered"] += len(covered)
 
             # Background tiles teach the detector what is not a parasite, but a
             # dataset that is mostly background trains a detector that says no.
@@ -237,7 +283,22 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
         "seed": seed,
         "annotated_parasites": annotated,
         "boxes_derived": derived,
+        # One box per annotation is the contract, so this is 0.0 unless an
+        # annotation sits off the edge of the cropped field entirely.
         "box_drop_rate": round(1 - derived / max(annotated, 1), 4),
+        "boxes_from_stain": stats["boxes_from_stain"],
+        "boxes_invented": 0,
+        "annotations_unboxable": stats["annotations_unboxable"],
+        "tiles_dropped_unboxable": stats["tiles_with_unboxable"],
+        # Derived boxes that reached a tile. The rest fell in tiles skipped for
+        # sitting outside the eyepiece disc, or straddled a tile edge in every
+        # tile covering them. Rim parasites are excluded from counting
+        # elsewhere in the pipeline too, so this is consistent -- but it is a
+        # second, larger shrinkage than the drop rate and must not be invisible.
+        "box_instances_written": stats["boxes_train"] + stats["boxes_val"],
+        "boxes_covered": stats["boxes_covered"],
+        "box_tile_loss_rate": round(
+            1 - stats["boxes_covered"] / max(derived, 1), 4),
         "box_side_median_px": float(np.median(sides)) if sides else None,
         "box_side_p10_px": float(np.percentile(sides, 10)) if sides else None,
         "box_side_p90_px": float(np.percentile(sides, 90)) if sides else None,
@@ -254,13 +315,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--images-per-patient", type=int, default=3,
                     help="3 is what the patch network's best held-out run used")
-    ap.add_argument("--tile", type=int, default=640)
-    ap.add_argument("--stride", type=int, default=512,
+    ap.add_argument("--tile", type=int, default=TILE_PX)
+    ap.add_argument("--stride", type=int, default=STRIDE_PX,
                     help="640 minus 512 gives 128 px of overlap")
     ap.add_argument("--negative-ratio", type=float, default=0.2)
-    ap.add_argument("--min-fov", type=float, default=0.9,
+    ap.add_argument("--min-fov", type=float, default=MIN_FOV,
                     help="skip tiles less than this fraction inside the disc")
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--max-patients", type=int, default=0,
+                    help="smoke test on a few patients instead of the fit set")
     ap.add_argument("--out", default="data/derived/detect")
     ap.add_argument("--uninfected-fields", type=int, default=-1,
                     help="clean fields from the fit half of the uninfected set, as background tiles; -1 = every field (569), 0 = none")
@@ -280,9 +343,15 @@ def main():
     print(f"val   {m['counts'].get('tiles_val', 0)} tiles, "
           f"{m['counts'].get('boxes_val', 0)} boxes")
     print(f"\n{m['boxes_derived']} boxes from {m['annotated_parasites']} "
-          f"annotations ({m['box_drop_rate'] * 100:.1f}% dropped, no stain peak)")
+          f"annotations ({m['box_drop_rate'] * 100:.2f}% unboxed)")
+    print(f"  every box contoured from the stain; none invented")
+    print(f"  {m['annotations_unboxable']} annotations had no stain peak; the "
+          f"{m['tiles_dropped_unboxable']} tiles containing them were dropped")
     print(f"box side px: p10 {m['box_side_p10_px']}, "
           f"median {m['box_side_median_px']}, p90 {m['box_side_p90_px']}")
+    print(f"{m['boxes_covered']} of those reached a tile "
+          f"({m['box_tile_loss_rate'] * 100:.1f}% never covered), written as "
+          f"{m['box_instances_written']} label lines across overlapping tiles")
     print(f"\nheld-out patients untouched: {m['holdout_patients_untouched']}")
     print(f"written to {out}")
 

@@ -18,6 +18,19 @@ from pathlib import Path
 import cv2 as cv
 import numpy as np
 
+# --- repo paths: run from anywhere, installed or not -------------------------
+# A remote runner executes the code snapshot without `pip install -e .`, so the
+# editable install that normally puts src/ on sys.path is absent and every
+# `from autoscope import ...` fails. True of AWS Batch and SageMaker as much as
+# of the GPU box the detectors are trained on. This depends on __file__ alone,
+# so it survives any working directory, any launch style, and a missing install.
+import sys as _sys, pathlib as _pl
+_sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
+                 for _d in ("src", "eval", "train")]
+# ----------------------------------------------------------------------------
+
+import splits
+
 from autoscope import annotations as ann
 from autoscope.segmentation import find_white_cells
 
@@ -62,7 +75,6 @@ def evaluate(images: int, seed: int = 0, holdout: bool = False,
     would flatter them. The honest number is the one from patients the fit never
     saw.
     """
-    rng = random.Random(seed)
     patients = sorted(p for p in RAW.iterdir() if p.is_dir() and p.name.startswith("TF"))
 
     if holdout:
@@ -75,7 +87,8 @@ def evaluate(images: int, seed: int = 0, holdout: bool = False,
 
     rows = []
     for patient in patients:
-        candidates = sorted(patient.glob("*.jpg"))
+        candidates = splits.annotated_images(patient)
+        rng = splits.image_rng(seed, patient)
         if not candidates:
             continue
         for path in rng.sample(candidates, min(images, len(candidates))):

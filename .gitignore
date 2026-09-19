@@ -34,3 +34,5 @@ infra/lambda/layers/python/*
 !infra/lambda/layers/python/.gitkeep
 infra/lambda/layers/*.zip
 infra/lambda/agent/moves.py
+eval/results/run_env.json
+eval/results/colab_env.json

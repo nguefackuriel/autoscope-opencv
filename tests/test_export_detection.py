@@ -75,3 +75,40 @@ def test_yolo_normalisation_puts_the_centre_in_range():
         cx, cy = (x + w / 2) / TILE, (y + h / 2) / TILE
         assert 0.0 < cx < 1.0 and 0.0 < cy < 1.0
         assert 0.0 < w / TILE < 1.0 and 0.0 < h / TILE < 1.0
+
+
+def test_min_fov_covers_essentially_every_parasite():
+    """The FOV threshold decides how much of the slide is looked at.
+
+    At 0.9 only tiles almost entirely inside the eyepiece disc survive: 10.2
+    tiles per image out of 29.6, covering 65.8% of annotated parasites. At
+    inference that capped recall at 0.652 before the model did anything, and
+    the shortfall was reported as geometry rather than as a threshold.
+    """
+    from autoscope.tiling import MIN_FOV
+    assert MIN_FOV <= 0.5, (
+        f"MIN_FOV={MIN_FOV} discards tiles near the disc rim, where parasites "
+        "genuinely sit. Measured coverage: 0.2 -> 99.9%, 0.5 -> 98.5%, "
+        "0.9 -> 65.8%.")
+
+
+def test_export_and_inference_share_one_fov_threshold():
+    """They must tile identically, or the detector is scored on parasites it
+    was never shown."""
+    import importlib
+    from autoscope.tiling import MIN_FOV, TILE_PX, STRIDE_PX
+    de = importlib.import_module("detector_eval")
+    assert de.MIN_FOV is MIN_FOV
+    assert de.TILE_PX is TILE_PX and de.STRIDE_PX is STRIDE_PX
+
+
+def test_covered_tiles_keeps_rim_tiles():
+    import numpy as np
+    from autoscope.tiling import covered_tiles
+    mask = np.zeros((1400, 1400), np.uint8)
+    cv_centre, r = 700, 690
+    yy, xx = np.mgrid[:1400, :1400]
+    mask[((xx - cv_centre) ** 2 + (yy - cv_centre) ** 2) <= r * r] = 255
+    strict = covered_tiles(mask, min_fov=0.9)
+    loose = covered_tiles(mask, min_fov=0.2)
+    assert len(loose) > len(strict), "the looser threshold must see more of the field"

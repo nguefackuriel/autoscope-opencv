@@ -36,6 +36,17 @@ from pathlib import Path
 
 import numpy as np
 
+# --- repo paths: run from anywhere, installed or not -------------------------
+# A remote runner executes the code snapshot without `pip install -e .`, so the
+# editable install that normally puts src/ on sys.path is absent and every
+# `from autoscope import ...` fails. True of AWS Batch and SageMaker as much as
+# of the GPU box the detectors are trained on. This depends on __file__ alone,
+# so it survives any working directory, any launch style, and a missing install.
+import sys as _sys, pathlib as _pl
+_sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
+                 for _d in ("src", "eval", "train")]
+# ----------------------------------------------------------------------------
+
 from autoscope.agent.loop import read_slide
 from autoscope.agent.policy import DecisionRule, RuleBased, WhoProtocol
 from autoscope.agent.tools import Tools

@@ -14,6 +14,19 @@ from pathlib import Path
 import cv2 as cv
 import numpy as np
 
+# --- repo paths: run from anywhere, installed or not -------------------------
+# A remote runner executes the code snapshot without `pip install -e .`, so the
+# editable install that normally puts src/ on sys.path is absent and every
+# `from autoscope import ...` fails. True of AWS Batch and SageMaker as much as
+# of the GPU box the detectors are trained on. This depends on __file__ alone,
+# so it survives any working directory, any launch style, and a missing install.
+import sys as _sys, pathlib as _pl
+_sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
+                 for _d in ("src", "eval", "train")]
+# ----------------------------------------------------------------------------
+
+import splits
+
 from autoscope import fov
 from autoscope.quality import assess_field
 
@@ -46,7 +59,8 @@ def survey(per_patient: int, seed: int = 0, fit_only: bool = False) -> list[dict
         patients = [p for p in patients if p.name in fitted]
 
     for i, patient in enumerate(patients, 1):
-        images = sorted(patient.glob("*.jpg"))
+        images = splits.annotated_images(patient)
+        rng = splits.image_rng(seed, patient)
         if not images:
             continue
         for img_path in rng.sample(images, min(per_patient, len(images))):
