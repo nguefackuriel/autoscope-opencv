@@ -31,7 +31,9 @@ def test_no_eval_script_globs_images_directly():
         if path.name == "splits.py":
             continue
         for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
-            if re.search(r'glob\(\s*["\']\*\.jpg["\']\s*\)', line):
+            # `.glob("*.jpg")` but not `.rglob(...)`, which walks an output
+            # directory rather than sampling a patient's images.
+            if re.search(r'(?<!r)\bglob\(\s*["\']\*\.jpg["\']\s*\)', line):
                 offenders.append(f"{path.name}:{i}")
     assert not offenders, (
         "these sample images without going through splits.annotated_images(), "
