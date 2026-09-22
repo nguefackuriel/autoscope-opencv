@@ -69,6 +69,20 @@ def main():
         task.connect(vars(args))
         task.connect(manifest, name="dataset")
 
+    run_dir = Path(__file__).resolve().parents[1] / "models" / "yolo26" / args.task_name
+    if (run_dir / "weights" / "best.pt").exists():
+        # exist_ok=True below means ultralytics writes into this directory. If
+        # the new run dies before its first improvement, the OLD best.pt
+        # survives and is indistinguishable from a fresh one -- so the
+        # evaluation would silently score the previous model, quite possibly
+        # one trained on the smoke set.
+        print(f"WARNING: {run_dir / 'weights' / 'best.pt'} exists and will be "
+              f"overwritten.\n"
+              f"         If this run fails early that stale file remains, and "
+              f"the evaluation\n"
+              f"         would score the PREVIOUS model. Delete {run_dir} to be "
+              f"certain.\n")
+
     from ultralytics import YOLO
 
     model = YOLO(args.model)
@@ -95,8 +109,22 @@ def main():
         erasing=0.0,
     )
 
-    out = Path(__file__).resolve().parents[1] / "models" / "yolo26" / args.task_name
+    out = run_dir
+    # Stamp the run with what it trained on, so a checkpoint is self-describing
+    # and cannot be mistaken for one trained on the smoke set.
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "dataset.json").write_text(json.dumps({
+        "data": str(root),
+        "tiles_train": manifest.get("counts", {}).get("tiles_train"),
+        "tiles_val": manifest.get("counts", {}).get("tiles_val"),
+        "images_per_patient": manifest.get("images_per_patient"),
+        "min_fov": manifest.get("min_fov"),
+        "export_git_revision": manifest.get("git_revision"),
+    }, indent=2))
+
     print(f"\nweights in {out / 'weights'}")
+    print(f"trained on {manifest.get('counts', {}).get('tiles_train')} train tiles "
+          f"from {root}")
     print("Now pick the checkpoint and the threshold on VAL, never on holdout:")
     print(f"  python eval/detector_eval.py --backend yolo "
           f"--weights {out / 'weights' / 'best.pt'} --split val --sweep")

@@ -208,7 +208,28 @@ def main():
     out = Path(args.out)
     if not out.is_absolute():
         out = Path(__file__).resolve().parents[1] / out
+    # Stale checkpoints from a previous run are a silent trap. Checkpoints are
+    # named epoch001.pt upward and the eval picks sorted(...)[-1], so a shorter
+    # run leaves the longer run's higher-numbered files behind and the eval
+    # selects one of THOSE -- a model trained on different data.
+    if out.exists():
+        stale = sorted(out.glob("epoch*.pt"))
+        if stale:
+            print(f"removing {len(stale)} checkpoints from a previous run in {out}")
+            for f in stale:
+                f.unlink()
     out.mkdir(parents=True, exist_ok=True)
+
+    # Stamp the run with what it trained on, so a checkpoint is self-describing
+    # and cannot be confused with one trained on the smoke set.
+    (out / "dataset.json").write_text(json.dumps({
+        "data": str(root),
+        "tiles_train": manifest.get("counts", {}).get("tiles_train"),
+        "tiles_val": manifest.get("counts", {}).get("tiles_val"),
+        "images_per_patient": manifest.get("images_per_patient"),
+        "min_fov": manifest.get("min_fov"),
+        "export_git_revision": manifest.get("git_revision"),
+    }, indent=2))
 
     history = []
     for epoch in range(1, args.epochs + 1):
