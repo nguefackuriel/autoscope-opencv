@@ -70,6 +70,22 @@ def boxes_in_tile(all_boxes, ox, oy, tile, edge=1):
     return kept
 
 
+def _git_revision() -> str:
+    """The commit that produced an export, or a marker if it cannot be read."""
+    import subprocess
+    try:
+        repo = Path(__file__).resolve().parents[1]
+        rev = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=repo,
+                             capture_output=True, text=True, timeout=10)
+        if rev.returncode != 0:
+            return "unknown"
+        dirty = subprocess.run(["git", "status", "--porcelain"], cwd=repo,
+                               capture_output=True, text=True, timeout=10)
+        return rev.stdout.strip() + ("+dirty" if dirty.stdout.strip() else "")
+    except Exception:
+        return "unknown"
+
+
 def prepare_output(out: Path) -> None:
     """Empty a previous export, or refuse if the directory is not one of ours.
 
@@ -293,6 +309,13 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
         "images_per_patient": images_per_patient,
         "tile_px": tile,
         "stride_px": stride,
+        # Provenance. Without min_fov recorded, a finished export cannot be
+        # told apart from one made before the threshold was corrected, and the
+        # difference is two thirds of the field. The git revision pins the rest
+        # of the behaviour: an export is only reproducible if you know which
+        # code wrote it.
+        "min_fov": min_fov,
+        "git_revision": _git_revision(),
         "seed": seed,
         "annotated_parasites": annotated,
         "boxes_derived": derived,
