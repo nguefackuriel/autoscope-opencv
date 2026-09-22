@@ -97,12 +97,16 @@ def prepare_output(out: Path) -> None:
     trained on different data, which destroys the only thing that makes the
     comparison mean anything.
 
-    Ours is recognised by the layout it writes, images/ and labels/, NOT by
+    Ours is recognised by ANY artefact this script writes, NOT by
     manifest.json. The manifest is written last, so an export killed part way
-    through has tiles and no manifest -- which is exactly the case most likely
-    to need re-running, and refusing it would be backwards. Anything without
-    that layout is somebody's data and we stop, because --out takes an
-    arbitrary path and a typo should not delete a directory.
+    through has no manifest -- which is exactly the case most likely to need
+    re-running, and refusing it would be backwards. Requiring images/ and
+    labels/ was the same mistake one level down: a run killed before its first
+    tile leaves only annotations/ or data.yaml, and then this refused a
+    directory the notebook had just announced it would clear, leaving no way
+    forward but a manual rm. A directory holding none of them is somebody's
+    data and we stop, because --out takes an arbitrary path and a typo should
+    not delete a directory.
     """
     if not out.exists():
         return
@@ -110,17 +114,26 @@ def prepare_output(out: Path) -> None:
     if not entries:
         return
 
-    ours = (out / "images").is_dir() and (out / "labels").is_dir()
-    if not ours:
+    # Any artefact this script writes marks the directory as ours. Requiring
+    # images/ AND labels/ was too strict: a run killed before the first tile,
+    # or one already half cleaned up, leaves only annotations/ or data.yaml,
+    # and then this refused to touch a directory the notebook had just promised
+    # to clear. The two checks disagreed and the export dead-ended.
+    OURS = ("images", "labels", "annotations", "data.yaml", "manifest.json")
+    found = [n for n in OURS if (out / n).exists()]
+    if not found:
+        listing = ", ".join(sorted(p.name for p in entries)[:8]) or "(empty)"
         raise SystemExit(
-            f"{out} exists and does not look like an export (no images/ and\n"
-            "labels/ directories). Refusing to delete it. Point --out somewhere\n"
-            "else, or remove the directory yourself if it really is disposable.")
+            f"{out} exists and holds none of {', '.join(OURS)}, so it is not an\n"
+            f"export. Refusing to delete it. It contains: {listing}\n"
+            "Point --out somewhere else, or remove the directory yourself if it\n"
+            "really is disposable.")
 
     n_img = sum(1 for _ in out.rglob("*.jpg"))
     finished = (out / "manifest.json").exists()
     state = "complete" if finished else "INTERRUPTED (no manifest.json)"
-    print(f"clearing a previous export in {out}: {n_img} tiles, {state}")
+    print(f"clearing a previous export in {out}: {n_img} tiles, {state} "
+          f"[found {', '.join(found)}]")
     shutil.rmtree(out)
 
 

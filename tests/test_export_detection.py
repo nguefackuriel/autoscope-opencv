@@ -119,7 +119,7 @@ def test_export_refuses_a_directory_that_is_not_a_previous_export(tmp_path):
     d = tmp_path / "not_ours"
     d.mkdir()
     (d / "important.txt").write_text("do not delete me")
-    with pytest.raises(SystemExit, match="does not look like an export"):
+    with pytest.raises(SystemExit, match="is not an\nexport"):
         ex.prepare_output(d)
     assert (d / "important.txt").exists()
 
@@ -165,3 +165,33 @@ def test_an_interrupted_export_is_still_recognised_as_ours(tmp_path):
     assert not ex.export_is_complete(d)
     ex.prepare_output(d)          # must clear, not refuse
     assert not d.exists()
+
+
+def test_a_partly_cleaned_export_is_still_recognised(tmp_path):
+    """A run killed before the first tile leaves annotations/ or data.yaml only.
+
+    Requiring images/ AND labels/ made prepare_output refuse a directory the
+    notebook had just announced it would clear, and the export dead-ended with
+    no way forward but a manual rm.
+    """
+    for marker in ("annotations", "images", "labels"):
+        d = tmp_path / marker
+        d.mkdir()
+        (d / marker).mkdir()
+        ex.prepare_output(d)
+        assert not d.exists(), f"{marker}/ alone should mark the directory as ours"
+
+    d = tmp_path / "yaml_only"
+    d.mkdir()
+    (d / "data.yaml").write_text("path: x")
+    ex.prepare_output(d)
+    assert not d.exists()
+
+
+def test_refusal_says_what_the_directory_holds(tmp_path):
+    d = tmp_path / "someones_work"
+    d.mkdir()
+    (d / "thesis.tex").write_text("x")
+    with pytest.raises(SystemExit, match="thesis.tex"):
+        ex.prepare_output(d)
+    assert (d / "thesis.tex").exists()
