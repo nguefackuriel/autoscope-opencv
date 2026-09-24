@@ -43,6 +43,11 @@ def main():
     ap.add_argument("--patience", type=int, default=25)
     ap.add_argument("--project", default="AutoScope/parasites")
     ap.add_argument("--task-name", default="yolo26")
+    ap.add_argument("--out", default=None,
+                    help="where runs are written. Point it at mounted Drive on "
+                         "Colab so checkpoints survive the session ending.")
+    ap.add_argument("--resume", action="store_true",
+                    help="continue from weights/last.pt in the run directory")
     ap.add_argument("--no-clearml", action="store_true")
     args = ap.parse_args()
 
@@ -69,8 +74,15 @@ def main():
         task.connect(vars(args))
         task.connect(manifest, name="dataset")
 
-    run_dir = Path(__file__).resolve().parents[1] / "models" / "yolo26" / args.task_name
-    if (run_dir / "weights" / "best.pt").exists():
+    project = (Path(args.out) if args.out
+               else Path(__file__).resolve().parents[1] / "models" / "yolo26")
+    run_dir = project / args.task_name
+    last = run_dir / "weights" / "last.pt"
+    if args.resume and not last.exists():
+        raise SystemExit(f"--resume was asked for but {last} does not exist. "
+                         "Drop --resume to start from scratch.")
+
+    if (run_dir / "weights" / "best.pt").exists() and not args.resume:
         # exist_ok=True below means ultralytics writes into this directory. If
         # the new run dies before its first improvement, the OLD best.pt
         # survives and is indistinguishable from a fresh one -- so the
@@ -85,29 +97,37 @@ def main():
 
     from ultralytics import YOLO
 
-    model = YOLO(args.model)
-    model.train(
-        data=str(root / "data.yaml"),
-        epochs=args.epochs,
-        imgsz=args.imgsz,
-        batch=args.batch,
-        workers=args.workers,
-        patience=args.patience,
-        project=str(Path(__file__).resolve().parents[1] / "models" / "yolo26"),
-        name=args.task_name,
-        exist_ok=True,
-        # See the module docstring: these are the small-object settings.
-        mosaic=0.0,
-        scale=0.10,
-        translate=0.10,
-        hsv_h=0.010,
-        hsv_s=0.30,
-        hsv_v=0.20,
-        fliplr=0.5,
-        flipud=0.5,
-        degrees=180.0,      # a smear has no up
-        erasing=0.0,
-    )
+    if args.resume:
+        # Ultralytics resumes from the checkpoint itself: it restores the
+        # optimiser state, the epoch counter and the original arguments, so a
+        # session that died at epoch 40 of 150 continues at 41 rather than
+        # starting over. Passing the other arguments again would be ignored at
+        # best and conflict at worst, so they are deliberately omitted here.
+        print(f"resuming from {last}")
+        YOLO(str(last)).train(resume=True)
+    else:
+        YOLO(args.model).train(
+            data=str(root / "data.yaml"),
+            epochs=args.epochs,
+            imgsz=args.imgsz,
+            batch=args.batch,
+            workers=args.workers,
+            patience=args.patience,
+            project=str(project),
+            name=args.task_name,
+            exist_ok=True,
+            # See the module docstring: these are the small-object settings.
+            mosaic=0.0,
+            scale=0.10,
+            translate=0.10,
+            hsv_h=0.010,
+            hsv_s=0.30,
+            hsv_v=0.20,
+            fliplr=0.5,
+            flipud=0.5,
+            degrees=180.0,      # a smear has no up
+            erasing=0.0,
+        )
 
     out = run_dir
     # Stamp the run with what it trained on, so a checkpoint is self-describing

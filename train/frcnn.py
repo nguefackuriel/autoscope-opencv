@@ -161,6 +161,10 @@ def main():
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--out", default="models/frcnn")
     ap.add_argument("--no-amp", action="store_true")
+    ap.add_argument("--resume", action="store_true",
+                    help="continue from the highest epoch*.pt in --out. Point "
+                         "--out at mounted Drive on Colab so a session ending "
+                         "does not cost the run.")
     ap.add_argument("--no-clearml", action="store_true")
     ap.add_argument("--project", default="AutoScope/parasites")
     ap.add_argument("--task-name", default="faster-rcnn")
@@ -212,7 +216,26 @@ def main():
     # named epoch001.pt upward and the eval picks sorted(...)[-1], so a shorter
     # run leaves the longer run's higher-numbered files behind and the eval
     # selects one of THOSE -- a model trained on different data.
-    if out.exists():
+    start_epoch = 1
+    if args.resume:
+        found = sorted(out.glob("epoch*.pt")) if out.exists() else []
+        if not found:
+            raise SystemExit(
+                f"--resume was asked for but {out} holds no epoch*.pt. "
+                "Drop --resume to start from scratch.")
+        ckpt = torch.load(found[-1], map_location=device)
+        model.load_state_dict(ckpt["model"])
+        if "optimiser" in ckpt:
+            optimiser.load_state_dict(ckpt["optimiser"])
+        if "schedule" in ckpt:
+            schedule.load_state_dict(ckpt["schedule"])
+        start_epoch = int(ckpt["epoch"]) + 1
+        print(f"resuming from {found[-1].name}, continuing at epoch {start_epoch}")
+        if start_epoch > args.epochs:
+            raise SystemExit(
+                f"{found[-1].name} already reached epoch {ckpt['epoch']} and "
+                f"--epochs is {args.epochs}. Nothing to do; raise --epochs.")
+    elif out.exists():
         stale = sorted(out.glob("epoch*.pt"))
         if stale:
             print(f"removing {len(stale)} checkpoints from a previous run in {out}")
@@ -232,7 +255,7 @@ def main():
     }, indent=2))
 
     history = []
-    for epoch in range(1, args.epochs + 1):
+    for epoch in range(start_epoch, args.epochs + 1):
         tr = run_epoch(model, train_dl, optimiser, device, scaler, epoch)
         va = val_loss(model, val_dl, device)
         schedule.step()
@@ -241,7 +264,13 @@ def main():
         if task is not None:
             task.get_logger().report_scalar("loss", "train", tr, epoch)
             task.get_logger().report_scalar("loss", "val", va, epoch)
-        torch.save({"model": model.state_dict(), "epoch": epoch, "args": vars(args)},
+        # Optimiser and schedule go in too: resuming with a fresh optimiser
+        # loses the momentum buffers and restarts the cosine schedule, which
+        # is a different training run wearing the same checkpoint's name.
+        torch.save({"model": model.state_dict(),
+                    "optimiser": optimiser.state_dict(),
+                    "schedule": schedule.state_dict(),
+                    "epoch": epoch, "args": vars(args)},
                    out / f"epoch{epoch:03d}.pt")
 
     (out / "history.json").write_text(json.dumps(history, indent=2))
