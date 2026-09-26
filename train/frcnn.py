@@ -24,6 +24,7 @@ from pathlib import Path
 
 import cv2 as cv
 import numpy as np
+import shutil
 import torch
 from torch.utils.data import DataLoader, Dataset
 
@@ -161,6 +162,9 @@ def main():
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--out", default="models/frcnn")
     ap.add_argument("--no-amp", action="store_true")
+    ap.add_argument("--mirror", default=None,
+                    help="copy each checkpoint here after the epoch that wrote "
+                         "it. Use mounted Drive on Colab; keep --out local.")
     ap.add_argument("--resume", action="store_true",
                     help="continue from the highest epoch*.pt in --out. Point "
                          "--out at mounted Drive on Colab so a session ending "
@@ -243,6 +247,13 @@ def main():
                 f.unlink()
     out.mkdir(parents=True, exist_ok=True)
 
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from yolo26 import check_writable        # shared probe, same failure mode
+    check_writable(out, "run dir")
+    mirror = Path(args.mirror) if args.mirror else None
+    if mirror:
+        check_writable(mirror, "mirror")
+
     # Stamp the run with what it trained on, so a checkpoint is self-describing
     # and cannot be confused with one trained on the smoke set.
     (out / "dataset.json").write_text(json.dumps({
@@ -272,6 +283,15 @@ def main():
                     "schedule": schedule.state_dict(),
                     "epoch": epoch, "args": vars(args)},
                    out / f"epoch{epoch:03d}.pt")
+        if mirror:
+            # Copy straight after writing, so a session that dies mid-epoch
+            # costs that epoch and nothing earlier.
+            try:
+                mirror.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(out / f"epoch{epoch:03d}.pt",
+                             mirror / f"epoch{epoch:03d}.pt")
+            except Exception as exc:
+                print(f"  mirror failed ({type(exc).__name__}: {exc}); continuing")
 
     (out / "history.json").write_text(json.dumps(history, indent=2))
     print(f"\ncheckpoints in {out}")
