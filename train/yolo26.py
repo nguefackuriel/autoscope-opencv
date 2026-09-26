@@ -96,7 +96,15 @@ def main():
     ap.add_argument("--imgsz", type=int, default=640,
                     help="must equal the export tile size, or the parasites "
                          "get rescaled and the tiling was pointless")
-    ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--workers", type=int, default=0,
+                    help="0 means one per CPU core, capped at 8. Colab VMs have "
+                         "2 cores, and asking for 8 workers there makes them "
+                         "fight over the same cores instead of feeding the GPU.")
+    ap.add_argument("--cache", default=None, choices=["ram", "disk"],
+                    help="cache decoded tiles. 'disk' writes .npy beside each "
+                         "tile and skips JPEG decode every epoch; 'ram' needs "
+                         "about 17 GB for 13.5k tiles at 640 px, so it is "
+                         "usually the wrong choice here.")
     ap.add_argument("--patience", type=int, default=25)
     ap.add_argument("--project", default="AutoScope/parasites")
     ap.add_argument("--task-name", default="yolo26")
@@ -116,6 +124,10 @@ def main():
     root = Path(args.data)
     if not root.is_absolute():
         root = Path(__file__).resolve().parents[1] / root
+    workers = args.workers or min(os.cpu_count() or 2, 8)
+    if args.workers == 0:
+        print(f"workers: {workers} (one per core, {os.cpu_count()} available)")
+
     manifest = json.loads((root / "manifest.json").read_text())
     print(f"split source: {manifest['split_source']}")
     print(f"train patients {manifest['train_patients']}, val {manifest['val_patients']}, "
@@ -195,7 +207,8 @@ def main():
             epochs=args.epochs,
             imgsz=args.imgsz,
             batch=args.batch,
-            workers=args.workers,
+            workers=workers,
+            cache=args.cache or False,
             patience=args.patience,
             project=str(project),
             name=args.task_name,
