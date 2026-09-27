@@ -21,3 +21,8 @@ models/frcnn/
 models/yolo26/
 eval/results/run_env.json
 eval/results/colab_env.json
+# Ultralytics downloads a nano model at training start for its AMP check, and
+# drops it in ./weights. Incidental, ~5 MB, and nothing depends on it being
+# committed.
+weights/
+*.pt
