@@ -25,6 +25,7 @@ somebody to point a training run at the directory.
 import argparse
 import json
 import random
+import shutil
 import sys
 from collections import Counter
 from pathlib import Path
@@ -70,6 +71,85 @@ def boxes_in_tile(all_boxes, ox, oy, tile, edge=1):
     return kept
 
 
+def _git_revision() -> str:
+    """The commit that produced an export, or a marker if it cannot be read."""
+    import subprocess
+    try:
+        repo = Path(__file__).resolve().parents[1]
+        rev = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=repo,
+                             capture_output=True, text=True, timeout=10)
+        if rev.returncode != 0:
+            return "unknown"
+        dirty = subprocess.run(["git", "status", "--porcelain"], cwd=repo,
+                               capture_output=True, text=True, timeout=10)
+        return rev.stdout.strip() + ("+dirty" if dirty.stdout.strip() else "")
+    except Exception:
+        return "unknown"
+
+
+def prepare_output(out: Path) -> None:
+    """Empty a previous export, or refuse if the directory is not one of ours.
+
+    Re-running without clearing is worse than untidy. Tile filenames are
+    deterministic, so old tiles survive, while annotations/instances_*.json and
+    manifest.json are overwritten with only the new run's contents. YOLO reads
+    the image directory and would train on old plus new; Faster R-CNN reads the
+    COCO json and would train on new alone. The two models would then be
+    trained on different data, which destroys the only thing that makes the
+    comparison mean anything.
+
+    Ours is recognised by ANY artefact this script writes, NOT by
+    manifest.json. The manifest is written last, so an export killed part way
+    through has no manifest -- which is exactly the case most likely to need
+    re-running, and refusing it would be backwards. Requiring images/ and
+    labels/ was the same mistake one level down: a run killed before its first
+    tile leaves only annotations/ or data.yaml, and then this refused a
+    directory the notebook had just announced it would clear, leaving no way
+    forward but a manual rm. A directory holding none of them is somebody's
+    data and we stop, because --out takes an arbitrary path and a typo should
+    not delete a directory.
+    """
+    if not out.exists():
+        return
+    entries = [p for p in out.iterdir() if p.name != ".gitignore"]
+    if not entries:
+        return
+
+    # Any artefact this script writes marks the directory as ours. Requiring
+    # images/ AND labels/ was too strict: a run killed before the first tile,
+    # or one already half cleaned up, leaves only annotations/ or data.yaml,
+    # and then this refused to touch a directory the notebook had just promised
+    # to clear. The two checks disagreed and the export dead-ended.
+    OURS = ("images", "labels", "annotations", "data.yaml", "manifest.json")
+    found = [n for n in OURS if (out / n).exists()]
+    if not found:
+        listing = ", ".join(sorted(p.name for p in entries)[:8]) or "(empty)"
+        raise SystemExit(
+            f"{out} exists and holds none of {', '.join(OURS)}, so it is not an\n"
+            f"export. Refusing to delete it. It contains: {listing}\n"
+            "Point --out somewhere else, or remove the directory yourself if it\n"
+            "really is disposable.")
+
+    n_img = sum(1 for _ in out.rglob("*.jpg"))
+    finished = (out / "manifest.json").exists()
+    state = "complete" if finished else "INTERRUPTED (no manifest.json)"
+    print(f"clearing a previous export in {out}: {n_img} tiles, {state} "
+          f"[found {', '.join(found)}]")
+    shutil.rmtree(out)
+
+
+def export_is_complete(out: Path) -> bool:
+    """Did a previous export finish?
+
+    manifest.json is written after the last tile, so its presence is the signal
+    that the run reached the end. A directory with tiles but no manifest is a
+    run that was killed, and its contents are a partial slice of the patients:
+    usable for nothing, because which patients made it in depends on where it
+    stopped.
+    """
+    return (out / "manifest.json").exists()
+
+
 def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
            uninfected_fields=0, clean_tiles=2, max_patients=0):
     root = splits.patient_root()
@@ -84,6 +164,8 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
         keep = set(train_ids[:max_patients]) | set(val_ids[:max(1, max_patients // 4)])
         wanted = {p: s for p, s in wanted.items() if p in keep}
         print(f"SMOKE TEST: {len(wanted)} patients, not the full fit set")
+
+    prepare_output(out)
 
     for sub in ("train", "val"):
         (out / "images" / sub).mkdir(parents=True, exist_ok=True)
@@ -280,6 +362,13 @@ def export(images_per_patient, tile, stride, out, seed, negative_ratio, min_fov,
         "images_per_patient": images_per_patient,
         "tile_px": tile,
         "stride_px": stride,
+        # Provenance. Without min_fov recorded, a finished export cannot be
+        # told apart from one made before the threshold was corrected, and the
+        # difference is two thirds of the field. The git revision pins the rest
+        # of the behaviour: an export is only reproducible if you know which
+        # code wrote it.
+        "min_fov": min_fov,
+        "git_revision": _git_revision(),
         "seed": seed,
         "annotated_parasites": annotated,
         "boxes_derived": derived,

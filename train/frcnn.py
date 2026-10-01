@@ -24,6 +24,7 @@ from pathlib import Path
 
 import cv2 as cv
 import numpy as np
+import shutil
 import torch
 from torch.utils.data import DataLoader, Dataset
 
@@ -162,6 +163,13 @@ def main():
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--out", default="models/frcnn")
     ap.add_argument("--no-amp", action="store_true")
+    ap.add_argument("--mirror", default=None,
+                    help="copy each checkpoint here after the epoch that wrote "
+                         "it. Use mounted Drive on Colab; keep --out local.")
+    ap.add_argument("--resume", action="store_true",
+                    help="continue from the highest epoch*.pt in --out. Point "
+                         "--out at mounted Drive on Colab so a session ending "
+                         "does not cost the run.")
     ap.add_argument("--no-clearml", action="store_true")
     ap.add_argument("--project", default="AutoScope/parasites")
     ap.add_argument("--task-name", default="faster-rcnn")
@@ -209,10 +217,57 @@ def main():
     out = Path(args.out)
     if not out.is_absolute():
         out = Path(__file__).resolve().parents[1] / out
+    # Stale checkpoints from a previous run are a silent trap. Checkpoints are
+    # named epoch001.pt upward and the eval picks sorted(...)[-1], so a shorter
+    # run leaves the longer run's higher-numbered files behind and the eval
+    # selects one of THOSE -- a model trained on different data.
+    start_epoch = 1
+    if args.resume:
+        found = sorted(out.glob("epoch*.pt")) if out.exists() else []
+        if not found:
+            raise SystemExit(
+                f"--resume was asked for but {out} holds no epoch*.pt. "
+                "Drop --resume to start from scratch.")
+        ckpt = torch.load(found[-1], map_location=device)
+        model.load_state_dict(ckpt["model"])
+        if "optimiser" in ckpt:
+            optimiser.load_state_dict(ckpt["optimiser"])
+        if "schedule" in ckpt:
+            schedule.load_state_dict(ckpt["schedule"])
+        start_epoch = int(ckpt["epoch"]) + 1
+        print(f"resuming from {found[-1].name}, continuing at epoch {start_epoch}")
+        if start_epoch > args.epochs:
+            raise SystemExit(
+                f"{found[-1].name} already reached epoch {ckpt['epoch']} and "
+                f"--epochs is {args.epochs}. Nothing to do; raise --epochs.")
+    elif out.exists():
+        stale = sorted(out.glob("epoch*.pt"))
+        if stale:
+            print(f"removing {len(stale)} checkpoints from a previous run in {out}")
+            for f in stale:
+                f.unlink()
     out.mkdir(parents=True, exist_ok=True)
 
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from yolo26 import check_writable        # shared probe, same failure mode
+    check_writable(out, "run dir")
+    mirror = Path(args.mirror) if args.mirror else None
+    if mirror:
+        check_writable(mirror, "mirror")
+
+    # Stamp the run with what it trained on, so a checkpoint is self-describing
+    # and cannot be confused with one trained on the smoke set.
+    (out / "dataset.json").write_text(json.dumps({
+        "data": str(root),
+        "tiles_train": manifest.get("counts", {}).get("tiles_train"),
+        "tiles_val": manifest.get("counts", {}).get("tiles_val"),
+        "images_per_patient": manifest.get("images_per_patient"),
+        "min_fov": manifest.get("min_fov"),
+        "export_git_revision": manifest.get("git_revision"),
+    }, indent=2))
+
     history = []
-    for epoch in range(1, args.epochs + 1):
+    for epoch in range(start_epoch, args.epochs + 1):
         tr = run_epoch(model, train_dl, optimiser, device, scaler, epoch)
         va = val_loss(model, val_dl, device)
         schedule.step()
@@ -221,8 +276,23 @@ def main():
         if task is not None:
             task.get_logger().report_scalar("loss", "train", tr, epoch)
             task.get_logger().report_scalar("loss", "val", va, epoch)
-        torch.save({"model": model.state_dict(), "epoch": epoch, "args": vars(args)},
+        # Optimiser and schedule go in too: resuming with a fresh optimiser
+        # loses the momentum buffers and restarts the cosine schedule, which
+        # is a different training run wearing the same checkpoint's name.
+        torch.save({"model": model.state_dict(),
+                    "optimiser": optimiser.state_dict(),
+                    "schedule": schedule.state_dict(),
+                    "epoch": epoch, "args": vars(args)},
                    out / f"epoch{epoch:03d}.pt")
+        if mirror:
+            # Copy straight after writing, so a session that dies mid-epoch
+            # costs that epoch and nothing earlier.
+            try:
+                mirror.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(out / f"epoch{epoch:03d}.pt",
+                             mirror / f"epoch{epoch:03d}.pt")
+            except Exception as exc:
+                print(f"  mirror failed ({type(exc).__name__}: {exc}); continuing")
 
     (out / "history.json").write_text(json.dumps(history, indent=2))
     print(f"\ncheckpoints in {out}")
