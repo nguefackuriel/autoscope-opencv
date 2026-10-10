@@ -133,6 +133,33 @@ not extrapolated. Expect it to land between 1.0× and 1.1×, and expect the
 `imgproc` ceiling to cap it further: the patch network through `cv.dnn` is 45%
 of a field, so at best half of any imgproc gain reaches the slide.
 
+## The whole pipeline on real fields, which is the number a laboratory buys
+
+`bench/field_profile.py`, twelve real NLM fields from twelve different held-out
+patients, shipped to the instance as a fixed bundle from S3 so every arm
+profiles the same images. Graviton4, 32 threads, KleidiCV on:
+
+| stage | seconds |
+|---|---|
+| `imread` | 0.057 |
+| `assess_field` | 0.055 |
+| prepare (disc + stain) | 0.024 |
+| white cells | 0.070 |
+| parasite candidates | 0.075 |
+| patches | 0.002 |
+| patch network (`cv.dnn`) | 0.050 |
+| **per field, end to end** | **0.222** |
+| **slides per hour** | **547.4** |
+
+For scale, the same twelve fields on the development laptop read 2.104 s per
+field and 57.8 slides per hour. A c8g.8xlarge is 9.5× quicker, which is what
+32 Graviton4 cores against eight laptop threads buys.
+
+**This revises the COOL ceiling upward.** On the laptop the patch network was
+45% of a field, so at most 55% of the work could be accelerated. On Graviton it
+is 0.050 s of 0.222 s — **22.5%** — leaving about 77% in `imgproc`. The ceiling
+is higher here than the September plan assumed in either direction.
+
 ## What a reader should take from this
 
 The defensible claim is narrow and it is this: *on Graviton4, the

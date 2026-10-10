@@ -32,6 +32,12 @@ RUNS="${3:-100}"
 # wheel on aarch64 already ships KleidiCV, so "COOL against the wheel" compares
 # two accelerated builds and measures almost nothing.
 KLEIDICV="${KLEIDICV:-on}"
+# PROFILE=1 runs bench/field_profile.py on real NLM fields instead of the
+# synthetic microbenchmark. The fields come from S3 as a fixed bundle, so
+# every arm profiles the same twelve images and the comparison is not a
+# comparison of samples.
+PROFILE="${PROFILE:-0}"
+BUNDLE="${BUNDLE:-s3://autoscope-bench-617847240757/bench-bundle.tar.gz}"
 REGION="${AWS_REGION:-us-east-1}"
 PROFILE_NAME="autoscope-bench-ssm"
 
@@ -85,6 +91,27 @@ echo "    online"
 # or a git clone: it is one file, the repository is private, and a token on a
 # throwaway instance is a token too many.
 SCRIPT_B64=$(base64 < "$here/cool_bench.py" | tr -d '\n')
+if [ "$PROFILE" = "1" ]; then
+  RUN_COOL="true   # the microbenchmark is skipped: this run profiles the pipeline"
+else
+  RUN_COOL="cd /opt/bench && PYTHONPATH=\"\${PYTHONPATH:-}\" python3.12 cool_bench.py --runs $RUNS --label '$LABEL'"
+fi
+
+if [ "$PROFILE" = "1" ]; then
+  RESULT="profile-$LABEL"
+  RUN_PROFILE=$(cat <<PROF
+python3.12 -m pip install --quiet 'scipy==1.16.3'
+aws s3 cp '$BUNDLE' /opt/bench/bundle.tar.gz
+tar -xzf /opt/bench/bundle.tar.gz -C /opt/bench
+cd /opt/bench && PYTHONPATH="/opt/bench/src:\${PYTHONPATH:-}" python3.12 bench/field_profile.py \
+    --fields 12 --label '$LABEL'
+cp /opt/bench/bench/results/profile-$LABEL.json /opt/bench/results/
+PROF
+)
+else
+  RESULT="$LABEL"
+  RUN_PROFILE=""
+fi
 
 if [ "$KLEIDICV" = "off" ]; then
   echo "    building OpenCV 5 from source with KleidiCV OFF (20-40 min)"
@@ -96,7 +123,10 @@ git clone --depth 1 --branch 5.0.0 https://github.com/opencv/opencv.git /opt/ope
 cmake -G Ninja -S /opt/opencv-src -B /opt/opencv-build \
   -DCMAKE_BUILD_TYPE=Release \
   -DWITH_KLEIDICV=OFF -DWITH_CAROTENE=OFF \
-  -DBUILD_LIST=core,imgproc,imgcodecs,python3 \
+  `# dnn is in the list because the pipeline profile loads the patch network` \
+  `# through cv.dnn. Leaving it out built fine and then failed at runtime with` \
+  `# "module 'cv2' has no attribute 'dnn'", half an hour in.` \
+  -DBUILD_LIST=core,imgproc,imgcodecs,dnn,python3 \
   -DBUILD_opencv_python3=ON \
   -DPYTHON3_EXECUTABLE=/usr/bin/python3.12 \
   -DBUILD_TESTS=OFF -DBUILD_PERF_TESTS=OFF -DBUILD_EXAMPLES=OFF \
@@ -130,9 +160,10 @@ dnf install -y python3.12 python3.12-pip mesa-libGL libxcb glib2 >/dev/null
 $INSTALL_OPENCV
 mkdir -p /opt/bench/results
 echo '$SCRIPT_B64' | base64 -d > /opt/bench/cool_bench.py
-cd /opt/bench && PYTHONPATH="${PYTHONPATH:-}" python3.12 cool_bench.py --runs $RUNS --label '$LABEL'
+$RUN_COOL
+$RUN_PROFILE
 echo '--- RESULT JSON BELOW ---'
-cat /opt/bench/results/$LABEL.json
+cat /opt/bench/results/$RESULT.json
 EOF
 )
 
@@ -185,15 +216,21 @@ fi
 
 mkdir -p "$here/results"
 printf '%s\n' "$OUT" | sed -n '/--- RESULT JSON BELOW ---/,$p' | tail -n +2 \
-  > "$here/results/$LABEL.json"
+  > "$here/results/$RESULT.json"
 
-echo "==> $LABEL"
-python3 - "$here/results/$LABEL.json" <<'PY'
+echo "==> $RESULT"
+python3 - "$here/results/$RESULT.json" <<'PY'
 import json, sys
 r = json.load(open(sys.argv[1]))
 print(f"    opencv {r['opencv_version']} on {r['machine']}, "
       f"kleidicv in build: {r['kleidicv_in_build']}")
-for name, v in r["results"].items():
-    print(f"    {name:<22}{v['median_ms']:>9.3f} ms   IQR {v['iqr_ms']:.3f}")
+if "results" in r:                       # cool_bench: per-function timings
+    for name, v in r["results"].items():
+        print(f"    {name:<22}{v['median_ms']:>9.3f} ms   IQR {v['iqr_ms']:.3f}")
+else:                                    # field_profile: the whole pipeline
+    for name, v in r["stages"].items():
+        print(f"    {name:<26}{v:>8.3f} s")
+    print(f"    {'per field':<26}{r['seconds_per_field_median']:>8.3f} s")
+    print(f"    {'slides/hour':<26}{r['slides_per_hour']:>8.1f}")
 PY
-echo "    written to bench/results/$LABEL.json"
+echo "    written to bench/results/$RESULT.json"
