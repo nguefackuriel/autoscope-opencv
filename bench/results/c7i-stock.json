@@ -1,0 +1,73 @@
+{
+  "label": "c7i-stock",
+  "recorded_utc": "2026-10-10T15:06:00+00:00",
+  "opencv_version": "5.0.0",
+  "machine": "x86_64",
+  "processor": "x86_64",
+  "python": "3.12.14",
+  "tile_px": 1024,
+  "kleidicv_in_build": false,
+  "cpu_baseline": "CPU/HW features:",
+  "results": {
+    "resize": {
+      "median_ms": 0.085,
+      "iqr_ms": 0.0034,
+      "min_ms": 0.0796,
+      "runs": 100
+    },
+    "medianBlur": {
+      "median_ms": 3.6528,
+      "iqr_ms": 0.0657,
+      "min_ms": 3.5456,
+      "runs": 100
+    },
+    "GaussianBlur": {
+      "median_ms": 0.7661,
+      "iqr_ms": 0.1585,
+      "min_ms": 0.5378,
+      "runs": 100
+    },
+    "adaptiveThreshold": {
+      "median_ms": 6.5498,
+      "iqr_ms": 0.1407,
+      "min_ms": 6.3793,
+      "runs": 100
+    },
+    "morphologyEx_open": {
+      "median_ms": 0.3408,
+      "iqr_ms": 0.0122,
+      "min_ms": 0.3364,
+      "runs": 100
+    },
+    "findContours": {
+      "median_ms": 25.9125,
+      "iqr_ms": 0.2064,
+      "min_ms": 25.6167,
+      "runs": 100
+    },
+    "calcHist": {
+      "median_ms": 0.3219,
+      "iqr_ms": 0.0105,
+      "min_ms": 0.318,
+      "runs": 100
+    },
+    "warpPerspective": {
+      "median_ms": 0.3077,
+      "iqr_ms": 0.0076,
+      "min_ms": 0.2982,
+      "runs": 100
+    },
+    "Laplacian": {
+      "median_ms": 1.022,
+      "iqr_ms": 0.0504,
+      "min_ms": 1.0139,
+      "runs": 100
+    },
+    "cvtColor_BGR2Lab": {
+      "median_ms": 0.5115,
+      "iqr_ms": 0.0182,
+      "min_ms": 0.4923,
+      "runs": 100
+    }
+  }
+}
