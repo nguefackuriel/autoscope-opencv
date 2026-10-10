@@ -160,14 +160,64 @@ field and 57.8 slides per hour. A c8g.8xlarge is 9.5× quicker, which is what
 is 0.050 s of 0.222 s — **22.5%** — leaving about 77% in `imgproc`. The ceiling
 is higher here than the September plan assumed in either direction.
 
+## The same pipeline with KleidiCV compiled out, and the result that decides it
+
+| stage | KleidiCV ON | OFF | |
+|---|---|---|---|
+| `imread` | 0.057 s | 0.061 s | 1.07× |
+| `assess_field` | 0.055 s | 0.078 s | 1.42× |
+| prepare (disc + stain) | 0.024 s | 0.017 s | 0.73× |
+| white cells | 0.070 s | 0.070 s | 0.99× |
+| parasite candidates | 0.075 s | 0.081 s | 1.07× |
+| patch network (`cv.dnn`) | 0.050 s | 0.044 s | 0.89× |
+| **per field** | **0.222 s** | **0.214 s** | **0.97×** |
+| **slides per hour** | 547.4 | **566.9** | |
+
+**On the whole pipeline, KleidiCV is 3.5% slower, not faster.** The
+microbenchmark promised 1.13×. The pipeline delivers 0.97×.
+
+That is the headline COOL finding of this project and it is negative. It
+should be reported as such.
+
+### Why the two disagree, and why that was predictable
+
+Everything needed to predict this was in the per-function table. The 1.13×
+rested on `medianBlur`, which this pipeline calls once; `GaussianBlur`, which
+it calls six times, is 32% slower accelerated. A benchmark that weights ten
+functions equally cannot stand in for a pipeline that does not.
+
+### Two limits on the strength of this claim
+
+**It is not purely a KleidiCV comparison.** The ON arm is the official pip
+wheel; the OFF arm is our own source build. They differ in compiler flags and
+module list as well as in KleidiCV, so some of the 3.5% belongs to the build
+and not to the library. Isolating it properly would mean building both arms
+from source with the flag as the only difference, which is another forty
+minutes of compile per arm.
+
+**n = 12 fields, one run, no repeats.** There is no variance estimate behind
+3.5%, and it is small enough that noise cannot be excluded. The defensible
+statement is not "KleidiCV is 3.5% slower"; it is **"on this pipeline KleidiCV
+shows no measurable speedup, and certainly not the 1.13× the microbenchmark
+suggests"**.
+
 ## What a reader should take from this
 
-The defensible claim is narrow and it is this: *on Graviton4, the
-KleidiCV-accelerated build is 1.13× faster than the same OpenCV 5.0.0 with the
-acceleration compiled out, on a ten-function microbenchmark — and that figure
-is carried almost entirely by `medianBlur`, which this pipeline calls once.*
+Two claims, one positive and one negative, and the negative one is the more
+useful.
 
-Anything broader is not supported yet.
+*On a ten-function microbenchmark on Graviton4, the KleidiCV build is 1.13×
+faster than the same OpenCV with the acceleration compiled out — carried almost
+entirely by `medianBlur`.*
+
+*On AutoScope's actual pipeline, reading real fields, that speedup does not
+appear. 547 slides an hour with it, 567 without.*
+
+The second is the one worth publishing. Function-level acceleration benchmarks
+do not predict pipeline throughput, and we can show exactly why on our own
+numbers: the accelerated function is called once, the deaccelerated one six
+times. Any team choosing hardware on the strength of a function table should
+see this.
 
 The claim that is **not** available from this data is *Graviton is faster than
 x86 for malaria microscopy*. On the contrary. If AutoScope runs on Graviton it
