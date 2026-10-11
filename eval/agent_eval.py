@@ -265,6 +265,9 @@ def main():
                          "an existing recording instead of failing on a miss")
     ap.add_argument("--bedrock-model", default=DEFAULT_MODEL)
     ap.add_argument("--bedrock-effort", default="low")
+    ap.add_argument("--max-patients", type=int, default=0,
+                    help="first N patients only. For costing a bedrock recording "
+                         "before committing to all 50, never for a published number.")
     args = ap.parse_args()
 
     args.policies = [p.strip() for p in args.policies.split(",") if p.strip()]
@@ -288,16 +291,16 @@ def main():
     if "bedrock" in args.policies:
         cache_path = OUT / args.bedrock_cache
         if args.record:
-            from anthropic import AnthropicBedrockMantle
-            live = AnthropicBedrockMantle(aws_region=os.environ.get("AWS_REGION_NAME", "us-east-1"))
+            from anthropic import AnthropicBedrock
+            live = AnthropicBedrock(aws_region=os.environ.get("AWS_REGION_NAME", "us-east-1"))
             cache = RecordingClient(live, cache_path)
             print(f"RECORDING to {cache_path.name}: this calls Bedrock and spends money.\n"
                   f"{len(cache._seen)} calls already on disk will be reused.\n")  # noqa: SLF001
         else:
             live = None
             if args.allow_live:
-                from anthropic import AnthropicBedrockMantle
-                live = AnthropicBedrockMantle(aws_region=os.environ.get("AWS_REGION_NAME", "us-east-1"))
+                from anthropic import AnthropicBedrock
+                live = AnthropicBedrock(aws_region=os.environ.get("AWS_REGION_NAME", "us-east-1"))
             try:
                 cache = ReplayClient(cache_path, allow_live=live)
             except FileNotFoundError as missing:
@@ -307,6 +310,9 @@ def main():
                 raise SystemExit(str(missing)) from None
             print(f"replaying {len(cache.rows)} recorded model calls from {cache_path.name}, "
                   f"no network and no cost\n")
+
+    if args.max_patients:
+        print(f"*** {args.max_patients} patients only: a costing probe, not a result ***\n")
 
     table = json.loads((OUT / args.fields).read_text())
     by_patient: dict[str, list[dict]] = {}
@@ -335,8 +341,11 @@ def main():
                                                  negative_wbc_min=args.negative_wbc),
             }
             for name in names:
+                chosen = sorted(by_patient.items())
+                if args.max_patients:
+                    chosen = chosen[:args.max_patients]
                 runs = [run_one(f, builders[name](), source, floor, args.negative_wbc)
-                        for _, f in sorted(by_patient.items())]
+                        for _, f in chosen]
                 out[f"{runs[0]['policy']}/{source}"] = {"summary": summarise(runs, refs, target),
                                                         "runs": runs}
         return out

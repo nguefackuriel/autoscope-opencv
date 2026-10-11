@@ -42,10 +42,12 @@ variable "bedrock_model_id" {
   type        = string
   # An INFERENCE PROFILE id, not a bare model id. Measured on this account on
   # 10 October: bare `anthropic.claude-*` ids return ValidationException, and
-  # the Opus tier plus Sonnet 5 return "not available for this account" either
-  # way. Sonnet 4.6 and Haiku 4.5 answer through the us. profile. Opus 5 is the
-  # model this agent was designed against; request access in the Bedrock
-  # console and change this line if it is granted.
+  # Sonnet 4.6 is the most capable Anthropic model this account can reach, and
+  # that was checked rather than assumed after the use-case form went in:
+  # Opus 5, Sonnet 5, Opus 4.8 and Opus 4.7 all answer "not available for this
+  # account" on both Converse and InvokeModel, and the message points at AWS
+  # Sales -- a commercial request, not a form. The agent was designed against
+  # Opus 5 and the report should say which model actually produced its numbers.
   default     = "us.anthropic.claude-sonnet-4-6"
 }
 
