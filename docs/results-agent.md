@@ -403,3 +403,72 @@ number that comes back is the number that was recorded.
 numbers are Sonnet 4.6, which is the most capable Anthropic model this AWS
 account can reach — Opus 5, Sonnet 5, Opus 4.8 and 4.7 all answer "not
 available for this account". A different model would need a new recording.
+
+## 11 October, second half: does the agent need a frontier model?
+
+`ConversePolicy` runs the identical loop and the identical five moves through
+Bedrock's Converse API, which is model-agnostic, so the only thing that
+differs between arms is the model. Three recorded, 3 005 calls, all replayable
+at zero cost.
+
+With the real counter:
+
+| arm | fields read | density error | escalated | model calls |
+|---|---|---|---|---|
+| who-200 | 524 | 26.5% | 7 | — |
+| rule-based | 491 | 27.2% | 36 | — |
+| decision | 450 | 27.4% | 25 | — |
+| **Claude Sonnet 4.6** | **393** | **26.8%** | 14 | 453 |
+| **GPT-OSS 120B** | **390** | 29.9% | 15 | 442 |
+| Llama 4 Maverick | 575 | 25.2% | **46** | 604 |
+
+### An open-weight model does the job
+
+**GPT-OSS 120B reads 390 fields against Sonnet's 393** — the same saving over
+the rule, from a model with open weights. It pays about three points of
+density error for it (29.9% against 26.8%), which is inside the band where the
+vision's own error lives but is not nothing.
+
+With expert counts, where the vision noise is removed, GPT-OSS is the better
+stopper of the two: 6.9% against Sonnet's 8.1%, on 410 fields against 395.
+
+So the answer to "does this need a frontier model" is **no**. The design is the
+agent, not the model. That matters for a tool meant for district hospitals:
+the arm that works is the one you can self-host.
+
+### A model that cannot be forced to pick a move is not an agent
+
+Llama 4 Maverick rejects `toolConfig.toolChoice.any` outright — Bedrock
+answers *"This model doesn't support the toolConfig.toolChoice.any field"*. So
+that arm runs unforced, and a turn that returns prose instead of a tool call is
+recorded as the model declining to commit.
+
+It declined on **46 of 50 slides**. It reads 575 fields, more than the WHO
+protocol's 524, because it mostly never decides to stop. Its 25.2% density
+error is the best in the table and means nothing: a policy that reads every
+field and hands the slide to a person has not made a decision, it has avoided
+one.
+
+That is the useful negative here, and it is a property of the API surface
+rather than of the model's intelligence: **forced tool choice is a hard
+requirement for this architecture**, and it should be checked before a model
+is considered at all. Our own first check missed it, because a `toolConfig`
+without `toolChoice` is accepted by every model.
+
+### What this costs
+
+| model | calls | input tokens |
+|---|---|---|
+| Claude Sonnet 4.6 | 900 | 779k |
+| GPT-OSS 120B | 901 | 407k |
+| Llama 4 Maverick | 1 204 | 742k |
+
+GPT-OSS uses roughly half the input tokens for the same work, because the
+Converse path sends no `strict` schema and the model is terser.
+
+### The models this account cannot reach
+
+Opus 5, Sonnet 5, Opus 4.8, Opus 4.7, GPT-6.1 Sol, GPT-6, GPT-5.6, Mistral
+Large, DeepSeek v3 and Qwen 3 all answer "not available for this account".
+Every number above comes from what was actually reachable, and the report
+should say so rather than imply a free choice of model.

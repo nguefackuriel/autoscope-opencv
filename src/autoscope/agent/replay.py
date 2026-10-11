@@ -68,18 +68,30 @@ def cache_key(model: str, effort: str, system: str, tools: Any, observation: Any
 
 
 def key_for_request(kwargs: dict[str, Any]) -> str:
-    """The key for one `messages.create(**kwargs)` call.
+    """The key for one call, in either of the two request shapes we send.
 
-    The observation is the user message the policy built; it is already a JSON
-    string, so it is hashed as sent rather than re-parsed and re-serialised.
+    The Anthropic SDK takes `model` / `system` / `tools` / `messages` with a
+    string content; Bedrock Converse takes `modelId` / `system` as a list of
+    blocks / `toolConfig` / content as a list of blocks. Both reduce to the
+    same four things that can change an answer, so one cache serves both and
+    an arm cannot accidentally replay another arm's recording: the model id is
+    part of the key.
     """
     messages = kwargs.get("messages") or [{}]
+    content = messages[0].get("content", "")
+    if isinstance(content, list):                       # Converse
+        content = next((b.get("text", "") for b in content if "text" in b), "")
+
+    system = kwargs.get("system", "")
+    if isinstance(system, list):                        # Converse
+        system = "".join(b.get("text", "") for b in system)
+
     return cache_key(
-        model=kwargs.get("model", ""),
+        model=kwargs.get("model") or kwargs.get("modelId", ""),
         effort=(kwargs.get("output_config") or {}).get("effort", ""),
-        system=kwargs.get("system", ""),
-        tools=kwargs.get("tools", []),
-        observation=messages[0].get("content", ""),
+        system=system,
+        tools=kwargs.get("tools") or kwargs.get("toolConfig", {}),
+        observation=content,
     )
 
 
@@ -133,6 +145,35 @@ class CacheMiss(RuntimeError):
     """Asked to replay a call that was never recorded."""
 
 
+def _converse_response(row: dict) -> dict:
+    """A recorded call rebuilt as a Converse reply, not an SDK object.
+
+    ConversePolicy reads plain dicts off boto3, so replay has to hand back the
+    same shape rather than the CachedResponse the Anthropic path wants.
+    """
+    move = row["move"]
+    return {
+        "output": {"message": {"content": [
+            {"toolUse": {"name": move["name"], "input": move["input"]}}]}},
+        "stopReason": row.get("stop_reason", "tool_use"),
+        "usage": {"inputTokens": row.get("usage", {}).get("input_tokens", 0),
+                  "outputTokens": row.get("usage", {}).get("output_tokens", 0)},
+    }
+
+
+def _row_from_converse(response: dict) -> dict:
+    blocks = response.get("output", {}).get("message", {}).get("content", [])
+    use = next((b["toolUse"] for b in blocks if "toolUse" in b), None)
+    usage = response.get("usage", {})
+    return {
+        "move": {"name": use["name"], "input": dict(use.get("input") or {})} if use else None,
+        "stop_reason": response.get("stopReason"),
+        "usage": {"input_tokens": usage.get("inputTokens", 0),
+                  "output_tokens": usage.get("outputTokens", 0),
+                  "cache_read_input_tokens": 0},
+    }
+
+
 class _Messages:
     """The `.messages` attribute both clients expose."""
 
@@ -159,6 +200,32 @@ class RecordingClient:
         self.served_from_cache = 0
         # Anything already on disk is reused rather than bought twice.
         self._seen: dict[str, dict] = _load(self.path)
+
+    def converse(self, **kwargs: Any) -> Any:
+        """Stands in for boto3's bedrock-runtime client, for ConversePolicy."""
+        key = key_for_request(kwargs)
+        if key in self._seen:
+            self.served_from_cache += 1
+            return _converse_response(self._seen[key])
+        response = self.inner.converse(**kwargs)
+        self._record(key, kwargs, _row_from_converse(response))
+        return response
+
+    def _record(self, key: str, kwargs: dict, row: dict) -> None:
+        content = (kwargs.get("messages") or [{}])[0].get("content", "")
+        if isinstance(content, list):
+            content = next((b.get("text", "") for b in content if "text" in b), "")
+        full = {
+            "key": key,
+            "observation": json.loads(content),
+            "model": kwargs.get("model") or kwargs.get("modelId"),
+            "recorded_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            **row,
+        }
+        with self.path.open("a") as handle:
+            handle.write(json.dumps(full, separators=(",", ":")) + "\n")
+        self._seen[key] = full
+        self.recorded += 1
 
     def _create(self, **kwargs: Any) -> Any:
         key = key_for_request(kwargs)
@@ -202,6 +269,27 @@ class ReplayClient:
         self.hits = 0
         self.live = 0
 
+    def converse(self, **kwargs: Any) -> Any:
+        """Stands in for boto3's bedrock-runtime client, for ConversePolicy."""
+        key = key_for_request(kwargs)
+        row = self.rows.get(key)
+        if row is not None:
+            self.hits += 1
+            return _converse_response(row)
+        if self.allow_live is None:
+            raise CacheMiss(self._miss(key))
+        self.live += 1
+        return self.allow_live.converse(**kwargs)
+
+    def _miss(self, key: str) -> str:
+        return (
+            f"no recorded call for key {key} in {self.path.name} "
+            f"({len(self.rows)} recorded). The prompt, the tool definitions or "
+            "the model have probably changed since the recording, which "
+            "invalidates every key on purpose. Re-record with --record, or "
+            "pass --allow-live to extend the cache."
+        )
+
     def _create(self, **kwargs: Any) -> Any:
         key = key_for_request(kwargs)
         row = self.rows.get(key)
@@ -210,13 +298,7 @@ class ReplayClient:
             return CachedResponse(row)
 
         if self.allow_live is None:
-            raise CacheMiss(
-                f"no recorded call for key {key} in {self.path.name} "
-                f"({len(self.rows)} recorded). The prompt or the tool definitions "
-                "have probably changed since the recording, which invalidates "
-                "every key on purpose. Re-record with --record, or pass "
-                "--allow-live to extend the cache."
-            )
+            raise CacheMiss(self._miss(key))
 
         self.live += 1
         return self.allow_live.messages.create(**kwargs)

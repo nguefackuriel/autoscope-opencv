@@ -50,6 +50,7 @@ _sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
 
 from autoscope.agent.loop import read_slide
 from autoscope.agent.bedrock import DEFAULT_MODEL, BedrockPolicy
+from autoscope.agent.converse import ConversePolicy
 from autoscope.agent.policy import DecisionRule, RuleBased, WhoProtocol
 from autoscope.agent.replay import RecordingClient, ReplayClient, cost_of
 from autoscope.agent.tools import Tools
@@ -129,6 +130,35 @@ def reference(fields: list[dict]) -> float:
     p = sum(f["truth_parasites"] for f in fields)
     w = sum(f["truth_wbc"] for f in fields)
     return p / w * WBC_PER_UL_DEFAULT if w else 0.0
+
+
+
+class _LiveClients:
+    """One object that answers both call shapes, built lazily.
+
+    The bedrock arm goes through the Anthropic SDK (`.messages.create`) and
+    the Converse arms through boto3 (`.converse`). A run can ask for both, so
+    rather than pick one and crash on the other, this holds each and
+    constructs it only if that arm actually runs.
+    """
+
+    def __init__(self, region: str) -> None:
+        self.region = region
+        self._anthropic = None
+        self._boto = None
+
+    @property
+    def messages(self):
+        if self._anthropic is None:
+            from anthropic import AnthropicBedrock
+            self._anthropic = AnthropicBedrock(aws_region=self.region)
+        return self._anthropic.messages
+
+    def converse(self, **kwargs):
+        if self._boto is None:
+            import boto3
+            self._boto = boto3.client("bedrock-runtime", region_name=self.region)
+        return self._boto.converse(**kwargs)
 
 
 def run_one(fields: list[dict], policy, source: str,
@@ -271,14 +301,16 @@ def main():
     args = ap.parse_args()
 
     args.policies = [p.strip() for p in args.policies.split(",") if p.strip()]
-    known = {"who", "rule", "decision", "bedrock"}
+    known = {"who", "rule", "decision", "bedrock", "gptoss", "llama"}
     unknown = set(args.policies) - known
     if unknown:
         ap.error(f"unknown policies {sorted(unknown)}; pick from {sorted(known)}")
 
     # Two guards against buying something nobody asked for.
-    if args.record and "bedrock" not in args.policies:
-        ap.error("--record only means anything with bedrock in --policies")
+    model_arms = {"bedrock", "gptoss", "llama"}
+    if args.record and not (model_arms & set(args.policies)):
+        ap.error(f"--record only means anything with a model arm in --policies "
+                 f"({', '.join(sorted(model_arms))})")
     if args.record and (args.sweep or args.sweep_settle):
         ap.error("--record with a sweep would pay for the same experiment nine times over, "
                  "and the sweep varies two knobs the agent never reads. Record once, then sweep "
@@ -288,19 +320,17 @@ def main():
         args.floor = json.loads(rule_path.read_text())["floor_per_ul"] if rule_path.exists() else FLOOR_PER_UL_DEFAULT
 
     cache = None
-    if "bedrock" in args.policies:
+    if model_arms & set(args.policies):
         cache_path = OUT / args.bedrock_cache
         if args.record:
-            from anthropic import AnthropicBedrock
-            live = AnthropicBedrock(aws_region=os.environ.get("AWS_REGION_NAME", "us-east-1"))
+            live = _LiveClients(os.environ.get("AWS_REGION_NAME", "us-east-1"))
             cache = RecordingClient(live, cache_path)
             print(f"RECORDING to {cache_path.name}: this calls Bedrock and spends money.\n"
                   f"{len(cache._seen)} calls already on disk will be reused.\n")  # noqa: SLF001
         else:
             live = None
             if args.allow_live:
-                from anthropic import AnthropicBedrock
-                live = AnthropicBedrock(aws_region=os.environ.get("AWS_REGION_NAME", "us-east-1"))
+                live = _LiveClients(os.environ.get("AWS_REGION_NAME", "us-east-1"))
             try:
                 cache = ReplayClient(cache_path, allow_live=live)
             except FileNotFoundError as missing:
@@ -335,6 +365,17 @@ def main():
                 "rule": lambda: RuleBased(target, min_fields=min_fields),
                 "decision": lambda: DecisionRule(floor, args.negative_wbc, target,
                                                  min_fields=min_fields, settle_ci_width=settle),
+                # Any Bedrock model through Converse. The arm is named after
+                # the model, so `--policies gptoss,llama` gives two arms that
+                # cannot collide and cannot replay each other's recording.
+                "gptoss": lambda: ConversePolicy(model="openai.gpt-oss-120b-1:0",
+                                                 client=cache, floor_per_ul=floor,
+                                                 negative_wbc_min=args.negative_wbc),
+                # Unforced: this model rejects toolConfig.toolChoice.any.
+                "llama": lambda: ConversePolicy(model="us.meta.llama4-maverick-17b-instruct-v1:0",
+                                                client=cache, floor_per_ul=floor,
+                                                negative_wbc_min=args.negative_wbc,
+                                                force_tool=False),
                 "bedrock": lambda: BedrockPolicy(client=cache, model=args.bedrock_model,
                                                  effort=args.bedrock_effort,
                                                  floor_per_ul=floor,
@@ -362,7 +403,7 @@ def main():
         # leaving it in would mean nine agent runs — and the two knobs being
         # swept, target error bar and minimum fields, are read by the rule
         # policies and not by the model.
-        swept = tuple(n for n in args.policies if n != "bedrock")
+        swept = tuple(n for n in args.policies if n not in model_arms)
         if not swept:
             ap.error("nothing to sweep: the sweep varies knobs only the rule policies read")
         for target in (0.15, 0.20, 0.30):
