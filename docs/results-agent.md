@@ -329,3 +329,77 @@ the recorded floor and say which.
 claim this artefact supports is "this recorded session, which anyone can replay
 exactly, reads N fields", not "any live run reads N fields". Sampling variance
 across live runs is unmeasured and this document does not imply otherwise.
+
+## 11 October: the agent measured against the rule, on all fifty patients
+
+The comparison this project has owed since the proposal. Claude Sonnet 4.6 on
+Bedrock, one call per loop step, 900 calls recorded to
+`eval/results/agent_bedrock_calls.jsonl` and replayable at zero cost — the
+replay below served 906 calls from disk and made none over the network.
+
+With the real counter, which is what a user would get:
+
+| arm | fields read | mean abs. density error | escalated | band settled |
+|---|---|---|---|---|
+| who-200 | 524 | 26.5% | 7 | 39 |
+| rule-based | 491 | 27.2% | 36 | 39 |
+| decision | 450 | 27.4% | 25 | 40 |
+| **bedrock** | **393** | **26.8%** | **14** | 39 |
+
+**The agent reads 393 fields where the decision rule reads 450 and the WHO
+protocol reads 524 — 13% fewer than the rule, 25% fewer than the protocol — and
+the density error is the same.** 26.8% against 26.5% and 27.4%: those three are
+within noise of each other, and the error is the vision's, not the policy's.
+
+It also escalates less: 14 slides to a person against the rule's 25 and
+rule-based's 36.
+
+So the answer to the question the plan posed in September — *if the model
+cannot beat the rule, the report says so* — is that it does beat it, on the
+axis the proposal claimed: fewer fields at the same answer. That is the
+saving, and it is measured rather than asserted.
+
+### The agent's own verdict agrees with the counts, 36 times out of 36
+
+The model's `stop` tool reports what it thinks the slide is. That is never what
+the results table prints — the call is derived by `density.decide()` from the
+counts, so every arm is scored by the same function. But the two can be
+compared, and on the 36 slides where the agent gave a verdict it matched the
+derived call every time.
+
+That is worth stating precisely: it does not mean the model is a good
+diagnostician. It means the model's self-report is consistent with the
+arithmetic it was shown, which is the most this design lets it be responsible
+for.
+
+### Where it is worse, and this is the more interesting half
+
+| arm | fields | mean abs. density error |
+|---|---|---|
+| decision / **expert counts** | 440 | **4.7%** |
+| bedrock / **expert counts** | 395 | **8.1%** |
+
+Given perfect counts, the agent stops too early: 8.1% error against the rule's
+4.7%. With the real counter that penalty vanishes, because the vision's error
+(around 27%) swamps it.
+
+The honest reading is that **the agent's earlier stopping is free only because
+our detector is not good enough for it to cost anything.** If the vision
+improved to the point where sampling error mattered, this arm would need
+re-tuning. The report should say that rather than quote 393 fields as a pure
+win.
+
+### Reproducing it
+
+```
+python eval/agent_eval.py --policies who,rule,decision,bedrock
+```
+
+No AWS account, no `anthropic` package, no cost. The recording is in the
+repository and a cache miss is an error rather than a silent live call, so a
+number that comes back is the number that was recorded.
+
+**Model caveat.** The agent was designed against Claude Opus 5 and these
+numbers are Sonnet 4.6, which is the most capable Anthropic model this AWS
+account can reach — Opus 5, Sonnet 5, Opus 4.8 and 4.7 all answer "not
+available for this account". A different model would need a new recording.
