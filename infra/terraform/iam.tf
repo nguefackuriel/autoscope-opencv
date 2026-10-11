@@ -164,10 +164,15 @@ data "aws_iam_policy_document" "agent" {
     # Read, and write the decision. Not the count: the count comes from the
     # pipeline job. The model does not get to write what it concluded into the
     # field the report reads.
+    # UpdateItem, not PutItem. The handler merges its decision into the row
+    # the Batch job already wrote, because a Put would replace the observation
+    # the decision was made on -- the one thing the row exists to preserve.
+    # The policy said PutItem and the handler says update_item, so the agent
+    # reached Bedrock, got its answer, and then could not record it.
     actions = [
       "dynamodb:GetItem",
       "dynamodb:Query",
-      "dynamodb:PutItem",
+      "dynamodb:UpdateItem",
     ]
     resources = [
       aws_dynamodb_table.trace.arn,
