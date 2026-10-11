@@ -171,6 +171,11 @@ resource "aws_batch_job_definition" "read_field" {
       { name = "AUTOSCOPE_RESULTS_BUCKET", value = aws_s3_bucket.results.id },
       { name = "AUTOSCOPE_TRACE_TABLE", value = aws_dynamodb_table.trace.name },
       { name = "AUTOSCOPE_SESSIONS_TABLE", value = aws_dynamodb_table.sessions.name },
+      # The package is pip-installed in the image, so the repo-relative model
+      # path resolves inside site-packages and the first job died looking for
+      # /usr/local/lib/python3.12/models/parasite_cnn.onnx. The Dockerfile puts
+      # them at /app/models.
+      { name = "AUTOSCOPE_MODELS", value = "/app/models" },
       { name = "OPENCV_LOG_LEVEL", value = "ERROR" },
     ]
 
