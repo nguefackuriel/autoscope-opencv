@@ -127,11 +127,35 @@ data "aws_iam_policy_document" "agent" {
       "bedrock:InvokeModel",
       "bedrock:InvokeModelWithResponseStream",
     ]
-    # Both spellings: an inference profile is a different ARN from the model.
+    # The foundation-model ARN is region-WILDCARD on purpose. A `us.` inference
+    # profile is cross-region: it routes the call to whichever of us-east-1,
+    # us-east-2 or us-west-2 has capacity, and the authorisation is checked
+    # against the region it chose. Pinning this to var.region produced a 403
+    # naming us-east-2 for a call made from us-east-1, which reads like a
+    # configuration error somewhere else entirely.
+    #
+    # The inference-profile ARN stays pinned: that resource really does live in
+    # this region and is account-scoped.
     resources = [
-      "arn:aws:bedrock:${var.region}::foundation-model/*",
+      "arn:aws:bedrock:*::foundation-model/*",
       "arn:aws:bedrock:${var.region}:${local.account_id}:inference-profile/*",
     ]
+  }
+
+  # The Mantle endpoint is a DIFFERENT SERVICE NAMESPACE from classic Bedrock.
+  # AnthropicBedrockMantle, which is the client the SDK recommends and the one
+  # agent/bedrock.py uses, calls bedrock-mantle:CreateInference against a
+  # project ARN -- not bedrock:InvokeModel against a model ARN. Granting only
+  # the latter gets a 403 that names an action nothing in the stack mentions,
+  # which is how the second end-to-end slide failed.
+  statement {
+    sid    = "AskTheModelThroughMantle"
+    effect = "Allow"
+    actions = [
+      "bedrock-mantle:CreateInference",
+      "bedrock-mantle:GetInference",
+    ]
+    resources = ["arn:aws:bedrock-mantle:${var.region}:${local.account_id}:project/*"]
   }
 
   statement {

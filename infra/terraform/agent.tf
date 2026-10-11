@@ -51,9 +51,15 @@ resource "aws_lambda_function" "agent" {
 # dying on a missing file, and the precondition below is what tells you the
 # build step was skipped — in a sentence, at plan time, rather than as an
 # ImportError in CloudWatch an hour later.
+# source_dir is layers/, NOT layers/python/. A Lambda layer is unpacked at
+# /opt, and the runtime looks for packages in /opt/python, so `python/` has to
+# be a directory INSIDE the zip. Pointing at layers/python put anthropic/ at
+# the zip root, the layer attached without complaint, and the agent failed at
+# runtime with "No module named 'anthropic'" on the first real slide.
 data "archive_file" "anthropic_layer" {
   type        = "zip"
-  source_dir  = "${path.module}/../lambda/layers/python"
+  source_dir  = "${path.module}/../lambda/layers"
+  excludes    = ["anthropic.zip"]
   output_path = "${path.module}/.build/anthropic-layer.zip"
 }
 
