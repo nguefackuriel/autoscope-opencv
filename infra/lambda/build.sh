@@ -26,7 +26,7 @@ mkdir -p "$layer/python"
 # --platform/--only-binary is what makes this an arm64 layer built from an x86
 # laptop. Without it pip silently builds for the host and the Lambda dies on
 # import with an ELF error that says nothing useful.
-pip install \
+python3 -m pip install \
   --target "$layer/python" \
   --platform manylinux2014_aarch64 \
   --implementation cp \

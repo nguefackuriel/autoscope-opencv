@@ -43,7 +43,7 @@ from autoscope.quality import FOCUS_MIN, FieldQuality
 
 # Bedrock model ids carry an `anthropic.` prefix. Confirm what the account
 # offers before deploying: aws bedrock list-foundation-models --by-provider anthropic
-DEFAULT_MODEL = os.environ.get("BEDROCK_MODEL_ID", "anthropic.claude-opus-5")
+DEFAULT_MODEL = os.environ.get("BEDROCK_MODEL_ID", "us.anthropic.claude-sonnet-4-6")
 DEFAULT_REGION = os.environ.get("AWS_REGION_NAME", "us-east-1")
 
 

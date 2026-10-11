@@ -16,9 +16,14 @@ variable "alert_email" {
 }
 
 variable "monthly_budget_usd" {
-  description = "Total monthly cost budget. The grant plus free tier is about 250-300 USD for the whole build."
+  description = <<-EOT
+    Total monthly cost budget. Set to 100 to match the budget created by hand
+    in the console on 10 October, which Terraform then imported rather than
+    duplicated: two budgets with the same name is an error, and two with
+    different names is a guardrail nobody reads.
+  EOT
   type        = number
-  default     = 150
+  default     = 100
 }
 
 variable "bedrock_budget_usd" {
@@ -35,7 +40,13 @@ variable "bedrock_model_id" {
         --query 'modelSummaries[].modelId' --output table
   EOT
   type        = string
-  default     = "anthropic.claude-opus-5"
+  # An INFERENCE PROFILE id, not a bare model id. Measured on this account on
+  # 10 October: bare `anthropic.claude-*` ids return ValidationException, and
+  # the Opus tier plus Sonnet 5 return "not available for this account" either
+  # way. Sonnet 4.6 and Haiku 4.5 answer through the us. profile. Opus 5 is the
+  # model this agent was designed against; request access in the Bedrock
+  # console and change this line if it is granted.
+  default     = "us.anthropic.claude-sonnet-4-6"
 }
 
 variable "cool_ami_id" {

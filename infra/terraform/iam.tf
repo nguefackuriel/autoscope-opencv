@@ -241,6 +241,27 @@ data "aws_iam_policy_document" "states" {
     resources = ["*"]
   }
 
+  # Vended logs. Step Functions does not write to the log group directly: it
+  # sets up a log DELIVERY, and that needs these actions on "*" rather than on
+  # the group's ARN. Without them CreateStateMachine fails with "The state
+  # machine IAM Role is not authorized to access the Log Destination", which
+  # names the role and not the missing actions.
+  statement {
+    sid    = "VendedLogs"
+    effect = "Allow"
+    actions = [
+      "logs:CreateLogDelivery",
+      "logs:GetLogDelivery",
+      "logs:UpdateLogDelivery",
+      "logs:DeleteLogDelivery",
+      "logs:ListLogDeliveries",
+      "logs:PutResourcePolicy",
+      "logs:DescribeResourcePolicies",
+      "logs:DescribeLogGroups",
+    ]
+    resources = ["*"]
+  }
+
   # Batch's .sync integration needs these to get told when a job ends.
   statement {
     sid    = "WaitForBatch"
