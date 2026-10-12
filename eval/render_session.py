@@ -157,27 +157,49 @@ def frames(session: str, steps: list[dict], scorer) -> list[np.ndarray]:
     return out
 
 
-def main() -> None:
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--session", default="TF101_233")
-    ap.add_argument("--arm", default="bedrock/found",
-                    help="which arm's run to draw, from agent_eval.json")
-    ap.add_argument("--out", default=str(ROOT / "docs" / "figures" / "session"))
-    ap.add_argument("--gif", action="store_true", help="also write an animated gif")
-    ap.add_argument("--seconds", type=float, default=2.2, help="per frame, in the gif")
-    args = ap.parse_args()
+def _sorted_fields(session: str) -> list[str]:
+    """The capture files in the order the uploader numbered them.
 
-    runs = json.loads((RESULTS / "agent_eval.json").read_text())["runs"][args.arm]
-    run = next((r for r in runs if r["patient"] == args.session), None)
+    `infra/site/add_patient.sh` uploads `sorted(*.jpg)` as field-0000 upward, and
+    the live trace refers to a field only by that index. Sorting the same way
+    here is what makes `observation.field.index` point at a real file.
+    """
+    return sorted(p.name for p in (RAW / session).glob("*.jpg"))
+
+
+def _steps_from_api(api: str, session: str) -> list[dict]:
+    """The reading AWS actually did, with the moves and reasons the model gave."""
+    import urllib.request
+
+    url = f"{api.rstrip('/')}/sessions/{session}/trace"
+    with urllib.request.urlopen(url, timeout=30) as r:
+        trace = json.loads(r.read())
+    names = _sorted_fields(session)
+    steps = []
+    for raw in trace.get("steps", []):
+        obs = raw.get("observation")
+        obs = json.loads(obs) if isinstance(obs, str) else (obs or {})
+        move = raw.get("move")
+        move = json.loads(move) if isinstance(move, str) else (move or {})
+        idx = (obs.get("field") or {}).get("index")
+        if idx is None or idx >= len(names):
+            continue
+        steps.append({"image": names[idx], "counted": True,
+                      "observation": obs, "move": move})
+    if not steps:
+        raise SystemExit(f"{url} returned no renderable steps")
+    return steps
+
+
+def _steps_from_arm(session: str, arm: str) -> list[dict]:
+    """The offline reading, rebuilt from the cached field table."""
+    runs = json.loads((RESULTS / "agent_eval.json").read_text())["runs"][arm]
+    run = next((r for r in runs if r["patient"] == session), None)
     if run is None:
-        raise SystemExit(f"{args.session} is not in arm {args.arm}")
+        raise SystemExit(f"{session} is not in arm {arm}")
 
-    # The per-field rows live in the cached field table; agent_eval's run dict
-    # carries the totals. Rebuild the steps from the table so the images and
-    # the counts come from the same place the numbers did.
     table = json.loads((RESULTS / "agent_fields.json").read_text())
-    rows = [r for r in table["rows"] if r["patient"] == args.session][:run["fields_read"]]
+    rows = [r for r in table["rows"] if r["patient"] == session][:run["fields_read"]]
 
     parasites = wbc = 0
     steps = []
@@ -193,8 +215,34 @@ def main() -> None:
         })
     if steps:
         steps[-1]["move"] = {"action": "stop", "reason": run["stopped_because"]}
+    return steps
 
-    out = Path(args.out)
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--session", default="TF101_233")
+    ap.add_argument("--arm", default="bedrock/found",
+                    help="which arm's run to draw, from agent_eval.json")
+    ap.add_argument("--from-api", metavar="URL",
+                    help="render the session AWS actually read, pulled from "
+                         "<URL>/sessions/<id>/trace, instead of the offline arm. "
+                         "This is what the demo page should show: the page prints "
+                         "the live trace in its log, so frames built from the "
+                         "offline arm can disagree with the table beside them. "
+                         "They did: TF101_233 reads 12 fields offline and 8 on AWS.")
+    ap.add_argument("--out", default=None,
+                    help="default: docs/figures/session/<session>")
+    ap.add_argument("--gif", action="store_true", help="also write an animated gif")
+    ap.add_argument("--seconds", type=float, default=2.2, help="per frame, in the gif")
+    args = ap.parse_args()
+
+    if args.from_api:
+        steps = _steps_from_api(args.from_api, args.session)
+    else:
+        steps = _steps_from_arm(args.session, args.arm)
+
+    out = Path(args.out) if args.out else ROOT / "docs" / "figures" / "session" / args.session
     out.mkdir(parents=True, exist_ok=True)
     made = frames(args.session, steps, PatchScorer.load())
     for i, f in enumerate(made):

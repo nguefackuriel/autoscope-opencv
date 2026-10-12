@@ -243,11 +243,12 @@
       </div>
       <div>
         <p class="note" style="margin-top:0">
-          Twelve fields of patient TF101_233, in the order the agent read them.
+          <span id="viewercap">The fields of the loaded session, in the order the
+          agent read them.</span>
           Green rings are parasites, blue are white cells. Both are
           <code>count_field</code>'s own detections at the shipped threshold,
-          drawn on the real capture. The running estimate and the agent's move
-          are printed on each frame.
+          drawn on the real capture. The running estimate and the move the agent
+          chose, with the reason it gave, are printed on each frame.
         </p>
         <p class="note">
           There is no slide being panned across here, and that is deliberate:
@@ -315,6 +316,9 @@ async function loadSession() {
     const response = await fetch(`${api}/sessions/${encodeURIComponent(id)}/trace`);
     if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
     render(await response.json());
+    // The pictures follow the numbers. Typing an id into the box has to move the
+    // viewer exactly as a ?session= link does, or the two paths disagree.
+    useFieldSet(id);
     setStatus("");
   } catch (error) {
     setStatus(`Could not reach the API: ${error.message}`, true);
@@ -479,17 +483,59 @@ const esc = s => String(s).replace(/[&<>"']/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 // ---- the field viewer -------------------------------------------------
-const FIELDS = 12;
+// The frames belong to a session. The first version hard-coded one patient's
+// twelve PNGs, so loading another slide changed every number on the page and
+// left the pictures showing somebody else's blood, which is worse than showing
+// nothing. `fields/manifest.json` says which sessions have frames and how many,
+// and deploy.sh writes it from whatever was rendered.
+const DEFAULT_SET = "TF101_233";
+let fieldSets = {};
+let fieldSet = DEFAULT_SET;
+let FIELDS = 0;
 let frame = 0, timer = null;
 
 function showField(i) {
+  if (!FIELDS) return;
   frame = ((i % FIELDS) + FIELDS) % FIELDS;
-  $("field").src = `fields/field-${String(frame).padStart(2, "0")}.png`;
+  $("field").src = `fields/${fieldSet}/field-${String(frame).padStart(2, "0")}.png`;
   $("scrub").value = frame;
   $("fieldno").textContent = `${frame + 1} of ${FIELDS}`;
   for (const b of $("thumbs").children) {
     b.setAttribute("aria-current", String(Number(b.dataset.i) === frame));
   }
+}
+
+function buildThumbs() {
+  const box = $("thumbs");
+  box.innerHTML = "";
+  for (let i = 0; i < FIELDS; i++) {
+    const b = document.createElement("button");
+    b.textContent = String(i + 1);
+    b.dataset.i = i;
+    b.addEventListener("click", () => { stop(); showField(i); });
+    box.appendChild(b);
+  }
+  $("scrub").max = Math.max(FIELDS - 1, 0);
+}
+
+function useFieldSet(session) {
+  stop();
+  const card = $("field").closest(".card");
+  const n = fieldSets[session];
+  if (!n) {
+    // Say so rather than show the wrong patient. A session read through the API
+    // that nobody has rendered frames for is a normal thing to hit.
+    card.hidden = true;
+    FIELDS = 0;
+    return;
+  }
+  card.hidden = false;
+  fieldSet = session;
+  FIELDS = n;
+  $("viewercap").textContent =
+    `The ${n} field${n === 1 ? "" : "s"} of ${session}, in the order the agent read them.`;
+  buildThumbs();
+  showField(0);
 }
 
 function stop() {
@@ -508,23 +554,24 @@ $("play").addEventListener("click", () => {
 });
 $("scrub").addEventListener("input", e => { stop(); showField(Number(e.target.value)); });
 
-for (let i = 0; i < FIELDS; i++) {
-  const b = document.createElement("button");
-  b.textContent = String(i + 1);
-  b.dataset.i = i;
-  b.addEventListener("click", () => { stop(); showField(i); });
-  $("thumbs").appendChild(b);
-}
-showField(0);
-
 $("load").addEventListener("click", loadSession);
 $("demo").addEventListener("click", loadSample);
 
 // A session id in the URL makes a result linkable, which is how a judge gets
-// sent one.
+// sent one. Read before the manifest fetch below, which needs it.
 const params = new URLSearchParams(location.search);
 if (params.get("api")) $("api").value = params.get("api");
 if (params.get("session")) $("session").value = params.get("session");
+
+fetch("fields/manifest.json")
+  .then(r => r.ok ? r.json() : {})
+  .catch(() => ({}))
+  .then(m => {
+    fieldSets = m || {};
+    const wanted = params.get("session");
+    useFieldSet(fieldSets[wanted] ? wanted : DEFAULT_SET);
+  });
+
 if (params.get("api") && params.get("session")) loadSession();
 </script>
 </body>

@@ -30,6 +30,14 @@ needs_data = pytest.mark.skipif(not RAW.exists(), reason="needs the NLM data, ru
 #   parasite_tiles     image yields no positives and its clean regions are
 #                      still valid negatives; neither script reports a measured
 #                      number, and no held-out figure depends on them.
+#   render_session     draws a reading that already happened; it reports no
+#                      number. It must enumerate in the order
+#                      infra/site/add_patient.sh uploaded, which is every .jpg
+#                      sorted, because the live trace names a field only by its
+#                      index into that list. Routing it through
+#                      annotated_images() would silently point every frame at
+#                      the wrong capture. Pinned by
+#                      test_render_session_orders_fields_the_way_the_uploader_did.
 #   tanzania_eval      different datasets entirely, with their own layouts and
 #   vivax_eval         their own annotation conventions. splits.py models the
 #                      NLM infected set and nothing else, so routing these
@@ -42,6 +50,7 @@ needs_data = pytest.mark.skipif(not RAW.exists(), reason="needs the NLM data, ru
 # Add to this list only with a reason, and only for a script that measures
 # nothing or measures a set splits.py does not describe.
 ENUMERATE_THEIR_OWN = {
+    "render_session.py",
     "splits.py",
     "parasite_patches.py",
     "parasite_tiles.py",
@@ -164,3 +173,27 @@ def test_image_rng_isolates_a_changed_population():
     # The trimmed patient MAY move (it need not, if the removed image was not
     # going to be drawn). Nothing else may move at all -- that is the property.
     assert moved <= {"TF5_X"}, f"unrelated patients moved: {sorted(moved - {'TF5_X'})}"
+
+
+@needs_data
+def test_render_session_orders_fields_the_way_the_uploader_did():
+    """The frames and the live trace have to agree on what field 3 is.
+
+    `infra/site/add_patient.sh` uploads `sorted(*.jpg)` as field-0000 upward, and
+    a trace step names its field only by that index. So the renderer has to
+    enumerate the same way: every jpg, sorted, not the annotated subset. Swapping
+    in `splits.annotated_images()` would look tidier, break nothing visibly, and
+    put a different patient's capture under every caption.
+    """
+    sys.path.insert(0, str(ROOT / "eval"))
+    import render_session
+
+    for name in splits.all_patients()[:5]:
+        got = render_session._sorted_fields(name)
+        want = sorted(p.name for p in (RAW / name).glob("*.jpg"))
+        assert got == want, name
+        annotated = sorted(p.name for p in splits.annotated_images(name))
+        if annotated != want:
+            assert got != annotated, (
+                f"{name}: the renderer is using the annotated subset, so its "
+                "field indices no longer match what add_patient.sh uploaded")
