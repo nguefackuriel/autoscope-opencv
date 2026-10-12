@@ -243,8 +243,10 @@
   so a judge could not re-run it and neither could we without paying again. Every
   call is therefore recorded to a JSONL cache keyed on the model, the effort
   setting, the system prompt, the tool definitions and the observation.
-  <strong>$agent_calls_cached</strong> of the calls in the shipped result replayed
-  from that cache; <strong>$agent_calls_live</strong> were live. Editing the prompt
+  <strong>$cache_calls calls across $cache_models models</strong> ship with the
+  repository in that cache; of the lookups in the published run,
+  $agent_calls_cached were served from it and $agent_calls_live were live.
+  Editing the prompt
   or the move definitions changes the key, so a changed prompt cannot silently
   replay decisions it never made, and a cache miss during replay <em>raises</em>
   rather than falling through to a live call. The comparison re-runs with no AWS

@@ -134,6 +134,25 @@ def figures() -> dict:
         "agent_calls_live": _dig(agent, "bedrock", "live_calls", src="agent_eval.json"),
     }
 
+    # The durable figure is the size of the replay cache, not one run's
+    # cache-hit split: the split changes every time a prompt edit invalidates a
+    # key, while the cache is what actually ships and what a judge replays.
+    # Counted from the file rather than copied out of a summary, because the
+    # file is the artefact being described.
+    cache = EVAL / "agent_bedrock_calls.jsonl"
+    if not cache.exists():
+        raise Missing("eval/results/agent_bedrock_calls.jsonl is missing — "
+                      "the agent comparison cannot be replayed without it")
+    models = set()
+    n = 0
+    for line in cache.read_text().splitlines():
+        if not line.strip():
+            continue
+        n += 1
+        models.add(json.loads(line).get("model", "?"))
+    f["cache_calls"] = n
+    f["cache_models"] = len(models)
+
     # The agent table. `found` is the shipped counter; `truth` is the oracle arm
     # and is reported separately because it is the ceiling, not the product.
     for arm in ("who-200", "rule-based", "decision", "bedrock",
