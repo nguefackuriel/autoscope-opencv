@@ -120,13 +120,21 @@ Do not skip this. It is the most persuasive forty seconds in the video.
 > gets right from the ones it gets wrong, so there is no automatic warning we
 > can give. A slide from a vivax region needs a human reader.
 >
-> COOL. On a function benchmark the accelerated build is 1.13× faster. On our
-> actual pipeline it is not: 547 slides an hour with the acceleration, 567
-> without. The speedup rests on one function we call once, while the function
-> we call six times is slower with it. Function benchmarks do not predict
-> pipeline throughput, and we can show why on our own numbers.
+> COOL. On a ten-function benchmark the Marketplace image is 1.59× faster than
+> the wheel we ship, on the same machine. On our actual pipeline it is 3.8×
+> *slower* — 143 slides an hour against 547. Six of the seven stages are
+> faster; one is nine and a half times slower and swallows the rest. So we
+> forced both builds down to a single thread, and they agreed to within six
+> percent on every call. The kernels are the same speed. The stock build takes
+> fifteen to twenty-five times back off the thirty-two cores, and the COOL
+> image takes none — while `cvtColor` parallelises fine on both, which is what
+> makes this a measurement and not a guess. Function benchmarks do not predict
+> pipeline throughput, and we can name the call.
 >
 > And a learned detector that we trained, measured, and did not ship.
+>
+> The COOL result is a bug report with a two-line reproduction, and it is
+> the half of that work we are proudest of.
 
 ## 2:50–3:00 — close
 

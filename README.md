@@ -6,6 +6,34 @@ with COOL, and an agent decides which field to look at next and when to stop.
 Entry for the OpenCV AI Competition 2026. Both award paths: Best Use of COOL and
 Agentic Vision.
 
+## If you are judging this
+
+| | |
+|---|---|
+| **Live demo** | <https://d1k2o3z37c1maf.cloudfront.net> — public, no credentials. The field viewer plays twelve real fields with the detections drawn and the agent's move on each. |
+| **Technical report** | `docs/report/` — `.venv/bin/python docs/report/build_report.py --build-pdf`. Every figure in it is read from a committed result file; none is typed by hand. |
+| **Architecture** | `docs/proposal/architecture.svg` |
+| **Agent trace** | `docs/figures/agent-trace-example.txt`, and every move of every slide in `eval/results/agent_eval.json` |
+
+Three claims and the one command that checks each. None of them needs an AWS
+account except the benchmark:
+
+```
+make setup && make test                       # 148 tests, x86 and arm64 in CI
+.venv/bin/python eval/agent_eval.py           # the agent against the rules, replayed
+                                              # from 3 005 recorded model calls: free
+SKIP_TRAIN=1 bash eval/chain.sh               # every held-out and specificity number (~2 h)
+bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock   # one COOL arm; the instance terminates itself
+```
+
+**What we are not claiming.** AutoScope is a screening aid, not a diagnostic
+device, and has never been run on a clinical sample. The stage is virtual: the
+agent's moves select among fields that were already captured, so the comparison
+against the rules is sound but "this drives a microscope" is not supported.
+Falciparum only — on *P. vivax* the detector reads F1 0.29 and its confidence
+score cannot tell you it is failing. Two of the seven targets we set ourselves
+in September were missed; section 6 of the report says which and why.
+
 ## Setup
 
 Needs Python 3.11 or newer, and [uv](https://docs.astral.sh/uv/).
