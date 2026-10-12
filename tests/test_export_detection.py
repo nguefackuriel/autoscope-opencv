@@ -112,3 +112,86 @@ def test_covered_tiles_keeps_rim_tiles():
     strict = covered_tiles(mask, min_fov=0.9)
     loose = covered_tiles(mask, min_fov=0.2)
     assert len(loose) > len(strict), "the looser threshold must see more of the field"
+
+
+def test_export_refuses_a_directory_that_is_not_a_previous_export(tmp_path):
+    """--out takes an arbitrary path; a typo must not delete someone's data."""
+    d = tmp_path / "not_ours"
+    d.mkdir()
+    (d / "important.txt").write_text("do not delete me")
+    with pytest.raises(SystemExit, match="is not an\nexport"):
+        ex.prepare_output(d)
+    assert (d / "important.txt").exists()
+
+
+def test_export_clears_a_previous_export(tmp_path):
+    """Stale tiles would leave YOLO and Faster R-CNN training on different data.
+
+    Tile names are deterministic so old tiles survive a re-run, while the COCO
+    json and the manifest are overwritten. YOLO reads the image directory, so
+    it would see old plus new; Faster R-CNN reads the json, so it would see new
+    alone. That silently breaks the comparison.
+    """
+    d = tmp_path / "detect"
+    (d / "images" / "train").mkdir(parents=True)
+    (d / "labels" / "train").mkdir(parents=True)
+    (d / "images" / "train" / "stale.jpg").write_bytes(b"x")
+    (d / "manifest.json").write_text("{}")
+    assert ex.export_is_complete(d)
+    ex.prepare_output(d)
+    assert not d.exists()
+
+
+def test_export_tolerates_a_missing_or_empty_directory(tmp_path):
+    ex.prepare_output(tmp_path / "never_made")
+    empty = tmp_path / "empty"
+    empty.mkdir()
+    ex.prepare_output(empty)
+    assert empty.exists()
+
+
+def test_an_interrupted_export_is_still_recognised_as_ours(tmp_path):
+    """manifest.json is written last, so a killed run has tiles and no manifest.
+
+    That is precisely the case most in need of re-running, so keying the
+    "is this ours?" check on the manifest would refuse exactly the wrong
+    directory. The layout is the signal; the manifest only says whether it
+    finished.
+    """
+    d = tmp_path / "detect"
+    (d / "images" / "train").mkdir(parents=True)
+    (d / "labels" / "train").mkdir(parents=True)
+    (d / "images" / "train" / "partial.jpg").write_bytes(b"x")
+    assert not ex.export_is_complete(d)
+    ex.prepare_output(d)          # must clear, not refuse
+    assert not d.exists()
+
+
+def test_a_partly_cleaned_export_is_still_recognised(tmp_path):
+    """A run killed before the first tile leaves annotations/ or data.yaml only.
+
+    Requiring images/ AND labels/ made prepare_output refuse a directory the
+    notebook had just announced it would clear, and the export dead-ended with
+    no way forward but a manual rm.
+    """
+    for marker in ("annotations", "images", "labels"):
+        d = tmp_path / marker
+        d.mkdir()
+        (d / marker).mkdir()
+        ex.prepare_output(d)
+        assert not d.exists(), f"{marker}/ alone should mark the directory as ours"
+
+    d = tmp_path / "yaml_only"
+    d.mkdir()
+    (d / "data.yaml").write_text("path: x")
+    ex.prepare_output(d)
+    assert not d.exists()
+
+
+def test_refusal_says_what_the_directory_holds(tmp_path):
+    d = tmp_path / "someones_work"
+    d.mkdir()
+    (d / "thesis.tex").write_text("x")
+    with pytest.raises(SystemExit, match="thesis.tex"):
+        ex.prepare_output(d)
+    assert (d / "thesis.tex").exists()
