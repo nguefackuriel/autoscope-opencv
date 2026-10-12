@@ -10,8 +10,8 @@ Agentic Vision.
 
 | | |
 |---|---|
-| **Live demo** | <https://d1k2o3z37c1maf.cloudfront.net> — public, no credentials. The field viewer plays twelve real fields with the detections drawn and the agent's move on each. |
-| **Technical report** | `docs/report/` — `.venv/bin/python docs/report/build_report.py --build-pdf`. Every figure in it is read from a committed result file; none is typed by hand. |
+| **Live demo** | <https://d1k2o3z37c1maf.cloudfront.net>, public, no credentials. The field viewer plays twelve real fields with the detections drawn and the agent's move on each. |
+| **Technical report** | `docs/report/`. Build it with `.venv/bin/python docs/report/build_report.py --build-pdf`. Every figure in it is read from a committed result file. None is typed by hand. |
 | **Architecture** | `docs/proposal/architecture.svg` |
 | **Agent trace** | `docs/figures/agent-trace-example.txt`, and every move of every slide in `eval/results/agent_eval.json` |
 
@@ -30,9 +30,9 @@ bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock   # one COOL arm; the instance te
 device, and has never been run on a clinical sample. The stage is virtual: the
 agent's moves select among fields that were already captured, so the comparison
 against the rules is sound but "this drives a microscope" is not supported.
-Falciparum only — on *P. vivax* the detector reads F1 0.29 and its confidence
+Falciparum only: on *P. vivax* the detector reads F1 0.29 and its confidence
 score cannot tell you it is failing. Two of the seven targets we set ourselves
-in September were missed; section 6 of the report says which and why.
+in September were missed, and section 6 of the report says which and why.
 
 ## Setup
 

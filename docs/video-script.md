@@ -19,7 +19,7 @@ video says where.
 | 2:25–2:50 | what does not work | vivax, COOL, species |
 | 2:50–3:00 | close | the URL and the repository |
 
-## 0:00–0:25 — the problem
+## 0:00-0:25, the problem
 
 *Shot: the WHO report page with the figures visible, then a thick film down a
 microscope.*
@@ -28,7 +28,7 @@ microscope.*
 > percent of those cases were in Africa.
 >
 > Rapid tests are losing ground. Some parasites have stopped making the protein
-> the tests look for — WHO found them in 42 countries. And artemisinin
+> the tests look for. WHO found them in 42 countries. And artemisinin
 > resistance is detected by *counting* parasites on day 0, 2 and 3. Rapid tests
 > cannot count.
 >
@@ -39,7 +39,7 @@ microscope.*
 Numbers from `docs/reference/WHO-World-Malaria-Report-2025.pdf`, read from the
 report rather than recalled.
 
-## 0:25–0:55 — what it is
+## 0:25-0:55, what it is
 
 *Shot: `docs/figures/architecture.svg` building up, one stage at a time.*
 
@@ -52,10 +52,10 @@ report rather than recalled.
 > a dirty field. Keep reading. Stop. Or hand the slide to a person.
 >
 > Stages one to four and six run on AWS Batch on Graviton4. The agent is Claude
-> on Bedrock. Step Functions holds the limits — fields, time and money — outside
+> on Bedrock. Step Functions holds the limits on fields, time and money outside
 > the model, so no model can talk its way past them.
 
-## 0:55–1:45 — the demo, and this is the part that matters
+## 0:55-1:45, the demo, which is the part that matters
 
 *Shot: screen recording of <https://d1k2o3z37c1maf.cloudfront.net>, no cuts.*
 
@@ -67,8 +67,8 @@ Scroll the log slowly. Let the viewer read the agent's own reasons.
 
 > Field one: thirty white cells, the interval is very wide, keep reading.
 > Field four: both bounds now sit inside one density band.
-> Field seven: a hundred and thirty-three white cells, the band is settled —
-> stop.
+> Field seven: a hundred and thirty-three white cells, the band is settled.
+> Stop.
 >
 > The agent is not pattern-matching a threshold. It is watching an error bar
 > narrow and stopping when the answer stops changing, which is what a
@@ -79,7 +79,7 @@ Point at the interval bar.
 > Eight thousand six hundred parasites per microlitre, interval seven thousand
 > two hundred and fifty to ten thousand one hundred. The grey line is this
 > pipeline's measured noise floor on clean slides. A positive is an interval
-> that clears that line — not a verdict the page asserts.
+> that clears that line, not a verdict the page asserts.
 
 Then click a detection in the verification grid and let the number move.
 
@@ -90,10 +90,10 @@ Then click a detection in the verification grid and let the number move.
 Last beat, and say it plainly:
 
 > The rule-based control reads eleven fields on this patient. The agent reads
-> eight. One slide is a data point, not a result — the comparison over all
+> eight. One slide is a data point, not a result. The comparison over all
 > fifty held-out patients is in the repository.
 
-## 1:45–2:25 — the numbers
+## 1:45-2:25, the numbers
 
 *Shot: the ECAMM table from `docs/plan-2026-09-05-hospital-grade.md`.*
 
@@ -109,25 +109,25 @@ Last beat, and say it plainly:
 > different stain, run once: 99.3% of clean fields report nothing, 70% of
 > infected fields find something, after a ten-slide site calibration.
 
-## 2:25–2:50 — what does not work
+## 2:25-2:50, what does not work
 
 Do not skip this. It is the most persuasive forty seconds in the video.
 
 > Three things we could not make work, and we are publishing all three.
 >
 > Species. On *P. vivax* the detector reads F1 0.29 against 0.80 on
-> falciparum — and its confidence score does not separate the detections it
+> falciparum, and its confidence score does not separate the detections it
 > gets right from the ones it gets wrong, so there is no automatic warning we
 > can give. A slide from a vivax region needs a human reader.
 >
 > COOL. On a ten-function benchmark the Marketplace image is 1.59× faster than
 > the wheel we ship, on the same machine. On our actual pipeline it is 3.8×
-> *slower* — 143 slides an hour against 547. Six of the seven stages are
+> *slower*: 143 slides an hour against 547. Six of the seven stages are
 > faster; one is nine and a half times slower and swallows the rest. So we
 > forced both builds down to a single thread, and they agreed to within six
 > percent on every call. The kernels are the same speed. The stock build takes
 > fifteen to twenty-five times back off the thirty-two cores, and the COOL
-> image takes none — while `cvtColor` parallelises fine on both, which is what
+> image takes none, while `cvtColor` parallelises fine on both, which is what
 > makes this a measurement and not a guess. Function benchmarks do not predict
 > pipeline throughput, and we can name the call.
 >
@@ -136,12 +136,12 @@ Do not skip this. It is the most persuasive forty seconds in the video.
 > The COOL result is a bug report with a two-line reproduction, and it is
 > the half of that work we are proudest of.
 
-## 2:50–3:00 — close
+## 2:50-3:00, close
 
 *Shot: the page, then the repository.*
 
 > AutoScope. The demo is live, every number is in the repository with the
-> script that produced it, and it is a screening aid — not a diagnostic
+> script that produced it, and it is a screening aid, not a diagnostic
 > device. Every result is reviewed by a person.
 
 ## Production notes
@@ -152,7 +152,7 @@ Do not skip this. It is the most persuasive forty seconds in the video.
   evidence; let it be quiet.
 - Record the demo **in one take**. A cut in the middle of a live session
   invites the question of what was cut.
-- Subtitles throughout — judges may watch muted, and the parasite counts are
+- Subtitles throughout. Judges may watch muted, and the parasite counts are
   hard to hear.
 - If the Marketplace COOL AMI arrives before filming, the COOL paragraph gains
   a fourth arm and should be re-recorded; the conclusion probably does not

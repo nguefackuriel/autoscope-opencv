@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AutoScope — reading a slide</title>
+<title>AutoScope: reading a slide</title>
 <style>
   :root {
     --bg: #fbfaf8;
@@ -154,7 +154,7 @@
     <p class="note" style="margin:12px 0 0">
       <strong>A real session read on AWS:</strong>
       <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF101_233">TF101_233</a>
-      — eight fields on a Graviton Spot fleet, the agent choosing when to stop.
+      Eight fields on a Graviton Spot fleet, with the agent choosing when to stop.
       Or leave the endpoint blank and “Replay a recorded session” reads
       <code>sample-session.json</code> from this page’s own folder, so the demo
       still works with nothing deployed and a judge can check it offline.
@@ -200,7 +200,7 @@
   </div>
 
   <div class="card" style="margin-top:20px">
-    <h2>The log — every field, and what the agent did about it</h2>
+    <h2>The log: every field, and what the agent did about it</h2>
     <div class="scroll wide">
       <table>
         <thead>
@@ -236,7 +236,7 @@
       <div>
         <p class="note" style="margin-top:0">
           Twelve fields of patient TF101_233, in the order the agent read them.
-          Green rings are parasites, blue are white cells — both are
+          Green rings are parasites, blue are white cells. Both are
           <code>count_field</code>'s own detections at the shipped threshold,
           drawn on the real capture. The running estimate and the agent's move
           are printed on each frame.
@@ -252,7 +252,7 @@
   </div>
 
   <div class="card" style="margin-top:20px">
-    <h2>Verification — click a detection to reject it</h2>
+    <h2>Verification: click a detection to reject it</h2>
     <div class="crops" id="crops">
       <span class="note">Nothing loaded yet.</span>
     </div>
@@ -269,7 +269,7 @@
     identify species. That is measured, not assumed: on 90 annotated
     <em>P. vivax</em> patients this detector reads F1 0.29, against 0.80 on
     <em>falciparum</em>, and its confidence score does not separate the
-    detections it gets right from the ones it gets wrong — so there is no
+    detections it gets right from the ones it gets wrong, so there is no
     automatic warning to give you. <strong>A slide from a region where
     <em>P. vivax</em> circulates needs a human reader.</strong> All development
     used retrospective, de-identified research slides (NLM/LHNCBC, NIH) and
