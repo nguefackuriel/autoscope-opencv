@@ -112,6 +112,26 @@ footer { margin-top: 9mm; border-top: 1.5pt solid var(--ink); padding-top: 4mm; 
 """
 
 
+def _fmt(v) -> str:
+    """One number, formatted the way a reader expects to see it.
+
+    Floats get three decimals with the trailing zeros trimmed, so 0.798 stays
+    0.798, a threshold of 0.53 is not printed 0.530, and a percentage of 94.8
+    is not printed 94.800%. The first build of this report did exactly that:
+    every float went through a blanket `:,.3f` and the evaluation section read
+    "70.000% of slides" and "count bias is -3.830%", which is three digits of
+    precision we do not have and did not claim anywhere else.
+    """
+    if isinstance(v, bool):
+        return str(v)
+    if isinstance(v, float):
+        out = f"{v:,.3f}".rstrip("0").rstrip(".")
+        return out if out not in ("", "-") else "0"
+    if isinstance(v, int):
+        return f"{v:,}"
+    return str(v)
+
+
 def _pct(x: float, nd: int = 1) -> str:
     return f"{x:.{nd}f}%"
 
@@ -212,9 +232,7 @@ def build(f: dict) -> str:
         geo_c7i=f"{geo['c7i_stock']:.2f}",
         cool_vs_stock_pipeline=f"{cool_vs_stock_pipeline:.1f}",
         cand_ratio=f"{cand_ratio:.1f}",
-        **{k: (f"{v:,.3f}" if isinstance(v, float) else f"{v:,}"
-               if isinstance(v, int) and not isinstance(v, bool) else str(v))
-           for k, v in f.items() if not isinstance(v, dict)},
+        **{k: _fmt(v) for k, v in f.items() if not isinstance(v, dict)},
         # a few that want their own formatting
         f1=f"{f['held_f1']:.3f}", prec=f"{f['held_precision']:.3f}",
         rec=f"{f['held_recall']:.3f}", pvf1=f"{f['pv_f1']:.3f}",
