@@ -32,6 +32,10 @@ MODEL=${MODEL:-cnn}
 WEIGHTS=${WEIGHTS:-}
 PY=${PY:-../.venv/bin/python}
 W=()
+# ${W[@]+"${W[@]}"} and not "${W[@]}": macOS ships bash 3.2, where expanding an
+# EMPTY array under `set -u` is an unbound-variable error. Every non-detector
+# run has W empty, so the plain form aborts the chain on the first step --- which
+# it did, on the re-measure for the final report.
 case "$MODEL" in yolo|frcnn)
   [ "$SKIP_TRAIN" = "1" ] || { echo "MODEL=$MODEL: train it on a GPU (make train-$MODEL), then SKIP_TRAIN=1 WEIGHTS=<best> here"; exit 1; }
   [ -n "$WEIGHTS" ] || { echo "MODEL=$MODEL needs WEIGHTS=<file>"; exit 1; }
@@ -83,8 +87,8 @@ step "measure only: network unchanged ($(git -C .. log --oneline -1))"
 fi
 
 step "rescore candidates: calibration, then held-out ($MODEL)"
-$PY parasite_scores.py --model "$MODEL" "${W[@]}" --group calibration
-$PY parasite_scores.py --model "$MODEL" "${W[@]}" --group holdout
+$PY parasite_scores.py --model "$MODEL" ${W[@]+"${W[@]}"} --group calibration
+$PY parasite_scores.py --model "$MODEL" ${W[@]+"${W[@]}"} --group holdout
 
 step "choose the threshold on the calibration patients"
 $PY choose_threshold.py
@@ -94,16 +98,16 @@ step "parasite_calibrate at $T"
 $PY parasite_calibrate.py --fixed "$T"
 
 step "parasite_eval held-out at $T"
-$PY parasite_eval.py --holdout --threshold "$T" --model "$MODEL" "${W[@]}" --tag "holdout_$MODEL"
+$PY parasite_eval.py --holdout --threshold "$T" --model "$MODEL" ${W[@]+"${W[@]}"} --tag "holdout_$MODEL"
 
 step "agent_fields at $T (609 fields)"
-$PY agent_fields.py --threshold "$T" --model "$MODEL" "${W[@]}"
+$PY agent_fields.py --threshold "$T" --model "$MODEL" ${W[@]+"${W[@]}"}
 
 step "agent_eval"
 $PY agent_eval.py
 
 step "negative_fields at $T (1141 fields, all 50 patients; the eval reports the frozen half)"
-$PY negative_fields.py --threshold "$T" --model "$MODEL" "${W[@]}"
+$PY negative_fields.py --threshold "$T" --model "$MODEL" ${W[@]+"${W[@]}"}
 
 step "negative_eval, frozen half"
 $PY negative_eval.py

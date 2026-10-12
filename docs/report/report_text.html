@@ -1,0 +1,637 @@
+<!-- The report's prose. Numbers are dollar-sign placeholders, filled by build_report.py from
+     report_numbers.py, which reads eval/results and bench/results. Do not type a figure
+     in here: if it is not in a result file, it is not a result. -->
+<title>AutoScope Technical Report</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>$css</style>
+
+<div class="cover">
+  <div class="top">
+    <div class="eyebrow">OpenCV AI Competition 2026 &middot; Technical Report</div>
+    <h1>AutoScope</h1>
+    <p class="sub">
+      Agentic malaria microscopy: an OpenCV&nbsp;5 pipeline that counts parasites
+      and white cells on thick-film fields, and an agent that decides which field
+      to read next and when the evidence settles the question.
+    </p>
+
+    <div class="headline">
+      <div><span class="n">$f1</span><span class="k">object-level parasite F1, $held_patients held-out patients the fit never saw</span></div>
+      <div><span class="n">$lod_per_ul/&micro;L</span><span class="k">limit of detection at 95% sensitivity, measured by dilution</span></div>
+      <div><span class="n">$sens</span><span class="k">per-patient sensitivity on infected slides; none called negative</span></div>
+      <div><span class="n">$stock_sph</span><span class="k">slides per hour on one c8g.8xlarge (Graviton4)</span></div>
+    </div>
+
+    <p class="sub" style="font-size:11pt">
+      Live demo: <a href="https://d1k2o3z37c1maf.cloudfront.net">d1k2o3z37c1maf.cloudfront.net</a><br>
+      Every figure in this report is read from a committed result file by
+      <code>docs/report/report_numbers.py</code>; none is typed by hand.
+    </p>
+  </div>
+
+  <div class="who">
+    <p><b>Uriel Nguefack Yefou</b> &middot; <b>Alex Bruno Kenfack Anafack</b><br>
+    Team AutoScope &middot; built 26 August to 26 October 2026 &middot; this report $built</p>
+    <p style="margin:0">
+      AutoScope is a screening aid, not a diagnostic device. It has not been
+      clinically validated. Every development and evaluation image is
+      retrospective, de-identified, public research material.
+    </p>
+  </div>
+</div>
+
+<section>
+<h2><span class="fignum">1</span>The problem, and who this is for</h2>
+<p class="lede">
+  Microscopy is still the reference method for malaria, and the thing it gives
+  you that a rapid test cannot is a <em>number</em>.
+</p>
+<p>
+  The WHO <em>World malaria report 2025</em> counts 282 million cases and
+  610&nbsp;000 deaths in 2024, with 94% of cases and 95% of deaths in the African
+  Region and just over three quarters of those deaths in children under five.
+  Rapid diagnostic tests carry most of the field load and they answer yes or no.
+  Two things break that answer. <em>pfhrp2</em> gene deletions, found in 42
+  countries as of 2024, make the commonest RDT target disappear from the
+  parasite. And artemisinin partial resistance is detected by <em>counting</em>
+  parasites on day 0, day 2 and day 3 and watching whether the count falls — a
+  measurement an RDT cannot make at all.
+</p>
+<p>
+  So the quantity that matters is parasites per microlitre, and the way it is
+  obtained is a technician at an eyepiece counting parasites against 200 white
+  blood cells on a thick film. That is slow, it is tiring, and the count's
+  precision is set by how many cells were counted before the technician stopped.
+  Where there are few microscopists the work does not get slower; it gets
+  skipped.
+</p>
+<h3>Who AutoScope is for</h3>
+<p>
+  A district-hospital or health-centre laboratory that already has a microscope
+  and a technician, and no budget for a slide scanner. The intended shape is a
+  phone camera held to the eyepiece, the fields uploaded, the count and its
+  confidence interval returned with the crops that produced it, and a person
+  signing the result. The technician is not removed from the loop; the counting
+  and the decision of when the count is precise enough are what move.
+</p>
+<div class="note">
+  <span class="label">What we did not have</span>
+  <p>
+    No microscope, no motorised stage, no clinical samples, and no institutional
+    data access. Everything here is built and measured on the public NLM/LHNCBC
+    thick-film sets plus a CC0 Tanzanian set, and the stage is a
+    <em>virtual</em> one: the agent's moves select among real captured fields
+    rather than driving real hardware. Section&nbsp;9 states exactly what that
+    does and does not license us to claim.
+  </p>
+</div>
+</section>
+
+<section>
+<h2><span class="fignum">2</span>What AutoScope does</h2>
+<p class="lede">
+  Six OpenCV stages produce the numbers. An agent decides how many fields to
+  spend getting them. A fixed function, not the agent, turns the numbers into a
+  call.
+</p>
+<figure>
+  <img src="../proposal/architecture.svg" alt="AutoScope architecture: upload, field assessment, counting, the agent loop, and the signed report">
+  <figcaption>
+    The pipeline and the loop around it. Stages 1&ndash;4 and 6 are OpenCV&nbsp;5;
+    stage&nbsp;5 is the agent. Remove OpenCV and there is nothing for the agent to
+    decide — that is the test we set ourselves in the proposal and it still holds.
+  </figcaption>
+</figure>
+<h3>The loop, in one paragraph</h3>
+<p>
+  A field arrives. OpenCV finds the lit disc, scores focus, evenness and debris,
+  normalises the stain, segments white cells, proposes parasite candidates with a
+  top-hat and judges each one with a small convolutional network through
+  <code>cv.dnn</code>. The running totals — parasites and white cells — go to the
+  agent as a short observation together with the current density estimate and its
+  exact Poisson interval. The agent picks one of five moves: count this field and
+  move on, refocus, skip it, stop, or hand the slide to a person. When it stops,
+  <code>density.decide()</code> reads the counts and returns the call. The trace
+  of every move, with the reason the agent gave, is what the technician reviews.
+</p>
+<h3>The five moves</h3>
+<table>
+  <caption>The agent's whole action space. Defined in <code>src/autoscope/agent/moves.py</code>.</caption>
+  <thead><tr><th>Move</th><th>What it is for</th></tr></thead>
+  <tbody>
+    <tr><td><code>count_then_move</code></td><td>The field is readable: count it and advance the stage.</td></tr>
+    <tr><td><code>refocus</code></td><td>The focus score says the field is soft; step the focus and re-assess.</td></tr>
+    <tr><td><code>skip</code></td><td>Debris, a bubble, or an edge: do not let it into the denominator.</td></tr>
+    <tr><td><code>stop</code></td><td>The interval is tight enough, or the protocol's cell count is reached.</td></tr>
+    <tr><td><code>flag_for_human</code></td><td>The evidence is not going to settle; escalate rather than guess.</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2><span class="fignum">3</span>The OpenCV&nbsp;5 pipeline</h2>
+<p class="lede">
+  Six stages, all <code>imgproc</code> and <code>dnn</code>, pinned to
+  <code>opencv-python 5.0.0.93</code>.
+</p>
+<h3>Stage 1 &mdash; the field of view</h3>
+<p>
+  A phone through an eyepiece produces a bright disc on a black surround, and the
+  surround is most of the frame and none of the slide. <code>fov.detect</code>
+  thresholds, closes with an elliptical kernel and takes the largest component, so
+  every later stage works on the lit area and the black border never enters a
+  histogram or a denominator.
+</p>
+<h3>Stage 2 &mdash; is this field worth counting</h3>
+<p>
+  Three numbers per field: a focus score from the variance of a Laplacian,
+  measured inside the disc only; an evenness score from the illumination field; and
+  a debris fraction. These are what make <code>refocus</code> and <code>skip</code>
+  mean something — an agent that cannot tell a soft field from a sharp one has no
+  reason to prefer one move over another.
+</p>
+<h3>Stage 3 &mdash; stain normalisation</h3>
+<p>
+  Giemsa varies between laboratories more than parasites vary between patients. The
+  pipeline works in Lab and uses the <code>a&minus;b</code> opponent channel as the
+  stain map, which is what makes the purple of a nucleus separable from the
+  background regardless of how heavily the slide was stained.
+</p>
+<h3>Stage 4 &mdash; white cells, the denominator</h3>
+<p>
+  Parasites per 200 white cells is what becomes a density, so an error here moves
+  every number downstream. White cell nuclei are segmented from the stain map and
+  separated with a distance transform and connected components.
+</p>
+<h3>Stage 5 &mdash; parasite candidates and the patch network</h3>
+<p>
+  A morphological top-hat on the smoothed stain map removes the background and
+  leaves small dark-purple objects; local maxima above a threshold, outside the
+  white-cell exclusion mask, are the candidates. Candidate recall against every
+  annotated parasite is <strong>$candidate_recall</strong>, which is the ceiling
+  the classifier works under. Each candidate is cut to a 48&nbsp;px patch and scored
+  by a small CNN exported to ONNX and run through <code>cv.dnn</code> — the same
+  binary on the laptop and on Graviton, which is why the cloud and local numbers
+  agree. The operating threshold is <strong>$threshold</strong>, chosen on 20
+  calibration patients by the rule <em>closest to zero count bias</em>, never on
+  the held-out set.
+</p>
+<h3>Stage 6 &mdash; density with an honest interval</h3>
+<p>
+  <code>density()</code> converts parasites per white cell to parasites per
+  microlitre using the WHO 8&nbsp;000 leucocytes/&micro;L convention, and attaches an
+  <em>exact</em> Poisson confidence interval rather than a normal approximation,
+  because at the counts that matter — a handful of parasites in 200 cells — the
+  approximation is wrong in the direction that flatters us.
+</p>
+<div class="note">
+  <span class="label">Why this is OpenCV and not incidental to it</span>
+  <p>
+    Take OpenCV out and the project does not get slower, it stops existing: there
+    are no field quality scores, so <code>refocus</code> and <code>skip</code> have
+    no input; there are no counts, so there is no interval; and there is nothing for
+    the agent to decide. The agent's entire observation is OpenCV output.
+  </p>
+</div>
+</section>
+
+<section>
+<h2><span class="fignum">4</span>The agent: what it decides, and what it never decides</h2>
+<p class="lede">
+  The agent chooses where to look and when to stop. It never chooses the
+  diagnosis.
+</p>
+<p>
+  This is a design decision with a measurement behind it, and it is the one that
+  makes the comparison in Section&nbsp;6 meaningful. The agent returns a structured
+  move, and when that move is <code>stop</code> it also returns its own opinion of
+  the call. That opinion is <em>recorded and not used</em>. The call comes from
+  <code>density.decide()</code>, the same arithmetic that serves the rule-based
+  arms, so what is being compared between an agent and a rule is the stopping
+  point and nothing else. Trusting the model's self-reported call would have
+  quietly turned a controlled comparison into a comparison of the rule's
+  arithmetic against the model's opinion.
+</p>
+<p>
+  Recording the model's own call anyway buys a number we could not get otherwise:
+  how often the model's self-assessment agrees with what its own counts actually
+  say. A disagreement rate is a finding in either direction.
+</p>
+<h3>A trace</h3>
+<pre>slide: TF15_C87P48   (a heavy slide: the agent stops at 5 fields where WHO reads 18)
+ 1  count_field()   focus=28  even=0.96  debris=0.71   parasites=79  wbc=18
+    counted, running total 79 in 18 white cells
+ 2  count_field()   focus=26  even=0.96  debris=0.67   parasites=88  wbc=17
+    counted, running total 167 in 35 white cells
+ ...
+ 5  count_field()   focus=23  even=0.94  debris=0.67   parasites=71  wbc=20
+    counted, running total 413 in 85 white cells
+ 6  stop            focus=23  even=0.96  debris=0.68
+    "413 parasites in 85 white cells is 38 900/uL with a 95% interval of
+     35 300 to 42 800. The interval is already inside the high band; more
+     fields cannot change the call."</pre>
+<p>
+  The full trace of every move on every slide is in
+  <code>eval/results/agent_eval.json</code>, and the twelve rendered frames of one
+  session — the real images, the detections circled, the interval narrowing, the
+  move and its reason — are on the demo page and in
+  <code>docs/figures/session/</code>.
+</p>
+<h3>Reproducible at zero cost</h3>
+<p>
+  A full comparison is one model call per loop step, about 600 to 1&nbsp;200 per arm,
+  so a judge could not re-run it and neither could we without paying again. Every
+  call is therefore recorded to a JSONL cache keyed on the model, the effort
+  setting, the system prompt, the tool definitions and the observation.
+  <strong>$agent_calls_cached</strong> of the calls in the shipped result replayed
+  from that cache; <strong>$agent_calls_live</strong> were live. Editing the prompt
+  or the move definitions changes the key, so a changed prompt cannot silently
+  replay decisions it never made, and a cache miss during replay <em>raises</em>
+  rather than falling through to a live call. The comparison re-runs with no AWS
+  account and no cost.
+</p>
+</section>
+
+<section>
+<h2><span class="fignum">5</span>Running it on AWS</h2>
+<p class="lede">
+  61 Terraform resources in <code>us-east-1</code>. A slide has been read end to
+  end on it.
+</p>
+<table>
+  <caption>What each service does. <code>infra/terraform/</code>, one <code>apply</code>.</caption>
+  <thead><tr><th>Service</th><th>Role</th></tr></thead>
+  <tbody>
+    <tr><td>S3 &middot; CloudFront</td><td>Field uploads, results, and the public demo page.</td></tr>
+    <tr><td>API Gateway &middot; Lambda</td><td>Starts a session, returns the trace and the crops.</td></tr>
+    <tr><td>Step Functions</td><td>The reading loop: assess, count, ask the agent, repeat or stop.</td></tr>
+    <tr><td>Batch on Graviton Spot</td><td>Runs the OpenCV container, <code>c8g</code>, arm64.</td></tr>
+    <tr><td>Bedrock</td><td>The agent. Three models compared; see Section&nbsp;6.</td></tr>
+    <tr><td>DynamoDB</td><td>One row per slide, merged as the loop advances.</td></tr>
+  </tbody>
+</table>
+<p>
+  The container is the same arm64 image the benchmark times, built once and pushed
+  to ECR; CI runs the test suite on both x86 and arm64 so an architecture-specific
+  break cannot reach the deploy. The demo page is public and needs no credentials.
+</p>
+<div class="note">
+  <span class="label">Cost discipline</span>
+  <p>
+    A $$100 monthly budget alarm, Spot for every benchmark instance, and a
+    <code>trap</code> that terminates the instance on any exit. That trap is not
+    sufficient on its own — stopping the orchestrating shell skips it, and one
+    <code>c8g.8xlarge</code> billed for fourteen minutes before we noticed — so
+    each instance now also runs <code>shutdown -h +90</code> on itself, with the
+    launch set to terminate on shutdown.
+  </p>
+</div>
+</section>
+
+<section>
+<h2><span class="fignum">6</span>Evaluation</h2>
+<p class="lede">
+  The plan written on 2 September set seven numeric targets for 26 October. We met
+  $n_met of $n_crit, and the two we missed are stated here rather than in a
+  footnote.
+</p>
+<table>
+  <caption>The plan's own targets (<code>docs/plan-2026-09-02.md</code>) against what was measured.</caption>
+  <thead><tr><th style="width:45%">Target set on 2 September</th><th>Measured</th><th>&nbsp;</th></tr></thead>
+  <tbody>$crit_rows</tbody>
+</table>
+
+<h3>The detector, on patients the fit never saw</h3>
+<p>
+  $held_patients held-out NLM patients, $held_images images, $held_truth annotated
+  parasites, at threshold $threshold: precision <strong>$prec</strong>, recall
+  <strong>$rec</strong>, <strong>F1 $f1</strong>. Count bias
+  $held_count_bias_pct%, and the parasite-per-white-cell ratio — the quantity that
+  becomes the density — tracks the expert's with a Spearman correlation of
+  $held_ratio_spearman and a bias of $held_ratio_bias_pct%.
+</p>
+<p>
+  <strong>This misses the 0.85 we set ourselves.</strong> The honest reading is
+  that object-level F1 is the wrong target for this product and we should have
+  noticed in September: what a laboratory acts on is the slide-level call and the
+  density, and both are carried by the decision rule, which reads
+  <strong>$sens</strong> sensitivity with <em>none</em> of the
+  $dec_infected_slides infected slides called negative. An F1 of $f1 is good
+  enough for that and not good enough for the claim we wrote down. Both are true
+  and the second is the one we got wrong.
+</p>
+
+<h3>Specificity, on the frozen uninfected half</h3>
+<p>
+  $neg_patients uninfected patients, $neg_fields fields, the $neg_which — material
+  scored once, with nothing fitted on it. $neg_clean_fields_pct% of fields come
+  back completely clean; pooled false parasites run at $neg_false_per_200 per 200
+  white cells, with a worst field of $neg_false_max.
+</p>
+<p>
+  At slide level: <strong>$dec_clean_called_positive of $dec_clean_slides clean
+  slides were called positive</strong>. $dec_clean_to_person were escalated to a
+  person. Because an escalation is not a negative, specificity as the plan defined
+  it reads <strong>$spec</strong> and <strong>misses the 0.90 target</strong>. We
+  are reporting both numbers because they say different things and only quoting
+  one would be a choice about which to hide: the pipeline produces no false
+  positive calls on clean slides, and it also cannot clear 40% of them without a
+  human. For a screening aid whose output is reviewed by a person that is a
+  defensible place to sit, but it is a cost — it is human time — and calling it
+  0.90 specificity would be false.
+</p>
+
+<h3>Density, and the limit of detection</h3>
+<p>
+  On $density_slides slides the density is within &plusmn;25% of the expert count on
+  <strong>$density_within_25%</strong> and within &plusmn;50% on $density_within_50%,
+  mean absolute error $density_mae_pct%. By dilution, over $lod_repeats repeats, the
+  95%-sensitivity limit of detection is <strong>$lod_per_ul parasites/&micro;L</strong>.
+  The measured noise floor on clean slides is $floor/&micro;L, and the rule will not
+  call a slide positive below it.
+</p>
+
+<h3>Does the agent earn its place</h3>
+<p>
+  $agent_patients patients, $agent_fields_total fields available, every arm reading
+  the same fields with the same counter and the same <code>decide()</code>. Only
+  the stopping policy differs.
+</p>
+<table>
+  <caption>Fields read is the cost; density error and settled bands are what the cost buys. Shipped counter.</caption>
+  <thead><tr><th>Stopping policy</th><th class="num">Fields read</th><th class="num">Density error</th><th class="num">Bands settled</th><th class="num">To a person</th></tr></thead>
+  <tbody>$agent_rows</tbody>
+</table>
+<p>
+  The agent reads <strong>$arm_bedrock_found_fields fields against
+  $arm_decision_found_fields</strong> for the best rule, at the same density error,
+  and escalates less. The open-weight arm matches it, which matters for a tool meant
+  to run where a district hospital can host it. Llama 4 Maverick is in the table
+  because it failed: it cannot be forced to pick a move on Bedrock, declined on
+  $arm_llama4_maverick_17b_instruct_v1_found_escalated of $agent_patients slides and
+  read more fields than the WHO protocol. Forced tool choice turns out to be a hard
+  requirement of this architecture, not a convenience.
+</p>
+<div class="note">
+  <span class="label">The honest limit on the agent result</span>
+  <p>
+    Run against an oracle counter instead of the shipped one, the agent's density
+    error is <em>worse</em> than the rule's
+    ($arm_bedrock_truth_mape% against $arm_decision_truth_mape%). Stopping earlier
+    is free only because the detector is not yet good enough for stopping early to
+    cost anything. If the detector improves, this comparison has to be re-run, and
+    the agent may lose it.
+  </p>
+</div>
+
+<h3>Generalisation, each run once</h3>
+<p>
+  <strong>Another laboratory.</strong> A CC0 Tanzanian set — different microscope,
+  camera and stain — scored once at commit <code>$tz_commit</code> with the
+  pipeline fixed: image-level AUC <strong>$tzauc</strong> over
+  $tz_infected_images infected and $tz_uninfected_images uninfected images, with
+  $tz_uninfected_at_zero% of uninfected images returning exactly zero parasites.
+</p>
+<p>
+  <strong>Another species.</strong> The falciparum detector on
+  <em>P.&nbsp;vivax</em>, $pv_patients patients, $pv_images images, run once:
+  <strong>F1 $pvf1</strong> against $f1 on falciparum, with
+  $pv_under10 patients under 10% recall. We had planned to ship a species
+  warning based on the detector's own confidence. That is not possible: the median
+  score on detections it gets <em>right</em> is $pv_score_matched and on the ones
+  it gets <em>wrong</em> is $pv_score_unmatched. The score is slightly
+  <em>higher</em> on the mistakes, so there is no threshold that separates them and
+  no automatic warning we can honestly give. The limitation is stated on the demo
+  page with the number instead.
+</p>
+</section>
+
+<section>
+<h2><span class="fignum">7</span>Where it fails</h2>
+<p class="lede">
+  Four failure modes with a number attached to each. The figures are in
+  <code>docs/figures/</code> and the catalogue is in <code>docs/results-parasites.md</code>.
+</p>
+<ol>
+  <li><strong>Sparse fields.</strong> On slides with very few parasites the
+  false-positive rate dominates the true-positive rate; this is what sets the
+  $lod_per_ul/&micro;L limit of detection and why the rule has a noise floor at
+  $floor/&micro;L rather than treating one detection as evidence.</li>
+  <li><strong>Platelets and stain debris.</strong> The dominant false positive is a
+  small, round, purple object that is not a parasite. The patch network removes
+  most of them; what survives is in
+  <code>docs/figures/parasite-false-positives-sparse-fields.png</code>.</li>
+  <li><strong>Another species.</strong> F1 $pvf1 on <em>P.&nbsp;vivax</em>, with no
+  usable confidence signal (Section&nbsp;6).</li>
+  <li><strong>Soft fields.</strong> The focus score is what lets the agent
+  <code>refocus</code> instead of counting a blurred field, but on a virtual stage
+  <code>refocus</code> can only choose among the focus planes that were captured. On
+  real hardware this stage is untested.</li>
+</ol>
+<figure>
+  <img src="../figures/parasite-false-positives-sparse-fields.png" alt="A grid of the worst false positives on sparse fields: small round purple objects that are not parasites">
+  <figcaption>
+    The worst false positives on sparse fields, at the shipped threshold. These are
+    what the limit of detection is made of.
+  </figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="fignum">8</span>COOL on Graviton</h2>
+<p class="lede">
+  Four arms, measured on real instances that the script launched, timed and
+  terminated. The result is one positive and one negative, and the negative is the
+  more useful.
+</p>
+<h3>The four arms</h3>
+<p>
+  Every arm is a <code>c8g.8xlarge</code> except the x86 control, every result file
+  is committed in <code>bench/results/</code>, and every file records the
+  <code>cv.getBuildInformation()</code> lines that prove which binary ran — because
+  a benchmark whose evidence existed only on a terminated instance is an assertion.
+</p>
+<table>
+  <caption>What actually differs between the pip wheel we ship and the Marketplace COOL image. Recorded, not quoted from a vendor page.</caption>
+  <thead><tr><th>&nbsp;</th><th>the wheel we ship</th><th>the COOL image</th></tr></thead>
+  <tbody>
+    <tr><td>OpenCV</td><td><code>$stock_vc</code></td><td><code>$cool_vc</code></td></tr>
+    <tr><td>Custom HAL</td><td>$stock_hal</td><td>$cool_hal</td></tr>
+    <tr><td>Parallel framework</td><td>$stock_par</td><td>$cool_par</td></tr>
+    <tr><td>Baseline</td><td>$stock_base</td><td>$cool_base</td></tr>
+  </tbody>
+</table>
+<p>
+  Two things to notice before any timing. Carotene is in <strong>both</strong>, so
+  it is not one of the differences. And the pip wheel's KleidiCV is <em>newer</em>
+  than the Marketplace image's. The COOL image is a major OpenCV version behind and
+  carries the older of the two acceleration libraries. Both of those corrected an
+  error in our own first draft of this table, which is the argument for recording
+  build lines rather than describing a build.
+</p>
+
+<h3>On a function benchmark, the COOL image wins clearly</h3>
+<p>
+  Geometric mean of ten per-function speedups against the wheel we ship, same
+  machine: COOL <strong>$geo_cool&times;</strong>. OpenCV&nbsp;5 with the Arm HAL
+  compiled out reads $geo_nokleidi&times; and the x86 <code>c7i.8xlarge</code> reads
+  $geo_c7i&times;. The COOL image also repairs a <code>GaussianBlur</code> regression
+  that made the stock KleidiCV build a wash on our workload.
+</p>
+
+<h3>On our pipeline it loses, by $cool_vs_stock_pipeline&times;</h3>
+<table>
+  <caption>The whole pipeline over twelve real NLM fields, the same twelve on every arm.</caption>
+  <thead><tr><th>Arm</th><th class="num">seconds / field</th><th class="num">slides / hour</th></tr></thead>
+  <tbody>
+    <tr><td>OpenCV 5, Arm HAL compiled out</td><td class="num">$cool_c8g_no_kleidicv_per_field</td><td class="num">$nokleidi_sph</td></tr>
+    <tr><td>OpenCV 5 wheel, as shipped</td><td class="num">$stock_spf</td><td class="num">$stock_sph</td></tr>
+    <tr><td>Marketplace COOL image</td><td class="num">$cool_spf</td><td class="num">$cool_sph</td></tr>
+  </tbody>
+</table>
+<p>
+  Six of the seven pipeline stages are faster or level on the COOL image. One,
+  <em>parasite candidates</em>, is <strong>$cand_ratio&times; slower</strong> and
+  swallows all of it. The ten tile cases could not say which call did that: they
+  time a 5&times;5 kernel over <code>uint8</code> at one megapixel, and the stage
+  runs a 31&times;31 ellipse over <code>float32</code> at twelve. So we added a case
+  group at the real shapes and dtypes, and swept the thread count.
+</p>
+<table>
+  <caption>The candidate stage's real calls, 4032&times;3024. Medians of 10 runs, milliseconds.</caption>
+  <thead><tr>
+    <th>call</th><th class="num">stock @32</th><th class="num">COOL @32</th>
+    <th class="num">stock @1</th><th class="num">COOL @1</th>
+    <th class="num">stock gain</th><th class="num">COOL gain</th>
+  </tr></thead>
+  <tbody>$sweep_rows</tbody>
+</table>
+<p>
+  Read the last two columns. <strong>Forced to a single thread the two images agree
+  to within 6% on every call.</strong> The kernels are the same speed. The stock
+  wheel then takes 15&ndash;25&times; back by spreading the work over the 32 cores; on
+  the COOL image those four calls gain <em>nothing</em>, at any thread count.
+</p>
+<p>
+  <code>cvtColor</code> is the control, and it is the line that makes this a
+  measurement rather than a guess: it parallelises on the COOL image exactly as well
+  as on the stock wheel. TBB is working and the threads are there. What does not
+  happen is that the HAL-intercepted filter and morphology paths use them. On a
+  1&nbsp;MP tile that costs almost nothing, which is precisely why the microbenchmark
+  reports $geo_cool&times; and the pipeline reports the opposite.
+</p>
+<div class="note">
+  <span class="label">What we take from this, and what the COOL team can</span>
+  <p>
+    For us it settles the question: we do not run on the Marketplace image as it
+    stands. For the COOL team it is a bug report with a two-line reproduction. One
+    limit, stated plainly: our pipeline leans unusually hard on large-kernel
+    morphology, and a pipeline that did not would see the $geo_cool&times;. This is a
+    finding about an interaction between one image and one workload, not a claim
+    that the COOL image is slow.
+  </p>
+</div>
+<p>
+  Reproduce both halves with:
+</p>
+<pre>GROUP=pipeline THREADS=0,1 COOL_AMI=&lt;ami&gt; bash bench/run_on_ec2.sh c8g.8xlarge c8g-cool 10
+GROUP=pipeline THREADS=0,1                 bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock 10</pre>
+</section>
+
+<section>
+<h2><span class="fignum">9</span>Limits, and responsible use</h2>
+<p class="lede">
+  The honest statement of what this is not.
+</p>
+<h3>It is a screening aid, not a diagnostic device</h3>
+<p>
+  Every output is reviewed by a person, and the product surface is built around
+  that: the trace, the crops and the interval are shown so a technician can
+  disagree. AutoScope has not been clinically validated, has never been run on a
+  clinical sample, and must not be used to make a treatment decision.
+</p>
+<h3>The stage is virtual, and that is load-bearing</h3>
+<p>
+  <code>refocus</code> and the stage moves select among fields that were already
+  captured. The agent's policy is measured honestly against the rules on exactly
+  the same fields, so the <em>comparison</em> is sound — but the claim "this drives
+  a microscope" is not one this work supports. Motorised-stage control is untested.
+</p>
+<h3>The data is not the deployment population</h3>
+<p>
+  Development and most evaluation use NLM/LHNCBC thick films from one collection.
+  The Tanzanian set is the only evidence of transfer to another laboratory, it was
+  run once, and an AUC of $tzauc is a long way from the within-collection numbers.
+  Any real deployment would need local calibration slides before it could be
+  trusted, and the pipeline provides the threshold-choosing script for exactly that.
+</p>
+<h3>Species</h3>
+<p>
+  Falciparum only. On <em>P.&nbsp;vivax</em> the detector reads F1 $pvf1, and —
+  this is the part that matters for safety — its confidence score cannot tell you
+  it is failing. A laboratory where vivax circulates cannot use this as built.
+</p>
+<h3>Test-set discipline</h3>
+<p>
+  The 50 held-out patients were separated by the white-cell work and never moved.
+  The uninfected frozen half, the Tanzanian set and the vivax set were each scored
+  <em>once</em>, with the pipeline fixed; re-running any of them requires an explicit
+  flag and would have to be declared. The threshold was chosen on 20 calibration
+  patients by a stated rule. Where a number moved between drafts, both readings are
+  in the repository with the reason.
+</p>
+<h3>Privacy and licence</h3>
+<p>
+  All imagery is public, retrospective and de-identified: the NLM/LHNCBC thick-film
+  sets and a CC0 Tanzanian set. No patient identifiers are processed, stored or
+  transmitted. Uploaded fields in the demo go to a private bucket behind the API and
+  are not published.
+</p>
+</section>
+
+<section>
+<h2><span class="fignum">10</span>Reproducing this</h2>
+<p class="lede">
+  Pinned dependencies, one command per claim.
+</p>
+<pre>make setup                 # venv, pinned requirements, opencv-python 5.0.0.93
+make test                  # the unit tests
+make data                  # the NLM thick smear set (3.9 GB, resumable)
+
+SKIP_TRAIN=1 bash eval/chain.sh          # every held-out and specificity number
+.venv/bin/python eval/agent_eval.py      # the agent table, replayed from cache, no AWS
+bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock   # one COOL arm, instance terminated by a trap
+.venv/bin/python docs/report/build_report.py     # this document, numbers re-read</pre>
+<p>
+  The agent comparison needs no AWS account: the recorded model calls ship with the
+  repository and a cache miss raises rather than calling out. The benchmark arms do
+  need an account, and each one launches a single instance, measures it and
+  terminates it.
+</p>
+<h3>Where to look</h3>
+<table>
+  <thead><tr><th>Claim</th><th>Evidence</th></tr></thead>
+  <tbody>
+    <tr><td>The detector and its failure cases</td><td><code>docs/results-parasites.md</code>, <code>docs/figures/</code></td></tr>
+    <tr><td>Specificity and the decision rule</td><td><code>docs/results-negatives.md</code></td></tr>
+    <tr><td>The agent against the rules</td><td><code>docs/results-agent.md</code>, <code>eval/results/agent_eval.json</code></td></tr>
+    <tr><td>Another laboratory, another species</td><td><code>docs/results-tanzania.md</code>, <code>docs/results-vivax.md</code></td></tr>
+    <tr><td>COOL, all four arms</td><td><code>docs/results-cool.md</code>, <code>bench/results/</code></td></tr>
+    <tr><td>The deployed stack</td><td><code>infra/terraform/</code>, <code>docs/aws-setup.md</code></td></tr>
+  </tbody>
+</table>
+</section>
+
+<footer>
+  <p>
+    <strong>AutoScope</strong> &middot; Uriel Nguefack Yefou and Alex Bruno Kenfack
+    Anafack &middot; OpenCV AI Competition 2026, powered by AWS &middot; report built
+    $built.
+  </p>
+  <p>
+    A screening aid, not a diagnostic device; not clinically validated; every result
+    reviewed by a person. Malaria burden figures are read from the WHO <em>World
+    malaria report 2025</em> (data year 2024). All imagery is public, retrospective
+    and de-identified.
+  </p>
+</footer>

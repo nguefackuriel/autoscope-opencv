@@ -51,3 +51,8 @@ infra/site/fields/
 # committed.
 weights/
 *.pt
+
+# The report HTML is generated from report_text.html + the result files by
+# docs/report/build_report.py. Committing it would be a second copy of every
+# number, free to go stale against eval/results.
+docs/report/report-print.html
