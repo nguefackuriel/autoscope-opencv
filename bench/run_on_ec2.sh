@@ -233,6 +233,14 @@ fi
 
 CMD=$(cat <<EOF
 set -eux
+# A dead-man switch. The trap above terminates the instance when this script
+# exits, but only if this script gets to run its trap: killing the orchestrating
+# shell -- a Ctrl-C that is not delivered, a backgrounded run that is stopped --
+# leaves a c8g.8xlarge billing at \$1.28 an hour with nobody watching it. That
+# happened once, for fourteen minutes. The instance now shuts itself down after
+# 90 minutes whatever else goes wrong, and the launch sets
+# instance-initiated-shutdown-behavior=terminate, so a shutdown is a terminate.
+shutdown -h +90 &
 # opencv-python links libGL, glib and xcb even when no window is ever opened,
 # and the minimal AL2023 AMI has none of them. Same two packages the Dockerfile
 # installs on Debian, under their Amazon Linux names. The wheel stays

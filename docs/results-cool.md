@@ -231,3 +231,110 @@ instance. Measured on the laptop, the patch network is 45% of a field, so the
 `imgproc` share any of this can accelerate is about 55% — not the 85% the
 September plan assumed. Whatever speedup the control arm shows, roughly half
 of it is the most the whole pipeline can inherit.
+
+## The fourth arm: the COOL Marketplace image itself
+
+Everything above compares builds we assembled. The product AWS and Arm actually
+ship is a Marketplace AMI, and the subscription came through on 12 October with
+a seven-day trial, so this is the image rather than our approximation of it.
+
+### It is not "the wheel plus KleidiCV"
+
+Recorded from `cv.getBuildInformation()` on the running instance, into every
+result file in `bench/results/`:
+
+| | the wheel we ship | the COOL image |
+|---|---|---|
+| OpenCV | `5.0.0-dirty` | `4.13.0-153-g9a6e0d1bff-dirty` (reports 4.14.0-pre) |
+| Custom HAL | carotene 0.0.1 + KleidiCV **26.03** | carotene 0.0.1 + KleidiCV **0.7.0** |
+| Parallel framework | pthreads | TBB 2022.1 |
+| BLAS/LAPACK | none | Arm Performance Libraries 25.07.1 |
+| Baseline | NEON FP16 | **SVE** NEON FP16 NEON_DOTPROD NEON_FP16 NEON_BF16 |
+| Build date | 2026-07-01 | 2026-04-21 |
+| OS | Amazon Linux 2023 | Ubuntu 24.04.3 |
+
+Two things worth noticing before any timing. Carotene is in **both**, so it is
+not one of the differences. And the pip wheel's KleidiCV is *newer* than the
+Marketplace image's — 26.03 against 0.7.0, built ten weeks later. The COOL
+image is a major OpenCV version behind and carries the older acceleration
+library of the two.
+
+Four things still differ at once, so no measurement below can be attributed to
+KleidiCV alone, and this doc does not try to. A result file that said only
+`kleidicv: true` would have let this section imply one library caused
+everything, which is why `build_lines` now exists — and it is what caught the
+carotene and version-ordering errors in the first draft of this table.
+
+### On the microbenchmark it is the best arm by a distance
+
+Geometric mean of the ten per-function speedups, same c8g.8xlarge:
+
+| arm | vs the shipped wheel | vs KleidiCV compiled out |
+|---|---|---|
+| OpenCV 5, Arm HAL off | 0.73× | 1.00× |
+| OpenCV 5 wheel (shipped) | 1.00× | 1.36× |
+| **COOL image** | **1.59×** | **2.17×** |
+| c7i.8xlarge, x86 wheel | 0.88× | 1.20× |
+
+It also repairs the regression that made the stock KleidiCV arm a wash:
+`GaussianBlur` was **0.68×** with the wheel's KleidiCV and is **1.06×** on the
+COOL image. Since the pipeline calls `GaussianBlur` six times and `medianBlur`
+once, that is the one change that should have moved throughput.
+
+### On the pipeline it is 3.8× slower, and one call is the whole story
+
+| | per field | slides/hour |
+|---|---|---|
+| OpenCV 5, Arm HAL off | 0.214 s | 566.9 |
+| OpenCV 5 wheel (shipped) | 0.222 s | 547.4 |
+| COOL image | **0.852 s** | **142.7** |
+
+Six of the seven stages are faster or level on the COOL image — `prepare` 0.62×,
+`white cells` 0.66×, `patches` 0.88×. One stage, `parasite candidates`, is
+**9.5× slower** and swallows all of it.
+
+The ten tile cases could not say which call did that, because they time a 5×5
+kernel over `uint8` at one megapixel and `parasites.tophat` runs a 31×31 ellipse
+over `float32` at twelve. So `cool_bench.py --group pipeline` times the real
+calls at the real shape and dtype, and `--threads` sweeps the thread count,
+because a function that is fine at 1 MP and catastrophic at 12 MP is what a
+filter that stopped parallelising looks like. It was:
+
+| call, 4032×3024 | stock @32 | COOL @32 | stock @1 | COOL @1 | stock gain | COOL gain |
+|---|---|---|---|---|---|---|
+| `cvtColor` BGR2Lab | 1.66 ms | 1.68 ms | 32.85 ms | 33.02 ms | 19.8× | **19.6×** |
+| `GaussianBlur` f32 | 1.63 ms | 25.11 ms | 24.56 ms | 25.20 ms | 15.1× | **1.0×** |
+| `morphologyEx` TOPHAT f32, ellipse 31 | 53.69 ms | 1137.37 ms | 1155.56 ms | 1139.70 ms | 21.5× | **1.0×** |
+| `dilate` f32, ellipse 15 | 5.09 ms | 133.84 ms | 125.58 ms | 132.88 ms | 24.7× | **1.0×** |
+| `morphologyEx` TOPHAT u8, ellipse 31 | 19.69 ms | 339.74 ms | 344.77 ms | 344.19 ms | 17.5× | **1.0×** |
+
+Read the last two columns. **Forced to one thread the two images agree to within
+6% on every call** — 0.99×, 1.03×, 0.99×, 1.06×, 1.00×. The kernels are the same
+speed. The stock wheel then gets 15–25× back by spreading the work over the 32
+cores; on the COOL image those four calls get **nothing**, at any thread count.
+
+`cvtColor` is the control, and it matters: it parallelises on the COOL image
+exactly as well as on the stock wheel, 19.6× against 19.8×. So TBB is working
+and the threads exist. What does not happen is that the HAL-intercepted filter
+and morphology paths use them. On a 1 MP tile that costs almost nothing, which
+is why the microbenchmark reports 1.59× and the pipeline reports 0.26×.
+
+### What this is worth to us, and to them
+
+To us it decides the question: **we do not run on the COOL image as it stands.**
+The shipped wheel on the same Graviton4 is 3.8× faster end to end, and 1.59× on
+a function table is not a reason to take a 3.8× loss on throughput.
+
+To the COOL team it is a bug report with a one-line reproduction, and it is the
+more useful half of this work. The arm cost four failed launches to stand up
+(`dnf` on an Ubuntu image, OpenCV on no default path, no AWS CLI, a `.` of a
+missing file under `set -e`) and about $4 of instance time, and it is reproduced
+by:
+
+    GROUP=pipeline THREADS=0,1 COOL_AMI=<ami> bash bench/run_on_ec2.sh c8g.8xlarge c8g-cool 10
+    GROUP=pipeline THREADS=0,1                 bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock 10
+
+One limit, stated plainly: our pipeline leans unusually hard on large-kernel
+morphology, and a pipeline that did not would see the 1.59×, not the 0.26×. This
+is a finding about an interaction between one image and one workload. It is not
+a claim that the COOL image is slow.

@@ -1,6 +1,6 @@
 {
   "label": "c8g-cool",
-  "recorded_utc": "2026-10-12T03:11:50+00:00",
+  "recorded_utc": "2026-10-12T03:34:09+00:00",
   "opencv_version": "4.14.0-pre",
   "machine": "aarch64",
   "processor": "aarch64",
@@ -15,37 +15,74 @@
     "Parallel framework": "TBB (ver 2022.1 interface 12150)",
     "Timestamp": "2026-04-21T08:44:26Z"
   },
-  "results": {
-    "12MP_cvtColor_Lab": {
-      "median_ms": 1.4933,
-      "iqr_ms": 0.0401,
-      "min_ms": 1.4445,
-      "runs": 15
+  "results": {},
+  "group": "pipeline",
+  "cv_threads_default": 32,
+  "cpu_count": 32,
+  "by_threads": {
+    "0": {
+      "12MP_cvtColor_Lab": {
+        "median_ms": 1.6821,
+        "iqr_ms": 0.0556,
+        "min_ms": 1.6239,
+        "runs": 10
+      },
+      "12MP_GaussianBlur_f32": {
+        "median_ms": 25.1079,
+        "iqr_ms": 0.093,
+        "min_ms": 24.9917,
+        "runs": 10
+      },
+      "12MP_tophat_f32_e31": {
+        "median_ms": 1137.3686,
+        "iqr_ms": 0.0963,
+        "min_ms": 1137.2738,
+        "runs": 10
+      },
+      "12MP_dilate_f32_e15": {
+        "median_ms": 133.8397,
+        "iqr_ms": 0.1167,
+        "min_ms": 133.7756,
+        "runs": 10
+      },
+      "12MP_tophat_u8_e31": {
+        "median_ms": 339.7441,
+        "iqr_ms": 0.1381,
+        "min_ms": 339.6511,
+        "runs": 10
+      }
     },
-    "12MP_GaussianBlur_f32": {
-      "median_ms": 23.8295,
-      "iqr_ms": 0.055,
-      "min_ms": 23.783,
-      "runs": 15
-    },
-    "12MP_tophat_f32_e31": {
-      "median_ms": 1161.4324,
-      "iqr_ms": 0.4246,
-      "min_ms": 1159.9703,
-      "runs": 15
-    },
-    "12MP_dilate_f32_e15": {
-      "median_ms": 126.8703,
-      "iqr_ms": 0.0496,
-      "min_ms": 126.8203,
-      "runs": 15
-    },
-    "12MP_tophat_u8_e31": {
-      "median_ms": 342.2978,
-      "iqr_ms": 0.1436,
-      "min_ms": 342.2051,
-      "runs": 15
+    "1": {
+      "12MP_cvtColor_Lab": {
+        "median_ms": 33.019,
+        "iqr_ms": 0.0399,
+        "min_ms": 32.9056,
+        "runs": 10
+      },
+      "12MP_GaussianBlur_f32": {
+        "median_ms": 25.1953,
+        "iqr_ms": 0.0865,
+        "min_ms": 25.1302,
+        "runs": 10
+      },
+      "12MP_tophat_f32_e31": {
+        "median_ms": 1139.7012,
+        "iqr_ms": 0.2546,
+        "min_ms": 1139.4376,
+        "runs": 10
+      },
+      "12MP_dilate_f32_e15": {
+        "median_ms": 132.8808,
+        "iqr_ms": 0.123,
+        "min_ms": 132.7854,
+        "runs": 10
+      },
+      "12MP_tophat_u8_e31": {
+        "median_ms": 344.1938,
+        "iqr_ms": 0.0922,
+        "min_ms": 344.0002,
+        "runs": 10
+      }
     }
-  },
-  "group": "pipeline"
+  }
 }
