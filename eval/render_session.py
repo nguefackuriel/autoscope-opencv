@@ -119,8 +119,13 @@ def frames(session: str, steps: list[dict], scorer) -> list[np.ndarray]:
         move = step.get("move", {})
 
         x = 30 + IMG_W + 48
-        _font(frame, f"FIELD {i} OF {len(counted)}", (x, 110), 0.5, MUTED)
-        _font(frame, step["image"], (x, 140), 0.46, MUTED)
+        # The patient goes on the frame, not only in the page caption. One GIF
+        # runs four sessions back to back and the slide changing is the whole
+        # point of it; without this the viewer sees the numbers jump and has no
+        # way to know why.
+        _font(frame, session, (x, 92), 0.62, INK, 2)
+        _font(frame, f"FIELD {i} OF {len(counted)}", (x, 124), 0.5, MUTED)
+        _font(frame, step["image"], (x, 150), 0.46, MUTED)
 
         cv.circle(frame, (x + 10, 196), 8, FOUND, 2, cv.LINE_AA)
         _font(frame, f"{result.parasites} parasites", (x + 32, 202), 0.66, FOUND)
@@ -221,7 +226,12 @@ def _steps_from_arm(session: str, arm: str) -> list[dict]:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--session", default="TF101_233")
+    ap.add_argument("--session", default="TF101_233",
+                    help="one session, or several comma-separated. With several "
+                         "and --gif you also get one gif running them back to "
+                         "back, which is the asset the video wants: the agent "
+                         "spending three fields on one slide and eleven on "
+                         "another is only legible side by side.")
     ap.add_argument("--arm", default="bedrock/found",
                     help="which arm's run to draw, from agent_eval.json")
     ap.add_argument("--from-api", metavar="URL",
@@ -234,31 +244,82 @@ def main() -> None:
     ap.add_argument("--out", default=None,
                     help="default: docs/figures/session/<session>")
     ap.add_argument("--gif", action="store_true", help="also write an animated gif")
+    ap.add_argument("--gif-only", action="store_true",
+                    help="build the gifs from the frames already on disk, "
+                         "without re-rendering them")
     ap.add_argument("--seconds", type=float, default=2.2, help="per frame, in the gif")
+    ap.add_argument("--gif-width", type=int, default=0,
+                    help="downscale the gif to this width; 0 keeps full size")
+    ap.add_argument("--hold", type=int, default=2,
+                    help="extra repeats of each session's last frame in the "
+                         "combined gif, so the decision has time to be read")
     args = ap.parse_args()
 
-    if args.from_api:
-        steps = _steps_from_api(args.from_api, args.session)
+    sessions = [s.strip() for s in args.session.split(",") if s.strip()]
+    if len(sessions) > 1 and args.out:
+        raise SystemExit("--out names one directory; drop it when rendering several")
+
+    base = ROOT / "docs" / "figures" / "session"
+    everything = []
+    if args.gif_only:
+        # Re-pace or re-size a gif without re-rendering. Drawing 27 frames means
+        # running count_field on 27 twelve-megapixel captures, about five
+        # minutes, and the thing you actually iterate on is the timing: the
+        # combined gif has to fit the beat it plays under in the video.
+        for session in sessions:
+            out = base / session
+            files = sorted(out.glob("field-*.png"))
+            if not files:
+                raise SystemExit(f"--gif-only but no frames in {out}")
+            everything.append((session, [cv.imread(str(f)) for f in files], out))
+            print(f"{len(files)} frames read from {out}")
     else:
-        steps = _steps_from_arm(args.session, args.arm)
+        scorer = PatchScorer.load()
+        for session in sessions:
+            steps = (_steps_from_api(args.from_api, session) if args.from_api
+                     else _steps_from_arm(session, args.arm))
+            out = Path(args.out) if args.out else base / session
+            out.mkdir(parents=True, exist_ok=True)
+            made = frames(session, steps, scorer)
+            for i, f in enumerate(made):
+                cv.imwrite(str(out / f"field-{i:02d}.png"), f)
+            print(f"{len(made)} frames in {out}")
+            everything.append((session, made, out))
 
-    out = Path(args.out) if args.out else ROOT / "docs" / "figures" / "session" / args.session
-    out.mkdir(parents=True, exist_ok=True)
-    made = frames(args.session, steps, PatchScorer.load())
-    for i, f in enumerate(made):
-        cv.imwrite(str(out / f"field-{i:02d}.png"), f)
-    print(f"{len(made)} frames in {out}")
+    if not args.gif:
+        return
+    try:
+        from PIL import Image
+    except ImportError:
+        raise SystemExit("--gif needs pillow: uv pip install pillow")
 
-    if args.gif and made:
-        try:
-            from PIL import Image
-        except ImportError:
-            raise SystemExit("--gif needs pillow: uv pip install pillow")
-        pil = [Image.fromarray(cv.cvtColor(f, cv.COLOR_BGR2RGB)) for f in made]
-        gif = out.parent / f"{args.session}-agent.gif"
-        pil[0].save(gif, save_all=True, append_images=pil[1:],
-                    duration=int(args.seconds * 1000), loop=0, optimize=True)
-        print(f"gif: {gif} ({gif.stat().st_size / 1e6:.1f} MB)")
+    def write(path: Path, mats, seconds: float) -> None:
+        pil = [Image.fromarray(cv.cvtColor(m, cv.COLOR_BGR2RGB)) for m in mats]
+        if args.gif_width and args.gif_width < pil[0].width:
+            k = args.gif_width / pil[0].width
+            size = (args.gif_width, int(pil[0].height * k))
+            pil = [im.resize(size, Image.LANCZOS) for im in pil]
+        pil[0].save(path, save_all=True, append_images=pil[1:],
+                    duration=int(seconds * 1000), loop=0, optimize=True)
+        print(f"gif: {path} ({path.stat().st_size / 1e6:.1f} MB, {len(pil)} frames)")
+
+    for session, made, out in everything:
+        if made:
+            write(base / f"{session}-agent.gif", made, args.seconds)
+
+    if len(everything) > 1:
+        combined = [m for _, made, _ in everything for m in made]
+        # The last frame of each session is the one that carries the decision,
+        # so it is held longer than the rest. Done by repeating it rather than
+        # with per-frame durations, which several GIF players ignore.
+        held = []
+        for _, made, _ in everything:
+            held.extend(made)
+            if made:
+                held.extend([made[-1]] * args.hold)
+        write(base / "four-sessions.gif", held, args.seconds)
+        print(f"    {len(everything)} sessions, "
+              f"{sum(len(m) for _, m, _ in everything)} fields")
 
 
 if __name__ == "__main__":

@@ -144,6 +144,37 @@ Do not skip this. It is the most persuasive forty seconds in the video.
 > script that produced it, and it is a screening aid, not a diagnostic
 > device. Every result is reviewed by a person.
 
+## The footage of the agent reading
+
+`docs/figures/session/four-sessions.gif`: 49 seconds, the four live AWS sessions
+back to back, which is the length of the 0:55-1:45 beat. Each session's last
+frame is held for 4.2 seconds so the decision can be read. The order is chosen so
+the contrast lands:
+
+| | fields | what it shows |
+|---|---|---|
+| TF41_UT5 | 3 | 164 parasites in the first field; stops at 90,435/uL |
+| TF101_233 | 8 | the ordinary case, settles at 8,601/uL |
+| TF22_C104P65 | 11 | reads everything it has and still straddles a band at 700 |
+| TF150_R5 | 5 | runs out of slide at 288/uL and goes to a person |
+
+The frames are real: the NLM capture, `count_field`'s own detections at the
+shipped threshold, and the move and reason the model gave on Bedrock. Nothing is
+staged and nothing is re-run for the camera.
+
+Rebuild it, or re-pace it for the edit, without re-rendering anything:
+
+    .venv/bin/python eval/render_session.py \
+      --session TF41_UT5,TF101_233,TF22_C104P65,TF150_R5 \
+      --gif --gif-only --seconds 1.4 --gif-width 960
+
+`--gif-only` reads the PNGs already in `docs/figures/session/`, so changing the
+pace costs a second instead of the five minutes it takes to run `count_field`
+over 27 twelve-megapixel captures. Drop `--gif-only` and add
+`--from-api https://fhemydiqba.execute-api.us-east-1.amazonaws.com` to redraw
+them from the live traces. Per-session gifs land beside it as
+`<session>-agent.gif` and are not committed, because that command makes them.
+
 ## Production notes
 
 - **Screen recording at 1440p**, the page in dark mode; it reads better

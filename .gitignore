@@ -56,3 +56,8 @@ weights/
 # docs/report/build_report.py. Committing it would be a second copy of every
 # number, free to go stale against eval/results.
 docs/report/report-print.html
+
+# The per-session gifs are a convenience: the frames beside them are the
+# source, and `--gif --gif-only` rebuilds all four in seconds. four-sessions.gif
+# IS committed, because the video script names it.
+docs/figures/session/*-agent.gif
