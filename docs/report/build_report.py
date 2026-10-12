@@ -112,19 +112,32 @@ footer { margin-top: 9mm; border-top: 1.5pt solid var(--ink); padding-top: 4mm; 
 """
 
 
-def _fmt(v) -> str:
-    """One number, formatted the way a reader expects to see it.
+# How many decimals each figure is worth, by key. Anything not listed has its
+# trailing zeros trimmed.
+#
+# Two opposite mistakes are possible here and this table exists because the
+# report made both. A blanket `:,.3f` printed "70.000% of slides" and "count
+# bias -3.830%", three digits of precision we do not have. Trimming everything
+# instead printed the held-out F1 of 0.7899 as "0.79", dropping a significant
+# figure from the number the whole evaluation turns on. A score keeps its three
+# decimals; a percentage keeps one; a count keeps none.
+_DECIMALS = {
+    "held_f1": 3, "held_precision": 3, "held_recall": 3, "held_ratio_spearman": 3,
+    "candidate_recall": 3, "tz_auc": 3, "tz_auc_density": 3,
+    "pv_f1": 3, "pv_recall": 3, "pv_precision": 3,
+    "pv_score_matched": 3, "pv_score_unmatched": 3,
+    "dec_sensitivity": 2, "dec_specificity": 2, "threshold": 2,
+    "neg_false_per_200": 2,
+}
 
-    Floats get three decimals with the trailing zeros trimmed, so 0.798 stays
-    0.798, a threshold of 0.53 is not printed 0.530, and a percentage of 94.8
-    is not printed 94.800%. The first build of this report did exactly that:
-    every float went through a blanket `:,.3f` and the evaluation section read
-    "70.000% of slides" and "count bias is -3.830%", which is three digits of
-    precision we do not have and did not claim anywhere else.
-    """
+
+def _fmt(v, key: str = "") -> str:
+    """One number, formatted the way a reader of this report expects it."""
     if isinstance(v, bool):
         return str(v)
     if isinstance(v, float):
+        if key in _DECIMALS:
+            return f"{v:,.{_DECIMALS[key]}f}"
         out = f"{v:,.3f}".rstrip("0").rstrip(".")
         return out if out not in ("", "-") else "0"
     if isinstance(v, int):
@@ -232,7 +245,7 @@ def build(f: dict) -> str:
         geo_c7i=f"{geo['c7i_stock']:.2f}",
         cool_vs_stock_pipeline=f"{cool_vs_stock_pipeline:.1f}",
         cand_ratio=f"{cand_ratio:.1f}",
-        **{k: _fmt(v) for k, v in f.items() if not isinstance(v, dict)},
+        **{k: _fmt(v, k) for k, v in f.items() if not isinstance(v, dict)},
         # a few that want their own formatting
         f1=f"{f['held_f1']:.3f}", prec=f"{f['held_precision']:.3f}",
         rec=f"{f['held_recall']:.3f}", pvf1=f"{f['pv_f1']:.3f}",

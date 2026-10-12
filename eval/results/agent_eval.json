@@ -12673,11 +12673,11 @@
   },
   "bedrock": {
     "cache": "agent_bedrock_calls.jsonl",
-    "mode": "record",
+    "mode": "replay",
     "model": "us.anthropic.claude-sonnet-4-6",
     "effort": "low",
-    "recorded_this_run": 138,
-    "served_from_cache": 2882,
-    "live_calls": 138
+    "recorded_this_run": 0,
+    "served_from_cache": 3020,
+    "live_calls": 0
   }
 }

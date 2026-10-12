@@ -3,7 +3,7 @@
   "model": "cnn",
   "patients": 50,
   "fields": 609,
-  "seconds_per_field": 1.72,
+  "seconds_per_field": 2.91,
   "rows": [
     {
       "patient": "TF101_233",
@@ -16,7 +16,7 @@
       "even": 0.9527,
       "debris": 0.8123,
       "usable": true,
-      "seconds": 1.8
+      "seconds": 3.94
     },
     {
       "patient": "TF101_233",
@@ -29,7 +29,7 @@
       "even": 0.9616,
       "debris": 0.7712,
       "usable": true,
-      "seconds": 2.0
+      "seconds": 3.88
     },
     {
       "patient": "TF101_233",
@@ -42,7 +42,7 @@
       "even": 0.9655,
       "debris": 0.7552,
       "usable": true,
-      "seconds": 2.22
+      "seconds": 3.98
     },
     {
       "patient": "TF101_233",
@@ -55,7 +55,7 @@
       "even": 0.9523,
       "debris": 0.7594,
       "usable": true,
-      "seconds": 2.67
+      "seconds": 4.4
     },
     {
       "patient": "TF101_233",
@@ -68,7 +68,7 @@
       "even": 0.968,
       "debris": 0.7695,
       "usable": true,
-      "seconds": 1.42
+      "seconds": 2.52
     },
     {
       "patient": "TF101_233",
@@ -81,7 +81,7 @@
       "even": 0.9676,
       "debris": 0.7365,
       "usable": true,
-      "seconds": 1.72
+      "seconds": 2.7
     },
     {
       "patient": "TF101_233",
@@ -94,7 +94,7 @@
       "even": 0.9794,
       "debris": 0.7949,
       "usable": true,
-      "seconds": 1.64
+      "seconds": 2.74
     },
     {
       "patient": "TF101_233",
@@ -107,7 +107,7 @@
       "even": 0.9686,
       "debris": 0.7977,
       "usable": true,
-      "seconds": 1.93
+      "seconds": 3.58
     },
     {
       "patient": "TF101_233",
@@ -120,7 +120,7 @@
       "even": 0.9735,
       "debris": 0.7854,
       "usable": true,
-      "seconds": 1.99
+      "seconds": 3.81
     },
     {
       "patient": "TF101_233",
@@ -133,7 +133,7 @@
       "even": 0.9783,
       "debris": 0.8003,
       "usable": true,
-      "seconds": 2.92
+      "seconds": 4.59
     },
     {
       "patient": "TF101_233",
@@ -146,7 +146,7 @@
       "even": 0.9779,
       "debris": 0.7977,
       "usable": true,
-      "seconds": 2.47
+      "seconds": 3.77
     },
     {
       "patient": "TF101_233",
@@ -159,7 +159,7 @@
       "even": 0.978,
       "debris": 0.7862,
       "usable": true,
-      "seconds": 2.64
+      "seconds": 5.59
     },
     {
       "patient": "TF101_233",
@@ -172,7 +172,7 @@
       "even": 0.9757,
       "debris": 0.7998,
       "usable": true,
-      "seconds": 2.22
+      "seconds": 4.1
     },
     {
       "patient": "TF101_233",
@@ -185,7 +185,7 @@
       "even": 0.9695,
       "debris": 0.8179,
       "usable": true,
-      "seconds": 1.78
+      "seconds": 4.17
     },
     {
       "patient": "TF107_249",
@@ -198,7 +198,7 @@
       "even": 0.986,
       "debris": 0.8103,
       "usable": true,
-      "seconds": 1.12
+      "seconds": 3.97
     },
     {
       "patient": "TF107_249",
@@ -211,7 +211,7 @@
       "even": 0.9784,
       "debris": 0.7078,
       "usable": true,
-      "seconds": 1.89
+      "seconds": 5.08
     },
     {
       "patient": "TF107_249",
@@ -224,7 +224,7 @@
       "even": 0.9744,
       "debris": 0.6945,
       "usable": true,
-      "seconds": 3.23
+      "seconds": 4.82
     },
     {
       "patient": "TF107_249",
@@ -237,7 +237,7 @@
       "even": 0.9665,
       "debris": 0.7067,
       "usable": true,
-      "seconds": 2.5
+      "seconds": 4.2
     },
     {
       "patient": "TF107_249",
@@ -250,7 +250,7 @@
       "even": 0.9565,
       "debris": 0.7177,
       "usable": true,
-      "seconds": 2.92
+      "seconds": 6.06
     },
     {
       "patient": "TF107_249",
@@ -263,7 +263,7 @@
       "even": 0.9694,
       "debris": 0.6748,
       "usable": true,
-      "seconds": 2.05
+      "seconds": 4.42
     },
     {
       "patient": "TF107_249",
@@ -276,7 +276,7 @@
       "even": 0.9633,
       "debris": 0.7077,
       "usable": true,
-      "seconds": 2.15
+      "seconds": 5.16
     },
     {
       "patient": "TF107_249",
@@ -289,7 +289,7 @@
       "even": 0.9722,
       "debris": 0.6296,
       "usable": true,
-      "seconds": 2.26
+      "seconds": 4.58
     },
     {
       "patient": "TF107_249",
@@ -302,7 +302,7 @@
       "even": 0.9763,
       "debris": 0.7261,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 3.78
     },
     {
       "patient": "TF107_249",
@@ -315,7 +315,7 @@
       "even": 0.9816,
       "debris": 0.7188,
       "usable": true,
-      "seconds": 1.83
+      "seconds": 3.61
     },
     {
       "patient": "TF107_249",
@@ -328,7 +328,7 @@
       "even": 0.9729,
       "debris": 0.7729,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 2.53
     },
     {
       "patient": "TF107_249",
@@ -341,7 +341,7 @@
       "even": 0.9686,
       "debris": 0.7148,
       "usable": true,
-      "seconds": 1.95
+      "seconds": 4.53
     },
     {
       "patient": "TF107_249",
@@ -354,7 +354,7 @@
       "even": 0.9755,
       "debris": 0.7109,
       "usable": true,
-      "seconds": 1.99
+      "seconds": 4.48
     },
     {
       "patient": "TF107_249",
@@ -367,7 +367,7 @@
       "even": 0.9723,
       "debris": 0.6776,
       "usable": true,
-      "seconds": 1.87
+      "seconds": 4.44
     },
     {
       "patient": "TF10_C65P26",
@@ -380,7 +380,7 @@
       "even": 0.9576,
       "debris": 0.6286,
       "usable": true,
-      "seconds": 1.65
+      "seconds": 3.42
     },
     {
       "patient": "TF10_C65P26",
@@ -393,7 +393,7 @@
       "even": 0.9521,
       "debris": 0.6851,
       "usable": true,
-      "seconds": 1.87
+      "seconds": 3.46
     },
     {
       "patient": "TF10_C65P26",
@@ -406,7 +406,7 @@
       "even": 0.957,
       "debris": 0.6785,
       "usable": true,
-      "seconds": 2.37
+      "seconds": 4.53
     },
     {
       "patient": "TF10_C65P26",
@@ -419,7 +419,7 @@
       "even": 0.9584,
       "debris": 0.6473,
       "usable": true,
-      "seconds": 1.8
+      "seconds": 3.23
     },
     {
       "patient": "TF10_C65P26",
@@ -432,7 +432,7 @@
       "even": 0.9399,
       "debris": 0.6311,
       "usable": true,
-      "seconds": 1.57
+      "seconds": 4.24
     },
     {
       "patient": "TF10_C65P26",
@@ -445,7 +445,7 @@
       "even": 0.9596,
       "debris": 0.581,
       "usable": true,
-      "seconds": 2.03
+      "seconds": 4.52
     },
     {
       "patient": "TF10_C65P26",
@@ -458,7 +458,7 @@
       "even": 0.9589,
       "debris": 0.551,
       "usable": true,
-      "seconds": 2.54
+      "seconds": 3.17
     },
     {
       "patient": "TF10_C65P26",
@@ -471,7 +471,7 @@
       "even": 0.9431,
       "debris": 0.6203,
       "usable": true,
-      "seconds": 2.66
+      "seconds": 3.51
     },
     {
       "patient": "TF10_C65P26",
@@ -484,7 +484,7 @@
       "even": 0.9562,
       "debris": 0.5765,
       "usable": true,
-      "seconds": 2.69
+      "seconds": 2.88
     },
     {
       "patient": "TF10_C65P26",
@@ -497,7 +497,7 @@
       "even": 0.959,
       "debris": 0.5748,
       "usable": true,
-      "seconds": 2.39
+      "seconds": 3.93
     },
     {
       "patient": "TF10_C65P26",
@@ -510,7 +510,7 @@
       "even": 0.9606,
       "debris": 0.5943,
       "usable": true,
-      "seconds": 2.74
+      "seconds": 4.88
     },
     {
       "patient": "TF110_270",
@@ -523,7 +523,7 @@
       "even": 0.9708,
       "debris": 0.6426,
       "usable": true,
-      "seconds": 1.41
+      "seconds": 2.16
     },
     {
       "patient": "TF110_270",
@@ -536,7 +536,7 @@
       "even": 0.9668,
       "debris": 0.704,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 4.64
     },
     {
       "patient": "TF110_270",
@@ -549,7 +549,7 @@
       "even": 0.9734,
       "debris": 0.6409,
       "usable": true,
-      "seconds": 1.28
+      "seconds": 1.96
     },
     {
       "patient": "TF110_270",
@@ -562,7 +562,7 @@
       "even": 0.9618,
       "debris": 0.755,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 2.95
     },
     {
       "patient": "TF110_270",
@@ -575,7 +575,7 @@
       "even": 0.957,
       "debris": 0.7499,
       "usable": true,
-      "seconds": 1.22
+      "seconds": 2.52
     },
     {
       "patient": "TF110_270",
@@ -588,7 +588,7 @@
       "even": 0.964,
       "debris": 0.6953,
       "usable": true,
-      "seconds": 1.14
+      "seconds": 2.99
     },
     {
       "patient": "TF111_238",
@@ -601,7 +601,7 @@
       "even": 0.9849,
       "debris": 0.7215,
       "usable": true,
-      "seconds": 1.92
+      "seconds": 6.11
     },
     {
       "patient": "TF111_238",
@@ -614,7 +614,7 @@
       "even": 0.9806,
       "debris": 0.6752,
       "usable": true,
-      "seconds": 1.74
+      "seconds": 4.01
     },
     {
       "patient": "TF111_238",
@@ -627,7 +627,7 @@
       "even": 0.9812,
       "debris": 0.6531,
       "usable": true,
-      "seconds": 1.64
+      "seconds": 3.95
     },
     {
       "patient": "TF111_238",
@@ -640,7 +640,7 @@
       "even": 0.9858,
       "debris": 0.7203,
       "usable": true,
-      "seconds": 2.16
+      "seconds": 5.55
     },
     {
       "patient": "TF111_238",
@@ -653,7 +653,7 @@
       "even": 0.9884,
       "debris": 0.76,
       "usable": true,
-      "seconds": 1.62
+      "seconds": 3.1
     },
     {
       "patient": "TF111_238",
@@ -666,7 +666,7 @@
       "even": 0.9878,
       "debris": 0.7216,
       "usable": true,
-      "seconds": 1.74
+      "seconds": 4.6
     },
     {
       "patient": "TF111_238",
@@ -679,7 +679,7 @@
       "even": 0.9682,
       "debris": 0.7343,
       "usable": true,
-      "seconds": 2.04
+      "seconds": 3.67
     },
     {
       "patient": "TF111_238",
@@ -692,7 +692,7 @@
       "even": 0.9723,
       "debris": 0.7013,
       "usable": true,
-      "seconds": 2.13
+      "seconds": 4.19
     },
     {
       "patient": "TF111_238",
@@ -705,7 +705,7 @@
       "even": 0.9766,
       "debris": 0.7248,
       "usable": true,
-      "seconds": 2.9
+      "seconds": 14.49
     },
     {
       "patient": "TF111_238",
@@ -718,7 +718,7 @@
       "even": 0.9694,
       "debris": 0.7028,
       "usable": true,
-      "seconds": 2.03
+      "seconds": 14.97
     },
     {
       "patient": "TF111_238",
@@ -731,7 +731,7 @@
       "even": 0.971,
       "debris": 0.7197,
       "usable": true,
-      "seconds": 2.66
+      "seconds": 16.33
     },
     {
       "patient": "TF111_238",
@@ -744,7 +744,7 @@
       "even": 0.9716,
       "debris": 0.7242,
       "usable": true,
-      "seconds": 2.13
+      "seconds": 7.81
     },
     {
       "patient": "TF117_R1",
@@ -757,7 +757,7 @@
       "even": 0.9575,
       "debris": 0.6852,
       "usable": true,
-      "seconds": 1.94
+      "seconds": 5.21
     },
     {
       "patient": "TF117_R1",
@@ -770,7 +770,7 @@
       "even": 0.9256,
       "debris": 0.6891,
       "usable": true,
-      "seconds": 1.6
+      "seconds": 3.6
     },
     {
       "patient": "TF117_R1",
@@ -783,7 +783,7 @@
       "even": 0.9034,
       "debris": 0.6509,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 3.75
     },
     {
       "patient": "TF117_R1",
@@ -796,7 +796,7 @@
       "even": 0.9357,
       "debris": 0.6913,
       "usable": true,
-      "seconds": 1.49
+      "seconds": 4.86
     },
     {
       "patient": "TF117_R1",
@@ -809,7 +809,7 @@
       "even": 0.9428,
       "debris": 0.6943,
       "usable": true,
-      "seconds": 1.38
+      "seconds": 5.17
     },
     {
       "patient": "TF117_R1",
@@ -822,7 +822,7 @@
       "even": 0.9388,
       "debris": 0.6602,
       "usable": true,
-      "seconds": 1.67
+      "seconds": 4.61
     },
     {
       "patient": "TF117_R1",
@@ -835,7 +835,7 @@
       "even": 0.9438,
       "debris": 0.643,
       "usable": true,
-      "seconds": 1.45
+      "seconds": 3.05
     },
     {
       "patient": "TF117_R1",
@@ -848,7 +848,7 @@
       "even": 0.9484,
       "debris": 0.6837,
       "usable": true,
-      "seconds": 1.97
+      "seconds": 3.56
     },
     {
       "patient": "TF122_1533R",
@@ -861,7 +861,7 @@
       "even": 0.9649,
       "debris": 0.818,
       "usable": true,
-      "seconds": 0.94
+      "seconds": 2.21
     },
     {
       "patient": "TF122_1533R",
@@ -874,7 +874,7 @@
       "even": 0.971,
       "debris": 0.8325,
       "usable": true,
-      "seconds": 1.08
+      "seconds": 2.74
     },
     {
       "patient": "TF122_1533R",
@@ -887,7 +887,7 @@
       "even": 0.9428,
       "debris": 0.7569,
       "usable": true,
-      "seconds": 1.58
+      "seconds": 2.72
     },
     {
       "patient": "TF122_1533R",
@@ -900,7 +900,7 @@
       "even": 0.967,
       "debris": 0.8144,
       "usable": true,
-      "seconds": 1.01
+      "seconds": 1.81
     },
     {
       "patient": "TF122_1533R",
@@ -913,7 +913,7 @@
       "even": 0.9646,
       "debris": 0.784,
       "usable": true,
-      "seconds": 0.96
+      "seconds": 1.42
     },
     {
       "patient": "TF122_1533R",
@@ -926,7 +926,7 @@
       "even": 0.9631,
       "debris": 0.7686,
       "usable": true,
-      "seconds": 0.87
+      "seconds": 1.35
     },
     {
       "patient": "TF122_1533R",
@@ -939,7 +939,7 @@
       "even": 0.9728,
       "debris": 0.8174,
       "usable": true,
-      "seconds": 0.86
+      "seconds": 1.48
     },
     {
       "patient": "TF122_1533R",
@@ -952,7 +952,7 @@
       "even": 0.9651,
       "debris": 0.8051,
       "usable": true,
-      "seconds": 0.89
+      "seconds": 1.68
     },
     {
       "patient": "TF122_1533R",
@@ -965,7 +965,7 @@
       "even": 0.9672,
       "debris": 0.8499,
       "usable": true,
-      "seconds": 0.92
+      "seconds": 1.64
     },
     {
       "patient": "TF122_1533R",
@@ -978,7 +978,7 @@
       "even": 0.9629,
       "debris": 0.811,
       "usable": true,
-      "seconds": 0.96
+      "seconds": 1.53
     },
     {
       "patient": "TF122_1533R",
@@ -991,7 +991,7 @@
       "even": 0.9494,
       "debris": 0.8234,
       "usable": true,
-      "seconds": 1.04
+      "seconds": 1.69
     },
     {
       "patient": "TF122_1533R",
@@ -1004,7 +1004,7 @@
       "even": 0.9676,
       "debris": 0.8189,
       "usable": true,
-      "seconds": 0.92
+      "seconds": 2.02
     },
     {
       "patient": "TF122_1533R",
@@ -1017,7 +1017,7 @@
       "even": 0.9417,
       "debris": 0.781,
       "usable": true,
-      "seconds": 0.87
+      "seconds": 1.6
     },
     {
       "patient": "TF122_1533R",
@@ -1030,7 +1030,7 @@
       "even": 0.9697,
       "debris": 0.8203,
       "usable": true,
-      "seconds": 0.88
+      "seconds": 1.42
     },
     {
       "patient": "TF123_1542",
@@ -1043,7 +1043,7 @@
       "even": 0.9481,
       "debris": 0.746,
       "usable": true,
-      "seconds": 1.88
+      "seconds": 2.91
     },
     {
       "patient": "TF123_1542",
@@ -1056,7 +1056,7 @@
       "even": 0.9581,
       "debris": 0.681,
       "usable": true,
-      "seconds": 1.74
+      "seconds": 3.52
     },
     {
       "patient": "TF123_1542",
@@ -1069,7 +1069,7 @@
       "even": 0.9706,
       "debris": 0.6884,
       "usable": true,
-      "seconds": 1.7
+      "seconds": 3.13
     },
     {
       "patient": "TF123_1542",
@@ -1082,7 +1082,7 @@
       "even": 0.9758,
       "debris": 0.67,
       "usable": true,
-      "seconds": 2.46
+      "seconds": 4.06
     },
     {
       "patient": "TF123_1542",
@@ -1095,7 +1095,7 @@
       "even": 0.9752,
       "debris": 0.6962,
       "usable": true,
-      "seconds": 2.23
+      "seconds": 3.53
     },
     {
       "patient": "TF123_1542",
@@ -1108,7 +1108,7 @@
       "even": 0.9718,
       "debris": 0.673,
       "usable": true,
-      "seconds": 4.0
+      "seconds": 9.57
     },
     {
       "patient": "TF123_1542",
@@ -1121,7 +1121,7 @@
       "even": 0.9728,
       "debris": 0.6652,
       "usable": true,
-      "seconds": 2.46
+      "seconds": 4.36
     },
     {
       "patient": "TF123_1542",
@@ -1134,7 +1134,7 @@
       "even": 0.9749,
       "debris": 0.6275,
       "usable": true,
-      "seconds": 1.66
+      "seconds": 3.26
     },
     {
       "patient": "TF123_1542",
@@ -1147,7 +1147,7 @@
       "even": 0.9764,
       "debris": 0.6922,
       "usable": true,
-      "seconds": 2.11
+      "seconds": 5.99
     },
     {
       "patient": "TF123_1542",
@@ -1160,7 +1160,7 @@
       "even": 0.9669,
       "debris": 0.6856,
       "usable": true,
-      "seconds": 1.91
+      "seconds": 4.49
     },
     {
       "patient": "TF123_1542",
@@ -1173,7 +1173,7 @@
       "even": 0.9799,
       "debris": 0.678,
       "usable": true,
-      "seconds": 2.03
+      "seconds": 3.96
     },
     {
       "patient": "TF123_1542",
@@ -1186,7 +1186,7 @@
       "even": 0.966,
       "debris": 0.6868,
       "usable": true,
-      "seconds": 2.76
+      "seconds": 5.09
     },
     {
       "patient": "TF123_1542",
@@ -1199,7 +1199,7 @@
       "even": 0.975,
       "debris": 0.6846,
       "usable": true,
-      "seconds": 2.58
+      "seconds": 5.02
     },
     {
       "patient": "TF123_1542",
@@ -1212,7 +1212,7 @@
       "even": 0.9689,
       "debris": 0.7252,
       "usable": true,
-      "seconds": 1.8
+      "seconds": 3.07
     },
     {
       "patient": "TF123_1542",
@@ -1225,7 +1225,7 @@
       "even": 0.9648,
       "debris": 0.7008,
       "usable": true,
-      "seconds": 2.15
+      "seconds": 2.73
     },
     {
       "patient": "TF123_1542",
@@ -1238,7 +1238,7 @@
       "even": 0.9656,
       "debris": 0.6771,
       "usable": true,
-      "seconds": 2.36
+      "seconds": 3.07
     },
     {
       "patient": "TF124_S540",
@@ -1251,7 +1251,7 @@
       "even": 0.9497,
       "debris": 0.6265,
       "usable": true,
-      "seconds": 1.74
+      "seconds": 2.02
     },
     {
       "patient": "TF124_S540",
@@ -1264,7 +1264,7 @@
       "even": 0.9709,
       "debris": 0.6781,
       "usable": true,
-      "seconds": 1.73
+      "seconds": 1.88
     },
     {
       "patient": "TF124_S540",
@@ -1277,7 +1277,7 @@
       "even": 0.9668,
       "debris": 0.676,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 2.09
     },
     {
       "patient": "TF124_S540",
@@ -1290,7 +1290,7 @@
       "even": 0.9539,
       "debris": 0.6662,
       "usable": true,
-      "seconds": 1.42
+      "seconds": 1.93
     },
     {
       "patient": "TF124_S540",
@@ -1303,7 +1303,7 @@
       "even": 0.9495,
       "debris": 0.6217,
       "usable": true,
-      "seconds": 1.31
+      "seconds": 1.61
     },
     {
       "patient": "TF124_S540",
@@ -1316,7 +1316,7 @@
       "even": 0.9636,
       "debris": 0.6804,
       "usable": true,
-      "seconds": 1.37
+      "seconds": 1.85
     },
     {
       "patient": "TF124_S540",
@@ -1329,7 +1329,7 @@
       "even": 0.96,
       "debris": 0.742,
       "usable": true,
-      "seconds": 1.36
+      "seconds": 1.86
     },
     {
       "patient": "TF124_S540",
@@ -1342,7 +1342,7 @@
       "even": 0.9807,
       "debris": 0.6737,
       "usable": true,
-      "seconds": 1.83
+      "seconds": 1.82
     },
     {
       "patient": "TF124_S540",
@@ -1355,7 +1355,7 @@
       "even": 0.9779,
       "debris": 0.7588,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 1.77
     },
     {
       "patient": "TF124_S540",
@@ -1368,7 +1368,7 @@
       "even": 0.9818,
       "debris": 0.6799,
       "usable": true,
-      "seconds": 1.17
+      "seconds": 1.94
     },
     {
       "patient": "TF130_S521",
@@ -1381,7 +1381,7 @@
       "even": 0.9457,
       "debris": 0.6115,
       "usable": true,
-      "seconds": 2.44
+      "seconds": 3.53
     },
     {
       "patient": "TF130_S521",
@@ -1394,7 +1394,7 @@
       "even": 0.9543,
       "debris": 0.6043,
       "usable": true,
-      "seconds": 2.03
+      "seconds": 2.62
     },
     {
       "patient": "TF130_S521",
@@ -1407,7 +1407,7 @@
       "even": 0.9542,
       "debris": 0.6039,
       "usable": true,
-      "seconds": 1.46
+      "seconds": 2.5
     },
     {
       "patient": "TF130_S521",
@@ -1420,7 +1420,7 @@
       "even": 0.9176,
       "debris": 0.6843,
       "usable": true,
-      "seconds": 1.41
+      "seconds": 4.32
     },
     {
       "patient": "TF130_S521",
@@ -1433,7 +1433,7 @@
       "even": 0.9444,
       "debris": 0.596,
       "usable": true,
-      "seconds": 1.49
+      "seconds": 7.07
     },
     {
       "patient": "TF130_S521",
@@ -1446,7 +1446,7 @@
       "even": 0.9506,
       "debris": 0.603,
       "usable": true,
-      "seconds": 1.57
+      "seconds": 8.08
     },
     {
       "patient": "TF130_S521",
@@ -1459,7 +1459,7 @@
       "even": 0.9492,
       "debris": 0.6001,
       "usable": true,
-      "seconds": 1.66
+      "seconds": 4.8
     },
     {
       "patient": "TF130_S521",
@@ -1472,7 +1472,7 @@
       "even": 0.9404,
       "debris": 0.5882,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 3.9
     },
     {
       "patient": "TF130_S521",
@@ -1485,7 +1485,7 @@
       "even": 0.9663,
       "debris": 0.6084,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 4.2
     },
     {
       "patient": "TF130_S521",
@@ -1498,7 +1498,7 @@
       "even": 0.9438,
       "debris": 0.6106,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 5.72
     },
     {
       "patient": "TF130_S521",
@@ -1511,7 +1511,7 @@
       "even": 0.9343,
       "debris": 0.57,
       "usable": true,
-      "seconds": 1.54
+      "seconds": 3.16
     },
     {
       "patient": "TF130_S521",
@@ -1524,7 +1524,7 @@
       "even": 0.955,
       "debris": 0.5764,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 3.64
     },
     {
       "patient": "TF130_S521",
@@ -1537,7 +1537,7 @@
       "even": 0.8991,
       "debris": 0.5763,
       "usable": false,
-      "seconds": 1.75
+      "seconds": 3.42
     },
     {
       "patient": "TF130_S521",
@@ -1550,7 +1550,7 @@
       "even": 0.9488,
       "debris": 0.5722,
       "usable": true,
-      "seconds": 1.56
+      "seconds": 2.85
     },
     {
       "patient": "TF132_S527",
@@ -1563,7 +1563,7 @@
       "even": 0.9677,
       "debris": 0.6905,
       "usable": true,
-      "seconds": 1.28
+      "seconds": 1.93
     },
     {
       "patient": "TF132_S527",
@@ -1576,7 +1576,7 @@
       "even": 0.9659,
       "debris": 0.6873,
       "usable": true,
-      "seconds": 1.14
+      "seconds": 1.55
     },
     {
       "patient": "TF132_S527",
@@ -1589,7 +1589,7 @@
       "even": 0.9707,
       "debris": 0.6944,
       "usable": true,
-      "seconds": 1.2
+      "seconds": 2.58
     },
     {
       "patient": "TF132_S527",
@@ -1602,7 +1602,7 @@
       "even": 0.9562,
       "debris": 0.6796,
       "usable": true,
-      "seconds": 1.21
+      "seconds": 2.2
     },
     {
       "patient": "TF132_S527",
@@ -1615,7 +1615,7 @@
       "even": 0.9705,
       "debris": 0.6755,
       "usable": true,
-      "seconds": 1.07
+      "seconds": 1.68
     },
     {
       "patient": "TF132_S527",
@@ -1628,7 +1628,7 @@
       "even": 0.9696,
       "debris": 0.6832,
       "usable": true,
-      "seconds": 1.12
+      "seconds": 2.05
     },
     {
       "patient": "TF132_S527",
@@ -1641,7 +1641,7 @@
       "even": 0.9586,
       "debris": 0.6495,
       "usable": true,
-      "seconds": 1.18
+      "seconds": 1.85
     },
     {
       "patient": "TF132_S527",
@@ -1654,7 +1654,7 @@
       "even": 0.9804,
       "debris": 0.6943,
       "usable": true,
-      "seconds": 1.01
+      "seconds": 1.26
     },
     {
       "patient": "TF132_S527",
@@ -1667,7 +1667,7 @@
       "even": 0.9682,
       "debris": 0.6837,
       "usable": true,
-      "seconds": 1.09
+      "seconds": 1.75
     },
     {
       "patient": "TF132_S527",
@@ -1680,7 +1680,7 @@
       "even": 0.9733,
       "debris": 0.7144,
       "usable": true,
-      "seconds": 1.15
+      "seconds": 1.77
     },
     {
       "patient": "TF132_S527",
@@ -1693,7 +1693,7 @@
       "even": 0.9819,
       "debris": 0.7153,
       "usable": true,
-      "seconds": 0.98
+      "seconds": 2.69
     },
     {
       "patient": "TF132_S527",
@@ -1706,7 +1706,7 @@
       "even": 0.9636,
       "debris": 0.7073,
       "usable": true,
-      "seconds": 1.27
+      "seconds": 4.67
     },
     {
       "patient": "TF132_S527",
@@ -1719,7 +1719,7 @@
       "even": 0.9664,
       "debris": 0.6463,
       "usable": true,
-      "seconds": 1.62
+      "seconds": 2.37
     },
     {
       "patient": "TF132_S527",
@@ -1732,7 +1732,7 @@
       "even": 0.9744,
       "debris": 0.6554,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 1.77
     },
     {
       "patient": "TF132_S527",
@@ -1745,7 +1745,7 @@
       "even": 0.9615,
       "debris": 0.7384,
       "usable": true,
-      "seconds": 1.36
+      "seconds": 1.85
     },
     {
       "patient": "TF132_S527",
@@ -1758,7 +1758,7 @@
       "even": 0.975,
       "debris": 0.75,
       "usable": true,
-      "seconds": 2.24
+      "seconds": 2.0
     },
     {
       "patient": "TF134_US28",
@@ -1771,7 +1771,7 @@
       "even": 0.98,
       "debris": 0.8116,
       "usable": true,
-      "seconds": 1.56
+      "seconds": 2.09
     },
     {
       "patient": "TF134_US28",
@@ -1784,7 +1784,7 @@
       "even": 0.9831,
       "debris": 0.7591,
       "usable": true,
-      "seconds": 1.4
+      "seconds": 1.81
     },
     {
       "patient": "TF134_US28",
@@ -1797,7 +1797,7 @@
       "even": 0.9802,
       "debris": 0.7858,
       "usable": true,
-      "seconds": 1.15
+      "seconds": 2.95
     },
     {
       "patient": "TF134_US28",
@@ -1810,7 +1810,7 @@
       "even": 0.9845,
       "debris": 0.8016,
       "usable": true,
-      "seconds": 1.45
+      "seconds": 2.43
     },
     {
       "patient": "TF134_US28",
@@ -1823,7 +1823,7 @@
       "even": 0.9886,
       "debris": 0.8082,
       "usable": true,
-      "seconds": 1.54
+      "seconds": 2.03
     },
     {
       "patient": "TF134_US28",
@@ -1836,7 +1836,7 @@
       "even": 0.9835,
       "debris": 0.8185,
       "usable": true,
-      "seconds": 1.28
+      "seconds": 2.78
     },
     {
       "patient": "TF134_US28",
@@ -1849,7 +1849,7 @@
       "even": 0.9785,
       "debris": 0.8641,
       "usable": false,
-      "seconds": 1.46
+      "seconds": 2.77
     },
     {
       "patient": "TF134_US28",
@@ -1862,7 +1862,7 @@
       "even": 0.9804,
       "debris": 0.8495,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 1.96
     },
     {
       "patient": "TF134_US28",
@@ -1875,7 +1875,7 @@
       "even": 0.9806,
       "debris": 0.8335,
       "usable": true,
-      "seconds": 1.13
+      "seconds": 2.02
     },
     {
       "patient": "TF134_US28",
@@ -1888,7 +1888,7 @@
       "even": 0.9785,
       "debris": 0.8218,
       "usable": true,
-      "seconds": 3.05
+      "seconds": 2.17
     },
     {
       "patient": "TF134_US28",
@@ -1901,7 +1901,7 @@
       "even": 0.9816,
       "debris": 0.7214,
       "usable": true,
-      "seconds": 1.66
+      "seconds": 2.13
     },
     {
       "patient": "TF134_US28",
@@ -1914,7 +1914,7 @@
       "even": 0.9838,
       "debris": 0.7971,
       "usable": true,
-      "seconds": 1.72
+      "seconds": 2.34
     },
     {
       "patient": "TF134_US28",
@@ -1927,7 +1927,7 @@
       "even": 0.9815,
       "debris": 0.7852,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 2.05
     },
     {
       "patient": "TF134_US28",
@@ -1940,7 +1940,7 @@
       "even": 0.9804,
       "debris": 0.7769,
       "usable": true,
-      "seconds": 1.27
+      "seconds": 2.24
     },
     {
       "patient": "TF134_US28",
@@ -1953,7 +1953,7 @@
       "even": 0.9819,
       "debris": 0.8185,
       "usable": true,
-      "seconds": 1.53
+      "seconds": 2.58
     },
     {
       "patient": "TF134_US28",
@@ -1966,7 +1966,7 @@
       "even": 0.9797,
       "debris": 0.7312,
       "usable": true,
-      "seconds": 1.22
+      "seconds": 2.53
     },
     {
       "patient": "TF137_US8",
@@ -1979,7 +1979,7 @@
       "even": 0.9693,
       "debris": 0.7055,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 2.47
     },
     {
       "patient": "TF137_US8",
@@ -1992,7 +1992,7 @@
       "even": 0.9695,
       "debris": 0.6173,
       "usable": true,
-      "seconds": 1.53
+      "seconds": 2.61
     },
     {
       "patient": "TF137_US8",
@@ -2005,7 +2005,7 @@
       "even": 0.9408,
       "debris": 0.6742,
       "usable": true,
-      "seconds": 1.63
+      "seconds": 2.79
     },
     {
       "patient": "TF137_US8",
@@ -2018,7 +2018,7 @@
       "even": 0.9659,
       "debris": 0.607,
       "usable": true,
-      "seconds": 1.3
+      "seconds": 2.44
     },
     {
       "patient": "TF137_US8",
@@ -2031,7 +2031,7 @@
       "even": 0.965,
       "debris": 0.6894,
       "usable": true,
-      "seconds": 1.5
+      "seconds": 3.07
     },
     {
       "patient": "TF137_US8",
@@ -2044,7 +2044,7 @@
       "even": 0.9678,
       "debris": 0.6948,
       "usable": true,
-      "seconds": 2.05
+      "seconds": 3.49
     },
     {
       "patient": "TF137_US8",
@@ -2057,7 +2057,7 @@
       "even": 0.9599,
       "debris": 0.736,
       "usable": true,
-      "seconds": 1.46
+      "seconds": 2.95
     },
     {
       "patient": "TF137_US8",
@@ -2070,7 +2070,7 @@
       "even": 0.943,
       "debris": 0.6858,
       "usable": true,
-      "seconds": 1.14
+      "seconds": 2.55
     },
     {
       "patient": "TF137_US8",
@@ -2083,7 +2083,7 @@
       "even": 0.9648,
       "debris": 0.6941,
       "usable": true,
-      "seconds": 1.5
+      "seconds": 2.2
     },
     {
       "patient": "TF137_US8",
@@ -2096,7 +2096,7 @@
       "even": 0.9812,
       "debris": 0.6765,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 3.07
     },
     {
       "patient": "TF137_US8",
@@ -2109,7 +2109,7 @@
       "even": 0.9594,
       "debris": 0.619,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 1.69
     },
     {
       "patient": "TF141_CT12",
@@ -2122,7 +2122,7 @@
       "even": 0.9809,
       "debris": 0.6712,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 1.91
     },
     {
       "patient": "TF141_CT12",
@@ -2135,7 +2135,7 @@
       "even": 0.9845,
       "debris": 0.7498,
       "usable": true,
-      "seconds": 1.32
+      "seconds": 1.95
     },
     {
       "patient": "TF141_CT12",
@@ -2148,7 +2148,7 @@
       "even": 0.9823,
       "debris": 0.722,
       "usable": true,
-      "seconds": 1.4
+      "seconds": 1.91
     },
     {
       "patient": "TF141_CT12",
@@ -2161,7 +2161,7 @@
       "even": 0.9823,
       "debris": 0.6618,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 2.59
     },
     {
       "patient": "TF141_CT12",
@@ -2174,7 +2174,7 @@
       "even": 0.9797,
       "debris": 0.6594,
       "usable": true,
-      "seconds": 1.22
+      "seconds": 2.68
     },
     {
       "patient": "TF141_CT12",
@@ -2187,7 +2187,7 @@
       "even": 0.9804,
       "debris": 0.7226,
       "usable": true,
-      "seconds": 1.57
+      "seconds": 3.4
     },
     {
       "patient": "TF141_CT12",
@@ -2200,7 +2200,7 @@
       "even": 0.9822,
       "debris": 0.7394,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 2.53
     },
     {
       "patient": "TF141_CT12",
@@ -2213,7 +2213,7 @@
       "even": 0.9831,
       "debris": 0.7109,
       "usable": true,
-      "seconds": 1.83
+      "seconds": 2.2
     },
     {
       "patient": "TF141_CT12",
@@ -2226,7 +2226,7 @@
       "even": 0.9744,
       "debris": 0.7278,
       "usable": true,
-      "seconds": 1.54
+      "seconds": 2.14
     },
     {
       "patient": "TF141_CT12",
@@ -2239,7 +2239,7 @@
       "even": 0.9784,
       "debris": 0.6821,
       "usable": true,
-      "seconds": 2.01
+      "seconds": 2.26
     },
     {
       "patient": "TF147_R3",
@@ -2252,7 +2252,7 @@
       "even": 0.9884,
       "debris": 0.699,
       "usable": true,
-      "seconds": 2.16
+      "seconds": 2.61
     },
     {
       "patient": "TF147_R3",
@@ -2265,7 +2265,7 @@
       "even": 0.989,
       "debris": 0.6564,
       "usable": true,
-      "seconds": 2.07
+      "seconds": 2.72
     },
     {
       "patient": "TF147_R3",
@@ -2278,7 +2278,7 @@
       "even": 0.9836,
       "debris": 0.667,
       "usable": true,
-      "seconds": 1.78
+      "seconds": 2.12
     },
     {
       "patient": "TF147_R3",
@@ -2291,7 +2291,7 @@
       "even": 0.9857,
       "debris": 0.6887,
       "usable": true,
-      "seconds": 1.83
+      "seconds": 2.37
     },
     {
       "patient": "TF147_R3",
@@ -2304,7 +2304,7 @@
       "even": 0.9854,
       "debris": 0.7256,
       "usable": true,
-      "seconds": 1.83
+      "seconds": 2.77
     },
     {
       "patient": "TF147_R3",
@@ -2317,7 +2317,7 @@
       "even": 0.9836,
       "debris": 0.6366,
       "usable": true,
-      "seconds": 1.48
+      "seconds": 2.23
     },
     {
       "patient": "TF147_R3",
@@ -2330,7 +2330,7 @@
       "even": 0.991,
       "debris": 0.674,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 3.28
     },
     {
       "patient": "TF147_R3",
@@ -2343,7 +2343,7 @@
       "even": 0.9884,
       "debris": 0.7265,
       "usable": true,
-      "seconds": 1.39
+      "seconds": 1.87
     },
     {
       "patient": "TF147_R3",
@@ -2356,7 +2356,7 @@
       "even": 0.9888,
       "debris": 0.6748,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 2.93
     },
     {
       "patient": "TF147_R3",
@@ -2369,7 +2369,7 @@
       "even": 0.983,
       "debris": 0.6475,
       "usable": true,
-      "seconds": 1.39
+      "seconds": 2.06
     },
     {
       "patient": "TF147_R3",
@@ -2382,7 +2382,7 @@
       "even": 0.983,
       "debris": 0.7103,
       "usable": true,
-      "seconds": 1.64
+      "seconds": 2.56
     },
     {
       "patient": "TF147_R3",
@@ -2395,7 +2395,7 @@
       "even": 0.9877,
       "debris": 0.7562,
       "usable": true,
-      "seconds": 1.91
+      "seconds": 2.71
     },
     {
       "patient": "TF150_R5",
@@ -2408,7 +2408,7 @@
       "even": 0.9543,
       "debris": 0.6748,
       "usable": true,
-      "seconds": 1.88
+      "seconds": 2.94
     },
     {
       "patient": "TF150_R5",
@@ -2421,7 +2421,7 @@
       "even": 0.939,
       "debris": 0.6266,
       "usable": true,
-      "seconds": 1.72
+      "seconds": 2.7
     },
     {
       "patient": "TF150_R5",
@@ -2434,7 +2434,7 @@
       "even": 0.944,
       "debris": 0.6562,
       "usable": true,
-      "seconds": 1.59
+      "seconds": 2.44
     },
     {
       "patient": "TF150_R5",
@@ -2447,7 +2447,7 @@
       "even": 0.9483,
       "debris": 0.6852,
       "usable": true,
-      "seconds": 1.62
+      "seconds": 2.64
     },
     {
       "patient": "TF150_R5",
@@ -2460,7 +2460,7 @@
       "even": 0.9441,
       "debris": 0.6009,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 2.29
     },
     {
       "patient": "TF15_C87P48",
@@ -2473,7 +2473,7 @@
       "even": 0.9631,
       "debris": 0.7091,
       "usable": true,
-      "seconds": 2.15
+      "seconds": 3.2
     },
     {
       "patient": "TF15_C87P48",
@@ -2486,7 +2486,7 @@
       "even": 0.9636,
       "debris": 0.6739,
       "usable": true,
-      "seconds": 2.3
+      "seconds": 3.38
     },
     {
       "patient": "TF15_C87P48",
@@ -2499,7 +2499,7 @@
       "even": 0.9714,
       "debris": 0.7105,
       "usable": true,
-      "seconds": 2.16
+      "seconds": 3.08
     },
     {
       "patient": "TF15_C87P48",
@@ -2512,7 +2512,7 @@
       "even": 0.9625,
       "debris": 0.673,
       "usable": true,
-      "seconds": 2.42
+      "seconds": 4.5
     },
     {
       "patient": "TF15_C87P48",
@@ -2525,7 +2525,7 @@
       "even": 0.9435,
       "debris": 0.6745,
       "usable": true,
-      "seconds": 2.14
+      "seconds": 3.14
     },
     {
       "patient": "TF15_C87P48",
@@ -2538,7 +2538,7 @@
       "even": 0.9612,
       "debris": 0.6801,
       "usable": true,
-      "seconds": 2.24
+      "seconds": 3.49
     },
     {
       "patient": "TF15_C87P48",
@@ -2551,7 +2551,7 @@
       "even": 0.9457,
       "debris": 0.6963,
       "usable": true,
-      "seconds": 2.72
+      "seconds": 3.7
     },
     {
       "patient": "TF15_C87P48",
@@ -2564,7 +2564,7 @@
       "even": 0.9705,
       "debris": 0.6948,
       "usable": true,
-      "seconds": 2.38
+      "seconds": 4.6
     },
     {
       "patient": "TF15_C87P48",
@@ -2577,7 +2577,7 @@
       "even": 0.955,
       "debris": 0.6281,
       "usable": true,
-      "seconds": 2.63
+      "seconds": 3.21
     },
     {
       "patient": "TF15_C87P48",
@@ -2590,7 +2590,7 @@
       "even": 0.9688,
       "debris": 0.6297,
       "usable": true,
-      "seconds": 2.58
+      "seconds": 3.34
     },
     {
       "patient": "TF15_C87P48",
@@ -2603,7 +2603,7 @@
       "even": 0.9686,
       "debris": 0.6331,
       "usable": true,
-      "seconds": 1.98
+      "seconds": 3.19
     },
     {
       "patient": "TF15_C87P48",
@@ -2616,7 +2616,7 @@
       "even": 0.951,
       "debris": 0.6941,
       "usable": true,
-      "seconds": 2.21
+      "seconds": 3.39
     },
     {
       "patient": "TF15_C87P48",
@@ -2629,7 +2629,7 @@
       "even": 0.96,
       "debris": 0.6879,
       "usable": true,
-      "seconds": 2.31
+      "seconds": 3.74
     },
     {
       "patient": "TF15_C87P48",
@@ -2642,7 +2642,7 @@
       "even": 0.972,
       "debris": 0.6505,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 3.25
     },
     {
       "patient": "TF15_C87P48",
@@ -2655,7 +2655,7 @@
       "even": 0.955,
       "debris": 0.6748,
       "usable": true,
-      "seconds": 2.16
+      "seconds": 3.5
     },
     {
       "patient": "TF15_C87P48",
@@ -2668,7 +2668,7 @@
       "even": 0.955,
       "debris": 0.6501,
       "usable": true,
-      "seconds": 1.88
+      "seconds": 2.88
     },
     {
       "patient": "TF15_C87P48",
@@ -2681,7 +2681,7 @@
       "even": 0.9525,
       "debris": 0.6543,
       "usable": true,
-      "seconds": 2.09
+      "seconds": 3.32
     },
     {
       "patient": "TF15_C87P48",
@@ -2694,7 +2694,7 @@
       "even": 0.9523,
       "debris": 0.6714,
       "usable": true,
-      "seconds": 2.59
+      "seconds": 3.66
     },
     {
       "patient": "TF15_C87P48",
@@ -2707,7 +2707,7 @@
       "even": 0.9416,
       "debris": 0.7086,
       "usable": true,
-      "seconds": 2.31
+      "seconds": 4.85
     },
     {
       "patient": "TF15_C87P48",
@@ -2720,7 +2720,7 @@
       "even": 0.9706,
       "debris": 0.6918,
       "usable": true,
-      "seconds": 2.29
+      "seconds": 3.57
     },
     {
       "patient": "TF15_C87P48",
@@ -2733,7 +2733,7 @@
       "even": 0.9514,
       "debris": 0.647,
       "usable": true,
-      "seconds": 2.28
+      "seconds": 3.82
     },
     {
       "patient": "TF1N_1522",
@@ -2746,7 +2746,7 @@
       "even": 0.9647,
       "debris": 0.7355,
       "usable": true,
-      "seconds": 1.86
+      "seconds": 2.66
     },
     {
       "patient": "TF1N_1522",
@@ -2759,7 +2759,7 @@
       "even": 0.9672,
       "debris": 0.6981,
       "usable": true,
-      "seconds": 1.52
+      "seconds": 2.13
     },
     {
       "patient": "TF1N_1522",
@@ -2772,7 +2772,7 @@
       "even": 0.964,
       "debris": 0.6862,
       "usable": true,
-      "seconds": 2.16
+      "seconds": 3.21
     },
     {
       "patient": "TF1N_1522",
@@ -2785,7 +2785,7 @@
       "even": 0.97,
       "debris": 0.6911,
       "usable": true,
-      "seconds": 1.96
+      "seconds": 3.44
     },
     {
       "patient": "TF1N_1522",
@@ -2798,7 +2798,7 @@
       "even": 0.9698,
       "debris": 0.7197,
       "usable": true,
-      "seconds": 1.99
+      "seconds": 2.91
     },
     {
       "patient": "TF1N_1522",
@@ -2811,7 +2811,7 @@
       "even": 0.9689,
       "debris": 0.7308,
       "usable": true,
-      "seconds": 2.05
+      "seconds": 2.98
     },
     {
       "patient": "TF1N_1522",
@@ -2824,7 +2824,7 @@
       "even": 0.9472,
       "debris": 0.7061,
       "usable": true,
-      "seconds": 1.57
+      "seconds": 2.3
     },
     {
       "patient": "TF1N_1522",
@@ -2837,7 +2837,7 @@
       "even": 0.967,
       "debris": 0.7117,
       "usable": true,
-      "seconds": 2.46
+      "seconds": 3.76
     },
     {
       "patient": "TF1N_1522",
@@ -2850,7 +2850,7 @@
       "even": 0.9638,
       "debris": 0.7083,
       "usable": true,
-      "seconds": 2.0
+      "seconds": 2.87
     },
     {
       "patient": "TF1N_1522",
@@ -2863,7 +2863,7 @@
       "even": 0.9728,
       "debris": 0.7096,
       "usable": true,
-      "seconds": 2.1
+      "seconds": 2.94
     },
     {
       "patient": "TF1N_1522",
@@ -2876,7 +2876,7 @@
       "even": 0.9698,
       "debris": 0.7216,
       "usable": true,
-      "seconds": 1.89
+      "seconds": 3.11
     },
     {
       "patient": "TF1N_1522",
@@ -2889,7 +2889,7 @@
       "even": 0.9357,
       "debris": 0.7182,
       "usable": true,
-      "seconds": 1.59
+      "seconds": 2.33
     },
     {
       "patient": "TF22_C104P65",
@@ -2902,7 +2902,7 @@
       "even": 0.9626,
       "debris": 0.6877,
       "usable": true,
-      "seconds": 2.03
+      "seconds": 3.25
     },
     {
       "patient": "TF22_C104P65",
@@ -2915,7 +2915,7 @@
       "even": 0.9348,
       "debris": 0.6797,
       "usable": true,
-      "seconds": 1.37
+      "seconds": 1.98
     },
     {
       "patient": "TF22_C104P65",
@@ -2928,7 +2928,7 @@
       "even": 0.9691,
       "debris": 0.6791,
       "usable": true,
-      "seconds": 1.5
+      "seconds": 2.02
     },
     {
       "patient": "TF22_C104P65",
@@ -2941,7 +2941,7 @@
       "even": 0.9575,
       "debris": 0.6902,
       "usable": true,
-      "seconds": 1.74
+      "seconds": 2.19
     },
     {
       "patient": "TF22_C104P65",
@@ -2954,7 +2954,7 @@
       "even": 0.9477,
       "debris": 0.6745,
       "usable": true,
-      "seconds": 1.47
+      "seconds": 2.45
     },
     {
       "patient": "TF22_C104P65",
@@ -2967,7 +2967,7 @@
       "even": 0.9428,
       "debris": 0.6893,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 2.0
     },
     {
       "patient": "TF22_C104P65",
@@ -2980,7 +2980,7 @@
       "even": 0.9664,
       "debris": 0.7161,
       "usable": true,
-      "seconds": 1.5
+      "seconds": 2.43
     },
     {
       "patient": "TF22_C104P65",
@@ -2993,7 +2993,7 @@
       "even": 0.9597,
       "debris": 0.6651,
       "usable": true,
-      "seconds": 1.57
+      "seconds": 2.13
     },
     {
       "patient": "TF22_C104P65",
@@ -3006,7 +3006,7 @@
       "even": 0.9625,
       "debris": 0.663,
       "usable": true,
-      "seconds": 1.66
+      "seconds": 3.03
     },
     {
       "patient": "TF22_C104P65",
@@ -3019,7 +3019,7 @@
       "even": 0.9701,
       "debris": 0.655,
       "usable": true,
-      "seconds": 1.45
+      "seconds": 3.69
     },
     {
       "patient": "TF22_C104P65",
@@ -3032,7 +3032,7 @@
       "even": 0.9598,
       "debris": 0.7226,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 3.83
     },
     {
       "patient": "TF24_C67P28",
@@ -3045,7 +3045,7 @@
       "even": 0.9606,
       "debris": 0.8286,
       "usable": true,
-      "seconds": 2.96
+      "seconds": 3.32
     },
     {
       "patient": "TF24_C67P28",
@@ -3058,7 +3058,7 @@
       "even": 0.9428,
       "debris": 0.613,
       "usable": true,
-      "seconds": 1.74
+      "seconds": 2.22
     },
     {
       "patient": "TF24_C67P28",
@@ -3071,7 +3071,7 @@
       "even": 0.9415,
       "debris": 0.564,
       "usable": true,
-      "seconds": 1.47
+      "seconds": 2.06
     },
     {
       "patient": "TF24_C67P28",
@@ -3084,7 +3084,7 @@
       "even": 0.9609,
       "debris": 0.5497,
       "usable": true,
-      "seconds": 1.46
+      "seconds": 2.11
     },
     {
       "patient": "TF24_C67P28",
@@ -3097,7 +3097,7 @@
       "even": 0.9412,
       "debris": 0.5698,
       "usable": true,
-      "seconds": 1.23
+      "seconds": 2.31
     },
     {
       "patient": "TF24_C67P28",
@@ -3110,7 +3110,7 @@
       "even": 0.9445,
       "debris": 0.5558,
       "usable": true,
-      "seconds": 1.56
+      "seconds": 2.27
     },
     {
       "patient": "TF24_C67P28",
@@ -3123,7 +3123,7 @@
       "even": 0.9322,
       "debris": 0.5356,
       "usable": true,
-      "seconds": 1.39
+      "seconds": 2.53
     },
     {
       "patient": "TF24_C67P28",
@@ -3136,7 +3136,7 @@
       "even": 0.9247,
       "debris": 0.5591,
       "usable": true,
-      "seconds": 1.56
+      "seconds": 2.54
     },
     {
       "patient": "TF24_C67P28",
@@ -3149,7 +3149,7 @@
       "even": 0.9292,
       "debris": 0.5595,
       "usable": true,
-      "seconds": 1.55
+      "seconds": 2.22
     },
     {
       "patient": "TF24_C67P28",
@@ -3162,7 +3162,7 @@
       "even": 0.9511,
       "debris": 0.5748,
       "usable": true,
-      "seconds": 1.63
+      "seconds": 2.55
     },
     {
       "patient": "TF24_C67P28",
@@ -3175,7 +3175,7 @@
       "even": 0.9001,
       "debris": 0.5654,
       "usable": true,
-      "seconds": 1.6
+      "seconds": 2.38
     },
     {
       "patient": "TF24_C67P28",
@@ -3188,7 +3188,7 @@
       "even": 0.9515,
       "debris": 0.5421,
       "usable": true,
-      "seconds": 1.91
+      "seconds": 2.98
     },
     {
       "patient": "TF24_C67P28",
@@ -3201,7 +3201,7 @@
       "even": 0.9369,
       "debris": 0.5282,
       "usable": true,
-      "seconds": 1.59
+      "seconds": 2.16
     },
     {
       "patient": "TF24_C67P28",
@@ -3214,7 +3214,7 @@
       "even": 0.9529,
       "debris": 0.6037,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 2.19
     },
     {
       "patient": "TF24_C67P28",
@@ -3227,7 +3227,7 @@
       "even": 0.9346,
       "debris": 0.527,
       "usable": true,
-      "seconds": 1.66
+      "seconds": 2.6
     },
     {
       "patient": "TF28W13B15A",
@@ -3240,7 +3240,7 @@
       "even": 0.9325,
       "debris": 0.6922,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 2.21
     },
     {
       "patient": "TF28W13B15A",
@@ -3253,7 +3253,7 @@
       "even": 0.917,
       "debris": 0.661,
       "usable": true,
-      "seconds": 1.28
+      "seconds": 1.69
     },
     {
       "patient": "TF28W13B15A",
@@ -3266,7 +3266,7 @@
       "even": 0.9385,
       "debris": 0.6887,
       "usable": true,
-      "seconds": 1.43
+      "seconds": 1.8
     },
     {
       "patient": "TF28W13B15A",
@@ -3279,7 +3279,7 @@
       "even": 0.9024,
       "debris": 0.6794,
       "usable": true,
-      "seconds": 1.28
+      "seconds": 1.67
     },
     {
       "patient": "TF28W13B15A",
@@ -3292,7 +3292,7 @@
       "even": 0.9005,
       "debris": 0.675,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 1.87
     },
     {
       "patient": "TF28W13B15A",
@@ -3305,7 +3305,7 @@
       "even": 0.9686,
       "debris": 0.6944,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 1.9
     },
     {
       "patient": "TF28W13B15A",
@@ -3318,7 +3318,7 @@
       "even": 0.9398,
       "debris": 0.7371,
       "usable": true,
-      "seconds": 1.38
+      "seconds": 2.01
     },
     {
       "patient": "TF28W13B15A",
@@ -3331,7 +3331,7 @@
       "even": 0.9497,
       "debris": 0.7149,
       "usable": true,
-      "seconds": 1.83
+      "seconds": 2.84
     },
     {
       "patient": "TF28W13B15A",
@@ -3344,7 +3344,7 @@
       "even": 0.965,
       "debris": 0.7031,
       "usable": true,
-      "seconds": 1.67
+      "seconds": 2.44
     },
     {
       "patient": "TF28W13B15A",
@@ -3357,7 +3357,7 @@
       "even": 0.9575,
       "debris": 0.7152,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 1.88
     },
     {
       "patient": "TF29_15_1_36",
@@ -3370,7 +3370,7 @@
       "even": 0.953,
       "debris": 0.5599,
       "usable": true,
-      "seconds": 1.7
+      "seconds": 2.73
     },
     {
       "patient": "TF29_15_1_36",
@@ -3383,7 +3383,7 @@
       "even": 0.9703,
       "debris": 0.7121,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 2.15
     },
     {
       "patient": "TF29_15_1_36",
@@ -3396,7 +3396,7 @@
       "even": 0.9637,
       "debris": 0.6227,
       "usable": true,
-      "seconds": 1.43
+      "seconds": 1.9
     },
     {
       "patient": "TF29_15_1_36",
@@ -3409,7 +3409,7 @@
       "even": 0.9545,
       "debris": 0.5829,
       "usable": true,
-      "seconds": 1.41
+      "seconds": 1.89
     },
     {
       "patient": "TF29_15_1_36",
@@ -3422,7 +3422,7 @@
       "even": 0.9627,
       "debris": 0.4942,
       "usable": true,
-      "seconds": 1.41
+      "seconds": 1.67
     },
     {
       "patient": "TF29_15_1_36",
@@ -3435,7 +3435,7 @@
       "even": 0.9512,
       "debris": 0.6054,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 1.74
     },
     {
       "patient": "TF29_15_1_36",
@@ -3448,7 +3448,7 @@
       "even": 0.9577,
       "debris": 0.6543,
       "usable": true,
-      "seconds": 1.48
+      "seconds": 1.97
     },
     {
       "patient": "TF29_15_1_36",
@@ -3461,7 +3461,7 @@
       "even": 0.9494,
       "debris": 0.6445,
       "usable": true,
-      "seconds": 1.48
+      "seconds": 2.09
     },
     {
       "patient": "TF29_15_1_36",
@@ -3474,7 +3474,7 @@
       "even": 0.9498,
       "debris": 0.6863,
       "usable": true,
-      "seconds": 1.48
+      "seconds": 2.22
     },
     {
       "patient": "TF29_15_1_36",
@@ -3487,7 +3487,7 @@
       "even": 0.9513,
       "debris": 0.6371,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 2.11
     },
     {
       "patient": "TF2N_159R",
@@ -3500,7 +3500,7 @@
       "even": 0.8675,
       "debris": 0.7007,
       "usable": false,
-      "seconds": 1.48
+      "seconds": 1.83
     },
     {
       "patient": "TF2N_159R",
@@ -3513,7 +3513,7 @@
       "even": 0.8916,
       "debris": 0.6778,
       "usable": false,
-      "seconds": 1.11
+      "seconds": 2.4
     },
     {
       "patient": "TF2N_159R",
@@ -3526,7 +3526,7 @@
       "even": 0.9286,
       "debris": 0.6713,
       "usable": true,
-      "seconds": 1.71
+      "seconds": 5.09
     },
     {
       "patient": "TF2N_159R",
@@ -3539,7 +3539,7 @@
       "even": 0.8844,
       "debris": 0.655,
       "usable": false,
-      "seconds": 1.08
+      "seconds": 1.93
     },
     {
       "patient": "TF2N_159R",
@@ -3552,7 +3552,7 @@
       "even": 0.9128,
       "debris": 0.6788,
       "usable": true,
-      "seconds": 1.88
+      "seconds": 2.51
     },
     {
       "patient": "TF2N_159R",
@@ -3565,7 +3565,7 @@
       "even": 0.9028,
       "debris": 0.6449,
       "usable": true,
-      "seconds": 1.41
+      "seconds": 2.5
     },
     {
       "patient": "TF2N_159R",
@@ -3578,7 +3578,7 @@
       "even": 0.9175,
       "debris": 0.6299,
       "usable": true,
-      "seconds": 1.37
+      "seconds": 2.47
     },
     {
       "patient": "TF2N_159R",
@@ -3591,7 +3591,7 @@
       "even": 0.8935,
       "debris": 0.6052,
       "usable": false,
-      "seconds": 1.49
+      "seconds": 2.7
     },
     {
       "patient": "TF2N_159R",
@@ -3604,7 +3604,7 @@
       "even": 0.8847,
       "debris": 0.6164,
       "usable": false,
-      "seconds": 1.38
+      "seconds": 2.22
     },
     {
       "patient": "TF2N_159R",
@@ -3617,7 +3617,7 @@
       "even": 0.8977,
       "debris": 0.635,
       "usable": false,
-      "seconds": 1.38
+      "seconds": 2.01
     },
     {
       "patient": "TF2N_159R",
@@ -3630,7 +3630,7 @@
       "even": 0.9061,
       "debris": 0.6168,
       "usable": true,
-      "seconds": 1.53
+      "seconds": 2.61
     },
     {
       "patient": "TF2N_159R",
@@ -3643,7 +3643,7 @@
       "even": 0.8953,
       "debris": 0.6256,
       "usable": false,
-      "seconds": 1.26
+      "seconds": 1.58
     },
     {
       "patient": "TF2N_159R",
@@ -3656,7 +3656,7 @@
       "even": 0.9282,
       "debris": 0.6925,
       "usable": true,
-      "seconds": 1.39
+      "seconds": 2.01
     },
     {
       "patient": "TF2N_159R",
@@ -3669,7 +3669,7 @@
       "even": 0.9081,
       "debris": 0.607,
       "usable": true,
-      "seconds": 1.26
+      "seconds": 1.72
     },
     {
       "patient": "TF34_Sc520",
@@ -3682,7 +3682,7 @@
       "even": 0.9445,
       "debris": 0.6491,
       "usable": true,
-      "seconds": 1.94
+      "seconds": 3.13
     },
     {
       "patient": "TF34_Sc520",
@@ -3695,7 +3695,7 @@
       "even": 0.9423,
       "debris": 0.645,
       "usable": true,
-      "seconds": 1.86
+      "seconds": 2.64
     },
     {
       "patient": "TF34_Sc520",
@@ -3708,7 +3708,7 @@
       "even": 0.9311,
       "debris": 0.6213,
       "usable": true,
-      "seconds": 1.73
+      "seconds": 2.54
     },
     {
       "patient": "TF34_Sc520",
@@ -3721,7 +3721,7 @@
       "even": 0.964,
       "debris": 0.52,
       "usable": true,
-      "seconds": 1.54
+      "seconds": 2.27
     },
     {
       "patient": "TF34_Sc520",
@@ -3734,7 +3734,7 @@
       "even": 0.9637,
       "debris": 0.681,
       "usable": true,
-      "seconds": 1.92
+      "seconds": 3.22
     },
     {
       "patient": "TF34_Sc520",
@@ -3747,7 +3747,7 @@
       "even": 0.9516,
       "debris": 0.6554,
       "usable": true,
-      "seconds": 1.9
+      "seconds": 2.93
     },
     {
       "patient": "TF34_Sc520",
@@ -3760,7 +3760,7 @@
       "even": 0.9412,
       "debris": 0.6305,
       "usable": true,
-      "seconds": 1.62
+      "seconds": 2.59
     },
     {
       "patient": "TF34_Sc520",
@@ -3773,7 +3773,7 @@
       "even": 0.9531,
       "debris": 0.5761,
       "usable": true,
-      "seconds": 2.37
+      "seconds": 4.32
     },
     {
       "patient": "TF34_Sc520",
@@ -3786,7 +3786,7 @@
       "even": 0.9656,
       "debris": 0.6066,
       "usable": true,
-      "seconds": 2.07
+      "seconds": 3.26
     },
     {
       "patient": "TF34_Sc520",
@@ -3799,7 +3799,7 @@
       "even": 0.9751,
       "debris": 0.6126,
       "usable": true,
-      "seconds": 2.49
+      "seconds": 4.19
     },
     {
       "patient": "TF34_Sc520",
@@ -3812,7 +3812,7 @@
       "even": 0.9796,
       "debris": 0.6011,
       "usable": true,
-      "seconds": 2.34
+      "seconds": 4.47
     },
     {
       "patient": "TF34_Sc520",
@@ -3825,7 +3825,7 @@
       "even": 0.9695,
       "debris": 0.6753,
       "usable": true,
-      "seconds": 1.48
+      "seconds": 2.26
     },
     {
       "patient": "TF34_Sc520",
@@ -3838,7 +3838,7 @@
       "even": 0.9751,
       "debris": 0.575,
       "usable": true,
-      "seconds": 1.99
+      "seconds": 2.95
     },
     {
       "patient": "TF34_Sc520",
@@ -3851,7 +3851,7 @@
       "even": 0.9681,
       "debris": 0.6751,
       "usable": true,
-      "seconds": 1.39
+      "seconds": 2.07
     },
     {
       "patient": "TF34_Sc520",
@@ -3864,7 +3864,7 @@
       "even": 0.9731,
       "debris": 0.6521,
       "usable": true,
-      "seconds": 1.53
+      "seconds": 2.48
     },
     {
       "patient": "TF34_Sc520",
@@ -3877,7 +3877,7 @@
       "even": 0.9708,
       "debris": 0.6842,
       "usable": true,
-      "seconds": 1.47
+      "seconds": 2.05
     },
     {
       "patient": "TF35_Sc521",
@@ -3890,7 +3890,7 @@
       "even": 0.9714,
       "debris": 0.6403,
       "usable": true,
-      "seconds": 3.21
+      "seconds": 5.57
     },
     {
       "patient": "TF35_Sc521",
@@ -3903,7 +3903,7 @@
       "even": 0.9617,
       "debris": 0.6153,
       "usable": true,
-      "seconds": 3.38
+      "seconds": 5.24
     },
     {
       "patient": "TF35_Sc521",
@@ -3916,7 +3916,7 @@
       "even": 0.9741,
       "debris": 0.6076,
       "usable": true,
-      "seconds": 3.98
+      "seconds": 7.23
     },
     {
       "patient": "TF35_Sc521",
@@ -3929,7 +3929,7 @@
       "even": 0.9727,
       "debris": 0.6215,
       "usable": true,
-      "seconds": 3.58
+      "seconds": 6.24
     },
     {
       "patient": "TF35_Sc521",
@@ -3942,7 +3942,7 @@
       "even": 0.9606,
       "debris": 0.6183,
       "usable": true,
-      "seconds": 3.64
+      "seconds": 9.33
     },
     {
       "patient": "TF35_Sc521",
@@ -3955,7 +3955,7 @@
       "even": 0.9734,
       "debris": 0.5912,
       "usable": true,
-      "seconds": 3.47
+      "seconds": 7.15
     },
     {
       "patient": "TF35_Sc521",
@@ -3968,7 +3968,7 @@
       "even": 0.9787,
       "debris": 0.5981,
       "usable": true,
-      "seconds": 3.54
+      "seconds": 6.72
     },
     {
       "patient": "TF35_Sc521",
@@ -3981,7 +3981,7 @@
       "even": 0.9586,
       "debris": 0.6265,
       "usable": true,
-      "seconds": 3.78
+      "seconds": 5.97
     },
     {
       "patient": "TF35_Sc521",
@@ -3994,7 +3994,7 @@
       "even": 0.9813,
       "debris": 0.6777,
       "usable": true,
-      "seconds": 2.29
+      "seconds": 3.78
     },
     {
       "patient": "TF35_Sc521",
@@ -4007,7 +4007,7 @@
       "even": 0.976,
       "debris": 0.6503,
       "usable": true,
-      "seconds": 3.02
+      "seconds": 5.16
     },
     {
       "patient": "TF35_Sc521",
@@ -4020,7 +4020,7 @@
       "even": 0.9821,
       "debris": 0.714,
       "usable": true,
-      "seconds": 2.37
+      "seconds": 4.02
     },
     {
       "patient": "TF35_Sc521",
@@ -4033,7 +4033,7 @@
       "even": 0.9774,
       "debris": 0.6573,
       "usable": true,
-      "seconds": 3.2
+      "seconds": 5.32
     },
     {
       "patient": "TF35_Sc521",
@@ -4046,7 +4046,7 @@
       "even": 0.969,
       "debris": 0.6145,
       "usable": true,
-      "seconds": 3.67
+      "seconds": 6.32
     },
     {
       "patient": "TF35_Sc521",
@@ -4059,7 +4059,7 @@
       "even": 0.9783,
       "debris": 0.687,
       "usable": true,
-      "seconds": 3.68
+      "seconds": 5.34
     },
     {
       "patient": "TF35_Sc521",
@@ -4072,7 +4072,7 @@
       "even": 0.9573,
       "debris": 0.6271,
       "usable": true,
-      "seconds": 3.12
+      "seconds": 4.93
     },
     {
       "patient": "TF35_Sc521",
@@ -4085,7 +4085,7 @@
       "even": 0.9681,
       "debris": 0.6331,
       "usable": true,
-      "seconds": 3.05
+      "seconds": 4.74
     },
     {
       "patient": "TF35_Sc521",
@@ -4098,7 +4098,7 @@
       "even": 0.9595,
       "debris": 0.596,
       "usable": true,
-      "seconds": 3.76
+      "seconds": 6.21
     },
     {
       "patient": "TF35_Sc521",
@@ -4111,7 +4111,7 @@
       "even": 0.9756,
       "debris": 0.5823,
       "usable": true,
-      "seconds": 4.65
+      "seconds": 7.25
     },
     {
       "patient": "TF35_Sc521",
@@ -4124,7 +4124,7 @@
       "even": 0.9763,
       "debris": 0.6311,
       "usable": true,
-      "seconds": 2.94
+      "seconds": 4.76
     },
     {
       "patient": "TF36_Sc542",
@@ -4137,7 +4137,7 @@
       "even": 0.9523,
       "debris": 0.648,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 1.91
     },
     {
       "patient": "TF36_Sc542",
@@ -4150,7 +4150,7 @@
       "even": 0.9535,
       "debris": 0.636,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 2.03
     },
     {
       "patient": "TF36_Sc542",
@@ -4163,7 +4163,7 @@
       "even": 0.9433,
       "debris": 0.6013,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 1.72
     },
     {
       "patient": "TF36_Sc542",
@@ -4176,7 +4176,7 @@
       "even": 0.9574,
       "debris": 0.6205,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 2.07
     },
     {
       "patient": "TF36_Sc542",
@@ -4189,7 +4189,7 @@
       "even": 0.9792,
       "debris": 0.6456,
       "usable": true,
-      "seconds": 1.47
+      "seconds": 2.15
     },
     {
       "patient": "TF36_Sc542",
@@ -4202,7 +4202,7 @@
       "even": 0.9603,
       "debris": 0.6166,
       "usable": true,
-      "seconds": 1.55
+      "seconds": 2.23
     },
     {
       "patient": "TF36_Sc542",
@@ -4215,7 +4215,7 @@
       "even": 0.9683,
       "debris": 0.6181,
       "usable": true,
-      "seconds": 1.68
+      "seconds": 2.84
     },
     {
       "patient": "TF36_Sc542",
@@ -4228,7 +4228,7 @@
       "even": 0.9726,
       "debris": 0.6501,
       "usable": true,
-      "seconds": 1.47
+      "seconds": 2.35
     },
     {
       "patient": "TF36_Sc542",
@@ -4241,7 +4241,7 @@
       "even": 0.9709,
       "debris": 0.6684,
       "usable": true,
-      "seconds": 1.32
+      "seconds": 2.16
     },
     {
       "patient": "TF36_Sc542",
@@ -4254,7 +4254,7 @@
       "even": 0.9597,
       "debris": 0.6322,
       "usable": true,
-      "seconds": 1.27
+      "seconds": 1.84
     },
     {
       "patient": "TF36_Sc542",
@@ -4267,7 +4267,7 @@
       "even": 0.9684,
       "debris": 0.6387,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 2.21
     },
     {
       "patient": "TF36_Sc542",
@@ -4280,7 +4280,7 @@
       "even": 0.9599,
       "debris": 0.6713,
       "usable": true,
-      "seconds": 1.42
+      "seconds": 4.13
     },
     {
       "patient": "TF36_Sc542",
@@ -4293,7 +4293,7 @@
       "even": 0.968,
       "debris": 0.6007,
       "usable": true,
-      "seconds": 1.43
+      "seconds": 2.11
     },
     {
       "patient": "TF37_Sc563",
@@ -4306,7 +4306,7 @@
       "even": 0.9812,
       "debris": 0.706,
       "usable": true,
-      "seconds": 1.58
+      "seconds": 2.31
     },
     {
       "patient": "TF37_Sc563",
@@ -4319,7 +4319,7 @@
       "even": 0.9825,
       "debris": 0.7169,
       "usable": true,
-      "seconds": 1.43
+      "seconds": 2.15
     },
     {
       "patient": "TF37_Sc563",
@@ -4332,7 +4332,7 @@
       "even": 0.9834,
       "debris": 0.6717,
       "usable": true,
-      "seconds": 1.6
+      "seconds": 2.53
     },
     {
       "patient": "TF37_Sc563",
@@ -4345,7 +4345,7 @@
       "even": 0.9805,
       "debris": 0.6725,
       "usable": true,
-      "seconds": 1.42
+      "seconds": 2.15
     },
     {
       "patient": "TF37_Sc563",
@@ -4358,7 +4358,7 @@
       "even": 0.9751,
       "debris": 0.6625,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 2.22
     },
     {
       "patient": "TF37_Sc563",
@@ -4371,7 +4371,7 @@
       "even": 0.9617,
       "debris": 0.7297,
       "usable": true,
-      "seconds": 1.77
+      "seconds": 2.64
     },
     {
       "patient": "TF37_Sc563",
@@ -4384,7 +4384,7 @@
       "even": 0.9544,
       "debris": 0.749,
       "usable": true,
-      "seconds": 1.63
+      "seconds": 2.63
     },
     {
       "patient": "TF37_Sc563",
@@ -4397,7 +4397,7 @@
       "even": 0.9703,
       "debris": 0.704,
       "usable": true,
-      "seconds": 1.87
+      "seconds": 2.97
     },
     {
       "patient": "TF37_Sc563",
@@ -4410,7 +4410,7 @@
       "even": 0.954,
       "debris": 0.6637,
       "usable": true,
-      "seconds": 1.75
+      "seconds": 2.6
     },
     {
       "patient": "TF37_Sc563",
@@ -4423,7 +4423,7 @@
       "even": 0.9568,
       "debris": 0.5898,
       "usable": true,
-      "seconds": 1.84
+      "seconds": 2.45
     },
     {
       "patient": "TF37_Sc563",
@@ -4436,7 +4436,7 @@
       "even": 0.9827,
       "debris": 0.6781,
       "usable": true,
-      "seconds": 1.79
+      "seconds": 2.44
     },
     {
       "patient": "TF37_Sc563",
@@ -4449,7 +4449,7 @@
       "even": 0.9714,
       "debris": 0.6766,
       "usable": true,
-      "seconds": 1.47
+      "seconds": 2.04
     },
     {
       "patient": "TF37_Sc563",
@@ -4462,7 +4462,7 @@
       "even": 0.9676,
       "debris": 0.6511,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 2.3
     },
     {
       "patient": "TF37_Sc563",
@@ -4475,7 +4475,7 @@
       "even": 0.9585,
       "debris": 0.6213,
       "usable": true,
-      "seconds": 1.58
+      "seconds": 2.48
     },
     {
       "patient": "TF38_CT1",
@@ -4488,7 +4488,7 @@
       "even": 0.9519,
       "debris": 0.6757,
       "usable": true,
-      "seconds": 2.3
+      "seconds": 3.59
     },
     {
       "patient": "TF38_CT1",
@@ -4501,7 +4501,7 @@
       "even": 0.963,
       "debris": 0.663,
       "usable": true,
-      "seconds": 2.06
+      "seconds": 3.62
     },
     {
       "patient": "TF38_CT1",
@@ -4514,7 +4514,7 @@
       "even": 0.9653,
       "debris": 0.674,
       "usable": true,
-      "seconds": 2.44
+      "seconds": 3.68
     },
     {
       "patient": "TF38_CT1",
@@ -4527,7 +4527,7 @@
       "even": 0.9464,
       "debris": 0.6844,
       "usable": true,
-      "seconds": 1.9
+      "seconds": 3.51
     },
     {
       "patient": "TF38_CT1",
@@ -4540,7 +4540,7 @@
       "even": 0.9586,
       "debris": 0.7027,
       "usable": true,
-      "seconds": 2.15
+      "seconds": 3.99
     },
     {
       "patient": "TF38_CT1",
@@ -4553,7 +4553,7 @@
       "even": 0.9552,
       "debris": 0.6634,
       "usable": true,
-      "seconds": 1.45
+      "seconds": 2.58
     },
     {
       "patient": "TF38_CT1",
@@ -4566,7 +4566,7 @@
       "even": 0.9428,
       "debris": 0.7111,
       "usable": true,
-      "seconds": 1.58
+      "seconds": 2.67
     },
     {
       "patient": "TF38_CT1",
@@ -4579,7 +4579,7 @@
       "even": 0.9532,
       "debris": 0.6237,
       "usable": true,
-      "seconds": 2.08
+      "seconds": 3.62
     },
     {
       "patient": "TF38_CT1",
@@ -4592,7 +4592,7 @@
       "even": 0.9379,
       "debris": 0.6686,
       "usable": true,
-      "seconds": 2.21
+      "seconds": 4.06
     },
     {
       "patient": "TF40_UT3",
@@ -4605,7 +4605,7 @@
       "even": 0.9825,
       "debris": 0.749,
       "usable": true,
-      "seconds": 1.38
+      "seconds": 2.13
     },
     {
       "patient": "TF40_UT3",
@@ -4618,7 +4618,7 @@
       "even": 0.9773,
       "debris": 0.7423,
       "usable": true,
-      "seconds": 1.24
+      "seconds": 2.45
     },
     {
       "patient": "TF40_UT3",
@@ -4631,7 +4631,7 @@
       "even": 0.9824,
       "debris": 0.7272,
       "usable": true,
-      "seconds": 1.25
+      "seconds": 1.87
     },
     {
       "patient": "TF40_UT3",
@@ -4644,7 +4644,7 @@
       "even": 0.9839,
       "debris": 0.7545,
       "usable": true,
-      "seconds": 1.42
+      "seconds": 2.17
     },
     {
       "patient": "TF40_UT3",
@@ -4657,7 +4657,7 @@
       "even": 0.9898,
       "debris": 0.7516,
       "usable": true,
-      "seconds": 1.22
+      "seconds": 1.73
     },
     {
       "patient": "TF40_UT3",
@@ -4670,7 +4670,7 @@
       "even": 0.9842,
       "debris": 0.7186,
       "usable": true,
-      "seconds": 1.23
+      "seconds": 1.88
     },
     {
       "patient": "TF40_UT3",
@@ -4683,7 +4683,7 @@
       "even": 0.9868,
       "debris": 0.7175,
       "usable": true,
-      "seconds": 1.45
+      "seconds": 2.12
     },
     {
       "patient": "TF40_UT3",
@@ -4696,7 +4696,7 @@
       "even": 0.9853,
       "debris": 0.6983,
       "usable": true,
-      "seconds": 1.19
+      "seconds": 1.79
     },
     {
       "patient": "TF40_UT3",
@@ -4709,7 +4709,7 @@
       "even": 0.9865,
       "debris": 0.7512,
       "usable": true,
-      "seconds": 1.12
+      "seconds": 2.13
     },
     {
       "patient": "TF40_UT3",
@@ -4722,7 +4722,7 @@
       "even": 0.9822,
       "debris": 0.7562,
       "usable": true,
-      "seconds": 1.26
+      "seconds": 1.87
     },
     {
       "patient": "TF40_UT3",
@@ -4735,7 +4735,7 @@
       "even": 0.9873,
       "debris": 0.757,
       "usable": true,
-      "seconds": 1.22
+      "seconds": 1.81
     },
     {
       "patient": "TF40_UT3",
@@ -4748,7 +4748,7 @@
       "even": 0.9754,
       "debris": 0.7185,
       "usable": true,
-      "seconds": 1.38
+      "seconds": 2.1
     },
     {
       "patient": "TF40_UT3",
@@ -4761,7 +4761,7 @@
       "even": 0.981,
       "debris": 0.7579,
       "usable": true,
-      "seconds": 1.16
+      "seconds": 1.7
     },
     {
       "patient": "TF40_UT3",
@@ -4774,7 +4774,7 @@
       "even": 0.9818,
       "debris": 0.7714,
       "usable": true,
-      "seconds": 1.38
+      "seconds": 2.36
     },
     {
       "patient": "TF40_UT3",
@@ -4787,7 +4787,7 @@
       "even": 0.9814,
       "debris": 0.7875,
       "usable": true,
-      "seconds": 1.9
+      "seconds": 2.44
     },
     {
       "patient": "TF40_UT3",
@@ -4800,7 +4800,7 @@
       "even": 0.9814,
       "debris": 0.7321,
       "usable": true,
-      "seconds": 1.09
+      "seconds": 1.71
     },
     {
       "patient": "TF40_UT3",
@@ -4813,7 +4813,7 @@
       "even": 0.9857,
       "debris": 0.7747,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 2.24
     },
     {
       "patient": "TF41_UT5",
@@ -4826,7 +4826,7 @@
       "even": 0.9775,
       "debris": 0.6747,
       "usable": true,
-      "seconds": 1.52
+      "seconds": 2.24
     },
     {
       "patient": "TF41_UT5",
@@ -4839,7 +4839,7 @@
       "even": 0.975,
       "debris": 0.6252,
       "usable": true,
-      "seconds": 1.64
+      "seconds": 2.44
     },
     {
       "patient": "TF41_UT5",
@@ -4852,7 +4852,7 @@
       "even": 0.9815,
       "debris": 0.6932,
       "usable": true,
-      "seconds": 1.87
+      "seconds": 3.41
     },
     {
       "patient": "TF41_UT5",
@@ -4865,7 +4865,7 @@
       "even": 0.9613,
       "debris": 0.6887,
       "usable": true,
-      "seconds": 2.0
+      "seconds": 3.03
     },
     {
       "patient": "TF41_UT5",
@@ -4878,7 +4878,7 @@
       "even": 0.9711,
       "debris": 0.6202,
       "usable": true,
-      "seconds": 1.65
+      "seconds": 3.04
     },
     {
       "patient": "TF41_UT5",
@@ -4891,7 +4891,7 @@
       "even": 0.9727,
       "debris": 0.6622,
       "usable": true,
-      "seconds": 2.12
+      "seconds": 2.98
     },
     {
       "patient": "TF41_UT5",
@@ -4904,7 +4904,7 @@
       "even": 0.9788,
       "debris": 0.6343,
       "usable": true,
-      "seconds": 1.65
+      "seconds": 2.78
     },
     {
       "patient": "TF41_UT5",
@@ -4917,7 +4917,7 @@
       "even": 0.9625,
       "debris": 0.6622,
       "usable": true,
-      "seconds": 1.59
+      "seconds": 2.5
     },
     {
       "patient": "TF41_UT5",
@@ -4930,7 +4930,7 @@
       "even": 0.9646,
       "debris": 0.674,
       "usable": true,
-      "seconds": 1.83
+      "seconds": 2.76
     },
     {
       "patient": "TF41_UT5",
@@ -4943,7 +4943,7 @@
       "even": 0.9702,
       "debris": 0.6631,
       "usable": true,
-      "seconds": 1.8
+      "seconds": 3.74
     },
     {
       "patient": "TF41_UT5",
@@ -4956,7 +4956,7 @@
       "even": 0.9732,
       "debris": 0.718,
       "usable": true,
-      "seconds": 2.06
+      "seconds": 3.78
     },
     {
       "patient": "TF41_UT5",
@@ -4969,7 +4969,7 @@
       "even": 0.9712,
       "debris": 0.6734,
       "usable": true,
-      "seconds": 2.02
+      "seconds": 2.89
     },
     {
       "patient": "TF41_UT5",
@@ -4982,7 +4982,7 @@
       "even": 0.9721,
       "debris": 0.6872,
       "usable": true,
-      "seconds": 1.79
+      "seconds": 2.76
     },
     {
       "patient": "TF41_UT5",
@@ -4995,7 +4995,7 @@
       "even": 0.9582,
       "debris": 0.6616,
       "usable": true,
-      "seconds": 1.59
+      "seconds": 2.47
     },
     {
       "patient": "TF46_UW23",
@@ -5008,7 +5008,7 @@
       "even": 0.9717,
       "debris": 0.6941,
       "usable": true,
-      "seconds": 1.38
+      "seconds": 2.19
     },
     {
       "patient": "TF46_UW23",
@@ -5021,7 +5021,7 @@
       "even": 0.959,
       "debris": 0.6567,
       "usable": true,
-      "seconds": 1.5
+      "seconds": 2.11
     },
     {
       "patient": "TF46_UW23",
@@ -5034,7 +5034,7 @@
       "even": 0.9636,
       "debris": 0.6828,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 1.89
     },
     {
       "patient": "TF46_UW23",
@@ -5047,7 +5047,7 @@
       "even": 0.9678,
       "debris": 0.6401,
       "usable": true,
-      "seconds": 1.41
+      "seconds": 2.77
     },
     {
       "patient": "TF46_UW23",
@@ -5060,7 +5060,7 @@
       "even": 0.9663,
       "debris": 0.644,
       "usable": true,
-      "seconds": 1.56
+      "seconds": 1.89
     },
     {
       "patient": "TF46_UW23",
@@ -5073,7 +5073,7 @@
       "even": 0.9421,
       "debris": 0.6594,
       "usable": true,
-      "seconds": 1.53
+      "seconds": 1.74
     },
     {
       "patient": "TF46_UW23",
@@ -5086,7 +5086,7 @@
       "even": 0.9592,
       "debris": 0.6498,
       "usable": true,
-      "seconds": 1.62
+      "seconds": 2.21
     },
     {
       "patient": "TF46_UW23",
@@ -5099,7 +5099,7 @@
       "even": 0.9628,
       "debris": 0.6679,
       "usable": true,
-      "seconds": 2.0
+      "seconds": 3.26
     },
     {
       "patient": "TF46_UW23",
@@ -5112,7 +5112,7 @@
       "even": 0.9627,
       "debris": 0.6134,
       "usable": true,
-      "seconds": 1.39
+      "seconds": 3.79
     },
     {
       "patient": "TF46_UW23",
@@ -5125,7 +5125,7 @@
       "even": 0.9601,
       "debris": 0.5605,
       "usable": true,
-      "seconds": 1.46
+      "seconds": 2.08
     },
     {
       "patient": "TF46_UW23",
@@ -5138,7 +5138,7 @@
       "even": 0.9605,
       "debris": 0.6956,
       "usable": true,
-      "seconds": 1.36
+      "seconds": 1.91
     },
     {
       "patient": "TF46_UW23",
@@ -5151,7 +5151,7 @@
       "even": 0.963,
       "debris": 0.7025,
       "usable": true,
-      "seconds": 1.39
+      "seconds": 2.11
     },
     {
       "patient": "TF46_UW23",
@@ -5164,7 +5164,7 @@
       "even": 0.9643,
       "debris": 0.7124,
       "usable": true,
-      "seconds": 1.54
+      "seconds": 2.26
     },
     {
       "patient": "TF46_UW23",
@@ -5177,7 +5177,7 @@
       "even": 0.9645,
       "debris": 0.6799,
       "usable": true,
-      "seconds": 1.4
+      "seconds": 2.0
     },
     {
       "patient": "TF47_UW29",
@@ -5190,7 +5190,7 @@
       "even": 0.9484,
       "debris": 0.685,
       "usable": true,
-      "seconds": 1.48
+      "seconds": 2.29
     },
     {
       "patient": "TF47_UW29",
@@ -5203,7 +5203,7 @@
       "even": 0.9321,
       "debris": 0.6815,
       "usable": true,
-      "seconds": 1.36
+      "seconds": 2.64
     },
     {
       "patient": "TF47_UW29",
@@ -5216,7 +5216,7 @@
       "even": 0.9472,
       "debris": 0.6941,
       "usable": true,
-      "seconds": 1.3
+      "seconds": 3.94
     },
     {
       "patient": "TF47_UW29",
@@ -5229,7 +5229,7 @@
       "even": 0.9464,
       "debris": 0.7411,
       "usable": true,
-      "seconds": 1.13
+      "seconds": 1.79
     },
     {
       "patient": "TF47_UW29",
@@ -5242,7 +5242,7 @@
       "even": 0.9526,
       "debris": 0.7299,
       "usable": true,
-      "seconds": 1.53
+      "seconds": 2.18
     },
     {
       "patient": "TF47_UW29",
@@ -5255,7 +5255,7 @@
       "even": 0.9564,
       "debris": 0.7138,
       "usable": true,
-      "seconds": 1.11
+      "seconds": 1.64
     },
     {
       "patient": "TF47_UW29",
@@ -5268,7 +5268,7 @@
       "even": 0.949,
       "debris": 0.7374,
       "usable": true,
-      "seconds": 1.22
+      "seconds": 1.85
     },
     {
       "patient": "TF47_UW29",
@@ -5281,7 +5281,7 @@
       "even": 0.9274,
       "debris": 0.7404,
       "usable": true,
-      "seconds": 1.15
+      "seconds": 1.83
     },
     {
       "patient": "TF47_UW29",
@@ -5294,7 +5294,7 @@
       "even": 0.9318,
       "debris": 0.7464,
       "usable": true,
-      "seconds": 1.13
+      "seconds": 1.8
     },
     {
       "patient": "TF47_UW29",
@@ -5307,7 +5307,7 @@
       "even": 0.9211,
       "debris": 0.7523,
       "usable": true,
-      "seconds": 1.17
+      "seconds": 1.96
     },
     {
       "patient": "TF47_UW29",
@@ -5320,7 +5320,7 @@
       "even": 0.9388,
       "debris": 0.7444,
       "usable": true,
-      "seconds": 1.38
+      "seconds": 1.9
     },
     {
       "patient": "TF47_UW29",
@@ -5333,7 +5333,7 @@
       "even": 0.9506,
       "debris": 0.7639,
       "usable": true,
-      "seconds": 1.25
+      "seconds": 1.71
     },
     {
       "patient": "TF48_UW31",
@@ -5346,7 +5346,7 @@
       "even": 0.962,
       "debris": 0.6252,
       "usable": true,
-      "seconds": 2.0
+      "seconds": 2.87
     },
     {
       "patient": "TF48_UW31",
@@ -5359,7 +5359,7 @@
       "even": 0.933,
       "debris": 0.623,
       "usable": true,
-      "seconds": 2.13
+      "seconds": 3.17
     },
     {
       "patient": "TF48_UW31",
@@ -5372,7 +5372,7 @@
       "even": 0.9409,
       "debris": 0.6044,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 2.69
     },
     {
       "patient": "TF48_UW31",
@@ -5385,7 +5385,7 @@
       "even": 0.9527,
       "debris": 0.6408,
       "usable": true,
-      "seconds": 1.89
+      "seconds": 4.95
     },
     {
       "patient": "TF48_UW31",
@@ -5398,7 +5398,7 @@
       "even": 0.9442,
       "debris": 0.6596,
       "usable": true,
-      "seconds": 1.9
+      "seconds": 4.42
     },
     {
       "patient": "TF48_UW31",
@@ -5411,7 +5411,7 @@
       "even": 0.9342,
       "debris": 0.6427,
       "usable": true,
-      "seconds": 1.79
+      "seconds": 2.79
     },
     {
       "patient": "TF53_CW41",
@@ -5424,7 +5424,7 @@
       "even": 0.9646,
       "debris": 0.7224,
       "usable": true,
-      "seconds": 1.46
+      "seconds": 2.18
     },
     {
       "patient": "TF53_CW41",
@@ -5437,7 +5437,7 @@
       "even": 0.9588,
       "debris": 0.7074,
       "usable": true,
-      "seconds": 1.5
+      "seconds": 2.15
     },
     {
       "patient": "TF53_CW41",
@@ -5450,7 +5450,7 @@
       "even": 0.9611,
       "debris": 0.7173,
       "usable": true,
-      "seconds": 1.26
+      "seconds": 1.85
     },
     {
       "patient": "TF53_CW41",
@@ -5463,7 +5463,7 @@
       "even": 0.968,
       "debris": 0.7309,
       "usable": true,
-      "seconds": 1.32
+      "seconds": 1.99
     },
     {
       "patient": "TF53_CW41",
@@ -5476,7 +5476,7 @@
       "even": 0.9749,
       "debris": 0.7395,
       "usable": true,
-      "seconds": 1.29
+      "seconds": 1.96
     },
     {
       "patient": "TF53_CW41",
@@ -5489,7 +5489,7 @@
       "even": 0.9637,
       "debris": 0.7338,
       "usable": true,
-      "seconds": 1.41
+      "seconds": 2.07
     },
     {
       "patient": "TF53_CW41",
@@ -5502,7 +5502,7 @@
       "even": 0.9643,
       "debris": 0.7344,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 2.14
     },
     {
       "patient": "TF53_CW41",
@@ -5515,7 +5515,7 @@
       "even": 0.9624,
       "debris": 0.7279,
       "usable": true,
-      "seconds": 1.3
+      "seconds": 1.94
     },
     {
       "patient": "TF55_CV4",
@@ -5528,7 +5528,7 @@
       "even": 0.9524,
       "debris": 0.679,
       "usable": true,
-      "seconds": 2.62
+      "seconds": 6.08
     },
     {
       "patient": "TF55_CV4",
@@ -5541,7 +5541,7 @@
       "even": 0.9618,
       "debris": 0.7008,
       "usable": true,
-      "seconds": 2.61
+      "seconds": 8.43
     },
     {
       "patient": "TF55_CV4",
@@ -5554,7 +5554,7 @@
       "even": 0.9584,
       "debris": 0.6832,
       "usable": true,
-      "seconds": 2.98
+      "seconds": 4.72
     },
     {
       "patient": "TF55_CV4",
@@ -5567,7 +5567,7 @@
       "even": 0.9647,
       "debris": 0.6648,
       "usable": true,
-      "seconds": 2.54
+      "seconds": 4.28
     },
     {
       "patient": "TF55_CV4",
@@ -5580,7 +5580,7 @@
       "even": 0.9709,
       "debris": 0.6724,
       "usable": true,
-      "seconds": 3.58
+      "seconds": 5.01
     },
     {
       "patient": "TF55_CV4",
@@ -5593,7 +5593,7 @@
       "even": 0.9698,
       "debris": 0.718,
       "usable": true,
-      "seconds": 3.36
+      "seconds": 5.14
     },
     {
       "patient": "TF55_CV4",
@@ -5606,7 +5606,7 @@
       "even": 0.9537,
       "debris": 0.6943,
       "usable": true,
-      "seconds": 2.6
+      "seconds": 4.09
     },
     {
       "patient": "TF55_CV4",
@@ -5619,7 +5619,7 @@
       "even": 0.9634,
       "debris": 0.6594,
       "usable": true,
-      "seconds": 2.18
+      "seconds": 3.87
     },
     {
       "patient": "TF55_CV4",
@@ -5632,7 +5632,7 @@
       "even": 0.9765,
       "debris": 0.7387,
       "usable": true,
-      "seconds": 1.7
+      "seconds": 2.68
     },
     {
       "patient": "TF55_CV4",
@@ -5645,7 +5645,7 @@
       "even": 0.9664,
       "debris": 0.7168,
       "usable": true,
-      "seconds": 2.84
+      "seconds": 4.46
     },
     {
       "patient": "TF55_CV4",
@@ -5658,7 +5658,7 @@
       "even": 0.9771,
       "debris": 0.7653,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 2.22
     },
     {
       "patient": "TF55_CV4",
@@ -5671,7 +5671,7 @@
       "even": 0.9728,
       "debris": 0.6839,
       "usable": true,
-      "seconds": 2.88
+      "seconds": 3.97
     },
     {
       "patient": "TF55_CV4",
@@ -5684,7 +5684,7 @@
       "even": 0.9699,
       "debris": 0.7528,
       "usable": true,
-      "seconds": 1.99
+      "seconds": 2.75
     },
     {
       "patient": "TF58_UT8",
@@ -5697,7 +5697,7 @@
       "even": 0.9711,
       "debris": 0.7506,
       "usable": true,
-      "seconds": 2.76
+      "seconds": 3.8
     },
     {
       "patient": "TF58_UT8",
@@ -5710,7 +5710,7 @@
       "even": 0.9672,
       "debris": 0.7347,
       "usable": true,
-      "seconds": 2.62
+      "seconds": 3.59
     },
     {
       "patient": "TF58_UT8",
@@ -5723,7 +5723,7 @@
       "even": 0.9757,
       "debris": 0.777,
       "usable": true,
-      "seconds": 2.08
+      "seconds": 2.79
     },
     {
       "patient": "TF58_UT8",
@@ -5736,7 +5736,7 @@
       "even": 0.9709,
       "debris": 0.7639,
       "usable": true,
-      "seconds": 1.85
+      "seconds": 2.73
     },
     {
       "patient": "TF58_UT8",
@@ -5749,7 +5749,7 @@
       "even": 0.9736,
       "debris": 0.7626,
       "usable": true,
-      "seconds": 2.68
+      "seconds": 4.74
     },
     {
       "patient": "TF58_UT8",
@@ -5762,7 +5762,7 @@
       "even": 0.9851,
       "debris": 0.761,
       "usable": true,
-      "seconds": 1.8
+      "seconds": 2.84
     },
     {
       "patient": "TF58_UT8",
@@ -5775,7 +5775,7 @@
       "even": 0.9831,
       "debris": 0.7689,
       "usable": true,
-      "seconds": 1.78
+      "seconds": 3.02
     },
     {
       "patient": "TF58_UT8",
@@ -5788,7 +5788,7 @@
       "even": 0.9727,
       "debris": 0.7515,
       "usable": true,
-      "seconds": 2.14
+      "seconds": 3.2
     },
     {
       "patient": "TF58_UT8",
@@ -5801,7 +5801,7 @@
       "even": 0.9819,
       "debris": 0.7743,
       "usable": true,
-      "seconds": 2.04
+      "seconds": 3.03
     },
     {
       "patient": "TF58_UT8",
@@ -5814,7 +5814,7 @@
       "even": 0.9719,
       "debris": 0.7628,
       "usable": true,
-      "seconds": 2.05
+      "seconds": 3.1
     },
     {
       "patient": "TF58_UT8",
@@ -5827,7 +5827,7 @@
       "even": 0.9682,
       "debris": 0.7169,
       "usable": true,
-      "seconds": 2.16
+      "seconds": 3.07
     },
     {
       "patient": "TF58_UT8",
@@ -5840,7 +5840,7 @@
       "even": 0.9673,
       "debris": 0.7298,
       "usable": true,
-      "seconds": 2.41
+      "seconds": 2.91
     },
     {
       "patient": "TF58_UT8",
@@ -5853,7 +5853,7 @@
       "even": 0.9671,
       "debris": 0.7698,
       "usable": true,
-      "seconds": 2.13
+      "seconds": 3.32
     },
     {
       "patient": "TF58_UT8",
@@ -5866,7 +5866,7 @@
       "even": 0.9723,
       "debris": 0.7598,
       "usable": true,
-      "seconds": 2.67
+      "seconds": 3.7
     },
     {
       "patient": "TF58_UT8",
@@ -5879,7 +5879,7 @@
       "even": 0.9755,
       "debris": 0.7538,
       "usable": true,
-      "seconds": 2.22
+      "seconds": 4.7
     },
     {
       "patient": "TF58_UT8",
@@ -5892,7 +5892,7 @@
       "even": 0.9684,
       "debris": 0.7363,
       "usable": true,
-      "seconds": 2.82
+      "seconds": 4.71
     },
     {
       "patient": "TF58_UT8",
@@ -5905,7 +5905,7 @@
       "even": 0.9773,
       "debris": 0.7161,
       "usable": true,
-      "seconds": 2.34
+      "seconds": 3.41
     },
     {
       "patient": "TF58_UT8",
@@ -5918,7 +5918,7 @@
       "even": 0.9759,
       "debris": 0.726,
       "usable": true,
-      "seconds": 2.78
+      "seconds": 4.39
     },
     {
       "patient": "TF61_CS20",
@@ -5931,7 +5931,7 @@
       "even": 0.9717,
       "debris": 0.6925,
       "usable": true,
-      "seconds": 1.78
+      "seconds": 2.55
     },
     {
       "patient": "TF61_CS20",
@@ -5944,7 +5944,7 @@
       "even": 0.9507,
       "debris": 0.6586,
       "usable": true,
-      "seconds": 1.63
+      "seconds": 2.35
     },
     {
       "patient": "TF61_CS20",
@@ -5957,7 +5957,7 @@
       "even": 0.9767,
       "debris": 0.6954,
       "usable": true,
-      "seconds": 2.02
+      "seconds": 2.73
     },
     {
       "patient": "TF61_CS20",
@@ -5970,7 +5970,7 @@
       "even": 0.9651,
       "debris": 0.686,
       "usable": true,
-      "seconds": 1.63
+      "seconds": 2.35
     },
     {
       "patient": "TF61_CS20",
@@ -5983,7 +5983,7 @@
       "even": 0.9737,
       "debris": 0.701,
       "usable": true,
-      "seconds": 2.09
+      "seconds": 2.76
     },
     {
       "patient": "TF61_CS20",
@@ -5996,7 +5996,7 @@
       "even": 0.9657,
       "debris": 0.6954,
       "usable": true,
-      "seconds": 1.56
+      "seconds": 2.06
     },
     {
       "patient": "TF61_CS20",
@@ -6009,7 +6009,7 @@
       "even": 0.9761,
       "debris": 0.714,
       "usable": true,
-      "seconds": 2.56
+      "seconds": 3.08
     },
     {
       "patient": "TF64_US2",
@@ -6022,7 +6022,7 @@
       "even": 0.9301,
       "debris": 0.7525,
       "usable": true,
-      "seconds": 1.89
+      "seconds": 2.09
     },
     {
       "patient": "TF64_US2",
@@ -6035,7 +6035,7 @@
       "even": 0.9471,
       "debris": 0.741,
       "usable": true,
-      "seconds": 1.58
+      "seconds": 2.25
     },
     {
       "patient": "TF64_US2",
@@ -6048,7 +6048,7 @@
       "even": 0.926,
       "debris": 0.7725,
       "usable": true,
-      "seconds": 1.71
+      "seconds": 3.26
     },
     {
       "patient": "TF64_US2",
@@ -6061,7 +6061,7 @@
       "even": 0.9301,
       "debris": 0.7204,
       "usable": true,
-      "seconds": 1.43
+      "seconds": 2.31
     },
     {
       "patient": "TF64_US2",
@@ -6074,7 +6074,7 @@
       "even": 0.9315,
       "debris": 0.7377,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 2.08
     },
     {
       "patient": "TF64_US2",
@@ -6087,7 +6087,7 @@
       "even": 0.9255,
       "debris": 0.7215,
       "usable": true,
-      "seconds": 1.58
+      "seconds": 2.11
     },
     {
       "patient": "TF64_US2",
@@ -6100,7 +6100,7 @@
       "even": 0.9517,
       "debris": 0.7223,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 2.59
     },
     {
       "patient": "TF64_US2",
@@ -6113,7 +6113,7 @@
       "even": 0.9339,
       "debris": 0.7663,
       "usable": true,
-      "seconds": 1.65
+      "seconds": 2.33
     },
     {
       "patient": "TF64_US2",
@@ -6126,7 +6126,7 @@
       "even": 0.9492,
       "debris": 0.7628,
       "usable": true,
-      "seconds": 1.6
+      "seconds": 2.34
     },
     {
       "patient": "TF64_US2",
@@ -6139,7 +6139,7 @@
       "even": 0.9634,
       "debris": 0.7482,
       "usable": true,
-      "seconds": 1.57
+      "seconds": 2.74
     },
     {
       "patient": "TF6N_527",
@@ -6152,7 +6152,7 @@
       "even": 0.9726,
       "debris": 0.8878,
       "usable": false,
-      "seconds": 1.28
+      "seconds": 2.04
     },
     {
       "patient": "TF6N_527",
@@ -6165,7 +6165,7 @@
       "even": 0.9556,
       "debris": 0.8198,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 2.28
     },
     {
       "patient": "TF6N_527",
@@ -6178,7 +6178,7 @@
       "even": 0.9519,
       "debris": 0.7453,
       "usable": true,
-      "seconds": 1.66
+      "seconds": 2.13
     },
     {
       "patient": "TF6N_527",
@@ -6191,7 +6191,7 @@
       "even": 0.9697,
       "debris": 0.7673,
       "usable": true,
-      "seconds": 1.43
+      "seconds": 1.61
     },
     {
       "patient": "TF6N_527",
@@ -6204,7 +6204,7 @@
       "even": 0.9798,
       "debris": 0.7738,
       "usable": true,
-      "seconds": 1.52
+      "seconds": 1.66
     },
     {
       "patient": "TF6N_527",
@@ -6217,7 +6217,7 @@
       "even": 0.9756,
       "debris": 0.7566,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 1.9
     },
     {
       "patient": "TF6N_527",
@@ -6230,7 +6230,7 @@
       "even": 0.959,
       "debris": 0.6987,
       "usable": true,
-      "seconds": 1.32
+      "seconds": 1.94
     },
     {
       "patient": "TF6N_527",
@@ -6243,7 +6243,7 @@
       "even": 0.979,
       "debris": 0.9271,
       "usable": false,
-      "seconds": 1.43
+      "seconds": 1.86
     },
     {
       "patient": "TF6N_527",
@@ -6256,7 +6256,7 @@
       "even": 0.9785,
       "debris": 0.762,
       "usable": true,
-      "seconds": 1.25
+      "seconds": 1.54
     },
     {
       "patient": "TF6N_527",
@@ -6269,7 +6269,7 @@
       "even": 0.9728,
       "debris": 0.76,
       "usable": true,
-      "seconds": 1.34
+      "seconds": 1.86
     },
     {
       "patient": "TF6N_527",
@@ -6282,7 +6282,7 @@
       "even": 0.9809,
       "debris": 0.7234,
       "usable": true,
-      "seconds": 1.31
+      "seconds": 1.66
     },
     {
       "patient": "TF6N_527",
@@ -6295,7 +6295,7 @@
       "even": 0.9789,
       "debris": 0.721,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 1.94
     },
     {
       "patient": "TF6N_527",
@@ -6308,7 +6308,7 @@
       "even": 0.9782,
       "debris": 0.7248,
       "usable": true,
-      "seconds": 1.29
+      "seconds": 1.95
     },
     {
       "patient": "TF6N_527",
@@ -6321,7 +6321,7 @@
       "even": 0.9791,
       "debris": 0.7086,
       "usable": true,
-      "seconds": 1.3
+      "seconds": 2.56
     },
     {
       "patient": "TF6N_527",
@@ -6334,7 +6334,7 @@
       "even": 0.9796,
       "debris": 0.7341,
       "usable": true,
-      "seconds": 1.2
+      "seconds": 3.83
     },
     {
       "patient": "TF6N_527",
@@ -6347,7 +6347,7 @@
       "even": 0.9713,
       "debris": 0.7366,
       "usable": true,
-      "seconds": 1.23
+      "seconds": 2.4
     },
     {
       "patient": "TF70_Scr440",
@@ -6360,7 +6360,7 @@
       "even": 0.9487,
       "debris": 0.5063,
       "usable": true,
-      "seconds": 2.19
+      "seconds": 3.24
     },
     {
       "patient": "TF70_Scr440",
@@ -6373,7 +6373,7 @@
       "even": 0.9478,
       "debris": 0.6035,
       "usable": true,
-      "seconds": 1.87
+      "seconds": 3.14
     },
     {
       "patient": "TF70_Scr440",
@@ -6386,7 +6386,7 @@
       "even": 0.9529,
       "debris": 0.5934,
       "usable": true,
-      "seconds": 2.09
+      "seconds": 3.48
     },
     {
       "patient": "TF70_Scr440",
@@ -6399,7 +6399,7 @@
       "even": 0.9518,
       "debris": 0.5745,
       "usable": true,
-      "seconds": 1.78
+      "seconds": 2.79
     },
     {
       "patient": "TF70_Scr440",
@@ -6412,7 +6412,7 @@
       "even": 0.9601,
       "debris": 0.5976,
       "usable": true,
-      "seconds": 1.75
+      "seconds": 2.84
     },
     {
       "patient": "TF70_Scr440",
@@ -6425,7 +6425,7 @@
       "even": 0.9429,
       "debris": 0.6109,
       "usable": true,
-      "seconds": 2.01
+      "seconds": 3.08
     },
     {
       "patient": "TF70_Scr440",
@@ -6438,7 +6438,7 @@
       "even": 0.9659,
       "debris": 0.6364,
       "usable": true,
-      "seconds": 1.97
+      "seconds": 2.7
     },
     {
       "patient": "TF70_Scr440",
@@ -6451,7 +6451,7 @@
       "even": 0.9426,
       "debris": 0.6205,
       "usable": true,
-      "seconds": 1.98
+      "seconds": 2.63
     },
     {
       "patient": "TF70_Scr440",
@@ -6464,7 +6464,7 @@
       "even": 0.9554,
       "debris": 0.6566,
       "usable": true,
-      "seconds": 1.62
+      "seconds": 2.22
     },
     {
       "patient": "TF70_Scr440",
@@ -6477,7 +6477,7 @@
       "even": 0.9557,
       "debris": 0.5664,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 2.02
     },
     {
       "patient": "TF70_Scr440",
@@ -6490,7 +6490,7 @@
       "even": 0.954,
       "debris": 0.5713,
       "usable": true,
-      "seconds": 1.72
+      "seconds": 2.56
     },
     {
       "patient": "TF70_Scr440",
@@ -6503,7 +6503,7 @@
       "even": 0.9567,
       "debris": 0.6284,
       "usable": true,
-      "seconds": 2.03
+      "seconds": 2.66
     },
     {
       "patient": "TF70_Scr440",
@@ -6516,7 +6516,7 @@
       "even": 0.9447,
       "debris": 0.5823,
       "usable": true,
-      "seconds": 2.1
+      "seconds": 3.18
     },
     {
       "patient": "TF70_Scr440",
@@ -6529,7 +6529,7 @@
       "even": 0.9409,
       "debris": 0.5777,
       "usable": true,
-      "seconds": 1.75
+      "seconds": 2.62
     },
     {
       "patient": "TF70_Scr440",
@@ -6542,7 +6542,7 @@
       "even": 0.9401,
       "debris": 0.5554,
       "usable": true,
-      "seconds": 1.92
+      "seconds": 2.78
     },
     {
       "patient": "TF70_Scr440",
@@ -6555,7 +6555,7 @@
       "even": 0.9501,
       "debris": 0.5603,
       "usable": true,
-      "seconds": 1.77
+      "seconds": 3.02
     },
     {
       "patient": "TF73_Scr538",
@@ -6568,7 +6568,7 @@
       "even": 0.9522,
       "debris": 0.7161,
       "usable": true,
-      "seconds": 1.22
+      "seconds": 2.12
     },
     {
       "patient": "TF73_Scr538",
@@ -6581,7 +6581,7 @@
       "even": 0.9597,
       "debris": 0.7502,
       "usable": true,
-      "seconds": 1.04
+      "seconds": 1.53
     },
     {
       "patient": "TF73_Scr538",
@@ -6594,7 +6594,7 @@
       "even": 0.9707,
       "debris": 0.7588,
       "usable": true,
-      "seconds": 1.17
+      "seconds": 1.83
     },
     {
       "patient": "TF73_Scr538",
@@ -6607,7 +6607,7 @@
       "even": 0.9783,
       "debris": 0.7763,
       "usable": true,
-      "seconds": 1.18
+      "seconds": 1.78
     },
     {
       "patient": "TF73_Scr538",
@@ -6620,7 +6620,7 @@
       "even": 0.9799,
       "debris": 0.6613,
       "usable": true,
-      "seconds": 1.27
+      "seconds": 1.52
     },
     {
       "patient": "TF73_Scr538",
@@ -6633,7 +6633,7 @@
       "even": 0.9619,
       "debris": 0.7237,
       "usable": true,
-      "seconds": 1.65
+      "seconds": 2.08
     },
     {
       "patient": "TF73_Scr538",
@@ -6646,7 +6646,7 @@
       "even": 0.9711,
       "debris": 0.7086,
       "usable": true,
-      "seconds": 1.55
+      "seconds": 1.67
     },
     {
       "patient": "TF73_Scr538",
@@ -6659,7 +6659,7 @@
       "even": 0.968,
       "debris": 0.7355,
       "usable": true,
-      "seconds": 1.54
+      "seconds": 1.68
     },
     {
       "patient": "TF73_Scr538",
@@ -6672,7 +6672,7 @@
       "even": 0.9686,
       "debris": 0.7433,
       "usable": true,
-      "seconds": 1.53
+      "seconds": 1.75
     },
     {
       "patient": "TF73_Scr538",
@@ -6685,7 +6685,7 @@
       "even": 0.9662,
       "debris": 0.7471,
       "usable": true,
-      "seconds": 1.38
+      "seconds": 1.51
     },
     {
       "patient": "TF73_Scr538",
@@ -6698,7 +6698,7 @@
       "even": 0.944,
       "debris": 0.6679,
       "usable": true,
-      "seconds": 1.17
+      "seconds": 1.43
     },
     {
       "patient": "TF73_Scr538",
@@ -6711,7 +6711,7 @@
       "even": 0.9496,
       "debris": 0.6936,
       "usable": true,
-      "seconds": 1.17
+      "seconds": 1.6
     },
     {
       "patient": "TF73_Scr538",
@@ -6724,7 +6724,7 @@
       "even": 0.9622,
       "debris": 0.7096,
       "usable": true,
-      "seconds": 1.4
+      "seconds": 1.55
     },
     {
       "patient": "TF73_Scr538",
@@ -6737,7 +6737,7 @@
       "even": 0.9566,
       "debris": 0.7119,
       "usable": true,
-      "seconds": 1.23
+      "seconds": 1.73
     },
     {
       "patient": "TF73_Scr538",
@@ -6750,7 +6750,7 @@
       "even": 0.9512,
       "debris": 0.7075,
       "usable": true,
-      "seconds": 1.3
+      "seconds": 1.85
     },
     {
       "patient": "TF73_Scr538",
@@ -6763,7 +6763,7 @@
       "even": 0.975,
       "debris": 0.725,
       "usable": true,
-      "seconds": 1.49
+      "seconds": 1.96
     },
     {
       "patient": "TF75_CO7",
@@ -6776,7 +6776,7 @@
       "even": 0.9711,
       "debris": 0.7992,
       "usable": true,
-      "seconds": 1.14
+      "seconds": 1.57
     },
     {
       "patient": "TF75_CO7",
@@ -6789,7 +6789,7 @@
       "even": 0.9758,
       "debris": 0.7415,
       "usable": true,
-      "seconds": 1.38
+      "seconds": 2.14
     },
     {
       "patient": "TF75_CO7",
@@ -6802,7 +6802,7 @@
       "even": 0.9741,
       "debris": 0.8059,
       "usable": true,
-      "seconds": 1.32
+      "seconds": 1.74
     },
     {
       "patient": "TF75_CO7",
@@ -6815,7 +6815,7 @@
       "even": 0.9764,
       "debris": 0.8567,
       "usable": false,
-      "seconds": 1.53
+      "seconds": 1.87
     },
     {
       "patient": "TF75_CO7",
@@ -6828,7 +6828,7 @@
       "even": 0.9724,
       "debris": 0.7717,
       "usable": true,
-      "seconds": 1.2
+      "seconds": 1.58
     },
     {
       "patient": "TF75_CO7",
@@ -6841,7 +6841,7 @@
       "even": 0.9728,
       "debris": 0.8914,
       "usable": false,
-      "seconds": 1.41
+      "seconds": 2.15
     },
     {
       "patient": "TF75_CO7",
@@ -6854,7 +6854,7 @@
       "even": 0.9717,
       "debris": 0.7916,
       "usable": true,
-      "seconds": 1.06
+      "seconds": 1.48
     },
     {
       "patient": "TF75_CO7",
@@ -6867,7 +6867,7 @@
       "even": 0.9628,
       "debris": 0.7421,
       "usable": true,
-      "seconds": 1.0
+      "seconds": 1.43
     },
     {
       "patient": "TF75_CO7",
@@ -6880,7 +6880,7 @@
       "even": 0.9768,
       "debris": 0.7393,
       "usable": true,
-      "seconds": 1.1
+      "seconds": 1.48
     },
     {
       "patient": "TF75_CO7",
@@ -6893,7 +6893,7 @@
       "even": 0.9512,
       "debris": 0.8929,
       "usable": false,
-      "seconds": 1.25
+      "seconds": 1.63
     },
     {
       "patient": "TF77_CO15",
@@ -6906,7 +6906,7 @@
       "even": 0.9762,
       "debris": 0.7947,
       "usable": true,
-      "seconds": 1.6
+      "seconds": 1.96
     },
     {
       "patient": "TF77_CO15",
@@ -6919,7 +6919,7 @@
       "even": 0.9748,
       "debris": 0.8175,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 2.38
     },
     {
       "patient": "TF77_CO15",
@@ -6932,7 +6932,7 @@
       "even": 0.9818,
       "debris": 0.8632,
       "usable": false,
-      "seconds": 1.29
+      "seconds": 1.77
     },
     {
       "patient": "TF77_CO15",
@@ -6945,7 +6945,7 @@
       "even": 0.9739,
       "debris": 0.7857,
       "usable": true,
-      "seconds": 1.21
+      "seconds": 1.84
     },
     {
       "patient": "TF77_CO15",
@@ -6958,7 +6958,7 @@
       "even": 0.9766,
       "debris": 0.7325,
       "usable": true,
-      "seconds": 1.03
+      "seconds": 1.49
     },
     {
       "patient": "TF77_CO15",
@@ -6971,7 +6971,7 @@
       "even": 0.9692,
       "debris": 0.7101,
       "usable": true,
-      "seconds": 1.03
+      "seconds": 1.41
     },
     {
       "patient": "TF77_CO15",
@@ -6984,7 +6984,7 @@
       "even": 0.978,
       "debris": 0.6933,
       "usable": true,
-      "seconds": 1.28
+      "seconds": 1.85
     },
     {
       "patient": "TF77_CO15",
@@ -6997,7 +6997,7 @@
       "even": 0.9809,
       "debris": 0.6785,
       "usable": true,
-      "seconds": 1.18
+      "seconds": 1.62
     },
     {
       "patient": "TF77_CO15",
@@ -7010,7 +7010,7 @@
       "even": 0.9668,
       "debris": 0.7244,
       "usable": true,
-      "seconds": 1.18
+      "seconds": 1.72
     },
     {
       "patient": "TF77_CO15",
@@ -7023,7 +7023,7 @@
       "even": 0.9728,
       "debris": 0.7286,
       "usable": false,
-      "seconds": 1.03
+      "seconds": 1.46
     },
     {
       "patient": "TF77_CO15",
@@ -7036,7 +7036,7 @@
       "even": 0.9693,
       "debris": 0.6947,
       "usable": true,
-      "seconds": 1.33
+      "seconds": 1.52
     },
     {
       "patient": "TF81_W8B5",
@@ -7049,7 +7049,7 @@
       "even": 0.9765,
       "debris": 0.6831,
       "usable": true,
-      "seconds": 1.07
+      "seconds": 1.67
     },
     {
       "patient": "TF81_W8B5",
@@ -7062,7 +7062,7 @@
       "even": 0.9803,
       "debris": 0.7148,
       "usable": true,
-      "seconds": 1.08
+      "seconds": 1.52
     },
     {
       "patient": "TF81_W8B5",
@@ -7075,7 +7075,7 @@
       "even": 0.9727,
       "debris": 0.6235,
       "usable": true,
-      "seconds": 0.97
+      "seconds": 1.23
     },
     {
       "patient": "TF81_W8B5",
@@ -7088,7 +7088,7 @@
       "even": 0.9791,
       "debris": 0.6891,
       "usable": true,
-      "seconds": 1.01
+      "seconds": 1.48
     },
     {
       "patient": "TF81_W8B5",
@@ -7101,7 +7101,7 @@
       "even": 0.9715,
       "debris": 0.7299,
       "usable": true,
-      "seconds": 1.06
+      "seconds": 1.47
     },
     {
       "patient": "TF81_W8B5",
@@ -7114,7 +7114,7 @@
       "even": 0.9727,
       "debris": 0.7464,
       "usable": true,
-      "seconds": 1.14
+      "seconds": 1.55
     },
     {
       "patient": "TF81_W8B5",
@@ -7127,7 +7127,7 @@
       "even": 0.9808,
       "debris": 0.7958,
       "usable": true,
-      "seconds": 1.26
+      "seconds": 1.64
     },
     {
       "patient": "TF81_W8B5",
@@ -7140,7 +7140,7 @@
       "even": 0.9837,
       "debris": 0.6825,
       "usable": true,
-      "seconds": 1.05
+      "seconds": 1.71
     },
     {
       "patient": "TF81_W8B5",
@@ -7153,7 +7153,7 @@
       "even": 0.9732,
       "debris": 0.6849,
       "usable": true,
-      "seconds": 1.01
+      "seconds": 1.46
     },
     {
       "patient": "TF81_W8B5",
@@ -7166,7 +7166,7 @@
       "even": 0.9774,
       "debris": 0.6973,
       "usable": true,
-      "seconds": 0.95
+      "seconds": 1.41
     },
     {
       "patient": "TF82_15_1_9",
@@ -7179,7 +7179,7 @@
       "even": 0.8708,
       "debris": 0.7212,
       "usable": false,
-      "seconds": 1.13
+      "seconds": 1.78
     },
     {
       "patient": "TF82_15_1_9",
@@ -7192,7 +7192,7 @@
       "even": 0.8746,
       "debris": 0.6962,
       "usable": false,
-      "seconds": 1.0
+      "seconds": 1.37
     },
     {
       "patient": "TF82_15_1_9",
@@ -7205,7 +7205,7 @@
       "even": 0.8922,
       "debris": 0.6799,
       "usable": false,
-      "seconds": 0.96
+      "seconds": 1.41
     },
     {
       "patient": "TF82_15_1_9",
@@ -7218,7 +7218,7 @@
       "even": 0.9113,
       "debris": 0.7282,
       "usable": true,
-      "seconds": 1.1
+      "seconds": 1.79
     },
     {
       "patient": "TF82_15_1_9",
@@ -7231,7 +7231,7 @@
       "even": 0.9242,
       "debris": 0.6865,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 2.06
     },
     {
       "patient": "TF82_15_1_9",
@@ -7244,7 +7244,7 @@
       "even": 0.9009,
       "debris": 0.7062,
       "usable": true,
-      "seconds": 1.18
+      "seconds": 1.7
     },
     {
       "patient": "TF82_15_1_9",
@@ -7257,7 +7257,7 @@
       "even": 0.9081,
       "debris": 0.7023,
       "usable": true,
-      "seconds": 1.0
+      "seconds": 1.69
     },
     {
       "patient": "TF82_15_1_9",
@@ -7270,7 +7270,7 @@
       "even": 0.8788,
       "debris": 0.7012,
       "usable": false,
-      "seconds": 1.06
+      "seconds": 1.48
     },
     {
       "patient": "TF82_15_1_9",
@@ -7283,7 +7283,7 @@
       "even": 0.9297,
       "debris": 0.7181,
       "usable": true,
-      "seconds": 1.05
+      "seconds": 1.66
     },
     {
       "patient": "TF82_15_1_9",
@@ -7296,7 +7296,7 @@
       "even": 0.8888,
       "debris": 0.6756,
       "usable": false,
-      "seconds": 1.12
+      "seconds": 1.7
     },
     {
       "patient": "TF82_15_1_9",
@@ -7309,7 +7309,7 @@
       "even": 0.8878,
       "debris": 0.7261,
       "usable": false,
-      "seconds": 1.07
+      "seconds": 1.55
     },
     {
       "patient": "TF82_15_1_9",
@@ -7322,7 +7322,7 @@
       "even": 0.9034,
       "debris": 0.7054,
       "usable": true,
-      "seconds": 1.15
+      "seconds": 1.65
     },
     {
       "patient": "TF89_CM5",
@@ -7335,7 +7335,7 @@
       "even": 0.9671,
       "debris": 0.6489,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 2.24
     },
     {
       "patient": "TF89_CM5",
@@ -7348,7 +7348,7 @@
       "even": 0.9774,
       "debris": 0.6902,
       "usable": true,
-      "seconds": 1.51
+      "seconds": 2.22
     },
     {
       "patient": "TF89_CM5",
@@ -7361,7 +7361,7 @@
       "even": 0.9688,
       "debris": 0.6798,
       "usable": true,
-      "seconds": 1.87
+      "seconds": 2.68
     },
     {
       "patient": "TF89_CM5",
@@ -7374,7 +7374,7 @@
       "even": 0.977,
       "debris": 0.5638,
       "usable": true,
-      "seconds": 1.38
+      "seconds": 2.02
     },
     {
       "patient": "TF89_CM5",
@@ -7387,7 +7387,7 @@
       "even": 0.9677,
       "debris": 0.6628,
       "usable": true,
-      "seconds": 1.31
+      "seconds": 2.13
     },
     {
       "patient": "TF89_CM5",
@@ -7400,7 +7400,7 @@
       "even": 0.959,
       "debris": 0.605,
       "usable": true,
-      "seconds": 1.56
+      "seconds": 2.46
     },
     {
       "patient": "TF89_CM5",
@@ -7413,7 +7413,7 @@
       "even": 0.9658,
       "debris": 0.6405,
       "usable": true,
-      "seconds": 1.7
+      "seconds": 2.67
     },
     {
       "patient": "TF90_15_60",
@@ -7426,7 +7426,7 @@
       "even": 0.9669,
       "debris": 0.7058,
       "usable": true,
-      "seconds": 1.95
+      "seconds": 2.84
     },
     {
       "patient": "TF90_15_60",
@@ -7439,7 +7439,7 @@
       "even": 0.9612,
       "debris": 0.6073,
       "usable": true,
-      "seconds": 1.74
+      "seconds": 2.54
     },
     {
       "patient": "TF90_15_60",
@@ -7452,7 +7452,7 @@
       "even": 0.9566,
       "debris": 0.6953,
       "usable": true,
-      "seconds": 2.18
+      "seconds": 3.16
     },
     {
       "patient": "TF90_15_60",
@@ -7465,7 +7465,7 @@
       "even": 0.9652,
       "debris": 0.6706,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 2.72
     },
     {
       "patient": "TF90_15_60",
@@ -7478,7 +7478,7 @@
       "even": 0.9667,
       "debris": 0.7124,
       "usable": true,
-      "seconds": 1.87
+      "seconds": 2.85
     },
     {
       "patient": "TF90_15_60",
@@ -7491,7 +7491,7 @@
       "even": 0.9663,
       "debris": 0.5656,
       "usable": true,
-      "seconds": 1.47
+      "seconds": 2.17
     },
     {
       "patient": "TF90_15_60",
@@ -7504,7 +7504,7 @@
       "even": 0.9355,
       "debris": 0.6537,
       "usable": true,
-      "seconds": 1.49
+      "seconds": 2.39
     },
     {
       "patient": "TF90_15_60",
@@ -7517,7 +7517,7 @@
       "even": 0.9757,
       "debris": 0.7115,
       "usable": true,
-      "seconds": 1.61
+      "seconds": 3.88
     },
     {
       "patient": "TF90_15_60",
@@ -7530,7 +7530,7 @@
       "even": 0.949,
       "debris": 0.7111,
       "usable": true,
-      "seconds": 1.79
+      "seconds": 2.52
     },
     {
       "patient": "TF94_210",
@@ -7543,7 +7543,7 @@
       "even": 0.9724,
       "debris": 0.6798,
       "usable": true,
-      "seconds": 2.33
+      "seconds": 3.69
     },
     {
       "patient": "TF94_210",
@@ -7556,7 +7556,7 @@
       "even": 0.9592,
       "debris": 0.6841,
       "usable": true,
-      "seconds": 2.25
+      "seconds": 3.25
     },
     {
       "patient": "TF94_210",
@@ -7569,7 +7569,7 @@
       "even": 0.9592,
       "debris": 0.646,
       "usable": true,
-      "seconds": 1.79
+      "seconds": 3.15
     },
     {
       "patient": "TF94_210",
@@ -7582,7 +7582,7 @@
       "even": 0.9662,
       "debris": 0.6631,
       "usable": true,
-      "seconds": 2.21
+      "seconds": 3.21
     },
     {
       "patient": "TF94_210",
@@ -7595,7 +7595,7 @@
       "even": 0.9749,
       "debris": 0.6885,
       "usable": true,
-      "seconds": 2.05
+      "seconds": 3.19
     },
     {
       "patient": "TF94_210",
@@ -7608,7 +7608,7 @@
       "even": 0.9767,
       "debris": 0.6595,
       "usable": true,
-      "seconds": 1.93
+      "seconds": 3.17
     },
     {
       "patient": "TF94_210",
@@ -7621,7 +7621,7 @@
       "even": 0.973,
       "debris": 0.6622,
       "usable": true,
-      "seconds": 2.22
+      "seconds": 3.5
     },
     {
       "patient": "TF95_223",
@@ -7634,7 +7634,7 @@
       "even": 0.9796,
       "debris": 0.7571,
       "usable": true,
-      "seconds": 1.79
+      "seconds": 3.23
     },
     {
       "patient": "TF95_223",
@@ -7647,7 +7647,7 @@
       "even": 0.9522,
       "debris": 0.7167,
       "usable": true,
-      "seconds": 1.49
+      "seconds": 2.33
     },
     {
       "patient": "TF95_223",
@@ -7660,7 +7660,7 @@
       "even": 0.9786,
       "debris": 0.7207,
       "usable": true,
-      "seconds": 1.69
+      "seconds": 3.36
     },
     {
       "patient": "TF95_223",
@@ -7673,7 +7673,7 @@
       "even": 0.9637,
       "debris": 0.7465,
       "usable": true,
-      "seconds": 1.47
+      "seconds": 2.23
     },
     {
       "patient": "TF95_223",
@@ -7686,7 +7686,7 @@
       "even": 0.9771,
       "debris": 0.7584,
       "usable": true,
-      "seconds": 1.36
+      "seconds": 2.13
     },
     {
       "patient": "TF95_223",
@@ -7699,7 +7699,7 @@
       "even": 0.9267,
       "debris": 0.7637,
       "usable": true,
-      "seconds": 1.07
+      "seconds": 1.51
     },
     {
       "patient": "TF95_223",
@@ -7712,7 +7712,7 @@
       "even": 0.9545,
       "debris": 0.7612,
       "usable": true,
-      "seconds": 1.49
+      "seconds": 1.72
     },
     {
       "patient": "TF95_223",
@@ -7725,7 +7725,7 @@
       "even": 0.965,
       "debris": 0.6862,
       "usable": true,
-      "seconds": 1.05
+      "seconds": 1.84
     },
     {
       "patient": "TF95_223",
@@ -7738,7 +7738,7 @@
       "even": 0.9716,
       "debris": 0.7377,
       "usable": true,
-      "seconds": 1.21
+      "seconds": 1.88
     },
     {
       "patient": "TF95_223",
@@ -7751,7 +7751,7 @@
       "even": 0.9663,
       "debris": 0.7353,
       "usable": true,
-      "seconds": 1.35
+      "seconds": 2.43
     },
     {
       "patient": "TF95_223",
@@ -7764,7 +7764,7 @@
       "even": 0.981,
       "debris": 0.731,
       "usable": true,
-      "seconds": 1.5
+      "seconds": 2.84
     },
     {
       "patient": "TF95_223",
@@ -7777,7 +7777,7 @@
       "even": 0.9814,
       "debris": 0.6982,
       "usable": true,
-      "seconds": 1.16
+      "seconds": 3.33
     },
     {
       "patient": "TF95_223",
@@ -7790,7 +7790,7 @@
       "even": 0.958,
       "debris": 0.6861,
       "usable": true,
-      "seconds": 1.44
+      "seconds": 2.75
     },
     {
       "patient": "TF95_223",
@@ -7803,7 +7803,7 @@
       "even": 0.9703,
       "debris": 0.7058,
       "usable": true,
-      "seconds": 1.26
+      "seconds": 1.62
     },
     {
       "patient": "TF97_CS31",
@@ -7816,7 +7816,7 @@
       "even": 0.9718,
       "debris": 0.7179,
       "usable": true,
-      "seconds": 2.12
+      "seconds": 3.07
     },
     {
       "patient": "TF97_CS31",
@@ -7829,7 +7829,7 @@
       "even": 0.9591,
       "debris": 0.7203,
       "usable": true,
-      "seconds": 1.72
+      "seconds": 2.54
     },
     {
       "patient": "TF97_CS31",
@@ -7842,7 +7842,7 @@
       "even": 0.98,
       "debris": 0.7346,
       "usable": true,
-      "seconds": 1.81
+      "seconds": 2.82
     },
     {
       "patient": "TF97_CS31",
@@ -7855,7 +7855,7 @@
       "even": 0.9828,
       "debris": 0.7388,
       "usable": true,
-      "seconds": 2.2
+      "seconds": 3.19
     },
     {
       "patient": "TF97_CS31",
@@ -7868,7 +7868,7 @@
       "even": 0.9723,
       "debris": 0.7172,
       "usable": true,
-      "seconds": 2.23
+      "seconds": 3.17
     },
     {
       "patient": "TF97_CS31",
@@ -7881,7 +7881,7 @@
       "even": 0.979,
       "debris": 0.7512,
       "usable": true,
-      "seconds": 2.62
+      "seconds": 5.13
     },
     {
       "patient": "TF97_CS31",
@@ -7894,7 +7894,7 @@
       "even": 0.9753,
       "debris": 0.7389,
       "usable": true,
-      "seconds": 1.91
+      "seconds": 3.02
     },
     {
       "patient": "TF97_CS31",
@@ -7907,7 +7907,7 @@
       "even": 0.971,
       "debris": 0.7516,
       "usable": true,
-      "seconds": 1.9
+      "seconds": 3.49
     },
     {
       "patient": "TF97_CS31",
@@ -7920,7 +7920,7 @@
       "even": 0.9632,
       "debris": 0.7009,
       "usable": true,
-      "seconds": 1.71
+      "seconds": 2.64
     }
   ]
 }

@@ -103,8 +103,14 @@ $PY parasite_eval.py --holdout --threshold "$T" --model "$MODEL" ${W[@]+"${W[@]}
 step "agent_fields at $T (609 fields)"
 $PY agent_fields.py --threshold "$T" --model "$MODEL" ${W[@]+"${W[@]}"}
 
-step "agent_eval"
-$PY agent_eval.py
+step "agent_eval, every arm including the three models"
+# --policies in full, NOT the default. agent_eval.py defaults to who,rule,decision
+# so that adding a model arm is always deliberate, which is right for a one-off
+# run and wrong here: a bare `agent_eval.py` REWRITES agent_eval.json with six
+# arms instead of twelve and silently deletes the whole model comparison. It did
+# exactly that on the re-measure for the final report. The model arms replay from
+# agent_bedrock_calls.jsonl at zero cost, so there is no reason to leave them out.
+$PY agent_eval.py --policies who,rule,decision,bedrock,gptoss,llama
 
 step "negative_fields at $T (1141 fields, all 50 patients; the eval reports the frozen half)"
 $PY negative_fields.py --threshold "$T" --model "$MODEL" ${W[@]+"${W[@]}"}

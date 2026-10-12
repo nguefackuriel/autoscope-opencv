@@ -1144,3 +1144,55 @@ then, quote 0.790 and say which draw it came from.
 
 What this does **not** license is picking whichever of the two reads better.
 They are the same measurement on two samples; the difference is the sample.
+
+## The re-measure the section above asked for, 12 October
+
+That note said every held-out figure here predates the 19 September re-draw and
+should be re-run before the final report. This is that run:
+`SKIP_TRAIN=1 bash eval/chain.sh` on the merged tree at `6d2968a`, network
+unchanged, about three hours. The whole chain is deterministic, so this is a
+reproducibility check and not a second draw on anything frozen. `negative_fields`
+reads every field in sorted order with no sampling, and `parasite_eval` is seeded.
+
+Of the 26 published figures compared before and after, **six moved and twenty did
+not**, and all six are the detector numbers that the new image draw was always
+going to move:
+
+| | before (chain 3 draw) | after (12 Oct) |
+|---|---|---|
+| images scored | 99 | 100 |
+| annotated parasites | 4 731 | 4 999 |
+| precision | 0.814 | 0.805 |
+| recall | 0.783 | 0.776 |
+| **F1** | **0.798** | **0.790** |
+| count bias | −3.83% | −3.62% |
+
+Everything else is identical to the digit: density error 19.3% and 70% of slides
+within 25%, sensitivity 0.98 with none of the 50 infected slides called negative,
+specificity 0.60 with 0 of 25 clean slides called positive, limit of detection
+500/µL, noise floor 148/µL, and all six agent arms (524 / 491 / 450 / 393 / 390 /
+575 fields).
+
+So the figure to quote is **F1 0.790**, and it is now the one in every result
+file rather than a correction applied on top of one. The threshold was
+re-chosen on the calibration patients by the same rule and came back 0.53 again.
+
+### Two traps this run walked into, both now fixed in `eval/chain.sh`
+
+**`"${W[@]}"` on an empty array.** macOS ships bash 3.2, where expanding an empty
+array under `set -u` is a fatal unbound-variable error. Every non-detector run
+has `W` empty, so the chain aborted on its first step. It is `${W[@]+"${W[@]}"}`
+now.
+
+**`agent_eval.py` with no `--policies`.** The default is `who,rule,decision`,
+which is right for a one-off run and wrong inside the chain: the bare call
+rewrote `agent_eval.json` with six arms instead of twelve and **silently deleted
+the entire model comparison**. Nothing failed and nothing warned; the file just
+got smaller. It was caught because the report builder raises on a missing arm.
+The chain now passes all six policies, and since the model arms replay from
+`agent_bedrock_calls.jsonl` there was never a cost reason to leave them out.
+
+The second one is the more dangerous kind of bug: a destructive default that
+looks like a successful run. The lesson for anything else in `eval/` is that a
+script which overwrites a published result file should either take the full set
+explicitly or refuse to narrow one.
