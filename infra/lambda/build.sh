@@ -20,13 +20,13 @@ cp "$repo/src/autoscope/agent/moves.py" "$here/agent/moves.py"
 
 echo "==> the anthropic layer, for python3.12 on arm64"
 layer="$here/layers"
-rm -rf "$layer/python" "$layer/anthropic.zip"
+rm -rf "$layer/python"
 mkdir -p "$layer/python"
 
 # --platform/--only-binary is what makes this an arm64 layer built from an x86
 # laptop. Without it pip silently builds for the host and the Lambda dies on
 # import with an ELF error that says nothing useful.
-pip install \
+python3 -m pip install \
   --target "$layer/python" \
   --platform manylinux2014_aarch64 \
   --implementation cp \
@@ -39,8 +39,9 @@ pip install \
 # risks a version that disagrees with the one underneath.
 rm -rf "$layer/python"/boto3* "$layer/python"/botocore* "$layer/python"/s3transfer*
 
-( cd "$layer" && zip -qr anthropic.zip python )
-echo "==> $(du -h "$layer/anthropic.zip" | cut -f1) at $layer/anthropic.zip"
+# No zip here: Terraform packs layers/ itself (agent.tf), so that the archive
+# contains python/ as a directory rather than its contents.
+echo "==> $(du -sh "$layer/python" | cut -f1) in $layer/python"
 
 echo
 echo "Done. Now: cd infra/terraform && terraform apply"

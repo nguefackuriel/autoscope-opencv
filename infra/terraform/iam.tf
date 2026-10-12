@@ -127,11 +127,35 @@ data "aws_iam_policy_document" "agent" {
       "bedrock:InvokeModel",
       "bedrock:InvokeModelWithResponseStream",
     ]
-    # Both spellings: an inference profile is a different ARN from the model.
+    # The foundation-model ARN is region-WILDCARD on purpose. A `us.` inference
+    # profile is cross-region: it routes the call to whichever of us-east-1,
+    # us-east-2 or us-west-2 has capacity, and the authorisation is checked
+    # against the region it chose. Pinning this to var.region produced a 403
+    # naming us-east-2 for a call made from us-east-1, which reads like a
+    # configuration error somewhere else entirely.
+    #
+    # The inference-profile ARN stays pinned: that resource really does live in
+    # this region and is account-scoped.
     resources = [
-      "arn:aws:bedrock:${var.region}::foundation-model/*",
+      "arn:aws:bedrock:*::foundation-model/*",
       "arn:aws:bedrock:${var.region}:${local.account_id}:inference-profile/*",
     ]
+  }
+
+  # The Mantle endpoint is a DIFFERENT SERVICE NAMESPACE from classic Bedrock.
+  # AnthropicBedrockMantle, which is the client the SDK recommends and the one
+  # agent/bedrock.py uses, calls bedrock-mantle:CreateInference against a
+  # project ARN -- not bedrock:InvokeModel against a model ARN. Granting only
+  # the latter gets a 403 that names an action nothing in the stack mentions,
+  # which is how the second end-to-end slide failed.
+  statement {
+    sid    = "AskTheModelThroughMantle"
+    effect = "Allow"
+    actions = [
+      "bedrock-mantle:CreateInference",
+      "bedrock-mantle:GetInference",
+    ]
+    resources = ["arn:aws:bedrock-mantle:${var.region}:${local.account_id}:project/*"]
   }
 
   statement {
@@ -140,10 +164,15 @@ data "aws_iam_policy_document" "agent" {
     # Read, and write the decision. Not the count: the count comes from the
     # pipeline job. The model does not get to write what it concluded into the
     # field the report reads.
+    # UpdateItem, not PutItem. The handler merges its decision into the row
+    # the Batch job already wrote, because a Put would replace the observation
+    # the decision was made on -- the one thing the row exists to preserve.
+    # The policy said PutItem and the handler says update_item, so the agent
+    # reached Bedrock, got its answer, and then could not record it.
     actions = [
       "dynamodb:GetItem",
       "dynamodb:Query",
-      "dynamodb:PutItem",
+      "dynamodb:UpdateItem",
     ]
     resources = [
       aws_dynamodb_table.trace.arn,
@@ -237,6 +266,27 @@ data "aws_iam_policy_document" "states" {
       "batch:SubmitJob",
       "batch:DescribeJobs",
       "batch:TerminateJob",
+    ]
+    resources = ["*"]
+  }
+
+  # Vended logs. Step Functions does not write to the log group directly: it
+  # sets up a log DELIVERY, and that needs these actions on "*" rather than on
+  # the group's ARN. Without them CreateStateMachine fails with "The state
+  # machine IAM Role is not authorized to access the Log Destination", which
+  # names the role and not the missing actions.
+  statement {
+    sid    = "VendedLogs"
+    effect = "Allow"
+    actions = [
+      "logs:CreateLogDelivery",
+      "logs:GetLogDelivery",
+      "logs:UpdateLogDelivery",
+      "logs:DeleteLogDelivery",
+      "logs:ListLogDeliveries",
+      "logs:PutResourcePolicy",
+      "logs:DescribeResourcePolicies",
+      "logs:DescribeLogGroups",
     ]
     resources = ["*"]
   }

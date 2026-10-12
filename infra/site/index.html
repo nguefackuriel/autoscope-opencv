@@ -106,6 +106,22 @@
   .crop[data-verdict="kept"] { border-color: var(--negative); }
   .crop[data-verdict="rejected"] { border-color: var(--positive); opacity: .45; }
   .note { color: var(--muted); font-size: 12.5px; }
+  /* The field viewer: what the agent actually looked at, one field at a time. */
+  .viewer { display: grid; gap: 18px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .viewer { grid-template-columns: minmax(0,1fr) 300px; } }
+  .viewer img {
+    width: 100%; border-radius: 8px; display: block;
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
+  }
+  .scrub { display: flex; gap: 10px; align-items: center; margin-top: 12px; }
+  .scrub input[type=range] { flex: 1; accent-color: var(--accent); }
+  .thumbs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-top: 10px; }
+  .thumbs button {
+    flex: 0 0 auto; width: 46px; height: 34px; padding: 0; border-radius: 5px;
+    border: 2px solid var(--line); background: color-mix(in srgb, var(--ink) 5%, transparent);
+    color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums;
+  }
+  .thumbs button[aria-current="true"] { border-color: var(--accent); color: var(--ink); }
   .disclaimer { margin-top: 26px; padding: 13px 16px; border-radius: 8px;
                 border: 1px solid var(--line);
                 background: color-mix(in srgb, var(--human) 9%, transparent);
@@ -136,9 +152,12 @@
       <span id="status" class="note"></span>
     </div>
     <p class="note" style="margin:12px 0 0">
-      Leave the endpoint blank and “Replay a recorded session” reads
+      <strong>A real session read on AWS:</strong>
+      <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF101_233">TF101_233</a>
+      — eight fields on a Graviton Spot fleet, the agent choosing when to stop.
+      Or leave the endpoint blank and “Replay a recorded session” reads
       <code>sample-session.json</code> from this page’s own folder, so the demo
-      works with nothing deployed and a judge can check it offline.
+      still works with nothing deployed and a judge can check it offline.
     </p>
   </div>
 
@@ -199,6 +218,37 @@
       from the rule, which does not produce one; the agent gives a reason for
       every move, and that difference is the point of running both.
     </p>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h2>What the agent looked at</h2>
+    <div class="viewer">
+      <div>
+        <img id="field" alt="A field of view with the parasites and white cells the pipeline found circled">
+        <div class="scrub">
+          <button id="play">Play</button>
+          <input id="scrub" type="range" min="0" max="11" value="0"
+                 aria-label="Field number">
+          <span id="fieldno" class="note" style="min-width:5.5em"></span>
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+      <div>
+        <p class="note" style="margin-top:0">
+          Twelve fields of patient TF101_233, in the order the agent read them.
+          Green rings are parasites, blue are white cells — both are
+          <code>count_field</code>'s own detections at the shipped threshold,
+          drawn on the real capture. The running estimate and the agent's move
+          are printed on each frame.
+        </p>
+        <p class="note">
+          There is no slide being panned across here, and that is deliberate:
+          NLM fields are separate captures minutes apart, not tiles of a
+          mosaic. A sequence of fields is what a technician sees down an
+          eyepiece.
+        </p>
+      </div>
+    </div>
   </div>
 
   <div class="card" style="margin-top:20px">
@@ -408,6 +458,45 @@ const fmt = v => (v === null || v === undefined) ? "—"
   : (typeof v === "number" ? (Math.abs(v) >= 100 ? Math.round(v) : v.toFixed(2)) : v);
 const esc = s => String(s).replace(/[&<>"']/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+// ---- the field viewer -------------------------------------------------
+const FIELDS = 12;
+let frame = 0, timer = null;
+
+function showField(i) {
+  frame = ((i % FIELDS) + FIELDS) % FIELDS;
+  $("field").src = `fields/field-${String(frame).padStart(2, "0")}.png`;
+  $("scrub").value = frame;
+  $("fieldno").textContent = `${frame + 1} of ${FIELDS}`;
+  for (const b of $("thumbs").children) {
+    b.setAttribute("aria-current", String(Number(b.dataset.i) === frame));
+  }
+}
+
+function stop() {
+  if (timer) { clearInterval(timer); timer = null; $("play").textContent = "Play"; }
+}
+
+$("play").addEventListener("click", () => {
+  if (timer) { stop(); return; }
+  $("play").textContent = "Pause";
+  timer = setInterval(() => {
+    // Stop at the last field rather than looping: the last frame is the
+    // agent's stop decision, which is the one worth landing on.
+    if (frame + 1 >= FIELDS) { showField(FIELDS - 1); stop(); }
+    else showField(frame + 1);
+  }, 2200);
+});
+$("scrub").addEventListener("input", e => { stop(); showField(Number(e.target.value)); });
+
+for (let i = 0; i < FIELDS; i++) {
+  const b = document.createElement("button");
+  b.textContent = String(i + 1);
+  b.dataset.i = i;
+  b.addEventListener("click", () => { stop(); showField(i); });
+  $("thumbs").appendChild(b);
+}
+showField(0);
 
 $("load").addEventListener("click", loadSession);
 $("demo").addEventListener("click", loadSample);

@@ -43,7 +43,7 @@ from autoscope.quality import FOCUS_MIN, FieldQuality
 
 # Bedrock model ids carry an `anthropic.` prefix. Confirm what the account
 # offers before deploying: aws bedrock list-foundation-models --by-provider anthropic
-DEFAULT_MODEL = os.environ.get("BEDROCK_MODEL_ID", "anthropic.claude-opus-5")
+DEFAULT_MODEL = os.environ.get("BEDROCK_MODEL_ID", "us.anthropic.claude-sonnet-4-6")
 DEFAULT_REGION = os.environ.get("AWS_REGION_NAME", "us-east-1")
 
 
@@ -143,9 +143,17 @@ class BedrockPolicy:
     @property
     def client(self) -> Any:
         if self._client is None:
-            from anthropic import AnthropicBedrockMantle
+            # AnthropicBedrock, not AnthropicBedrockMantle. Mantle is the client
+            # the SDK recommends for new code, and on this account it answers
+            # every model id with 404 "does not exist" -- anthropic.claude-*,
+            # us.anthropic.claude-*, all of them -- after first needing a separate
+            # bedrock-mantle:CreateInference grant. The classic client goes through
+            # bedrock-runtime, which is the API we verified by hand with
+            # `aws bedrock-runtime converse`, and it takes the us. inference
+            # profile ids. Revisit if Mantle is enabled on the account later.
+            from anthropic import AnthropicBedrock
 
-            self._client = AnthropicBedrockMantle(aws_region=self.region)
+            self._client = AnthropicBedrock(aws_region=self.region)
         return self._client
 
     def next_move(self, quality: FieldQuality, tools: Tools) -> Move:

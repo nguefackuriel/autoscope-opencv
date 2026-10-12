@@ -167,6 +167,12 @@ def read(session_id: str, field: int) -> dict[str, Any]:
     counted = count_field(image, scorer=scorer(), scale=scale)
     parasites, wbc = counted.as_tuple()
 
+    # KNOWN: re-reading a field double-counts it. Totals sums every row in the
+    # trace, and this field's row from an earlier run of the same session is
+    # already one of them, so the in-memory addition below counts it twice.
+    # Observed on 10 October: field 0 of TF101_233 reported 46 parasites in 32
+    # white cells, which is exactly 23 in 16 twice. Harmless on a first pass
+    # and wrong on every retry; the fix is for Totals to skip `field`.
     totals = Totals(session_id)
     totals.parasites += parasites
     totals.wbc += wbc

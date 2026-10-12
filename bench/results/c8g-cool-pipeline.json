@@ -1,0 +1,88 @@
+{
+  "label": "c8g-cool",
+  "recorded_utc": "2026-10-12T03:34:09+00:00",
+  "opencv_version": "4.14.0-pre",
+  "machine": "aarch64",
+  "processor": "aarch64",
+  "python": "3.12.3",
+  "tile_px": 1024,
+  "kleidicv_in_build": true,
+  "cpu_baseline": "CPU/HW features:",
+  "build_lines": {
+    "Version control": "4.13.0-153-g9a6e0d1bff-dirty",
+    "Baseline": "SVE NEON FP16 NEON_DOTPROD NEON_FP16 NEON_BF16",
+    "Custom HAL": "YES (carotene (ver 0.0.1) KleidiCV (ver 0.7.0))",
+    "Parallel framework": "TBB (ver 2022.1 interface 12150)",
+    "Timestamp": "2026-04-21T08:44:26Z"
+  },
+  "results": {},
+  "group": "pipeline",
+  "cv_threads_default": 32,
+  "cpu_count": 32,
+  "by_threads": {
+    "0": {
+      "12MP_cvtColor_Lab": {
+        "median_ms": 1.6821,
+        "iqr_ms": 0.0556,
+        "min_ms": 1.6239,
+        "runs": 10
+      },
+      "12MP_GaussianBlur_f32": {
+        "median_ms": 25.1079,
+        "iqr_ms": 0.093,
+        "min_ms": 24.9917,
+        "runs": 10
+      },
+      "12MP_tophat_f32_e31": {
+        "median_ms": 1137.3686,
+        "iqr_ms": 0.0963,
+        "min_ms": 1137.2738,
+        "runs": 10
+      },
+      "12MP_dilate_f32_e15": {
+        "median_ms": 133.8397,
+        "iqr_ms": 0.1167,
+        "min_ms": 133.7756,
+        "runs": 10
+      },
+      "12MP_tophat_u8_e31": {
+        "median_ms": 339.7441,
+        "iqr_ms": 0.1381,
+        "min_ms": 339.6511,
+        "runs": 10
+      }
+    },
+    "1": {
+      "12MP_cvtColor_Lab": {
+        "median_ms": 33.019,
+        "iqr_ms": 0.0399,
+        "min_ms": 32.9056,
+        "runs": 10
+      },
+      "12MP_GaussianBlur_f32": {
+        "median_ms": 25.1953,
+        "iqr_ms": 0.0865,
+        "min_ms": 25.1302,
+        "runs": 10
+      },
+      "12MP_tophat_f32_e31": {
+        "median_ms": 1139.7012,
+        "iqr_ms": 0.2546,
+        "min_ms": 1139.4376,
+        "runs": 10
+      },
+      "12MP_dilate_f32_e15": {
+        "median_ms": 132.8808,
+        "iqr_ms": 0.123,
+        "min_ms": 132.7854,
+        "runs": 10
+      },
+      "12MP_tophat_u8_e31": {
+        "median_ms": 344.1938,
+        "iqr_ms": 0.0922,
+        "min_ms": 344.0002,
+        "runs": 10
+      }
+    }
+  }
+}

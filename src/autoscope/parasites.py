@@ -43,6 +43,7 @@ passes raw features.
 """
 
 from dataclasses import dataclass
+import os
 from pathlib import Path
 
 import cv2 as cv
@@ -76,8 +77,21 @@ FEATURE_NAMES = [
     "size_half", "elongation", "solidity", "dist_wbc", "neighbours_20", "local_field_L",
 ]
 
-MODEL_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_mlp.onnx"
-CNN_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_cnn.onnx"
+# WHERE THE MODELS LIVE
+#
+# `parents[2]` is the repository root when this file is src/autoscope/, which
+# is how it is run from a checkout. It is NOT the repository root once the
+# package is pip-installed: in site-packages it resolves to the Python prefix,
+# and the first AWS Batch job died on
+# "/usr/local/lib/python3.12/models/parasite_cnn.onnx is missing" after
+# starting cleanly on Graviton. AUTOSCOPE_MODELS overrides it, which is what
+# the container sets; the checkout path stays the default so nothing on a
+# laptop has to change.
+MODELS_DIR = Path(os.environ.get(
+    "AUTOSCOPE_MODELS", Path(__file__).resolve().parents[2] / "models"))
+
+MODEL_PATH = MODELS_DIR / "parasite_mlp.onnx"
+CNN_PATH = MODELS_DIR / "parasite_cnn.onnx"
 
 # Chosen on the twenty fit patients the shipped network never trained on, by
 # matching the count to every annotated parasite. Not 0.80: that came from a
@@ -102,7 +116,7 @@ CNN_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_cnn.onnx"
 # threshold on the chain-3 network. tests/test_parasites.py now pins it to
 # the canonical threshold_fixedstats.json.
 DEFAULT_THRESHOLD = 0.53
-HYBRID_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_hybrid.onnx"
+HYBRID_PATH = MODELS_DIR / "parasite_hybrid.onnx"
 
 # The learned detector (6 September 2026, docs/plan-2026-09-05-hospital-grade.md
 # step 4): a small U-Net on the half-resolution field whose peaks are the
@@ -110,7 +124,7 @@ HYBRID_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_hybrid.
 # cell exclusion zone and no rim margin; trained by eval/parasite_heatmap_train.py
 # from the point annotations. Its threshold is chosen like the patch
 # network's, on the calibration patients (choose_threshold.py).
-HEATMAP_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_heatmap.onnx"
+HEATMAP_PATH = MODELS_DIR / "parasite_heatmap.onnx"
 HEATMAP_SCALE = 0.5
 HEATMAP_NMS_PX = 4        # half-resolution px: two peaks closer than this are one parasite
 HEATMAP_FLOOR = 0.05      # peaks below this are not even reported
@@ -460,9 +474,8 @@ HEAT_CNN_THRESHOLD = 0.55
 # variable, or these defaults; their threshold is chosen on the calibration
 # patients like every other model's (choose_threshold.py). 0.25 is a
 # placeholder until one has been.
-import os
-BOX_WEIGHTS = {"yolo": Path(__file__).resolve().parents[2] / "models" / "yolo26" / "best.pt",
-               "frcnn": Path(__file__).resolve().parents[2] / "models" / "frcnn" / "best.pt"}
+BOX_WEIGHTS = {"yolo": MODELS_DIR / "yolo26" / "best.pt",
+               "frcnn": MODELS_DIR / "frcnn" / "best.pt"}
 BOX_THRESHOLD = 0.25
 BOX_MODELS = ("yolo", "frcnn")
 _BOX_SCORERS: dict = {}
@@ -484,7 +497,7 @@ def _box_scorer(kind: str, weights=None):
 # saw, and on the sparse slides it lets them through (results-parasites.md
 # section 16b). Chain 4 trains a judge on the heat map's own candidates and
 # writes it here; until then heat-cnn uses the plain patch network.
-HEAT_CNN_PATH = Path(__file__).resolve().parents[2] / "models" / "parasite_cnn_heat.onnx"
+HEAT_CNN_PATH = MODELS_DIR / "parasite_cnn_heat.onnx"
 _HEAT_CNN_SCORER: "PatchScorer | None" = None
 
 

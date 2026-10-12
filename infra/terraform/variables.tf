@@ -16,9 +16,14 @@ variable "alert_email" {
 }
 
 variable "monthly_budget_usd" {
-  description = "Total monthly cost budget. The grant plus free tier is about 250-300 USD for the whole build."
+  description = <<-EOT
+    Total monthly cost budget. Set to 100 to match the budget created by hand
+    in the console on 10 October, which Terraform then imported rather than
+    duplicated: two budgets with the same name is an error, and two with
+    different names is a guardrail nobody reads.
+  EOT
   type        = number
-  default     = 150
+  default     = 100
 }
 
 variable "bedrock_budget_usd" {
@@ -35,7 +40,15 @@ variable "bedrock_model_id" {
         --query 'modelSummaries[].modelId' --output table
   EOT
   type        = string
-  default     = "anthropic.claude-opus-5"
+  # An INFERENCE PROFILE id, not a bare model id. Measured on this account on
+  # 10 October: bare `anthropic.claude-*` ids return ValidationException, and
+  # Sonnet 4.6 is the most capable Anthropic model this account can reach, and
+  # that was checked rather than assumed after the use-case form went in:
+  # Opus 5, Sonnet 5, Opus 4.8 and Opus 4.7 all answer "not available for this
+  # account" on both Converse and InvokeModel, and the message points at AWS
+  # Sales -- a commercial request, not a form. The agent was designed against
+  # Opus 5 and the report should say which model actually produced its numbers.
+  default     = "us.anthropic.claude-sonnet-4-6"
 }
 
 variable "cool_ami_id" {

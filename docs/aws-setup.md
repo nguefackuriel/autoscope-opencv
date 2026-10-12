@@ -185,3 +185,56 @@ working a weekend.
 Call it **$80 of the ~$250–300 we have**, which leaves room for the demo to
 stay up through judging. The COOL AMI itself carries no software charge beyond
 the instance.
+
+
+## Deployed, 10 October 2026
+
+Account 617847240757 (AI Technologies for Africa), us-east-1, 61 resources.
+
+| | |
+|---|---|
+| **Demo page** | <https://d1k2o3z37c1maf.cloudfront.net> |
+| **API** | <https://fhemydiqba.execute-api.us-east-1.amazonaws.com> |
+| ECR | `617847240757.dkr.ecr.us-east-1.amazonaws.com/autoscope-pipeline` |
+| Batch queue | `autoscope-slides` |
+| State machine | `arn:aws:states:us-east-1:617847240757:stateMachine:autoscope-session` |
+| COOL AMI in use | **no** — Marketplace subscription not granted |
+
+`GET /health` returns 200. The page loads its recorded session and renders the
+call, the interval and the full audit trail.
+
+### Four things this account taught us that the plan did not predict
+
+**A new account starts on the FREE plan and cannot launch the hardware.** Only
+free-tier-eligible types are permitted — `t4g.micro` is the largest Arm option,
+which is Graviton2 and burstable. `c8g.8xlarge` is refused with "not eligible
+for Free Tier", and **`run-instances --dry-run` does not catch it**: the dry run
+reported "would have succeeded" against an instance type the account could not
+start. The account owner has to upgrade to a paid plan in Billing; the credits
+carry over.
+
+**The EC2 quota was never the blocker.** This account came with 32 vCPU
+On-Demand and 32 Spot, which is a `c8g.8xlarge`. Two weeks were spent treating
+a quota increase as the critical path on the strength of a misread CLI output.
+
+**Bedrock needs inference profile ids, and the Opus tier is not granted.** Bare
+`anthropic.claude-*` ids return ValidationException; `us.anthropic.claude-*`
+work. On this account `us.anthropic.claude-sonnet-4-6` and
+`us.anthropic.claude-haiku-4-5-...` answer, while Opus 5, Opus 4.8, Opus 4.7
+and Sonnet 5 return "not available for this account". The agent was designed
+against Opus 5 and now defaults to Sonnet 4.6; request Opus access in the
+Bedrock console and change `bedrock_model_id` if it is granted.
+
+**`aws login` credentials are invisible to boto3 and Terraform.** Both fail
+with "no valid credential sources". `eval "$(aws configure export-credentials
+--profile autoscope --format env)"` fixes it for the shell, and the session
+expires after a few hours.
+
+### Two fixes the first apply needed
+
+The Step Functions role could not create its log delivery — vended logs need
+`logs:CreateLogDelivery` and its siblings on `*`, not on the log group ARN, and
+the error names the role rather than the missing actions. And the console
+budget already existed, so Terraform refused to create a second with the same
+name; it was imported instead, and `monthly_budget_usd` now defaults to the 100
+that was set by hand rather than fighting it.

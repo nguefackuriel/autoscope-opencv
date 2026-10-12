@@ -329,3 +329,146 @@ the recorded floor and say which.
 claim this artefact supports is "this recorded session, which anyone can replay
 exactly, reads N fields", not "any live run reads N fields". Sampling variance
 across live runs is unmeasured and this document does not imply otherwise.
+
+## 11 October: the agent measured against the rule, on all fifty patients
+
+The comparison this project has owed since the proposal. Claude Sonnet 4.6 on
+Bedrock, one call per loop step, 900 calls recorded to
+`eval/results/agent_bedrock_calls.jsonl` and replayable at zero cost — the
+replay below served 906 calls from disk and made none over the network.
+
+With the real counter, which is what a user would get:
+
+| arm | fields read | mean abs. density error | escalated | band settled |
+|---|---|---|---|---|
+| who-200 | 524 | 26.5% | 7 | 39 |
+| rule-based | 491 | 27.2% | 36 | 39 |
+| decision | 450 | 27.4% | 25 | 40 |
+| **bedrock** | **393** | **26.8%** | **14** | 39 |
+
+**The agent reads 393 fields where the decision rule reads 450 and the WHO
+protocol reads 524 — 13% fewer than the rule, 25% fewer than the protocol — and
+the density error is the same.** 26.8% against 26.5% and 27.4%: those three are
+within noise of each other, and the error is the vision's, not the policy's.
+
+It also escalates less: 14 slides to a person against the rule's 25 and
+rule-based's 36.
+
+So the answer to the question the plan posed in September — *if the model
+cannot beat the rule, the report says so* — is that it does beat it, on the
+axis the proposal claimed: fewer fields at the same answer. That is the
+saving, and it is measured rather than asserted.
+
+### The agent's own verdict agrees with the counts, 36 times out of 36
+
+The model's `stop` tool reports what it thinks the slide is. That is never what
+the results table prints — the call is derived by `density.decide()` from the
+counts, so every arm is scored by the same function. But the two can be
+compared, and on the 36 slides where the agent gave a verdict it matched the
+derived call every time.
+
+That is worth stating precisely: it does not mean the model is a good
+diagnostician. It means the model's self-report is consistent with the
+arithmetic it was shown, which is the most this design lets it be responsible
+for.
+
+### Where it is worse, and this is the more interesting half
+
+| arm | fields | mean abs. density error |
+|---|---|---|
+| decision / **expert counts** | 440 | **4.7%** |
+| bedrock / **expert counts** | 395 | **8.1%** |
+
+Given perfect counts, the agent stops too early: 8.1% error against the rule's
+4.7%. With the real counter that penalty vanishes, because the vision's error
+(around 27%) swamps it.
+
+The honest reading is that **the agent's earlier stopping is free only because
+our detector is not good enough for it to cost anything.** If the vision
+improved to the point where sampling error mattered, this arm would need
+re-tuning. The report should say that rather than quote 393 fields as a pure
+win.
+
+### Reproducing it
+
+```
+python eval/agent_eval.py --policies who,rule,decision,bedrock
+```
+
+No AWS account, no `anthropic` package, no cost. The recording is in the
+repository and a cache miss is an error rather than a silent live call, so a
+number that comes back is the number that was recorded.
+
+**Model caveat.** The agent was designed against Claude Opus 5 and these
+numbers are Sonnet 4.6, which is the most capable Anthropic model this AWS
+account can reach — Opus 5, Sonnet 5, Opus 4.8 and 4.7 all answer "not
+available for this account". A different model would need a new recording.
+
+## 11 October, second half: does the agent need a frontier model?
+
+`ConversePolicy` runs the identical loop and the identical five moves through
+Bedrock's Converse API, which is model-agnostic, so the only thing that
+differs between arms is the model. Three recorded, 3 005 calls, all replayable
+at zero cost.
+
+With the real counter:
+
+| arm | fields read | density error | escalated | model calls |
+|---|---|---|---|---|
+| who-200 | 524 | 26.5% | 7 | — |
+| rule-based | 491 | 27.2% | 36 | — |
+| decision | 450 | 27.4% | 25 | — |
+| **Claude Sonnet 4.6** | **393** | **26.8%** | 14 | 453 |
+| **GPT-OSS 120B** | **390** | 29.9% | 15 | 442 |
+| Llama 4 Maverick | 575 | 25.2% | **46** | 604 |
+
+### An open-weight model does the job
+
+**GPT-OSS 120B reads 390 fields against Sonnet's 393** — the same saving over
+the rule, from a model with open weights. It pays about three points of
+density error for it (29.9% against 26.8%), which is inside the band where the
+vision's own error lives but is not nothing.
+
+With expert counts, where the vision noise is removed, GPT-OSS is the better
+stopper of the two: 6.9% against Sonnet's 8.1%, on 410 fields against 395.
+
+So the answer to "does this need a frontier model" is **no**. The design is the
+agent, not the model. That matters for a tool meant for district hospitals:
+the arm that works is the one you can self-host.
+
+### A model that cannot be forced to pick a move is not an agent
+
+Llama 4 Maverick rejects `toolConfig.toolChoice.any` outright — Bedrock
+answers *"This model doesn't support the toolConfig.toolChoice.any field"*. So
+that arm runs unforced, and a turn that returns prose instead of a tool call is
+recorded as the model declining to commit.
+
+It declined on **46 of 50 slides**. It reads 575 fields, more than the WHO
+protocol's 524, because it mostly never decides to stop. Its 25.2% density
+error is the best in the table and means nothing: a policy that reads every
+field and hands the slide to a person has not made a decision, it has avoided
+one.
+
+That is the useful negative here, and it is a property of the API surface
+rather than of the model's intelligence: **forced tool choice is a hard
+requirement for this architecture**, and it should be checked before a model
+is considered at all. Our own first check missed it, because a `toolConfig`
+without `toolChoice` is accepted by every model.
+
+### What this costs
+
+| model | calls | input tokens |
+|---|---|---|
+| Claude Sonnet 4.6 | 900 | 779k |
+| GPT-OSS 120B | 901 | 407k |
+| Llama 4 Maverick | 1 204 | 742k |
+
+GPT-OSS uses roughly half the input tokens for the same work, because the
+Converse path sends no `strict` schema and the model is terser.
+
+### The models this account cannot reach
+
+Opus 5, Sonnet 5, Opus 4.8, Opus 4.7, GPT-6.1 Sol, GPT-6, GPT-5.6, Mistral
+Large, DeepSeek v3 and Qwen 3 all answer "not available for this account".
+Every number above comes from what was actually reachable, and the report
+should say so rather than imply a free choice of model.
