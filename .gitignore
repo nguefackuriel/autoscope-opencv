@@ -6,7 +6,11 @@ venv/
 data/raw/
 data/derived/
 *.zip
-bench/results/*.json
+# Benchmark results ARE committed: the COOL claim is worth exactly what its
+# evidence is worth, and a judge cannot check a number that only ever existed
+# on a terminated instance. Only the local scratch runs are ignored.
+bench/results/local-*.json
+bench/results/profile-local-*.json
 .pytest_cache/
 .DS_Store
 
