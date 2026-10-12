@@ -152,9 +152,17 @@
       <span id="status" class="note"></span>
     </div>
     <p class="note" style="margin:12px 0 0">
-      <strong>A real session read on AWS:</strong>
+      <strong>Four real sessions read on AWS,</strong> one per density band, so you
+      can watch the agent spend effort in proportion to the evidence:
+      <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF41_UT5">TF41_UT5</a>
+      stops after 3 fields at 90,000/µL,
       <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF101_233">TF101_233</a>
-      Eight fields on a Graviton Spot fleet, with the agent choosing when to stop.
+      takes 8 to settle at 8,600,
+      <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF22_C104P65">TF22_C104P65</a>
+      reads all 11 it has and still straddles a band boundary at 700, and
+      <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF150_R5">TF150_R5</a>
+      runs out of slide at 288 and goes to a person. All four are NLM held-out
+      patients the fit never saw.
       Or leave the endpoint blank and “Replay a recorded session” reads
       <code>sample-session.json</code> from this page’s own folder, so the demo
       still works with nothing deployed and a judge can check it offline.
@@ -411,11 +419,15 @@ function poisson(count) {
 
 function recompute() {
   let parasites = 0, wbc = 0, fields = 0, skipped = 0, calls = 0, why = "—";
+  let stopped = false;
   for (const step of state.steps) {
     if (step.move) calls += 1;
     const action = step.move && step.move.action;
     if (action === "skip") skipped += 1;
-    if (action === "stop" || action === "flag_for_human") why = (step.move.reason || "—");
+    if (action === "stop" || action === "flag_for_human") {
+      why = (step.move.reason || "—");
+      stopped = true;
+    }
     const counted = step.counted;
     if (counted) { parasites += counted.parasites || 0; wbc += counted.wbc || 0; fields += 1; }
   }
@@ -426,7 +438,14 @@ function recompute() {
   $("wbc").textContent = wbc;
   $("skipped").textContent = skipped;
   $("calls").textContent = calls;
-  $("why").textContent = why;
+  // A reading can end without the agent choosing to end it: these slides are
+  // captures, not a stage, so a short one runs out of fields while the interval
+  // is still wide. Leaving a dash there read as a bug. It is a real state, and
+  // it is the state that sends a slide to a person.
+  $("why").textContent = stopped ? why
+    : (state.steps.length
+        ? "the slide ran out of fields before the interval settled, so it goes to a person"
+        : "—");
 
   if (!wbc) { $("perul").textContent = "—"; $("ci").textContent = "no white cells counted"; return; }
 
