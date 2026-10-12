@@ -40,3 +40,8 @@ infra/lambda/layers/*.zip
 infra/lambda/agent/moves.py
 eval/results/run_env.json
 eval/results/colab_env.json
+
+# The demo page pulls its frames from docs/figures/session at deploy time
+# (infra/site/deploy.sh). A second copy here would be duplicate binary that can
+# silently disagree with the committed one.
+infra/site/fields/

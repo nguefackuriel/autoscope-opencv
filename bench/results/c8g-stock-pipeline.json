@@ -1,0 +1,51 @@
+{
+  "label": "c8g-stock",
+  "recorded_utc": "2026-10-12T03:16:13+00:00",
+  "opencv_version": "5.0.0",
+  "machine": "aarch64",
+  "processor": "aarch64",
+  "python": "3.12.14",
+  "tile_px": 1024,
+  "kleidicv_in_build": true,
+  "cpu_baseline": "CPU/HW features:",
+  "build_lines": {
+    "Version control": "5.0.0-dirty",
+    "Baseline": "NEON FP16",
+    "Custom HAL": "YES (carotene (ver 0.0.1) KleidiCV (ver 26.03))",
+    "Parallel framework": "pthreads",
+    "Timestamp": "2026-07-01T10:08:42Z"
+  },
+  "results": {
+    "12MP_cvtColor_Lab": {
+      "median_ms": 1.6754,
+      "iqr_ms": 0.0484,
+      "min_ms": 1.6506,
+      "runs": 15
+    },
+    "12MP_GaussianBlur_f32": {
+      "median_ms": 1.7,
+      "iqr_ms": 0.0581,
+      "min_ms": 1.6481,
+      "runs": 15
+    },
+    "12MP_tophat_f32_e31": {
+      "median_ms": 54.8167,
+      "iqr_ms": 0.7582,
+      "min_ms": 53.9477,
+      "runs": 15
+    },
+    "12MP_dilate_f32_e15": {
+      "median_ms": 5.0564,
+      "iqr_ms": 0.0387,
+      "min_ms": 5.0123,
+      "runs": 15
+    },
+    "12MP_tophat_u8_e31": {
+      "median_ms": 22.3683,
+      "iqr_ms": 0.5066,
+      "min_ms": 21.6688,
+      "runs": 15
+    }
+  },
+  "group": "pipeline"
+}

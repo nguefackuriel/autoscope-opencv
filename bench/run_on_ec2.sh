@@ -37,9 +37,18 @@ KLEIDICV="${KLEIDICV:-on}"
 # every arm profiles the same twelve images and the comparison is not a
 # comparison of samples.
 PROFILE="${PROFILE:-0}"
+# GROUP=pipeline swaps the 1024px synthetic cases for the candidate stage's real
+# calls at 12 MP. See _pipeline_cases in cool_bench.py for why that exists.
+GROUP="${GROUP:-tile}"
+THREADS="${THREADS:-0}"
 BUNDLE="${BUNDLE:-s3://autoscope-bench-617847240757/bench-bundle.tar.gz}"
 REGION="${AWS_REGION:-us-east-1}"
 PROFILE_NAME="autoscope-bench-ssm"
+# COOL_AMI swaps the stock Amazon Linux image for the Marketplace Cloud
+# Optimized OpenCV AMI. That image already carries OpenCV built the way COOL
+# ships it, so this arm must NOT pip install opencv over the top: doing so
+# would time the wheel again and label the result COOL.
+COOL_AMI="${COOL_AMI:-}"
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo="$(cd "$here/.." && pwd)"
@@ -51,8 +60,22 @@ esac
 AMI_PARAM="/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-${ARCH}"
 
 echo "==> $LABEL on $TYPE ($ARCH) in $REGION"
-AMI=$(aws ssm get-parameters --names "$AMI_PARAM" --region "$REGION" \
-        --query 'Parameters[0].Value' --output text)
+# The COOL AMI is not Amazon Linux -- `dnf` is not on it -- and it already
+# carries OpenCV with every library OpenCV needs. Installing the GUI packages
+# is both impossible and pointless there.
+if [ -n "$COOL_AMI" ]; then
+  BASE_PACKAGES="true   # the COOL image brings its own OpenCV and its deps"
+else
+  BASE_PACKAGES="dnf install -y python3.12 python3.12-pip mesa-libGL libxcb glib2 >/dev/null"
+fi
+
+if [ -n "$COOL_AMI" ]; then
+  AMI="$COOL_AMI"
+  echo "    using the COOL Marketplace AMI"
+else
+  AMI=$(aws ssm get-parameters --names "$AMI_PARAM" --region "$REGION" \
+          --query 'Parameters[0].Value' --output text)
+fi
 SUBNET=$(aws ec2 describe-subnets --region "$REGION" \
         --filters Name=default-for-az,Values=true \
         --query 'Subnets[0].SubnetId' --output text)
@@ -91,25 +114,41 @@ echo "    online"
 # or a git clone: it is one file, the repository is private, and a token on a
 # throwaway instance is a token too many.
 SCRIPT_B64=$(base64 < "$here/cool_bench.py" | tr -d '\n')
+
+# The Amazon Linux arms reach the bundle with `aws s3 cp`, because the AL2023
+# image carries the CLI. The COOL image is Ubuntu and does not, and installing
+# a CLI onto a benchmark instance is both a few minutes of apt and a change to
+# the thing being measured. A presigned GET is the smaller move: the URL is
+# generated here with our own credentials, expires in an hour, and the instance
+# needs nothing but curl.
+if [ -n "$COOL_AMI" ]; then
+  FETCH_BUNDLE="curl -sSfL '$(aws s3 presign "$BUNDLE" --region "$REGION" --expires-in 3600)' -o /opt/bench/bundle.tar.gz"
+else
+  FETCH_BUNDLE="aws s3 cp '$BUNDLE' /opt/bench/bundle.tar.gz"
+fi
 if [ "$PROFILE" = "1" ]; then
   RUN_COOL="true   # the microbenchmark is skipped: this run profiles the pipeline"
 else
-  RUN_COOL="cd /opt/bench && PYTHONPATH=\"\${PYTHONPATH:-}\" python3.12 cool_bench.py --runs $RUNS --label '$LABEL'"
+  # `. ./.py || true` is not a guard: in dash under `set -e`, sourcing a file
+  # that does not exist exits the shell before the `||` is ever reached, which
+  # is how the stock arm died on a file only the COOL arm writes.
+  RUN_COOL="cd /opt/bench; if [ -f ./.py ]; then . ./.py; fi; \${COOL_PY:-python3.12} cool_bench.py --runs $RUNS --group $GROUP --threads '$THREADS' --label '$LABEL'"
 fi
 
 if [ "$PROFILE" = "1" ]; then
   RESULT="profile-$LABEL"
   RUN_PROFILE=$(cat <<PROF
-python3.12 -m pip install --quiet 'scipy==1.16.3'
-aws s3 cp '$BUNDLE' /opt/bench/bundle.tar.gz
+PY=\${COOL_PY:-python3.12}
+\$PY -m pip install --quiet 'scipy==1.16.3'
+$FETCH_BUNDLE
 tar -xzf /opt/bench/bundle.tar.gz -C /opt/bench
-cd /opt/bench && PYTHONPATH="/opt/bench/src:\${PYTHONPATH:-}" python3.12 bench/field_profile.py \
+cd /opt/bench && PYTHONPATH="/opt/bench/src:\${PYTHONPATH:-}" \$PY bench/field_profile.py \
     --fields 12 --label '$LABEL'
 cp /opt/bench/bench/results/profile-$LABEL.json /opt/bench/results/
 PROF
 )
 else
-  RESULT="$LABEL"
+  if [ "$GROUP" = "tile" ]; then RESULT="$LABEL"; else RESULT="$LABEL-pipeline"; fi
   RUN_PROFILE=""
 fi
 
@@ -145,6 +184,49 @@ sys.exit('CONTROL BUILD STILL HAS: %s' % bad) if bad else print('control build c
 "
 BUILD
 )
+elif [ -n "$COOL_AMI" ]; then
+  # The COOL image is Ubuntu 24.04, not Amazon Linux, and it keeps its OpenCV
+  # off every default path: the bindings sit in /opt/cool/python_<ver>/
+  # site-packages and the shared objects in /opt/cool/cpp_sdk/lib, so a bare
+  # `python3 -c "import cv2"` fails on this image even though OpenCV is right
+  # there -- which is how the first attempt at this arm concluded the image had
+  # no OpenCV at all. The matching venv under /opt/cool/venvs carries numpy and
+  # nothing else, so nothing has to be installed over COOL's own build.
+  INSTALL_OPENCV=$(cat <<'COOLSETUP'
+export LD_LIBRARY_PATH=/opt/cool/cpp_sdk/lib:${LD_LIBRARY_PATH:-}
+COOL_PY=""; COOL_PP=""
+for v in 3.12 3.11 3.10; do
+  cand=/opt/cool/venvs/python_$v/bin/python
+  [ -x "$cand" ] || continue
+  if PYTHONPATH=/opt/cool/python_$v/site-packages $cand -c "import cv2" 2>/dev/null; then
+    COOL_PY=$cand; COOL_PP=/opt/cool/python_$v/site-packages; break
+  fi
+done
+# A COOL arm that quietly fell back to the pip wheel is worse than no COOL arm
+# at all, so stop here rather than install one.
+if [ -z "$COOL_PY" ]; then
+  echo "NO PYTHON ON THIS IMAGE CAN IMPORT THE COOL OPENCV"
+  echo "searched /opt/cool/venvs/python_{3.12,3.11,3.10} with LD_LIBRARY_PATH=/opt/cool/cpp_sdk/lib"
+  ls -la /opt/cool 2>&1 | head -20
+  exit 1
+fi
+export PYTHONPATH="$COOL_PP"
+$COOL_PY -c "
+import cv2, sys
+info = cv2.getBuildInformation()
+want = ('Custom HAL', 'Parallel framework', 'Baseline', 'Version control')
+for line in info.splitlines():
+    if line.strip().startswith(want):
+        print('   ', line.strip())
+print('    opencv', cv2.__version__, 'at', cv2.__file__)
+if 'kleidicv' not in info.lower():
+    sys.exit('THE COOL IMAGE HAS NO KLEIDICV IN ITS BUILD -- not a COOL arm')
+"
+mkdir -p /opt/bench
+printf 'export LD_LIBRARY_PATH=/opt/cool/cpp_sdk/lib\nexport PYTHONPATH=%s\nCOOL_PY=%s\n' \
+  "$COOL_PP" "$COOL_PY" > /opt/bench/.py
+COOLSETUP
+)
 else
   INSTALL_OPENCV="python3.12 -m pip install --quiet 'opencv-python==5.0.0.93' 'numpy==2.3.4'"
 fi
@@ -156,7 +238,7 @@ set -eux
 # installs on Debian, under their Amazon Linux names. The wheel stays
 # opencv-python and not -headless on purpose: the point is to time the same
 # binary the project ships.
-dnf install -y python3.12 python3.12-pip mesa-libGL libxcb glib2 >/dev/null
+$BASE_PACKAGES
 $INSTALL_OPENCV
 mkdir -p /opt/bench/results
 echo '$SCRIPT_B64' | base64 -d > /opt/bench/cool_bench.py
@@ -224,7 +306,12 @@ import json, sys
 r = json.load(open(sys.argv[1]))
 print(f"    opencv {r['opencv_version']} on {r['machine']}, "
       f"kleidicv in build: {r['kleidicv_in_build']}")
-if "results" in r:                       # cool_bench: per-function timings
+if r.get("by_threads"):                  # cool_bench, one block per thread count
+    for n, block in r["by_threads"].items():
+        print(f"    --- {n if n != '0' else 'default'} thread(s) ---")
+        for name, v in block.items():
+            print(f"    {name:<22}{v['median_ms']:>9.3f} ms   IQR {v['iqr_ms']:.3f}")
+elif "results" in r:                     # cool_bench: per-function timings
     for name, v in r["results"].items():
         print(f"    {name:<22}{v['median_ms']:>9.3f} ms   IQR {v['iqr_ms']:.3f}")
 else:                                    # field_profile: the whole pipeline

@@ -12,6 +12,7 @@ run: a best-of number is not reproducible and a judge is right to distrust it.
 
 import argparse
 import json
+import os
 import platform
 import statistics
 import time
@@ -63,6 +64,40 @@ def _cases(img: np.ndarray) -> dict:
     }
 
 
+def _pipeline_cases(size: tuple[int, int] = (3024, 4032)) -> dict:
+    """The calls the candidate stage actually makes, at its real shape and dtype.
+
+    The ten cases above are a 1024x1024 uint8 tile, which is what a
+    microbenchmark looks like and not what this pipeline does. The whole-pipeline
+    profile on the COOL image came back with `parasite candidates` 9.5x slower
+    than on the stock wheel while six of the other seven stages were faster, and
+    the tile cases could not say which call did it: they time morphology on a
+    5x5 kernel over uint8, and `parasites.tophat` runs a 31x31 ellipse over
+    float32 at twelve megapixels.
+
+    So these are the real ones, lifted from parasites.tophat and parasites.peaks
+    with the shipped constants. A regression that shows up here is attributable
+    to a named OpenCV call; one that shows up only in the stage timing is not.
+    """
+    rng = np.random.default_rng(0)
+    h, w = size
+    bgr = rng.integers(60, 220, (h, w, 3), dtype=np.uint8)
+    lab = cv.cvtColor(bgr, cv.COLOR_BGR2Lab).astype(np.float32)
+    stain = cv.GaussianBlur(lab[:, :, 1] - lab[:, :, 2], (0, 0), 1.4)
+    k31 = cv.getStructuringElement(cv.MORPH_ELLIPSE, (31, 31))      # TOPHAT_PX
+    k15 = cv.getStructuringElement(cv.MORPH_ELLIPSE, (15, 15))      # 2*PEAK_NMS_PX+1
+    top = cv.morphologyEx(stain, cv.MORPH_TOPHAT, k31)
+    return {
+        "12MP_cvtColor_Lab": lambda: cv.cvtColor(bgr, cv.COLOR_BGR2Lab),
+        "12MP_GaussianBlur_f32": lambda: cv.GaussianBlur(stain, (0, 0), 1.4),
+        "12MP_tophat_f32_e31": lambda: cv.morphologyEx(stain, cv.MORPH_TOPHAT, k31),
+        "12MP_dilate_f32_e15": lambda: cv.dilate(top, k15),
+        "12MP_tophat_u8_e31": lambda: cv.morphologyEx(
+            cv.cvtColor(bgr, cv.COLOR_BGR2GRAY), cv.MORPH_TOPHAT, k31
+        ),
+    }
+
+
 def time_case(fn, runs: int, warmup: int = 5) -> dict:
     for _ in range(warmup):
         fn()
@@ -87,6 +122,16 @@ def main() -> None:
     ap.add_argument("--runs", type=int, default=100)
     ap.add_argument("--tile", type=int, default=1024)
     ap.add_argument("--label", default="local", help="e.g. c8g-cool, c8g-stock, c7i-stock")
+    ap.add_argument("--threads", default="0",
+                    help="comma-separated thread counts to time each case under; "
+                         "0 means leave OpenCV's default. The 12 MP cases came "
+                         "back 14-25x slower on the COOL image while the 1 MP "
+                         "tile cases were at parity, which is what a filter that "
+                         "stopped parallelising looks like -- so the thread count "
+                         "is a measured variable here, not a fixed condition.")
+    ap.add_argument("--group", default="tile", choices=("tile", "pipeline"),
+                    help="tile: the 1024px synthetic cases; pipeline: the real "
+                         "candidate-stage calls at 12 MP (fewer runs, much slower)")
     args = ap.parse_args()
 
     img = _tile(args.tile)
@@ -105,16 +150,44 @@ def main() -> None:
         "cpu_baseline": next(
             (l.strip() for l in build.splitlines() if "CPU/HW features" in l), "unknown"
         ),
+        # The COOL image turned out to differ from the pip wheel in more than
+        # KleidiCV: it is OpenCV 4.14 with carotene beside KleidiCV 0.7.0, TBB
+        # instead of pthreads, Arm Performance Libraries for BLAS and SVE in
+        # the baseline. A single "kleidicv: yes" would let the report imply the
+        # speedup came from one library, so every line that differs is recorded
+        # and the report quotes them.
+        "build_lines": {
+            key: next(
+                (l.split(":", 1)[1].strip() for l in build.splitlines()
+                 if l.strip().startswith(key)), "unknown"
+            )
+            for key in ("Version control", "Baseline", "Custom HAL",
+                        "Parallel framework", "Timestamp")
+        },
         "results": {},
     }
 
-    for name, fn in _cases(img).items():
-        report["results"][name] = time_case(fn, args.runs)
-        r = report["results"][name]
-        print(f"{name:22} {r['median_ms']:8.3f} ms   IQR {r['iqr_ms']:6.3f}")
+    cases = _cases(img) if args.group == "tile" else _pipeline_cases()
+    report["group"] = args.group
+    report["cv_threads_default"] = cv.getNumThreads()
+    report["cpu_count"] = os.cpu_count()
+    wanted = [int(t) for t in args.threads.split(",")]
+    for n_threads in wanted:
+        if n_threads:
+            cv.setNumThreads(n_threads)
+        else:
+            cv.setNumThreads(report["cv_threads_default"])
+        bucket = report["results"] if len(wanted) == 1 else \
+            report.setdefault("by_threads", {}).setdefault(str(n_threads), {})
+        label = "" if len(wanted) == 1 else f"  [{cv.getNumThreads()} threads]"
+        for name, fn in cases.items():
+            bucket[name] = time_case(fn, args.runs)
+            r = bucket[name]
+            print(f"{name:22} {r['median_ms']:8.3f} ms   IQR {r['iqr_ms']:6.3f}{label}")
 
     RESULTS.mkdir(exist_ok=True)
-    out = RESULTS / f"{args.label}.json"
+    out = RESULTS / (f"{args.label}.json" if args.group == "tile"
+                     else f"{args.label}-pipeline.json")
     out.write_text(json.dumps(report, indent=2))
     print(f"\narch {report['machine']} | opencv {report['opencv_version']} | "
           f"kleidicv in build: {report['kleidicv_in_build']}")
