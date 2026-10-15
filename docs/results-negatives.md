@@ -254,3 +254,56 @@ detection by dilution 200/µL (82% at 100, 48% at 50), and the decision
 rule at N = 200 with a floor of 23 to 30/µL reading specificity 1.00 and
 sensitivity 0.98 on the fit half. The shipped pair reads 0.06 per field,
 19/µL and 500/µL.
+
+## 16 October: the ten escalations were not short slides
+
+The section above says the rule sends 10 clean slides to a person because the
+white cell gate makes more of them fall short of 500 cells before the captured
+fields run out. That was the explanation nobody checked. Checked on 15 October
+against the terminal counts in `negative_eval.json`, it is wrong for 9 of the 10.
+
+Whole-slide white cells on the 25 frozen clean slides run from 482 to 594,
+median 542. Exactly one slide, TF217_15_54 at 482, cannot reach 500. The ten
+escalations split three ways:
+
+| | slides | terminal counts |
+|---|---|---|
+| already met the negative criterion, escalated anyway | **7** | TF207 0/518, TF209 0/510, TF223 0/513, TF232 0/512, TF242 0/515, TF246 4/521 (61/µL), TF249 7/504 (111/µL) |
+| quality gate rejected the fields that held the cells | 2 | TF203 468 counted, 74 in rejected fields; TF245 183 counted, 386 in rejected fields |
+| genuinely under 500 cells | 1 | TF217, 482 |
+
+The seven were a defect in `src/autoscope/agent/loop.py`, not in the rule and
+not in the data. The policy is consulted at the top of each turn, before the
+field it then asks to count. When that count is the last field the slide has,
+the totals the rule has never seen are the final totals, and the loop escalated
+without asking. Each of the seven crossed 500 on exactly that field with the
+estimate under the floor. The rule would have called every one negative.
+
+Fixed on 16 October, commit `754deee`: before leaving the slide right after a
+count, a policy with `_stop` is asked once more from the totals alone. No field,
+no count and no model call is added, so the Bedrock replay cache is untouched
+and a model policy escalates exactly as before. A regression test reproduces the
+bug on four fields of 130 cells and fails on the old loop.
+
+Measured on the uninfected **fit** half, the design set:
+
+| fit half, N = 500, floor 148/µL | before | after |
+|---|---|---|
+| specificity | 0.56 | **0.68** |
+| clean slides to a person | 11 | 8 |
+| clean slides called positive | 0 | 0 |
+| sensitivity, 50 infected held-out | 0.98 | 0.98 |
+| infected called negative | 0 | 0 |
+| fields read, clean + infected | 507 + 450 | 507 + 450 |
+
+Projected on the frozen half from its committed terminal counts: 15 of 25 called
+negative becomes 22 of 25, specificity 0.60 to 0.88, with the same zero clean
+slides called positive and zero infected called negative. **That half has not
+been re-run.** It was scored once, and a second look needs an explicit `--again`
+and a line in the report saying so. Until that happens the published frozen
+number stays 0.60, and the report quotes it.
+
+What the ceiling now is: the three slides left are one too short to reach 500
+and two whose cells sit in fields the quality gate rejected. The first is the
+dataset. The second is a real choice about whether to count a field the gate
+distrusts when the slide is otherwise exhausted, and it is measured separately.
