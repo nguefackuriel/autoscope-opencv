@@ -29,6 +29,35 @@ def _advance(tools) -> bool:
     return False
 
 
+def _last_look(tools, policy, trace, where: str, measured: dict, fallback: str) -> None:
+    """The loop is about to leave the slide right after a count. Let a rule
+    that can decide from the totals alone look at them once more first.
+
+    The policy is consulted at the top of each turn, before the field it then
+    asks to count. So when the count it asked for is the last one the slide has,
+    or the one that hits the field ceiling, the totals it has never seen are the
+    final totals. Escalating straight away threw that decision away: on the
+    frozen uninfected half, 7 of the 10 clean slides sent to a person had crossed
+    500 white cells on exactly that last field with the estimate under the noise
+    floor. The rule would have called them negative. It was never asked.
+
+    Only policies with `_stop` get the look (RuleBased, DecisionRule). It takes
+    the totals and nothing else, so it adds no field, no count and no model call,
+    and the Bedrock replay cache stays valid. A model policy has no `_stop` and
+    escalates exactly as before.
+    """
+    stop_now = getattr(policy, "_stop", None)
+    if stop_now is not None:
+        stop, why = stop_now(tools)
+        if stop:
+            trace.record(where, "stop", measured, why)
+            trace.stopped_because = why
+            return
+    tools.flag_for_human(fallback)
+    trace.record(where, "flag_for_human()", measured, fallback)
+    trace.stopped_because = fallback
+
+
 def read_slide(
     tools: Tools,
     policy: Policy,
@@ -79,16 +108,12 @@ def read_slide(
                 f"counted, running total {tools.parasites} in {tools.wbc} white cells",
             )
             if tools.fields_read >= max_fields:
-                reason = f"hit the {max_fields} field ceiling, handing to a person"
-                tools.flag_for_human(reason)
-                trace.record(where, "flag_for_human()", measured, reason)
-                trace.stopped_because = reason
+                _last_look(tools, policy, trace, where, measured,
+                           f"hit the {max_fields} field ceiling, handing to a person")
                 break
             if not _advance(tools):
-                reason = "ran out of slide before the error bar was tight enough"
-                tools.flag_for_human(reason)
-                trace.record(where, "flag_for_human()", measured, reason)
-                trace.stopped_because = reason
+                _last_look(tools, policy, trace, where, measured,
+                           "ran out of slide before the error bar was tight enough")
                 break
             continue
 

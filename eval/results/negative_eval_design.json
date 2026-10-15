@@ -757,9 +757,9 @@
     "floor_per_ul": 148.05007075743845,
     "negative_wbc_min": 500,
     "clean_slides": 25,
-    "specificity": 0.56,
+    "specificity": 0.68,
     "clean_called_positive": 0,
-    "clean_to_a_person": 11,
+    "clean_to_a_person": 8,
     "clean_fields_read": 507,
     "infected_slides": 50,
     "sensitivity": 0.98,
@@ -833,9 +833,9 @@
         "wbc": 534,
         "parasites": 3,
         "per_ul": 44.9,
-        "stopped_because": "hit the 16 field ceiling, handing to a person",
-        "escalated": true,
-        "call": "undecided",
+        "stopped_because": "negative: 3 parasites in 534 white cells reads 45/uL, within the 148/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
         "band": null
       },
       {
@@ -846,9 +846,9 @@
         "wbc": 517,
         "parasites": 1,
         "per_ul": 15.5,
-        "stopped_because": "hit the 19 field ceiling, handing to a person",
-        "escalated": true,
-        "call": "undecided",
+        "stopped_because": "negative: 1 parasites in 517 white cells reads 15/uL, within the 148/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
         "band": null
       },
       {
@@ -1041,9 +1041,9 @@
         "wbc": 507,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "hit the 26 field ceiling, handing to a person",
-        "escalated": true,
-        "call": "undecided",
+        "stopped_because": "negative: 0 parasites in 507 white cells reads 0/uL, within the 148/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
         "band": null
       },
       {
@@ -1264,8 +1264,8 @@
         "wbc": 229,
         "parasites": 188,
         "per_ul": 6567.7,
-        "stopped_because": "ran out of slide before the error bar was tight enough",
-        "escalated": true,
+        "stopped_because": "positive: 6,568/uL (5,662 to 7,577), above the 148/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "escalated": false,
         "call": "positive",
         "band": "1 000 to 10 000/uL"
       },
@@ -1771,19 +1771,19 @@
       "negative_wbc_min": 200,
       "clean_slides": 25,
       "specificity": 0.92,
-      "clean_called_positive": 2,
-      "clean_to_a_person": 0,
+      "clean_called_positive": 1,
+      "clean_to_a_person": 1,
       "clean_fields_read": 260,
       "infected_slides": 50,
-      "sensitivity": 0.98,
+      "sensitivity": 1.0,
       "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
+      "infected_to_a_person": 0,
+      "infected_band_settled": 41,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
         "0": {
           "slides": 1,
-          "called_positive": 0
+          "called_positive": 1
         },
         "1": {
           "slides": 26,
@@ -1875,8 +1875,8 @@
       "clean_fields_read": 223,
       "infected_slides": 50,
       "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
+      "infected_called_negative": 1,
+      "infected_to_a_person": 0,
       "infected_band_settled": 40,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
@@ -1908,8 +1908,8 @@
       "clean_fields_read": 223,
       "infected_slides": 50,
       "sensitivity": 0.96,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 2,
+      "infected_called_negative": 1,
+      "infected_to_a_person": 1,
       "infected_band_settled": 40,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
@@ -1941,8 +1941,8 @@
       "clean_fields_read": 223,
       "infected_slides": 50,
       "sensitivity": 0.94,
-      "infected_called_negative": 1,
-      "infected_to_a_person": 2,
+      "infected_called_negative": 2,
+      "infected_to_a_person": 1,
       "infected_band_settled": 40,
       "infected_fields_read": 448,
       "sensitivity_by_expert_band": {
@@ -1974,8 +1974,8 @@
       "clean_fields_read": 223,
       "infected_slides": 50,
       "sensitivity": 0.88,
-      "infected_called_negative": 2,
-      "infected_to_a_person": 4,
+      "infected_called_negative": 3,
+      "infected_to_a_person": 3,
       "infected_band_settled": 40,
       "infected_fields_read": 447,
       "sensitivity_by_expert_band": {
@@ -2007,8 +2007,8 @@
       "clean_fields_read": 223,
       "infected_slides": 50,
       "sensitivity": 0.86,
-      "infected_called_negative": 6,
-      "infected_to_a_person": 1,
+      "infected_called_negative": 7,
+      "infected_to_a_person": 0,
       "infected_band_settled": 39,
       "infected_fields_read": 438,
       "sensitivity_by_expert_band": {
@@ -2035,19 +2035,19 @@
       "negative_wbc_min": 300,
       "clean_slides": 25,
       "specificity": 0.88,
-      "clean_called_positive": 2,
-      "clean_to_a_person": 1,
+      "clean_called_positive": 1,
+      "clean_to_a_person": 2,
       "clean_fields_read": 346,
       "infected_slides": 50,
-      "sensitivity": 0.98,
+      "sensitivity": 1.0,
       "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
+      "infected_to_a_person": 0,
+      "infected_band_settled": 41,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
         "0": {
           "slides": 1,
-          "called_positive": 0
+          "called_positive": 1
         },
         "1": {
           "slides": 26,
@@ -2139,8 +2139,8 @@
       "clean_fields_read": 320,
       "infected_slides": 50,
       "sensitivity": 0.98,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 1,
+      "infected_called_negative": 1,
+      "infected_to_a_person": 0,
       "infected_band_settled": 40,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
@@ -2172,8 +2172,8 @@
       "clean_fields_read": 320,
       "infected_slides": 50,
       "sensitivity": 0.96,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 2,
+      "infected_called_negative": 1,
+      "infected_to_a_person": 1,
       "infected_band_settled": 40,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
@@ -2205,8 +2205,8 @@
       "clean_fields_read": 320,
       "infected_slides": 50,
       "sensitivity": 0.94,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 3,
+      "infected_called_negative": 1,
+      "infected_to_a_person": 2,
       "infected_band_settled": 40,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
@@ -2238,8 +2238,8 @@
       "clean_fields_read": 320,
       "infected_slides": 50,
       "sensitivity": 0.88,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 6,
+      "infected_called_negative": 1,
+      "infected_to_a_person": 5,
       "infected_band_settled": 40,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
@@ -2270,10 +2270,10 @@
       "clean_to_a_person": 1,
       "clean_fields_read": 320,
       "infected_slides": 50,
-      "sensitivity": 0.86,
-      "infected_called_negative": 0,
-      "infected_to_a_person": 7,
-      "infected_band_settled": 39,
+      "sensitivity": 0.88,
+      "infected_called_negative": 1,
+      "infected_to_a_person": 5,
+      "infected_band_settled": 40,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
         "0": {
@@ -2282,7 +2282,7 @@
         },
         "1": {
           "slides": 26,
-          "called_positive": 20
+          "called_positive": 21
         },
         "2": {
           "slides": 22,
@@ -2299,19 +2299,19 @@
       "negative_wbc_min": 400,
       "clean_slides": 25,
       "specificity": 0.84,
-      "clean_called_positive": 2,
-      "clean_to_a_person": 2,
+      "clean_called_positive": 1,
+      "clean_to_a_person": 3,
       "clean_fields_read": 427,
       "infected_slides": 50,
-      "sensitivity": 0.98,
+      "sensitivity": 1.0,
       "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
+      "infected_to_a_person": 0,
+      "infected_band_settled": 41,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
         "0": {
           "slides": 1,
-          "called_positive": 0
+          "called_positive": 1
         },
         "1": {
           "slides": 26,
@@ -2534,10 +2534,10 @@
       "clean_to_a_person": 2,
       "clean_fields_read": 409,
       "infected_slides": 50,
-      "sensitivity": 0.86,
+      "sensitivity": 0.88,
       "infected_called_negative": 0,
-      "infected_to_a_person": 7,
-      "infected_band_settled": 39,
+      "infected_to_a_person": 6,
+      "infected_band_settled": 40,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
         "0": {
@@ -2546,7 +2546,7 @@
         },
         "1": {
           "slides": 26,
-          "called_positive": 20
+          "called_positive": 21
         },
         "2": {
           "slides": 22,
@@ -2562,20 +2562,20 @@
       "floor_per_ul": 86,
       "negative_wbc_min": 500,
       "clean_slides": 25,
-      "specificity": 0.52,
-      "clean_called_positive": 2,
-      "clean_to_a_person": 10,
+      "specificity": 0.64,
+      "clean_called_positive": 1,
+      "clean_to_a_person": 8,
       "clean_fields_read": 509,
       "infected_slides": 50,
-      "sensitivity": 0.98,
+      "sensitivity": 1.0,
       "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
+      "infected_to_a_person": 0,
+      "infected_band_settled": 41,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
         "0": {
           "slides": 1,
-          "called_positive": 0
+          "called_positive": 1
         },
         "1": {
           "slides": 26,
@@ -2595,9 +2595,9 @@
       "floor_per_ul": 148,
       "negative_wbc_min": 500,
       "clean_slides": 25,
-      "specificity": 0.56,
+      "specificity": 0.68,
       "clean_called_positive": 0,
-      "clean_to_a_person": 11,
+      "clean_to_a_person": 8,
       "clean_fields_read": 507,
       "infected_slides": 50,
       "sensitivity": 0.98,
@@ -2628,9 +2628,9 @@
       "floor_per_ul": 214,
       "negative_wbc_min": 500,
       "clean_slides": 25,
-      "specificity": 0.64,
+      "specificity": 0.76,
       "clean_called_positive": 0,
-      "clean_to_a_person": 9,
+      "clean_to_a_person": 6,
       "clean_fields_read": 497,
       "infected_slides": 50,
       "sensitivity": 0.98,
@@ -2661,9 +2661,9 @@
       "floor_per_ul": 300,
       "negative_wbc_min": 500,
       "clean_slides": 25,
-      "specificity": 0.64,
+      "specificity": 0.76,
       "clean_called_positive": 0,
-      "clean_to_a_person": 9,
+      "clean_to_a_person": 6,
       "clean_fields_read": 497,
       "infected_slides": 50,
       "sensitivity": 0.98,
@@ -2694,9 +2694,9 @@
       "floor_per_ul": 500,
       "negative_wbc_min": 500,
       "clean_slides": 25,
-      "specificity": 0.64,
+      "specificity": 0.76,
       "clean_called_positive": 0,
-      "clean_to_a_person": 9,
+      "clean_to_a_person": 6,
       "clean_fields_read": 497,
       "infected_slides": 50,
       "sensitivity": 0.96,
@@ -2727,9 +2727,9 @@
       "floor_per_ul": 800,
       "negative_wbc_min": 500,
       "clean_slides": 25,
-      "specificity": 0.64,
+      "specificity": 0.76,
       "clean_called_positive": 0,
-      "clean_to_a_person": 9,
+      "clean_to_a_person": 6,
       "clean_fields_read": 497,
       "infected_slides": 50,
       "sensitivity": 0.94,
@@ -2760,9 +2760,9 @@
       "floor_per_ul": 1000,
       "negative_wbc_min": 500,
       "clean_slides": 25,
-      "specificity": 0.64,
+      "specificity": 0.76,
       "clean_called_positive": 0,
-      "clean_to_a_person": 9,
+      "clean_to_a_person": 6,
       "clean_fields_read": 497,
       "infected_slides": 50,
       "sensitivity": 0.88,
@@ -2793,15 +2793,15 @@
       "floor_per_ul": 1500,
       "negative_wbc_min": 500,
       "clean_slides": 25,
-      "specificity": 0.64,
+      "specificity": 0.76,
       "clean_called_positive": 0,
-      "clean_to_a_person": 9,
+      "clean_to_a_person": 6,
       "clean_fields_read": 497,
       "infected_slides": 50,
-      "sensitivity": 0.86,
+      "sensitivity": 0.88,
       "infected_called_negative": 0,
-      "infected_to_a_person": 7,
-      "infected_band_settled": 39,
+      "infected_to_a_person": 6,
+      "infected_band_settled": 40,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
         "0": {
@@ -2810,7 +2810,7 @@
         },
         "1": {
           "slides": 26,
-          "called_positive": 20
+          "called_positive": 21
         },
         "2": {
           "slides": 22,
@@ -2827,19 +2827,19 @@
       "negative_wbc_min": 1000,
       "clean_slides": 25,
       "specificity": 0.0,
-      "clean_called_positive": 2,
-      "clean_to_a_person": 23,
+      "clean_called_positive": 1,
+      "clean_to_a_person": 24,
       "clean_fields_read": 538,
       "infected_slides": 50,
-      "sensitivity": 0.98,
+      "sensitivity": 1.0,
       "infected_called_negative": 0,
-      "infected_to_a_person": 1,
-      "infected_band_settled": 40,
+      "infected_to_a_person": 0,
+      "infected_band_settled": 41,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
         "0": {
           "slides": 1,
-          "called_positive": 0
+          "called_positive": 1
         },
         "1": {
           "slides": 26,
@@ -3062,10 +3062,10 @@
       "clean_to_a_person": 25,
       "clean_fields_read": 538,
       "infected_slides": 50,
-      "sensitivity": 0.86,
+      "sensitivity": 0.88,
       "infected_called_negative": 0,
-      "infected_to_a_person": 7,
-      "infected_band_settled": 39,
+      "infected_to_a_person": 6,
+      "infected_band_settled": 40,
       "infected_fields_read": 450,
       "sensitivity_by_expert_band": {
         "0": {
@@ -3074,7 +3074,7 @@
         },
         "1": {
           "slides": 26,
-          "called_positive": 20
+          "called_positive": 21
         },
         "2": {
           "slides": 22,

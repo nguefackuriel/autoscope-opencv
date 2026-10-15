@@ -136,3 +136,47 @@ def test_decision_rule_calls_a_clean_slide_negative_and_a_heavy_one_positive():
     assert tools.decision.call == "positive"
     assert tools.decision.band_name is not None
     assert trace.fields_read < 100
+
+
+def test_a_clean_slide_that_crosses_the_threshold_on_its_last_field_is_called_negative():
+    """The decision the rule would have made on the final totals must not be
+    thrown away because the slide happened to end there.
+
+    Four fields of 130 white cells: 390 after three, 520 after the fourth. The
+    rule is asked at the top of each turn, before the count it then requests,
+    so it last saw 390 and said "keep going". The fourth count makes it 520,
+    the slide is out, and the loop used to escalate without asking again. On
+    the frozen uninfected half that was 7 of the 10 clean slides sent to a
+    person: all of them past 500 cells with nothing found.
+    """
+    from autoscope.agent.policy import DecisionRule
+
+    stage = VirtualStage(synthetic_slide(cols=4, rows=1), tile=TILE)
+    tools = Tools(stage, counter=lambda image: (0, 130))
+    policy = DecisionRule(floor_per_ul=148, negative_wbc_min=500, min_fields=1)
+    trace = read_slide(tools, policy, slide="short clean", max_fields=40)
+
+    assert tools.fields_read == 4 and tools.wbc == 520, "the look must add no field"
+    assert tools.escalation is None, "the rule had a negative; it must not be escalated"
+    assert tools.decision.call == "negative"
+    assert "negative" in trace.stopped_because
+
+
+def test_a_policy_without_a_rule_still_escalates_when_the_slide_runs_out():
+    """The last look is only for policies that can decide from totals alone. A
+    model policy has no `_stop`, so the end of the slide is still an escalation
+    and, just as important, costs it no extra call."""
+
+    class CountEverything:
+        name = "count-everything"
+
+        def next_move(self, quality, tools):  # noqa: ARG002
+            return "count_then_move", {"reason": "keep counting"}
+
+    stage = VirtualStage(synthetic_slide(cols=4, rows=1), tile=TILE)
+    tools = Tools(stage, counter=lambda image: (0, 130))
+    trace = read_slide(tools, CountEverything(), slide="short clean", max_fields=40)
+
+    assert tools.fields_read == 4
+    assert tools.escalation is not None
+    assert "ran out of slide" in trace.stopped_because
