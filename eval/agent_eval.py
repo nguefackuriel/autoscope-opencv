@@ -302,14 +302,16 @@ def main():
 
     args.policies = [p.strip() for p in args.policies.split(",") if p.strip()]
     known = {"who", "rule", "decision", "bedrock", "gptoss", "llama",
-             "haiku", "deepseek", "devstral", "ministral", "nova", "gemma", "minimax"}
+             "haiku", "deepseek", "devstral", "ministral", "nova", "gemma", "minimax",
+             "nemotron", "qwen80", "qwen32", "qwencoder", "qwenvl"}
     unknown = set(args.policies) - known
     if unknown:
         ap.error(f"unknown policies {sorted(unknown)}; pick from {sorted(known)}")
 
     # Two guards against buying something nobody asked for.
     model_arms = {"bedrock", "gptoss", "llama",
-                  "haiku", "deepseek", "devstral", "ministral", "nova", "gemma", "minimax"}
+                  "haiku", "deepseek", "devstral", "ministral", "nova", "gemma", "minimax",
+             "nemotron", "qwen80", "qwen32", "qwencoder", "qwenvl"}
     if args.record and not (model_arms & set(args.policies)):
         ap.error(f"--record only means anything with a model arm in --policies "
                  f"({', '.join(sorted(model_arms))})")
@@ -406,6 +408,26 @@ def main():
                     client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
                 "minimax": lambda: ConversePolicy(
                     model="minimax.minimax-m2.5", name="minimax-m2-5",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                # Second probe, 16 October, after reading the full catalogue:
+                # Nvidia has four Nemotron models and only nano-3 30B honours
+                # toolChoice.any (super-3 120B, nano 12B and 9B answer and will
+                # not be forced). Qwen3 honours it on all four tested. DeepSeek
+                # R1 has no tool use at all; Writer needs provisioned throughput.
+                "nemotron": lambda: ConversePolicy(
+                    model="nvidia.nemotron-nano-3-30b", name="nemotron-nano-3-30b",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                "qwen80": lambda: ConversePolicy(
+                    model="qwen.qwen3-next-80b-a3b", name="qwen3-next-80b",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                "qwen32": lambda: ConversePolicy(
+                    model="qwen.qwen3-32b-v1:0", name="qwen3-32b",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                "qwencoder": lambda: ConversePolicy(
+                    model="qwen.qwen3-coder-next", name="qwen3-coder-next",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                "qwenvl": lambda: ConversePolicy(
+                    model="qwen.qwen3-vl-235b-a22b", name="qwen3-vl-235b",
                     client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
                 "bedrock": lambda: BedrockPolicy(client=cache, model=args.bedrock_model,
                                                  effort=args.bedrock_effort,
