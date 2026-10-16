@@ -86,6 +86,7 @@
   input, button, select {
     font: inherit; padding: 7px 11px; border-radius: 7px;
     border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+    max-width: 100%;
   }
   button { cursor: pointer; font-weight: 560; }
   /* A keyboard user has to be able to see where they are. The browser default
@@ -105,6 +106,7 @@
      into one 92px column. */
   .crops > .note { grid-column: 1 / -1; }
   .crop { border: 2px solid var(--line); border-radius: 7px; overflow: hidden;
+          padding: 0; background: var(--panel); font: inherit; color: inherit;
           cursor: pointer; background: color-mix(in srgb, var(--ink) 4%, transparent);
           aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
           font-family: var(--mono); font-size: 11px; color: var(--muted); position: relative; }
@@ -118,7 +120,11 @@
   .viewer { display: grid; gap: 18px; grid-template-columns: 1fr; }
   @media (min-width: 900px) { .viewer { grid-template-columns: minmax(0,1fr) 300px; } }
   .viewer img {
-    width: 100%; border-radius: 8px; display: block;
+    /* 1280x860 is what render_session.py writes. The width and height on the
+       tag give the browser the box before the bytes arrive, so the page does
+       not jump as each field loads; height:auto keeps the whole frame visible
+       rather than cropping it to fit. */
+    width: 100%; height: auto; border-radius: 8px; display: block;
     background: color-mix(in srgb, var(--ink) 6%, transparent);
   }
   .scrub { display: flex; gap: 10px; align-items: center; margin-top: 12px; }
@@ -240,7 +246,8 @@
     <h2>What the agent looked at</h2>
     <div class="viewer">
       <div>
-        <img id="field" alt="A field of view with the parasites and white cells the pipeline found circled">
+        <img id="field" width="1280" height="860" loading="lazy"
+             alt="A field of view with the parasites and white cells the pipeline found circled">
         <div class="scrub">
           <button id="play" aria-label="Play the fields in order">Play</button>
           <input id="scrub" type="range" min="0" max="11" value="0"
@@ -426,16 +433,23 @@ function drawCrops() {
   }
   $("verifynote").style.display = "";
   box.innerHTML = detections.map((d, i) => `
-    <div class="crop" data-i="${i}" data-verdict="kept" title="field ${d.step}, score ${d.score}">
-      ${d.url ? `<img src="${esc(d.url)}" alt="detection ${i}">` : "no crop"}
+    <button type="button" class="crop" data-i="${i}" data-verdict="kept"
+            aria-pressed="false"
+            title="field ${d.step}, score ${d.score}"
+            aria-label="Detection ${i + 1} from field ${d.step}, score ${fmt(d.score)}. Press to reject it.">
+      ${d.url ? `<img src="${esc(d.url)}" alt="">` : "no crop"}
       <span class="score">${fmt(d.score)}</span>
-    </div>`).join("");
+    </button>`).join("");
 
   box.querySelectorAll(".crop").forEach(el => {
     el.addEventListener("click", () => {
       const i = Number(el.dataset.i);
       const rejected = el.dataset.verdict === "rejected";
       el.dataset.verdict = rejected ? "kept" : "rejected";
+      el.setAttribute("aria-pressed", String(!rejected));
+      el.setAttribute("aria-label", el.getAttribute("aria-label").replace(
+        rejected ? "Press to keep it." : "Press to reject it.",
+        rejected ? "Press to reject it." : "Press to keep it."));
       if (rejected) state.rejected.delete(i); else state.rejected.add(i);
       recompute();
     });
