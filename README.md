@@ -1,7 +1,13 @@
 # AutoScope
 
-Agent-driven malaria slide reading. OpenCV 5 does the image work on AWS Graviton
-with COOL, and an agent decides which field to look at next and when to stop.
+Agent-driven malaria slide reading. OpenCV 5 does the image work on AWS
+Graviton, and an agent decides which field to look at next and when to stop.
+
+The container runs the OpenCV 5 pip wheel, which on aarch64 is built with
+carotene and KleidiCV 26.03: Arm-accelerated OpenCV on Graviton4. The COOL
+Marketplace image is measured as a fourth arm, and with the tiled-morphology
+workaround it reads the same counts at 0.97x the wheel's speed. Section 8 of
+the report has all four builds with the `cv.getBuildInformation()` line of each.
 
 Entry for the OpenCV AI Competition 2026. Both award paths: Best Use of COOL and
 Agentic Vision.
@@ -10,7 +16,7 @@ Agentic Vision.
 
 | | |
 |---|---|
-| **Live demo** | <https://d1k2o3z37c1maf.cloudfront.net>, public, no credentials. The field viewer plays twelve real fields with the detections drawn and the agent's move on each. |
+| **Live demo** | <https://d1k2o3z37c1maf.cloudfront.net>, public, no credentials. It opens on a session read live on AWS and plays every field the agent looked at, with the detections drawn and the move it made on each. Four sessions are linked, 3 to 11 fields depending on the slide. |
 | **Technical report** | `docs/report/`. Build it with `.venv/bin/python docs/report/build_report.py --build-pdf`. Every figure in it is read from a committed result file. None is typed by hand. |
 | **Architecture** | `docs/proposal/architecture.svg` |
 | **Agent trace** | `docs/figures/agent-trace-example.txt`, and every move of every slide in `eval/results/agent_eval.json` |
@@ -20,9 +26,9 @@ account except the benchmark:
 
 ```
 make setup && make test                       # 152 tests, x86 and arm64 in CI
-.venv/bin/python eval/agent_eval.py           # the agent against the rules, replayed
-                                              # from 15 396 recorded model calls across
-                                              # fifteen models: free
+.venv/bin/python eval/agent_eval.py --policies all   # every arm in the report's
+                                              # table, replayed from 15 396 recorded
+                                              # model calls across fifteen models: free
 SKIP_TRAIN=1 bash eval/chain.sh               # every held-out and specificity number (~2 h)
 bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock   # one COOL arm; the instance terminates itself
 ```
@@ -118,9 +124,9 @@ docs/data-notes.md            what the data actually is. Read before coding.
 docs/plan-2026-09-02.md       where we stand, what is wrong, the plan to 26 Oct
 src/autoscope/
   fov.py                      find the round eyepiece view. Runs first.
-  quality.py         stage 1  is this field worth counting
+  quality.py         stage 1  is this field worth counting, and frame_motion
+                              for whether the stage has settled between views
   photometry.py      stage 2  even out lighting and stain
-  registration.py    stage 3  line up views, measure overlap    (to write)
   annotations.py              read the ground truth, in the image's own frame
   segmentation.py    stage 4  find the white cells (the denominator)
   parasites.py       stage 5  find the parasites (the numerator): top-hat

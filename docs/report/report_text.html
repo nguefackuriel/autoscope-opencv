@@ -83,8 +83,9 @@
 <figure>
   <img src="../proposal/architecture.svg" alt="AutoScope architecture: upload, field assessment, counting, the agent loop, and the signed report">
   <figcaption>
-    Stages 1 to 4 and 6 are OpenCV&nbsp;5. Stage 5 is the agent. The agent's whole
-    input is OpenCV output.
+    All six stages are OpenCV&nbsp;5, and they are listed in Section&nbsp;3. The
+    agent sits outside them: its whole input is OpenCV output and the only thing
+    it returns is which field to read next.
   </figcaption>
 </figure>
 <h3>The loop</h3>
@@ -211,11 +212,11 @@
   <thead><tr><th>Service</th><th>Role</th></tr></thead>
   <tbody>
     <tr><td>S3, CloudFront</td><td>Field uploads, results, the public demo page.</td></tr>
-    <tr><td>API Gateway, Lambda</td><td>Starts a session. Returns the trace and the crops.</td></tr>
+    <tr><td>API Gateway, Lambda</td><td>Starts a session. Returns the trace.</td></tr>
     <tr><td>Step Functions</td><td>The reading loop: assess, count, ask the agent, repeat or stop.</td></tr>
     <tr><td>Batch on Graviton Spot</td><td>Runs the OpenCV container, <code>c8g</code>, arm64.</td></tr>
     <tr><td>Bedrock</td><td>The agent. $agent_model_arms models compared in Section&nbsp;6.</td></tr>
-    <tr><td>DynamoDB</td><td>One row per slide.</td></tr>
+    <tr><td>DynamoDB</td><td>One row per field read, with the observation, the counts and the move. The totals are rebuilt from those rows, so they cannot drift from the audit trail.</td></tr>
   </tbody>
 </table>
 <p>
@@ -679,8 +680,11 @@ make test                  # unit tests
 make data                  # NLM thick smear set, 3.9 GB
 
 SKIP_TRAIN=1 bash eval/chain.sh          # every held-out and specificity number
-.venv/bin/python eval/agent_eval.py      # the agent table, replayed from cache
+.venv/bin/python eval/agent_eval.py --policies all   # the whole agent table,
+                                         # 18 arms replayed from the cache, free
+.venv/bin/python eval/agent_moves.py     # the move each model chose, counted
 bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock   # one benchmark arm
+.venv/bin/python bench/cost_model.py --markdown  # dollars per 1,000 slides
 .venv/bin/python docs/report/build_report.py     # this document</pre>
 <p>
   The agent comparison needs no AWS account. The benchmark arms need one. Each
@@ -695,7 +699,8 @@ bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock   # one benchmark arm
     <tr><td>Other laboratory, other species</td><td><code>docs/results-tanzania.md</code>, <code>docs/results-vivax.md</code></td></tr>
     <tr><td>COOL, four builds</td><td><code>docs/results-cool.md</code>, <code>bench/results/</code></td></tr>
     <tr><td>What would make the detector stronger</td><td><code>eval/soft_count.py</code>, <code>docs/detector-levers-2026-10-16.md</code></td></tr>
-    <tr><td>Deployed stack</td><td><code>infra/terraform/</code>, <code>docs/aws-setup.md</code></td></tr>
+    <tr><td>Deployed stack</td><td><code>infra/terraform/</code>, <code>infra/terraform/deployed.json</code>, <code>docs/aws-setup.md</code></td></tr>
+    <tr><td>COOL gives the same counts</td><td><code>bench/compare_counts.py</code>, <code>bench/results/profile-c8g-*-counts.json</code></td></tr>
   </tbody>
 </table>
 </section>

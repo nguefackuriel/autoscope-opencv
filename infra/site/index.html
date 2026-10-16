@@ -417,9 +417,10 @@ function drawCrops() {
   }
   if (!detections.length) {
     box.innerHTML = '<span class="note">This session carries no detection crops: it '
-      + 'was replayed from the cached field table, which keeps the counts and not '
-      + 'the pixels. A session read on AWS writes each detection to S3 and they '
-      + 'appear here.</span>';
+      + 'keeps the counts and not the pixels. The field pictures above are the '
+      + 'fields this session read, with every detection drawn on them; the '
+      + 'per-detection crops below them ship only with the recorded sample '
+      + 'session, where you can reject one and watch the density move.</span>';
     $("verifynote").style.display = "none";
     return;
   }
