@@ -215,7 +215,67 @@ read 6 fields, 148 parasites in 141 white cells</pre>
 </section>
 
 <section>
-<h2><span class="fignum">5</span>On AWS</h2>
+<h2><span class="fignum">5</span>What is already known, and what is not</h2>
+<p class="lede">
+  Automated malaria microscopy is a solved research problem at the field level.
+  What is not solved is the slide.
+</p>
+<p>
+  <strong>The detector.</strong> Yang et al. is the paper that goes with this
+  dataset: a smartphone-based detector on the same 150 patients, reporting
+  92.6% sensitivity and 94.3% precision at the candidate level.<sup>1</sup>
+  Everything measured here is read against that. Our contribution is not a
+  better detector. Our detector is deliberately a small CNN on top of classical
+  morphology, because it has to run through <code>cv.dnn</code> on an Arm
+  instance beside five other OpenCV stages.
+</p>
+<p>
+  <strong>The protocol.</strong> How many fields to read is not a modelling
+  question, it is a WHO one: count parasites against 200 white cells, or read
+  100 fields before calling a slide negative.<sup>2</sup> That protocol is a
+  fixed budget. It spends the same effort on a slide swarming with parasites as
+  on an empty one. Nothing in the literature we found treats "how much of this
+  slide is enough" as a decision to be made per slide and measured.
+</p>
+<p>
+  <strong>What is new here.</strong> Three things, and each one is a
+  measurement rather than a claim.
+</p>
+<ol>
+  <li><strong>The stopping decision is separated from the diagnosis and
+  measured on its own.</strong> Every policy in Section&nbsp;7 reads the same
+  fields with the same counter and the same <code>decide()</code>; only the
+  stopping point changes. That is what makes an agent comparable to a rule at
+  all, and it is why the honest answer about a fixed eight fields could be
+  found rather than argued about.</li>
+  <li><strong>Fifteen models through one loop, replayable for nothing.</strong>
+  $cache_calls recorded calls ship with the repository. The finding is that
+  model size does not predict anything and willingness to stop does:
+  $agent_never_stop of the $agent_model_arms never chose <code>stop</code> once.
+  That is not visible on any model card and costs one cheap run to check.</li>
+  <li><strong>A defect in a shipped accelerated OpenCV, diagnosed to the call
+  and worked around.</strong> Section&nbsp;9. The function benchmark says 1.59
+  times faster; the pipeline says 3.8 times slower; the thread sweep says why.
+  Function-level benchmarks are how hardware gets chosen, and here is a case
+  where they point the wrong way.</li>
+</ol>
+<p class="note">
+  1. Yang F, Poostchi M, Yu H, Zhou Z, Silamut K, Yu J, Maude RJ, Jaeger S,
+  Antani S. <em>Deep learning for smartphone-based malaria parasite detection
+  in thick blood smears.</em> IEEE Journal of Biomedical and Health
+  Informatics, 24(5):1427&ndash;1438, 2020.
+  <code>doi:10.1109/JBHI.2019.2939121</code><br>
+  2. WHO, <em>Basic malaria microscopy</em>, and the counting convention of
+  8&nbsp;000 leucocytes per microlitre used throughout this report. Burden
+  figures are from the <em>World malaria report 2025</em>, in
+  <code>docs/reference/</code>.<br>
+  3. Tanzania set: Harvard Dataverse <code>doi:10.7910/DVN/O2WVWA</code>,
+  CC0, with its Data in Brief paper <code>doi:10.1016/j.dib.2024.111169</code>.
+</p>
+</section>
+
+<section>
+<h2><span class="fignum">6</span>On AWS</h2>
 <p class="lede">
   $tf_resources Terraform resources in <code>us-east-1</code>. Four slides have been
   read end to end.
@@ -228,7 +288,7 @@ read 6 fields, 148 parasites in 141 white cells</pre>
     <tr><td>API Gateway, Lambda</td><td>Starts a session. Returns the trace.</td></tr>
     <tr><td>Step Functions</td><td>The reading loop: assess, count, ask the agent, repeat or stop.</td></tr>
     <tr><td>Batch on Graviton Spot</td><td>Runs the OpenCV container, <code>c8g</code>, arm64.</td></tr>
-    <tr><td>Bedrock</td><td>The agent. $agent_model_arms models compared in Section&nbsp;6.</td></tr>
+    <tr><td>Bedrock</td><td>The agent. $agent_model_arms models compared in Section&nbsp;7.</td></tr>
     <tr><td>DynamoDB</td><td>One row per field read, with the observation, the counts and the move. The totals are rebuilt from those rows, so they cannot drift from the audit trail.</td></tr>
   </tbody>
 </table>
@@ -274,7 +334,7 @@ read 6 fields, 148 parasites in 141 white cells</pre>
 </section>
 
 <section>
-<h2><span class="fignum">6</span>Evaluation</h2>
+<h2><span class="fignum">7</span>Evaluation</h2>
 <p class="lede">
   The plan of 2 September set seven numeric targets. $n_met of $n_crit were met.
 </p>
@@ -416,7 +476,7 @@ read 6 fields, 148 parasites in 141 white cells</pre>
 </section>
 
 <section>
-<h2><span class="fignum">7</span>Failure modes</h2>
+<h2><span class="fignum">8</span>Failure modes</h2>
 <p class="lede">
   Figures in <code>docs/figures/</code>. Catalogue in
   <code>docs/results-parasites.md</code>.
@@ -442,7 +502,7 @@ read 6 fields, 148 parasites in 141 white cells</pre>
 </section>
 
 <section>
-<h2><span class="fignum">8</span>COOL on Graviton</h2>
+<h2><span class="fignum">9</span>COOL on Graviton</h2>
 <p class="lede">
   Four builds measured on real instances. Every result file is in
   <code>bench/results/</code> with the <code>cv.getBuildInformation()</code> lines
@@ -587,7 +647,7 @@ python bench/compare_counts.py profile-c8g-stock-counts profile-c8g-cool-counts<
 </section>
 
 <section>
-<h2><span class="fignum">9</span>Limits and responsible use</h2>
+<h2><span class="fignum">10</span>Limits and responsible use</h2>
 <h3>Screening aid</h3>
 <p>
   A person reviews every output. The trace, the crops and the interval are shown
@@ -659,7 +719,7 @@ python bench/compare_counts.py profile-c8g-stock-counts profile-c8g-cool-counts<
 </section>
 
 <section>
-<h2><span class="fignum">10</span>What would make the detector stronger</h2>
+<h2><span class="fignum">11</span>What would make the detector stronger</h2>
 <p class="lede">
   Measured on the cached candidate scores. Nothing here is shipped: each item
   changes counts, which would invalidate every recorded model call and every
@@ -692,7 +752,7 @@ python bench/compare_counts.py profile-c8g-stock-counts profile-c8g-cool-counts<
   </tbody>
 </table>
 <p>
-  The soft count also removes the cancellation described in Section&nbsp;6: with
+  The soft count also removes the cancellation described in Section&nbsp;7: with
   an exact white cell count the shipped count gets worse and the soft count does
   not. It costs a few dozen lines and no training. It is the first thing to
   build.
@@ -715,7 +775,7 @@ python bench/compare_counts.py profile-c8g-stock-counts profile-c8g-cool-counts<
 </section>
 
 <section>
-<h2><span class="fignum">11</span>Reproduction</h2>
+<h2><span class="fignum">12</span>Reproduction</h2>
 <pre>make setup                 # venv, pinned requirements, opencv-python 5.0.0.93
 make test                  # unit tests
 make data                  # NLM thick smear set, 3.9 GB
