@@ -139,6 +139,22 @@ def figures() -> dict:
     # key, while the cache is what actually ships and what a judge replays.
     # Counted from the file rather than copied out of a summary, because the
     # file is the artefact being described.
+    # --- the measured roadmap for the detector, eval/soft_count.py
+    sc = _load(EVAL / "soft_count.json")
+    ship, soft = sc["shipped"], sc["soft_kept"]
+    nine, rest, split = sc["nine_slides"], sc["nine_slides"]["others"], sc["ratio_variance_split"]
+    f.update({
+        "sc_k": sc["soft_scale_k"],
+        "sc_ship_err": ship["mean_abs_error_pct"], "sc_ship_bias": ship["bias_pct"],
+        "sc_ship_cv": ship["ratio_cv_pct"], "sc_ship_w25": ship["within_25_pct"],
+        "sc_soft_err": soft["mean_abs_error_pct"], "sc_soft_bias": soft["bias_pct"],
+        "sc_soft_cv": soft["ratio_cv_pct"], "sc_soft_w25": soft["within_25_pct"],
+        "sc_nine_share": nine["share_of_log_ratio_variance_pct"],
+        "sc_rest_slides": rest["slides"], "sc_rest_err": rest["mean_abs_error_pct"],
+        "sc_rest_cv": rest["ratio_cv_pct"],
+        "sc_rec_cv": split["recall_cv_pct"], "sc_fa_cv": split["false_alarm_cv_pct"],
+    })
+
     cache = EVAL / "agent_bedrock_calls.jsonl"
     if not cache.exists():
         raise Missing("eval/results/agent_bedrock_calls.jsonl is missing — "

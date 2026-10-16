@@ -128,6 +128,7 @@ _DECIMALS = {
     "pv_score_matched": 3, "pv_score_unmatched": 3,
     "dec_sensitivity": 2, "dec_specificity": 2, "threshold": 2,
     "neg_false_per_200": 2,
+    "sc_k": 3,
 }
 
 

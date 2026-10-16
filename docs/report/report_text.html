@@ -469,7 +469,63 @@ GROUP=pipeline THREADS=0,1                 bash bench/run_on_ec2.sh c8g.8xlarge 
 </section>
 
 <section>
-<h2><span class="fignum">10</span>Reproduction</h2>
+<h2><span class="fignum">10</span>What would make the detector stronger</h2>
+<p class="lede">
+  Measured on the cached candidate scores. Nothing here is shipped: each item
+  changes counts, which would invalidate every recorded model call and every
+  frozen figure above.
+</p>
+<h3>What limits it</h3>
+<p>
+  The density error tracks the per-slide spread of the found-to-true parasite
+  ratio, not F1. The spread is false alarms, not recall: across the 50 held-out
+  slides the false-alarm rate per true parasite varies with a coefficient of
+  variation of $sc_fa_cv%, recall with $sc_rec_cv%. Nine slides carry
+  $sc_nine_share% of that variance. The other $sc_rest_slides read $sc_rest_err%
+  error with $sc_rest_cv% spread. Six of the nine are sparse slides that
+  over-count on detections scored just above the threshold: rods, streaks and
+  clumps. Three are dense slides with soft focus whose parasites score near
+  zero. Every counter trained for this project fails on the same nine.
+</p>
+<h3>Count by score, not by one each</h3>
+<p>
+  A false alarm that clears the threshold usually clears it by little. Summing
+  the scores of the kept detections instead of counting them, and rescaling by
+  one factor fitted on the 20 calibration patients (k = $sc_k), gives:
+</p>
+<table>
+  <caption>Held-out 50 patients. k is the only fitted quantity and it was fitted on calibration.</caption>
+  <thead><tr><th>&nbsp;</th><th class="num">error</th><th class="num">bias</th><th class="num">per-slide spread</th><th class="num">within &plusmn;25%</th></tr></thead>
+  <tbody>
+    <tr><td>shipped count</td><td class="num">$sc_ship_err%</td><td class="num">$sc_ship_bias%</td><td class="num">$sc_ship_cv%</td><td class="num">$sc_ship_w25%</td></tr>
+    <tr><td>soft count</td><td class="num"><strong>$sc_soft_err%</strong></td><td class="num">$sc_soft_bias%</td><td class="num"><strong>$sc_soft_cv%</strong></td><td class="num"><strong>$sc_soft_w25%</strong></td></tr>
+  </tbody>
+</table>
+<p>
+  The soft count also removes the cancellation described in Section&nbsp;6: with
+  an exact white cell count the shipped count gets worse and the soft count does
+  not. It costs a few dozen lines and no training. It is the first thing to
+  build.
+</p>
+<h3>Context around the patch</h3>
+<p>
+  The parasites the judge rejects are fainter than the false alarms it accepts.
+  That is the judge's own axis. Features of the surroundings, neighbours, white
+  cells, field debris, do not separate the two error sets. A wider patch or a
+  second-stage classifier on context is not worth building.
+</p>
+<h3>A single-stage detector</h3>
+<p>
+  The requirement is per-slide spread under 20% at bias under 5% on the 20
+  calibration patients, with the sparse and the dense failure modes both inside
+  &plusmn;25%. F1 does not predict this. The box detectors trained on Colab need
+  their validation split separated from the calibration patients before their
+  numbers can be compared, then one GPU run scored on density.
+</p>
+</section>
+
+<section>
+<h2><span class="fignum">11</span>Reproduction</h2>
 <pre>make setup                 # venv, pinned requirements, opencv-python 5.0.0.93
 make test                  # unit tests
 make data                  # NLM thick smear set, 3.9 GB
@@ -490,6 +546,7 @@ bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock   # one benchmark arm
     <tr><td>Agent against the rules</td><td><code>docs/results-agent.md</code>, <code>eval/results/agent_eval.json</code></td></tr>
     <tr><td>Other laboratory, other species</td><td><code>docs/results-tanzania.md</code>, <code>docs/results-vivax.md</code></td></tr>
     <tr><td>COOL, four builds</td><td><code>docs/results-cool.md</code>, <code>bench/results/</code></td></tr>
+    <tr><td>What would make the detector stronger</td><td><code>eval/soft_count.py</code>, <code>docs/detector-levers-2026-10-16.md</code></td></tr>
     <tr><td>Deployed stack</td><td><code>infra/terraform/</code>, <code>docs/aws-setup.md</code></td></tr>
   </tbody>
 </table>
