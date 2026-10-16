@@ -294,9 +294,16 @@ read 6 fields, 148 parasites in 141 white cells</pre>
 </table>
 <p>
   The container is the same arm64 image the benchmark times. CI runs the test suite
-  on x86 and arm64. Benchmark instances run on Spot and terminate themselves. A
-  $$100 monthly budget alarm is set. The demo page is public and needs no
-  credentials.
+  on x86 and arm64. Benchmark instances run on Spot and terminate themselves. The
+  demo page is public and needs no credentials.
+</p>
+<p>
+  <strong>Every field says which binary read it.</strong> Each trace row carries
+  the OpenCV version, the custom HAL line, the parallel framework and the
+  machine, read from <code>cv.getBuildInformation()</code> in the job itself. A
+  speed claim about an accelerated build is only checkable if the build travels
+  with the data, so it is on the demo page under the counts it produced, not only
+  in a benchmark file.
 </p>
 
 <h3>What is logged, what is locked down, where a person decides</h3>
