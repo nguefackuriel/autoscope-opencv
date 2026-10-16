@@ -301,13 +301,15 @@ def main():
     args = ap.parse_args()
 
     args.policies = [p.strip() for p in args.policies.split(",") if p.strip()]
-    known = {"who", "rule", "decision", "bedrock", "gptoss", "llama"}
+    known = {"who", "rule", "decision", "bedrock", "gptoss", "llama",
+             "haiku", "deepseek", "devstral", "ministral", "nova", "gemma", "minimax"}
     unknown = set(args.policies) - known
     if unknown:
         ap.error(f"unknown policies {sorted(unknown)}; pick from {sorted(known)}")
 
     # Two guards against buying something nobody asked for.
-    model_arms = {"bedrock", "gptoss", "llama"}
+    model_arms = {"bedrock", "gptoss", "llama",
+                  "haiku", "deepseek", "devstral", "ministral", "nova", "gemma", "minimax"}
     if args.record and not (model_arms & set(args.policies)):
         ap.error(f"--record only means anything with a model arm in --policies "
                  f"({', '.join(sorted(model_arms))})")
@@ -376,6 +378,35 @@ def main():
                                                 client=cache, floor_per_ul=floor,
                                                 negative_wbc_min=args.negative_wbc,
                                                 force_tool=False),
+                # Seven more, probed on 16 October with one forced tool call
+                # each: every one of these answers AND honours toolChoice.any,
+                # which is the hard requirement the Llama 4 arm established.
+                # Kimi K3 answered but would not be forced, so it is not here.
+                # Every Claude 5.x, GPT-5.6/6.x and Grok id is AccessDenied for
+                # this account. `name` is explicit where the model id has a
+                # dot in it: the default takes the text after the last dot,
+                # which would call deepseek.v3.2 "2" and minimax-m2.5 "5".
+                "haiku": lambda: ConversePolicy(
+                    model="us.anthropic.claude-haiku-4-5-20251001-v1:0", name="haiku-4-5",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                "deepseek": lambda: ConversePolicy(
+                    model="deepseek.v3.2", name="deepseek-v3-2",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                "devstral": lambda: ConversePolicy(
+                    model="mistral.devstral-2-123b", name="devstral-2-123b",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                "ministral": lambda: ConversePolicy(
+                    model="mistral.ministral-3-14b-instruct", name="ministral-3-14b",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                "nova": lambda: ConversePolicy(
+                    model="us.amazon.nova-pro-v1:0", name="nova-pro",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                "gemma": lambda: ConversePolicy(
+                    model="google.gemma-3-27b-it", name="gemma-3-27b",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                "minimax": lambda: ConversePolicy(
+                    model="minimax.minimax-m2.5", name="minimax-m2-5",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
                 "bedrock": lambda: BedrockPolicy(client=cache, model=args.bedrock_model,
                                                  effort=args.bedrock_effort,
                                                  floor_per_ul=floor,

@@ -87,15 +87,70 @@ def _pipeline_cases(size: tuple[int, int] = (3024, 4032)) -> dict:
     k31 = cv.getStructuringElement(cv.MORPH_ELLIPSE, (31, 31))      # TOPHAT_PX
     k15 = cv.getStructuringElement(cv.MORPH_ELLIPSE, (15, 15))      # 2*PEAK_NMS_PX+1
     top = cv.morphologyEx(stain, cv.MORPH_TOPHAT, k31)
+    # The workaround hypothesis. On the COOL image the HAL-intercepted filter
+    # and morphology paths run on one core whatever cv.setNumThreads says, but
+    # at one thread the COOL kernels are as fast as the wheel's. So split the
+    # image into horizontal bands, overlapping by the kernel radius so no
+    # band sees a cut edge, and run the same call per band from a thread
+    # pool: OpenCV releases the GIL inside the C++ call, so the bands run on
+    # separate cores. If this recovers the 15 to 25x the wheel gets from its
+    # own threading, the COOL image wins the pipeline instead of losing it.
+    # The halo is the kernel radius TIMES the number of chained passes. A
+    # top-hat is src - dilate(erode(src)): the erode needs 15 rows of context
+    # and the dilate then needs 15 rows of correctly ERODED context, so 30. A
+    # halo of 15 passed the eye and failed the check below by 13.8 on a
+    # float32 stain map. A plain dilate is one pass, so 7.
+    tiled_tophat = lambda: _tiled(stain, lambda a: cv.morphologyEx(a, cv.MORPH_TOPHAT, k31), 30)
+    tiled_dilate = lambda: _tiled(top, lambda a: cv.dilate(a, k15), 7)
+    # Correctness, once, loudly: a tiled result that differs from the plain
+    # one is a wrong answer delivered faster, which is worse than slow.
+    for label, tiled, plain in (
+        ("tophat", tiled_tophat, lambda: cv.morphologyEx(stain, cv.MORPH_TOPHAT, k31)),
+        ("dilate", tiled_dilate, lambda: cv.dilate(top, k15)),
+    ):
+        err = float(np.abs(tiled() - plain()).max())
+        print(f"tiled {label} vs plain: max abs diff {err:.3g}"
+              + ("   OK" if err < 1e-3 else "   MISMATCH, the halo is wrong"))
+        if err >= 1e-3:
+            raise SystemExit("tiled workaround is incorrect; not timing a wrong answer")
     return {
         "12MP_cvtColor_Lab": lambda: cv.cvtColor(bgr, cv.COLOR_BGR2Lab),
         "12MP_GaussianBlur_f32": lambda: cv.GaussianBlur(stain, (0, 0), 1.4),
         "12MP_tophat_f32_e31": lambda: cv.morphologyEx(stain, cv.MORPH_TOPHAT, k31),
+        "12MP_tophat_f32_e31_tiled": tiled_tophat,
         "12MP_dilate_f32_e15": lambda: cv.dilate(top, k15),
+        "12MP_dilate_f32_e15_tiled": tiled_dilate,
         "12MP_tophat_u8_e31": lambda: cv.morphologyEx(
             cv.cvtColor(bgr, cv.COLOR_BGR2GRAY), cv.MORPH_TOPHAT, k31
         ),
     }
+
+
+def _tiled(img: np.ndarray, fn, halo: int, bands: int | None = None) -> np.ndarray:
+    """Run `fn` on horizontal bands of `img` concurrently and stitch the result.
+
+    `halo` is the kernel radius: each band is cut `halo` rows wider on both
+    sides so the morphology inside the kept rows sees the same neighbourhood
+    it would in the whole image, then the halo is trimmed. One band per core
+    by default. A thread pool, not processes: OpenCV drops the GIL in the
+    call, and the bands are views into one array, so nothing is copied in.
+    """
+    from concurrent.futures import ThreadPoolExecutor
+
+    n = bands or max(os.cpu_count() or 1, 1)
+    h = img.shape[0]
+    edges = [round(i * h / n) for i in range(n + 1)]
+    out = np.empty_like(img)
+
+    def one(i: int) -> None:
+        y0, y1 = edges[i], edges[i + 1]
+        a, b = max(y0 - halo, 0), min(y1 + halo, h)
+        res = fn(img[a:b])
+        out[y0:y1] = res[y0 - a:y0 - a + (y1 - y0)]
+
+    with ThreadPoolExecutor(max_workers=n) as pool:
+        list(pool.map(one, range(n)))
+    return out
 
 
 def time_case(fn, runs: int, warmup: int = 5) -> dict:
