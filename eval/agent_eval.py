@@ -312,7 +312,8 @@ def main():
     args.policies = [p.strip() for p in args.policies.split(",") if p.strip()]
     known = {"who", "rule", "decision", "bedrock", "gptoss", "llama",
              "haiku", "deepseek", "devstral", "ministral", "nova", "gemma", "minimax",
-             "nemotron", "qwen80", "qwen32", "qwencoder", "qwenvl"}
+             "nemotron", "qwen80", "qwen32", "qwencoder", "qwenvl",
+             "opus5", "sonnet5", "gpt6"}
     unknown = set(args.policies) - known
     if unknown:
         ap.error(f"unknown policies {sorted(unknown)}; pick from {sorted(known)}")
@@ -320,7 +321,8 @@ def main():
     # Two guards against buying something nobody asked for.
     model_arms = {"bedrock", "gptoss", "llama",
                   "haiku", "deepseek", "devstral", "ministral", "nova", "gemma", "minimax",
-             "nemotron", "qwen80", "qwen32", "qwencoder", "qwenvl"}
+             "nemotron", "qwen80", "qwen32", "qwencoder", "qwenvl",
+             "opus5", "sonnet5", "gpt6"}
     if args.record and not (model_arms & set(args.policies)):
         ap.error(f"--record only means anything with a model arm in --policies "
                  f"({', '.join(sorted(model_arms))})")
@@ -437,6 +439,21 @@ def main():
                     client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
                 "qwenvl": lambda: ConversePolicy(
                     model="qwen.qwen3-vl-235b-a22b", name="qwen3-vl-235b",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                # Frontier arms behind a model agreement. On 16 October the
+                # three agreements were created through the Bedrock offers API
+                # and sat PENDING; these arms exist so recording can start the
+                # moment one resolves. Through Converse like the other model
+                # arms, not BedrockPolicy, so the arm name cannot collide with
+                # the Sonnet 4.6 "bedrock" arm or replay its recording.
+                "opus5": lambda: ConversePolicy(
+                    model="global.anthropic.claude-opus-5", name="opus-5",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                "sonnet5": lambda: ConversePolicy(
+                    model="global.anthropic.claude-sonnet-5", name="sonnet-5",
+                    client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
+                "gpt6": lambda: ConversePolicy(
+                    model="global.openai.gpt-6-sol", name="gpt-6-sol",
                     client=cache, floor_per_ul=floor, negative_wbc_min=args.negative_wbc),
                 "bedrock": lambda: BedrockPolicy(client=cache, model=args.bedrock_model,
                                                  effort=args.bedrock_effort,
