@@ -48,7 +48,7 @@ variable "bedrock_model_id" {
   # account" on both Converse and InvokeModel, and the message points at AWS
   # Sales -- a commercial request, not a form. The agent was designed against
   # Opus 5 and the report should say which model actually produced its numbers.
-  default     = "us.anthropic.claude-sonnet-4-6"
+  default = "us.anthropic.claude-sonnet-4-6"
 }
 
 variable "cool_ami_id" {

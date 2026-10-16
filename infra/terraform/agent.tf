@@ -122,6 +122,10 @@ resource "aws_sfn_state_machine" "session" {
   definition = jsonencode({
     Comment = "AutoScope: read one slide, field by field, until the agent decides."
     StartAt = "ReadField"
+    # A reading that has not finished in an hour is stuck. Ending it here means
+    # the Batch job is cancelled and the money stops, rather than an execution
+    # sitting open for a year.
+    TimeoutSeconds = 3600
 
     States = {
       # Stages 1 to 4 on Graviton. Everything the agent reads comes from here.
@@ -137,7 +141,8 @@ resource "aws_sfn_state_machine" "session" {
             "field.$"      = "States.Format('{}', $.field)"
           }
         }
-        ResultPath = "$.batch"
+        ResultPath     = "$.batch"
+        TimeoutSeconds = 900
         Retry = [{
           ErrorEquals     = ["States.TaskFailed"]
           IntervalSeconds = 10
@@ -162,11 +167,22 @@ resource "aws_sfn_state_machine" "session" {
         }
         ResultSelector = { "move.$" = "$.Payload" }
         ResultPath     = "$.decision"
+        TimeoutSeconds = 120
         Retry = [{
           ErrorEquals     = ["Lambda.TooManyRequestsException", "Lambda.ServiceException"]
           IntervalSeconds = 2
           MaxAttempts     = 3
           BackoffRate     = 2
+        }]
+        # Without this, anything the agent Lambda raises that is not in the
+        # Retry list fails the whole execution and the slide is left with no
+        # outcome at all. For a screening aid that is the wrong failure: a
+        # slide the pipeline cannot decide on is a slide for a person, and the
+        # counts read so far are already in DynamoDB for them to look at.
+        Catch = [{
+          ErrorEquals = ["States.ALL"]
+          Next        = "FlagForHuman"
+          ResultPath  = "$.error"
         }]
         Next = "Limits"
       }
@@ -177,9 +193,9 @@ resource "aws_sfn_state_machine" "session" {
         Type = "Choice"
         Choices = [
           {
-            Variable     = "$.field"
+            Variable                 = "$.field"
             NumericGreaterThanEquals = 400
-            Next         = "FlagForHuman"
+            Next                     = "FlagForHuman"
           },
           {
             Variable     = "$.decision.move.action"
@@ -210,7 +226,7 @@ resource "aws_sfn_state_machine" "session" {
       }
 
       FlagForHuman = {
-        Type = "Succeed"
+        Type    = "Succeed"
         Comment = "Not a failure: a slide the pipeline will not call on its own is the correct outcome for a screening aid."
       }
     }

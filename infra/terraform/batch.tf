@@ -60,7 +60,7 @@ resource "aws_security_group" "batch" {
 
 resource "aws_batch_compute_environment" "graviton_spot" {
   compute_environment_name = "${var.name}-graviton-spot"
-  type = "MANAGED"
+  type                     = "MANAGED"
 
   compute_resources {
     type                = "SPOT"
@@ -91,7 +91,7 @@ resource "aws_batch_compute_environment" "graviton_spot" {
     subnets            = data.aws_subnets.default.ids
     security_group_ids = [aws_security_group.batch.id]
 
-    instance_role = aws_iam_instance_profile.batch_instance.arn
+    instance_role       = aws_iam_instance_profile.batch_instance.arn
     spot_iam_fleet_role = aws_iam_role.spot_fleet.arn
 
     tags = {
