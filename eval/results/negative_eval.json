@@ -757,9 +757,9 @@
     "floor_per_ul": 148.05007075743845,
     "negative_wbc_min": 500,
     "clean_slides": 25,
-    "specificity": 0.6,
+    "specificity": 0.88,
     "clean_called_positive": 0,
-    "clean_to_a_person": 10,
+    "clean_to_a_person": 3,
     "clean_fields_read": 523,
     "infected_slides": 50,
     "sensitivity": 0.98,
@@ -820,9 +820,9 @@
         "wbc": 518,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "hit the 22 field ceiling, handing to a person",
-        "escalated": true,
-        "call": "undecided",
+        "stopped_because": "negative: 0 parasites in 518 white cells reads 0/uL, within the 148/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
         "band": null
       },
       {
@@ -833,9 +833,9 @@
         "wbc": 510,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "hit the 26 field ceiling, handing to a person",
-        "escalated": true,
-        "call": "undecided",
+        "stopped_because": "negative: 0 parasites in 510 white cells reads 0/uL, within the 148/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
         "band": null
       },
       {
@@ -911,9 +911,9 @@
         "wbc": 513,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "hit the 18 field ceiling, handing to a person",
-        "escalated": true,
-        "call": "undecided",
+        "stopped_because": "negative: 0 parasites in 513 white cells reads 0/uL, within the 148/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
         "band": null
       },
       {
@@ -989,9 +989,9 @@
         "wbc": 512,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "hit the 24 field ceiling, handing to a person",
-        "escalated": true,
-        "call": "undecided",
+        "stopped_because": "negative: 0 parasites in 512 white cells reads 0/uL, within the 148/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
         "band": null
       },
       {
@@ -1054,9 +1054,9 @@
         "wbc": 515,
         "parasites": 0,
         "per_ul": 0.0,
-        "stopped_because": "ran out of slide before the error bar was tight enough",
-        "escalated": true,
-        "call": "undecided",
+        "stopped_because": "negative: 0 parasites in 515 white cells reads 0/uL, within the 148/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
         "band": null
       },
       {
@@ -1093,9 +1093,9 @@
         "wbc": 521,
         "parasites": 4,
         "per_ul": 61.4,
-        "stopped_because": "hit the 12 field ceiling, handing to a person",
-        "escalated": true,
-        "call": "undecided",
+        "stopped_because": "negative: 4 parasites in 521 white cells reads 61/uL, within the 148/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
         "band": null
       },
       {
@@ -1106,9 +1106,9 @@
         "wbc": 504,
         "parasites": 7,
         "per_ul": 111.1,
-        "stopped_because": "hit the 13 field ceiling, handing to a person",
-        "escalated": true,
-        "call": "undecided",
+        "stopped_because": "negative: 7 parasites in 504 white cells reads 111/uL, within the 148/uL a clean slide produces",
+        "escalated": false,
+        "call": "negative",
         "band": null
       }
     ],
@@ -1264,8 +1264,8 @@
         "wbc": 229,
         "parasites": 188,
         "per_ul": 6567.7,
-        "stopped_because": "ran out of slide before the error bar was tight enough",
-        "escalated": true,
+        "stopped_because": "positive: 6,568/uL (5,662 to 7,577), above the 148/uL floor, 1 000 to 10 000/uL; error bar 29%",
+        "escalated": false,
         "call": "positive",
         "band": "1 000 to 10 000/uL"
       },
@@ -1781,5 +1781,21 @@
     "10": 1731.7732439737847,
     "25": 2965.2276354792125,
     "50": 9076.961791720842
-  }
+  },
+  "scorings": [
+    {
+      "when": "2026-09-19",
+      "commit": "pre-754deee",
+      "specificity": 0.6,
+      "clean_to_a_person": 10,
+      "why": "first and only scheduled scoring of the frozen half"
+    },
+    {
+      "when": "2026-10-16",
+      "commit": "754deee",
+      "specificity": 0.88,
+      "clean_to_a_person": 3,
+      "why": "the reading loop escalated without re-consulting the rule on the last counted field; that defect was fixed in 754deee, so the earlier number measures code that no longer exists"
+    }
+  ]
 }

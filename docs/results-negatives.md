@@ -298,10 +298,29 @@ Measured on the uninfected **fit** half, the design set:
 
 Projected on the frozen half from its committed terminal counts: 15 of 25 called
 negative becomes 22 of 25, specificity 0.60 to 0.88, with the same zero clean
-slides called positive and zero infected called negative. **That half has not
-been re-run.** It was scored once, and a second look needs an explicit `--again`
-and a line in the report saying so. Until that happens the published frozen
-number stays 0.60, and the report quotes it.
+slides called positive and zero infected called negative.
+
+**Scored again on 16 October, and the projection was right.** The frozen half
+has now been read twice. The first number measured a loop that no longer exists,
+which is the only reason to look at a frozen set twice and the reason is in the
+result file and in the report:
+
+| frozen half, N = 500, floor 148/µL | 19 Sept, pre-754deee | 16 Oct, post-754deee |
+|---|---|---|
+| specificity | 0.60 | **0.88** |
+| clean slides to a person | 10 | 3 |
+| clean slides called positive | 0 | 0 |
+| sensitivity, 50 infected held-out | 0.98 | 0.98 |
+| infected called negative | 0 | 0 |
+| fields read, clean + infected | 523 + 450 | 523 + 450 |
+
+Nothing was fitted on this half between the two runs. The floor is still the p95
+of the fit half, 148/µL; N is still 500; the classifier and its threshold are the
+ones frozen since chain 3. Both scorings are in
+`eval/results/negative_eval.json` under `scorings`, and section 6 of the report
+prints both.
+
+The target was 0.90. 0.88 still misses it, and the report still says missed.
 
 What the ceiling now is: the three slides left are one too short to reach 500
 and two whose cells sit in fields the quality gate rejected. The first is the

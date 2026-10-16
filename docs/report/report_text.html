@@ -286,9 +286,9 @@
 
 <h3>Specificity</h3>
 <p>
-  $neg_patients uninfected patients, $neg_fields fields, the $neg_which. Scored
-  once. $neg_clean_fields_pct% of fields return no detection. Pooled false
-  parasites: $neg_false_per_200 per 200 white cells. Worst field: $neg_false_max.
+  $neg_patients uninfected patients, $neg_fields fields, the $neg_which.
+  $neg_clean_fields_pct% of fields return no detection. Pooled false parasites:
+  $neg_false_per_200 per 200 white cells. Worst field: $neg_false_max.
 </p>
 <p>
   <strong>$dec_clean_called_positive of $dec_clean_slides clean slides called
@@ -296,12 +296,17 @@
   negative, so specificity is <strong>$spec</strong>, below the 0.90 target.
 </p>
 <p>
-  Of the $dec_clean_to_person escalated slides, 7 had reached 500 white cells with
-  the estimate under the noise floor on their final field. The reading loop did not
-  re-consult the decision rule on that field. This is corrected in commit
-  <code>754deee</code>. The frozen half has not been re-scored, so $spec is the
-  figure reported. On the design half the correction moves specificity from 0.56 to
-  0.68 with no change in sensitivity or in fields read.
+  <strong>This half has been scored twice, and both numbers are here.</strong> The
+  first scoring, on 19 September, read specificity 0.60 with 10 slides sent to a
+  person. Seven of those ten had reached 500 white cells with the estimate under
+  the noise floor on their final field: the reading loop did not re-consult the
+  decision rule on that field, so the slide was handed over rather than called
+  negative. The loop was corrected in commit <code>754deee</code>, which made the
+  first number a measurement of code that no longer exists, and the half was
+  scored again on 16 October at $spec with $dec_clean_to_person escalations.
+  Sensitivity, fields read and the floor are unchanged. Both scorings are recorded
+  in <code>eval/results/negative_eval.json</code> under <code>scorings</code>. No
+  threshold, floor or model was chosen on this half between the two runs.
 </p>
 
 <h3>Density and limit of detection</h3>
