@@ -328,8 +328,10 @@ async function loadSession() {
     // viewer exactly as a ?session= link does, or the two paths disagree.
     useFieldSet(id);
     setStatus("");
+    return true;
   } catch (error) {
     setStatus(`Could not reach the API: ${error.message}`, true);
+    return false;
   }
 }
 
@@ -345,8 +347,29 @@ async function loadSample() {
   }
 }
 
+// A session read live on AWS records the running totals in each observation and
+// does not repeat the per-field counts; a session replayed from the cached field
+// table records the per-field counts directly. Fill in the first shape from the
+// second so the page has one thing to read: a step counted a field when
+// fields_counted went up, and what it found is the difference.
+function fillCounts(steps) {
+  let prev = { fields_counted: 0, parasites: 0, white_cells: 0 };
+  for (const step of steps) {
+    const totals = (step.observation && step.observation.totals) || null;
+    if (!totals) continue;
+    if (!step.counted && (totals.fields_counted ?? 0) > (prev.fields_counted ?? 0)) {
+      step.counted = {
+        parasites: (totals.parasites ?? 0) - (prev.parasites ?? 0),
+        wbc: (totals.white_cells ?? 0) - (prev.white_cells ?? 0),
+      };
+    }
+    prev = totals;
+  }
+}
+
 function render(payload) {
   state.steps = payload.steps || [];
+  fillCounts(state.steps);
   state.rejected = new Set();
   const last = state.steps[state.steps.length - 1];
   if (last && last.observation && last.observation.reference) {
@@ -567,6 +590,7 @@ $("demo").addEventListener("click", loadSample);
 
 // A session id in the URL makes a result linkable, which is how a judge gets
 // sent one. Read before the manifest fetch below, which needs it.
+const DEFAULT_API = "https://fhemydiqba.execute-api.us-east-1.amazonaws.com";
 const params = new URLSearchParams(location.search);
 if (params.get("api")) $("api").value = params.get("api");
 if (params.get("session")) $("session").value = params.get("session");
@@ -580,7 +604,16 @@ fetch("fields/manifest.json")
     useFieldSet(fieldSets[wanted] ? wanted : DEFAULT_SET);
   });
 
-if (params.get("api") && params.get("session")) loadSession();
+// A bare URL has to show the thing working. Load the live session the field
+// viewer defaults to; if the API is unreachable, fall back to the recorded one
+// that ships beside this page, so the page is never empty.
+if (params.get("api") && params.get("session")) {
+  loadSession();
+} else {
+  $("api").value = $("api").value || DEFAULT_API;
+  $("session").value = $("session").value || DEFAULT_SET;
+  loadSession().then(ok => { if (!ok) loadSample(); });
+}
 </script>
 </body>
 </html>
