@@ -622,6 +622,34 @@ python bench/compare_counts.py profile-c8g-stock-counts profile-c8g-cool-counts<
   once. Re-scoring requires an explicit flag and a statement in this report. The
   threshold was chosen on 20 calibration patients by a stated rule.
 </p>
+<h3>The guards, and where each one is</h3>
+<p>
+  Every limit is outside the model. A policy that keeps answering "one more
+  field" stops at the state machine, not when it decides to.
+</p>
+<table>
+  <caption>Operational limits. <code>docs/operations.md</code> has the rest.</caption>
+  <thead><tr><th>Guard</th><th>Value</th><th>Where</th></tr></thead>
+  <tbody>
+    <tr><td>Fields on one slide</td><td class="num">400</td><td><code>agent.tf</code>, the <code>Limits</code> choice</td></tr>
+    <tr><td>Time on one slide</td><td class="num">1 h</td><td><code>agent.tf</code>, <code>TimeoutSeconds</code></td></tr>
+    <tr><td>One field read</td><td class="num">15 min, 3 tries</td><td><code>batch.tf</code></td></tr>
+    <tr><td>One agent call</td><td class="num">2 min</td><td><code>agent.tf</code>, and anything it raises goes to a person</td></tr>
+    <tr><td>Spot fleet</td><td class="num">64 vCPU, 0 at rest</td><td><code>batch.tf</code></td></tr>
+    <tr><td>API</td><td class="num">10/s, burst 20</td><td><code>api.tf</code></td></tr>
+    <tr><td>Sessions started</td><td class="num">alarm over 50 / 5 min</td><td><code>budget.tf</code></td></tr>
+    <tr><td>Spend</td><td class="num">$$$budget_monthly/month, $$$budget_bedrock Bedrock</td><td><code>budget.tf</code>, email at 80% forecast</td></tr>
+    <tr><td>Uploads</td><td class="num">deleted after 30 days</td><td><code>storage.tf</code></td></tr>
+  </tbody>
+</table>
+<p>
+  The agent has no move that issues a diagnosis, and no path to one. Its five
+  moves are count, refocus, skip, stop and <code>flag_for_human</code>; the call
+  comes from <code>decide()</code> reading the counts. If the agent Lambda raises
+  anything at all, the slide goes to a person with the fields read so far
+  already in the trace, rather than the reading failing with no outcome.
+</p>
+
 <h3>Privacy</h3>
 <p>
   All imagery is public, retrospective and de-identified. No patient identifier is
@@ -713,6 +741,7 @@ bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock   # one benchmark arm
     <tr><td>COOL, four builds</td><td><code>docs/results-cool.md</code>, <code>bench/results/</code></td></tr>
     <tr><td>What would make the detector stronger</td><td><code>eval/soft_count.py</code>, <code>docs/detector-levers-2026-10-16.md</code></td></tr>
     <tr><td>Deployed stack</td><td><code>infra/terraform/</code>, <code>infra/terraform/deployed.json</code>, <code>docs/aws-setup.md</code></td></tr>
+    <tr><td>Running it, and turning it off</td><td><code>docs/operations.md</code></td></tr>
     <tr><td>COOL gives the same counts</td><td><code>bench/compare_counts.py</code>, <code>bench/results/profile-c8g-*-counts.json</code></td></tr>
   </tbody>
 </table>
