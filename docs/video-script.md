@@ -15,8 +15,9 @@ video says where.
 | 0:00–0:25 | the problem | why a microscope, and why counting |
 | 0:25–0:55 | what AutoScope is | the phone, the pipeline, the agent |
 | 0:55–1:45 | **the live demo** | the page, a real session, the audit trail |
-| 1:45–2:25 | the numbers | held-out, ECAMM, Tanzania |
-| 2:25–2:50 | what does not work | vivax, COOL, species |
+| 1:45–2:10 | the numbers | held-out, specificity, Tanzania |
+| 2:10–2:25 | what the agent is worth | eighteen policies, fifteen models |
+| 2:25–2:50 | what does not work | vivax, COOL |
 | 2:50–3:00 | close | the URL and the repository |
 
 ## 0:00-0:25, the problem
@@ -41,7 +42,7 @@ report rather than recalled.
 
 ## 0:25-0:55, what it is
 
-*Shot: `docs/figures/architecture.svg` building up, one stage at a time.*
+*Shot: `docs/proposal/architecture.svg` building up, one stage at a time.*
 
 > AutoScope turns the microscope they already own into a scanner. A phone films
 > through the eyepiece. In the cloud, OpenCV 5 evens out the lighting and the
@@ -51,15 +52,18 @@ report rather than recalled.
 > Then an agent reads those numbers and decides what to do next. Refocus. Skip
 > a dirty field. Keep reading. Stop. Or hand the slide to a person.
 >
-> Stages one to four and six run on AWS Batch on Graviton4. The agent is Claude
-> on Bedrock. Step Functions holds the limits on fields, time and money outside
-> the model, so no model can talk its way past them.
+> All six stages are OpenCV, and they run on AWS Batch on Graviton4. The agent
+> sits outside them: everything it sees is OpenCV output, and the only thing it
+> returns is which field to read next. Step Functions holds the limits on
+> fields, time and money outside the model, so no model can talk its way past
+> them. The call itself comes from a fixed function reading the counts. The
+> agent has no move that issues a diagnosis.
 
 ## 0:55-1:45, the demo, which is the part that matters
 
 *Shot: screen recording of <https://d1k2o3z37c1maf.cloudfront.net>, no cuts.*
 
-Open the page. Click the live session link. Let the table fill.
+Open the page. It loads a real session by itself. Let the table fill.
 
 > This is a real session, read on AWS. Eight fields on a Graviton Spot fleet.
 
@@ -81,7 +85,9 @@ Point at the interval bar.
 > pipeline's measured noise floor on clean slides. A positive is an interval
 > that clears that line, not a verdict the page asserts.
 
-Then click a detection in the verification grid and let the number move.
+Then press "Replay a recorded session" and click a detection in the
+verification grid. The per-detection crops ship with that recorded session;
+a session read live keeps the field pictures and the counts, not the crops.
 
 > And a technician can disagree. Reject a detection and the count and the
 > interval recompute. Those corrections are what a deployment keeps as training
@@ -89,52 +95,86 @@ Then click a detection in the verification grid and let the number move.
 
 Last beat, and say it plainly:
 
-> The rule-based control reads eleven fields on this patient. The agent reads
-> eight. One slide is a data point, not a result. The comparison over all
-> fifty held-out patients is in the repository.
+> One slide is a data point, not a result. The comparison over all fifty
+> held-out patients is in the repository, and it does not say what you would
+> expect.
 
-## 1:45-2:25, the numbers
+## 1:45-2:10, the numbers
 
-*Shot: the ECAMM table from `docs/plan-2026-09-05-hospital-grade.md`.*
+*Shot: the targets table on page 6 of the report, the one with two MISSED
+chips in it.*
 
-> We measured against the WHO competency assessment, the panel a human
-> microscopist is certified on. Fifty held-out patients the fit never saw.
+> Fifty held-out patients the fit never saw.
 >
-> Parasite F1, 0.79. Limit of detection by dilution, 500 per microlitre.
-> Twenty of twenty clean slides long enough to decide called negative, and
-> forty-nine of fifty infected slides called positive, with none wrong.
-> Counting passes Level 1.
+> Parasite F1, 0.79. Limit of detection by dilution, 500 parasites per
+> microlitre. Forty-nine of fifty infected slides called positive and not one
+> called negative. On twenty-five clean slides, none called positive, three
+> sent to a person, so specificity is 0.88. We set ourselves 0.90 in
+> September and we missed it.
 >
 > Then a Tanzanian set from a different microscope, a different camera and a
-> different stain, run once: 99.3% of clean fields report nothing, 70% of
-> infected fields find something, after a ten-slide site calibration.
+> different stain, scored once: 99.3% of clean fields report nothing, image
+> level AUC 0.85, after a ten-slide site calibration.
+
+## 2:10-2:25, what the agent is actually worth
+
+*Shot: the arm table in section 6 of the report.*
+
+> We ran eighteen stopping policies through the same loop, the same prompt and
+> the same counter. Fifteen of them are models on Bedrock. Fifteen thousand
+> recorded calls ship with the repository, so anyone can replay the whole
+> comparison for nothing.
+>
+> Two things came out of it, and neither is the thing we expected.
+>
+> First: a fixed eight fields per slide does as well as the agent on the
+> totals. Three hundred and ninety fields against three hundred and ninety
+> three, the same error, fewer slides sent to a person. No model needed. We
+> say that in the report in those words.
+>
+> What the agent does instead is spend the budget unevenly. Three fields on
+> the ten densest slides, nine or ten on the ten sparsest, and the correlation
+> with the slide's real density is minus zero point seven. The fixed policy
+> reads eight whatever the slide is. Same cost, same error, put where the
+> evidence is thin, with a reason attached to every move.
+>
+> Second: what separates the models is not size. It is whether they are
+> willing to stop. Three of the fifteen never chose stop once in more than a
+> thousand calls each. They read every field a slide has and then hand it over.
+> Forced tool choice makes a model answer. It does not make it finish.
 
 ## 2:25-2:50, what does not work
 
 Do not skip this. It is the most persuasive forty seconds in the video.
 
-> Three things we could not make work, and we are publishing all three.
+> Two things we could not make work, and we are publishing both.
 >
 > Species. On *P. vivax* the detector reads F1 0.29 against 0.80 on
 > falciparum, and its confidence score does not separate the detections it
 > gets right from the ones it gets wrong, so there is no automatic warning we
 > can give. A slide from a vivax region needs a human reader.
 >
-> COOL. On a ten-function benchmark the Marketplace image is 1.59× faster than
-> the wheel we ship, on the same machine. On our actual pipeline it is 3.8×
-> *slower*: 143 slides an hour against 547. Six of the seven stages are
-> faster; one is nine and a half times slower and swallows the rest. So we
-> forced both builds down to a single thread, and they agreed to within six
-> percent on every call. The kernels are the same speed. The stock build takes
-> fifteen to twenty-five times back off the thirty-two cores, and the COOL
+> COOL. On a ten-function benchmark the Marketplace image is 1.59 times faster
+> than the wheel we ship, on the same machine. On our pipeline it was 3.8 times
+> slower: 143 slides an hour against 547. Six of the seven stages are faster.
+> One is nine and a half times slower and swallows the rest.
+>
+> So we forced both builds down to a single thread, and they agreed to within
+> six percent on every call. The kernels are the same speed. The stock build
+> takes fifteen to twenty-five times back off the thirty-two cores. The COOL
 > image takes none, while `cvtColor` parallelises fine on both, which is what
-> makes this a measurement and not a guess. Function benchmarks do not predict
-> pipeline throughput, and we can name the call.
+> makes this a measurement and not a guess.
 >
-> And a learned detector that we trained, measured, and did not ship.
+> The fix is forty lines. We split the image into bands, one per core, each
+> with a halo as wide as the kernel, and run the morphology band by band. The
+> result is checked against the unsplit call before it is timed. With that on,
+> the COOL image reads 532 slides an hour against the wheel's 547.
 >
-> The COOL result is a bug report with a two-line reproduction, and it is
-> the half of that work we are proudest of.
+> Then we ran the whole pipeline twice on the same twelve fields, once on each
+> build, and kept the counts. Six hundred and five parasites and every white
+> cell, identical. The COOL image runs AutoScope at 0.97 times the wheel and
+> returns the same answers. That defect is a bug report with a reproduction,
+> and it is the half of this work we are proudest of.
 
 ## 2:50-3:00, close
 
@@ -185,8 +225,8 @@ them from the live traces. Per-session gifs land beside it as
   invites the question of what was cut.
 - Subtitles throughout. Judges may watch muted, and the parasite counts are
   hard to hear.
-- If the Marketplace COOL AMI arrives before filming, the COOL paragraph gains
-  a fourth arm and should be re-recorded; the conclusion probably does not
-  change.
+- The COOL beat is the long one and it is worth the time. It is the only part
+  of the video where we find a defect in someone else's shipped product, fix
+  it, and prove the fix returns the same answers.
 - **Who speaks:** Uriel on the pipeline and the numbers, Alex on AWS, COOL and
   the agent, matching how the work was actually split.
