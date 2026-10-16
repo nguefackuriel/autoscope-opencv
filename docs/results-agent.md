@@ -556,3 +556,45 @@ This is the measured answer to "does the agent need a frontier model". It does
 not. It needs a model that will end a task. That is a property worth checking in
 one cheap run before a model is considered at all, and it is not on any model
 card.
+
+## 16 October, second half: a fixed eight fields
+
+`FixedProtocol(8)` and `FixedProtocol(12)` are arms now, so the comparison the
+report had been making in prose is in the table:
+
+| policy | fields | density error | escalated | oracle error |
+|---|---|---|---|---|
+| WHO 200 | 524 | 26.5% | 7 | 4.0% |
+| **fixed 8** | **390** | **26.8%** | **8** | **7.1%** |
+| fixed 12 | 531 | 26.7% | 27 | 1.9% |
+| rule-based | 491 | 27.2% | 36 | 2.8% |
+| decision | 450 | 27.4% | 24 | 4.7% |
+| agent, Sonnet 4.6 | 393 | 26.8% | 14 | 8.1% |
+
+Fixed 8 matches the agent on fields and on error, sends fewer slides to a
+person, and is better on expert counts. It needs no model and no prompt. On
+totals alone the agent is not worth its complexity, and the report now says so
+in those words.
+
+### What the agent does that the fixed policy cannot
+
+The totals hide the allocation. Fields read against the slide's expert density,
+over the 50 held-out patients:
+
+| policy | ten densest slides | ten sparsest | range | r with log density |
+|---|---|---|---|---|
+| fixed 8 | 8 | 8 | 5 to 8 | +0.12 |
+| agent, Sonnet 4.6 | 3 | 9.5 | 1 to 14 | **-0.70** |
+
+The fixed policy reads eight fields whatever the slide is. The agent reads
+three on a slide where the first field already settles the band, and nine or
+ten where it does not. Same total, same error, spent differently.
+
+That is the honest size of the claim. The agent allocates, gives a reason for
+every move that a reviewer can read next to the field it was made on, and the
+whole comparison replays from the cache. It does not beat a fixed eight on any
+number in the first table.
+
+Reproduce:
+
+    .venv/bin/python eval/agent_eval.py --policies all

@@ -60,6 +60,9 @@ class FixedProtocol:
 
     def __init__(self, fields: int = 100) -> None:
         self.fields = fields
+        # Two fixed arms in one table have to be told apart, and the number is
+        # the whole difference between them.
+        self.name = f"fixed-{fields}"
 
     def next_move(self, quality: FieldQuality, tools: Tools) -> Move:  # noqa: ARG002
         if tools.fields_read >= self.fields:

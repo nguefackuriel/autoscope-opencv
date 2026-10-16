@@ -51,7 +51,8 @@ _sys.path[:0] = [str(_pl.Path(__file__).resolve().parents[1] / _d)
 from autoscope.agent.loop import read_slide
 from autoscope.agent.bedrock import DEFAULT_MODEL, BedrockPolicy
 from autoscope.agent.converse import ConversePolicy
-from autoscope.agent.policy import DecisionRule, RuleBased, WhoProtocol
+from autoscope.agent.policy import (DecisionRule, FixedProtocol, RuleBased,
+                                    WhoProtocol)
 from autoscope.agent.replay import RecordingClient, ReplayClient, cost_of
 from autoscope.agent.tools import Tools
 from autoscope.density import (FLOOR_PER_UL_DEFAULT, NEGATIVE_WBC_MIN, SETTLE_CI_WIDTH,
@@ -313,14 +314,15 @@ def main():
     args = ap.parse_args()
 
     args.policies = [p.strip() for p in args.policies.split(",") if p.strip()]
-    known = {"who", "rule", "decision", "bedrock", "gptoss", "llama",
+    known = {"who", "fixed8", "fixed12", "rule", "decision", "bedrock", "gptoss", "llama",
              "haiku", "deepseek", "devstral", "ministral", "nova", "gemma", "minimax",
              "nemotron", "qwen80", "qwen32", "qwencoder", "qwenvl",
              "opus5", "sonnet5", "gpt6"}
     # Every arm that has a recording. The three frontier ids are left out on
     # purpose: the agreements are accepted and the runtime still refuses them,
     # so "all" would ask for a model that cannot answer and fail the run.
-    RECORDED = ["who", "rule", "decision", "bedrock", "gptoss", "llama", "haiku",
+    RECORDED = ["who", "fixed8", "fixed12", "rule", "decision", "bedrock", "gptoss",
+                "llama", "haiku",
                 "deepseek", "devstral", "ministral", "nova", "gemma", "minimax",
                 "nemotron", "qwen80", "qwen32", "qwencoder", "qwenvl"]
     if args.policies == ["all"]:
@@ -388,6 +390,11 @@ def main():
             floor = 0.0 if source == "truth" else args.floor
             builders = {
                 "who": lambda: WhoProtocol(200),
+                # Read a fixed number of fields and stop. No model, no rule, no
+                # quality gate: the floor any policy has to beat to be worth
+                # its complexity.
+                "fixed8": lambda: FixedProtocol(8),
+                "fixed12": lambda: FixedProtocol(12),
                 "rule": lambda: RuleBased(target, min_fields=min_fields),
                 "decision": lambda: DecisionRule(floor, args.negative_wbc, target,
                                                  min_fields=min_fields, settle_ci_width=settle),

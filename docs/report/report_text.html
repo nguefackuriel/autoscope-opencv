@@ -335,6 +335,15 @@
   $arm_haiku_4_5_found_fields, the same as the WHO protocol.
 </p>
 <p>
+  <strong>A fixed 8 fields does as well on the total.</strong> It reads
+  $arm_fixed_8_found_fields fields at $arm_fixed_8_found_mape% error and sends
+  $arm_fixed_8_found_escalated slides to a person, against the agent's
+  $arm_bedrock_found_fields, $arm_bedrock_found_mape% and
+  $arm_bedrock_found_escalated. On expert counts it is ahead:
+  $arm_fixed_8_truth_mape% against $arm_bedrock_truth_mape%. No model is needed to
+  read a flat eight fields, so a total is not where the agent earns its place.
+</p>
+<p>
   What separates the models is not their size. It is whether they are willing to
   stop. Nova Pro, Gemma 3 and Nemotron never chose <code>stop</code> in more than a
   thousand calls each. They read every field the slide has and send the slide to a
@@ -349,13 +358,24 @@
   $arm_qwen3_coder_next_found_mape% error.
 </p>
 <p>
-  Against an oracle counter the agent's density error is
-  $arm_bedrock_truth_mape%, against $arm_decision_truth_mape% for the decision rule.
-  The agent stops earlier than the rule, and on exact counts that costs accuracy.
-  Against a fixed policy of reading 8 fields per slide, every policy in the table
-  reads more fields for a similar error. The agent's measured advantage is in
-  skipping unusable fields, refocusing, and giving a reason for each move, not in
-  field count.
+  <strong>Where the fields go is the difference.</strong> The fixed policy reads
+  eight fields on every slide whether the parasites are everywhere or almost
+  absent: on the ten densest slides it reads $alloc_fixed_dense and on the ten
+  sparsest $alloc_fixed_sparse, and its field count barely tracks the slide
+  (r&nbsp;=&nbsp;$alloc_fixed_r against expert density). The agent spends the same
+  budget unevenly. It reads $alloc_agent_dense fields on the ten densest slides and
+  $alloc_agent_sparse on the ten sparsest, from $alloc_agent_min to
+  $alloc_agent_max across the set, r&nbsp;=&nbsp;$alloc_agent_r. It stops after one
+  field when the interval is already inside a band and keeps reading when it is
+  not.
+</p>
+<p>
+  So the measured claim is this one, and not a larger one: at the same cost and the
+  same error, the agent puts its effort where the evidence is thin, states a reason
+  for every move, and the reason is on the demo page next to the field it was made
+  on. Against an oracle counter it is behind both the rule
+  ($arm_bedrock_truth_mape% against $arm_decision_truth_mape%) and the fixed
+  policy. Stopping earlier costs accuracy on exact counts.
 </p>
 
 <h3>Generalisation, each scored once</h3>

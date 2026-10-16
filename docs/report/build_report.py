@@ -124,6 +124,7 @@ footer { margin-top: 9mm; border-top: 1.5pt solid var(--ink); padding-top: 4mm; 
 # figure from the number the whole evaluation turns on. A score keeps its three
 # decimals; a percentage keeps one; a count keeps none.
 _DECIMALS = {
+    "alloc_agent_r": 2, "alloc_fixed_r": 2,
     "cost_stock": 2, "cost_cool": 2, "cost_nokleidi": 2,
     "cost_stock_spot": 2, "cost_cool_spot": 2, "cost_nokleidi_spot": 2,
     "same_stock_slides_hour": 0, "same_cool_slides_hour": 0,

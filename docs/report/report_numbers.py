@@ -35,6 +35,8 @@ ROOT = Path(__file__).resolve().parents[2]
 # by fields read, so the order here does not matter.
 AGENT_ARMS = (
     ("who-200", None, "WHO 200-white-cell protocol"),
+    ("fixed-8", None, "Fixed 8 fields"),
+    ("fixed-12", None, "Fixed 12 fields"),
     ("rule-based", None, "Rule-based control"),
     ("decision", None, "Decision rule"),
     ("bedrock", "us.anthropic.claude-sonnet-4-6", "Claude Sonnet 4.6"),
@@ -185,6 +187,34 @@ def figures() -> dict:
         "sc_rest_cv": rest["ratio_cv_pct"],
         "sc_rec_cv": split["recall_cv_pct"], "sc_fa_cv": split["false_alarm_cv_pct"],
     })
+
+    # --- where each policy spends its fields. A total is not a policy: two
+    # arms can read the same number of fields and allocate them completely
+    # differently, and that is the agent's whole claim. Expert density per
+    # slide comes from the full read on expert counts.
+    import math
+    import statistics
+
+    truth = {r["patient"]: r["per_ul"] for r in agent["runs"]["who-200/truth"]}
+    dense = sorted(truth, key=truth.get, reverse=True)[:10]
+    sparse = sorted(truth, key=truth.get)[:10]
+
+    def _pearson(xs, ys):
+        mx, my = statistics.mean(xs), statistics.mean(ys)
+        num = sum((a - mx) * (b - my) for a, b in zip(xs, ys))
+        den = (sum((a - mx) ** 2 for a in xs) * sum((b - my) ** 2 for b in ys)) ** 0.5
+        return num / den if den else 0.0
+
+    for arm, key in (("bedrock", "alloc_agent"), ("fixed-8", "alloc_fixed")):
+        rows = agent["runs"][f"{arm}/found"]
+        by_patient = {r["patient"]: r["fields_read"] for r in rows}
+        xs = [math.log10(max(truth[r["patient"]], 1.0)) for r in rows]
+        ys = [r["fields_read"] for r in rows]
+        f[f"{key}_r"] = round(_pearson(xs, ys), 2)
+        f[f"{key}_dense"] = statistics.median(by_patient[p] for p in dense)
+        f[f"{key}_sparse"] = statistics.median(by_patient[p] for p in sparse)
+        f[f"{key}_min"] = min(ys)
+        f[f"{key}_max"] = max(ys)
 
     # --- the deployed stack, counted from the Terraform state rather than from
     # the .tf files, so the report describes what is running and not what was
