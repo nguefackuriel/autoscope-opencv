@@ -1,0 +1,22 @@
+{
+  "label": "c8g-cool-tiled",
+  "recorded_utc": "2026-10-16T13:01:09+00:00",
+  "opencv_version": "4.14.0-pre",
+  "machine": "aarch64",
+  "threads": 32,
+  "kleidicv_in_build": true,
+  "fields": 12,
+  "fields_per_slide": 29.6,
+  "seconds_per_field_median": 0.2286,
+  "fields_per_second": 4.3753,
+  "slides_per_hour": 532.13,
+  "stages": {
+    "imread": 0.0696,
+    "assess_field": 0.0588,
+    "prepare (disc + stain)": 0.0147,
+    "white cells": 0.0469,
+    "parasite candidates": 0.1142,
+    "patches": 0.0022,
+    "patch network (cv.dnn)": 0.0563
+  }
+}

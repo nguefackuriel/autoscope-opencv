@@ -187,19 +187,70 @@ def _wbc_exclusion(image_bgr: np.ndarray, mask: np.ndarray) -> np.ndarray:
     return cv.dilate(full, k)
 
 
+# --- large-kernel morphology, with a way around a single-threaded HAL ----------
+#
+# On the AWS COOL image (OpenCV 4.14, carotene + KleidiCV 0.7.0, TBB) the
+# HAL-intercepted filter and morphology paths run on ONE core whatever
+# cv.setNumThreads says. Measured on c8g.8xlarge at 4032x3024 float32: the
+# top-hat below takes 1126 ms there against 54 ms with the pip wheel, and at one
+# thread the two builds agree within 6%, so the kernels are the same speed and
+# only the threading differs (docs/results-cool.md). Cutting the image into one
+# band per core, overlapping by the kernel's full support, and running the same
+# call per band from a thread pool brings it to 68 ms: OpenCV drops the GIL
+# inside the C++ call, so the bands run on separate cores.
+#
+# Off by default. The plain call is what every published number was measured
+# with, and on the pip wheel, which threads internally, tiling only adds
+# overhead. AUTOSCOPE_TILED_MORPH=1 turns it on. The result is exact: the test
+# pins tiled == plain to zero on both calls.
+
+TILED_MORPH = os.environ.get("AUTOSCOPE_TILED_MORPH", "") not in ("", "0", "false")
+
+
+def _morph(img: np.ndarray, fn, halo: int, bands: int | None = None) -> np.ndarray:
+    """`fn(img)`, or the same thing band by band from a thread pool.
+
+    `halo` is the number of rows a band must see beyond its own on each side
+    for the kept rows to be identical to the whole-image result: the kernel
+    radius times the number of chained passes.
+    """
+    if not TILED_MORPH:
+        return fn(img)
+    from concurrent.futures import ThreadPoolExecutor
+
+    n = bands or max(os.cpu_count() or 1, 1)
+    h = img.shape[0]
+    if n <= 1 or h < 4 * halo:
+        return fn(img)
+    edges = [round(i * h / n) for i in range(n + 1)]
+    out = np.empty_like(img)
+
+    def one(i: int) -> None:
+        y0, y1 = edges[i], edges[i + 1]
+        a, b = max(y0 - halo, 0), min(y1 + halo, h)
+        res = fn(img[a:b])
+        out[y0:y1] = res[y0 - a:y0 - a + (y1 - y0)]
+
+    with ThreadPoolExecutor(max_workers=n) as pool:
+        list(pool.map(one, range(n)))
+    return out
+
+
 def tophat(image_bgr: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Background-free stain map. Returns (tophat, smoothed stain, Lab float)."""
     lab = cv.cvtColor(image_bgr, cv.COLOR_BGR2Lab).astype(np.float32)
     stain = cv.GaussianBlur(lab[:, :, 1] - lab[:, :, 2], (0, 0), SMOOTH_SIGMA)
     k = cv.getStructuringElement(cv.MORPH_ELLIPSE, (TOPHAT_PX, TOPHAT_PX))
-    top = cv.morphologyEx(stain, cv.MORPH_TOPHAT, k)
+    # A top-hat is src - dilate(erode(src)): two chained passes, so the band
+    # halo is twice the kernel radius.
+    top = _morph(stain, lambda a: cv.morphologyEx(a, cv.MORPH_TOPHAT, k), halo=TOPHAT_PX)
     return top, stain, lab
 
 
 def peaks(top: np.ndarray, allowed: np.ndarray) -> np.ndarray:
     """Local maxima of the top-hat above PEAK_MIN, inside `allowed`. Nx2 (x, y)."""
     k = cv.getStructuringElement(cv.MORPH_ELLIPSE, (2 * PEAK_NMS_PX + 1,) * 2)
-    dil = cv.dilate(top, k)
+    dil = _morph(top, lambda a: cv.dilate(a, k), halo=PEAK_NMS_PX)
     is_peak = (top >= dil) & (top > PEAK_MIN) & (allowed > 0)
     ys, xs = np.nonzero(is_peak)
     return np.stack([xs, ys], axis=1)

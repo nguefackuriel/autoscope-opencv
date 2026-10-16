@@ -102,3 +102,37 @@ def test_the_default_threshold_is_the_shipped_one():
     if not f.exists():
         pytest.skip("no canonical threshold file")
     assert par.DEFAULT_THRESHOLD == json.loads(f.read_text())["threshold"]
+
+
+def test_tiled_morphology_is_exact(monkeypatch):
+    """The band-parallel path must give the same array as the whole-image call.
+
+    It exists for the COOL image, whose HAL runs large-kernel morphology on one
+    core. A faster wrong answer there would be worse than the slow right one,
+    so this pins tiled == plain to zero on both calls the pipeline makes. The
+    height is deliberately not a multiple of the band count, and the halo for
+    the top-hat is the one the two chained passes need, not the kernel radius.
+    """
+    import os
+    from autoscope import parasites as par
+
+    rng = np.random.default_rng(3)
+    stain = rng.normal(0, 20, (1013, 1600)).astype(np.float32)   # odd height, not divisible
+    k31 = cv.getStructuringElement(cv.MORPH_ELLIPSE, (par.TOPHAT_PX, par.TOPHAT_PX))
+    k15 = cv.getStructuringElement(cv.MORPH_ELLIPSE, (2 * par.PEAK_NMS_PX + 1,) * 2)
+    plain_top = cv.morphologyEx(stain, cv.MORPH_TOPHAT, k31)
+    plain_dil = cv.dilate(plain_top, k15)
+
+    monkeypatch.setattr(par, "TILED_MORPH", True)
+    monkeypatch.setattr(os, "cpu_count", lambda: 6)
+    top = par._morph(stain, lambda a: cv.morphologyEx(a, cv.MORPH_TOPHAT, k31), halo=par.TOPHAT_PX)
+    dil = par._morph(top, lambda a: cv.dilate(a, k15), halo=par.PEAK_NMS_PX)
+
+    assert np.array_equal(top, plain_top), "tiled top-hat differs from the plain one"
+    assert np.array_equal(dil, plain_dil), "tiled dilate differs from the plain one"
+
+    # And with the flag off the helper is a plain call, byte for byte.
+    monkeypatch.setattr(par, "TILED_MORPH", False)
+    assert np.array_equal(
+        par._morph(stain, lambda a: cv.morphologyEx(a, cv.MORPH_TOPHAT, k31), halo=par.TOPHAT_PX),
+        plain_top)

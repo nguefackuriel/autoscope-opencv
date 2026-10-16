@@ -41,6 +41,11 @@ PROFILE="${PROFILE:-0}"
 # calls at 12 MP. See _pipeline_cases in cool_bench.py for why that exists.
 GROUP="${GROUP:-tile}"
 THREADS="${THREADS:-0}"
+# TILED_MORPH=1 turns on the band-parallel morphology in parasites.py for a
+# PROFILE=1 run. Off by default so the committed profiles stay what they were
+# measured with. Use a label that says so, e.g. c8g-cool-tiled, and point
+# BUNDLE at a bundle whose src/ carries the flag.
+TILED_MORPH="${TILED_MORPH:-}"
 BUNDLE="${BUNDLE:-s3://autoscope-bench-617847240757/bench-bundle.tar.gz}"
 REGION="${AWS_REGION:-us-east-1}"
 PROFILE_NAME="autoscope-bench-ssm"
@@ -76,19 +81,33 @@ else
   AMI=$(aws ssm get-parameters --names "$AMI_PARAM" --region "$REGION" \
           --query 'Parameters[0].Value' --output text)
 fi
-SUBNET=$(aws ec2 describe-subnets --region "$REGION" \
+# Every default subnet, one per availability zone. A c8g.8xlarge is not always
+# available in the first zone on the list: on 16 October us-east-1c answered
+# InsufficientInstanceCapacity while 1a, 1b, 1d and 1f had capacity, and the
+# run died on the one zone it had asked for. Try them in turn.
+SUBNETS=$(aws ec2 describe-subnets --region "$REGION" \
         --filters Name=default-for-az,Values=true \
-        --query 'Subnets[0].SubnetId' --output text)
-echo "    ami $AMI, subnet $SUBNET"
-
-ID=$(aws ec2 run-instances --region "$REGION" \
-  --image-id "$AMI" --instance-type "$TYPE" --subnet-id "$SUBNET" \
-  --iam-instance-profile "Name=$PROFILE_NAME" \
-  --block-device-mappings '[{"DeviceName":"/dev/xvda","Ebs":{"VolumeSize":40,"VolumeType":"gp3","DeleteOnTermination":true}}]' \
-  --instance-initiated-shutdown-behavior terminate \
-  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=autoscope-cool-$LABEL},{Key=Project,Value=autoscope}]" \
-  --query 'Instances[0].InstanceId' --output text)
-echo "    instance $ID"
+        --query 'Subnets[].[SubnetId,AvailabilityZone]' --output text)
+ID=""
+while read -r SUBNET AZ; do
+  [ -n "$SUBNET" ] || continue
+  echo "    ami $AMI, trying $AZ ($SUBNET)"
+  OUT=$(aws ec2 run-instances --region "$REGION" \
+    --image-id "$AMI" --instance-type "$TYPE" --subnet-id "$SUBNET" \
+    --iam-instance-profile "Name=$PROFILE_NAME" \
+    --block-device-mappings '[{"DeviceName":"/dev/xvda","Ebs":{"VolumeSize":40,"VolumeType":"gp3","DeleteOnTermination":true}}]' \
+    --instance-initiated-shutdown-behavior terminate \
+    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=autoscope-cool-$LABEL},{Key=Project,Value=autoscope}]" \
+    --query 'Instances[0].InstanceId' --output text 2>&1) && { ID="$OUT"; break; }
+  case "$OUT" in
+    *InsufficientInstanceCapacity*) echo "    no $TYPE capacity in $AZ, next zone" ;;
+    *) echo "$OUT"; exit 1 ;;
+  esac
+done <<EOF
+$SUBNETS
+EOF
+[ -n "$ID" ] || { echo "no zone in $REGION has $TYPE capacity right now"; exit 1; }
+echo "    instance $ID in $AZ"
 
 # Terminate on any exit, including a failure or a Ctrl-C. An instance left
 # running after a benchmark is the most expensive kind of mistake here.
@@ -142,7 +161,7 @@ PY=\${COOL_PY:-python3.12}
 \$PY -m pip install --quiet 'scipy==1.16.3'
 $FETCH_BUNDLE
 tar -xzf /opt/bench/bundle.tar.gz -C /opt/bench
-cd /opt/bench && PYTHONPATH="/opt/bench/src:\${PYTHONPATH:-}" \$PY bench/field_profile.py \
+cd /opt/bench && AUTOSCOPE_TILED_MORPH='$TILED_MORPH' PYTHONPATH="/opt/bench/src:\${PYTHONPATH:-}" \$PY bench/field_profile.py \
     --fields 12 --label '$LABEL'
 cp /opt/bench/bench/results/profile-$LABEL.json /opt/bench/results/
 PROF

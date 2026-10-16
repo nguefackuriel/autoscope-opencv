@@ -338,3 +338,61 @@ One limit, stated plainly: our pipeline leans unusually hard on large-kernel
 morphology, and a pipeline that did not would see the 1.59×, not the 0.26×. This
 is a finding about an interaction between one image and one workload. It is not
 a claim that the COOL image is slow.
+
+## 16 October: the workaround, and the COOL image at parity
+
+The thread sweep above showed the COOL image's filter and morphology paths run on
+one core, while at one thread its kernels match the wheel's within 6%. So the
+fix is to supply the threads ourselves: cut the 12 MP image into one band per
+core, overlapping by the kernel's full support, run the same call per band from
+a thread pool, and stitch. OpenCV releases the GIL inside the C++ call, so the
+bands run on separate cores. `parasites._morph`, off by default, on with
+`AUTOSCOPE_TILED_MORPH=1`. The result is exact: a test pins tiled == plain to
+zero on both calls.
+
+The halo matters. A top-hat is `src - dilate(erode(src))`, two chained passes,
+so a band needs 30 rows of context on each side, not 15. With 15 the first
+attempt differed from the plain call by 13.8 on a float32 stain map, and the
+correctness check in `cool_bench.py` refused to time it.
+
+### The calls, 4032x3024, c8g.8xlarge
+
+| call | wheel @32 | COOL plain | COOL tiled | plain / wheel | tiled / wheel |
+|---|---|---|---|---|---|
+| `morphologyEx` TOPHAT f32, ellipse 31 | 53.7 ms | 1125.8 ms | **68.5 ms** | 21.0x | 1.28x |
+| `dilate` f32, ellipse 15 | 5.1 ms | 130.6 ms | **9.7 ms** | 25.7x | 1.91x |
+
+On the wheel, tiling is slower than the plain call (77.5 ms against 54.7): the
+wheel already threads internally and the pool only adds overhead. The
+workaround belongs to the COOL image and stays opt-in.
+
+### The pipeline, twelve real fields
+
+| | wheel | COOL plain | COOL tiled |
+|---|---|---|---|
+| prepare (disc + stain) | 0.024 s | 0.015 s | 0.015 s |
+| white cells | 0.070 s | 0.046 s | 0.047 s |
+| parasite candidates | 0.075 s | 0.718 s | **0.114 s** |
+| patch network (cv.dnn) | 0.050 s | 0.060 s | 0.056 s |
+| per field | 0.222 s | 0.852 s | **0.229 s** |
+| slides per hour | 547.4 | 142.7 | **532.1** |
+| against the wheel | 1.00x | 0.26x | **0.97x** |
+
+So the COOL image, with the workaround, matches the pip wheel on this pipeline.
+Not faster. The stages COOL accelerates on its own, preparation and white cells,
+are a small share of a field; the stage that dominates is the one its HAL would
+not thread, and once that is worked around the two builds are level. The 1.59x
+from the function benchmark does not carry through because the calls it is
+carried by (`medianBlur` 23x, `calcHist` 12x, `adaptiveThreshold` 8x) are not
+where this pipeline spends its time.
+
+What this is worth: a reproducible defect in the shipped image, a diagnosis down
+to the call, and a forty-line workaround that recovers 3.7x on the pipeline,
+measured on the image inside its trial window. That is the thing to send
+upstream.
+
+Reproduce:
+
+    GROUP=pipeline THREADS=0,1 COOL_AMI=<ami> bash bench/run_on_ec2.sh c8g.8xlarge c8g-cool 10
+    PROFILE=1 TILED_MORPH=1 BUNDLE=s3://.../bench-bundle-tiled.tar.gz COOL_AMI=<ami> \
+        bash bench/run_on_ec2.sh c8g.8xlarge c8g-cool-tiled

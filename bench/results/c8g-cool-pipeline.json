@@ -1,6 +1,6 @@
 {
   "label": "c8g-cool",
-  "recorded_utc": "2026-10-12T03:34:09+00:00",
+  "recorded_utc": "2026-10-16T12:46:39+00:00",
   "opencv_version": "4.14.0-pre",
   "machine": "aarch64",
   "processor": "aarch64",
@@ -22,65 +22,89 @@
   "by_threads": {
     "0": {
       "12MP_cvtColor_Lab": {
-        "median_ms": 1.6821,
-        "iqr_ms": 0.0556,
-        "min_ms": 1.6239,
+        "median_ms": 1.4998,
+        "iqr_ms": 0.0589,
+        "min_ms": 1.4718,
         "runs": 10
       },
       "12MP_GaussianBlur_f32": {
-        "median_ms": 25.1079,
-        "iqr_ms": 0.093,
-        "min_ms": 24.9917,
+        "median_ms": 25.1232,
+        "iqr_ms": 0.1129,
+        "min_ms": 25.0233,
         "runs": 10
       },
       "12MP_tophat_f32_e31": {
-        "median_ms": 1137.3686,
-        "iqr_ms": 0.0963,
-        "min_ms": 1137.2738,
+        "median_ms": 1125.816,
+        "iqr_ms": 3.269,
+        "min_ms": 1123.5348,
+        "runs": 10
+      },
+      "12MP_tophat_f32_e31_tiled": {
+        "median_ms": 68.4994,
+        "iqr_ms": 0.2176,
+        "min_ms": 68.4364,
         "runs": 10
       },
       "12MP_dilate_f32_e15": {
-        "median_ms": 133.8397,
-        "iqr_ms": 0.1167,
-        "min_ms": 133.7756,
+        "median_ms": 130.5642,
+        "iqr_ms": 0.3309,
+        "min_ms": 130.3709,
+        "runs": 10
+      },
+      "12MP_dilate_f32_e15_tiled": {
+        "median_ms": 9.7259,
+        "iqr_ms": 1.7348,
+        "min_ms": 9.1521,
         "runs": 10
       },
       "12MP_tophat_u8_e31": {
-        "median_ms": 339.7441,
-        "iqr_ms": 0.1381,
-        "min_ms": 339.6511,
+        "median_ms": 339.5165,
+        "iqr_ms": 0.6068,
+        "min_ms": 338.9516,
         "runs": 10
       }
     },
     "1": {
       "12MP_cvtColor_Lab": {
-        "median_ms": 33.019,
-        "iqr_ms": 0.0399,
-        "min_ms": 32.9056,
+        "median_ms": 32.3255,
+        "iqr_ms": 0.0178,
+        "min_ms": 32.308,
         "runs": 10
       },
       "12MP_GaussianBlur_f32": {
-        "median_ms": 25.1953,
-        "iqr_ms": 0.0865,
-        "min_ms": 25.1302,
+        "median_ms": 24.8538,
+        "iqr_ms": 0.1311,
+        "min_ms": 24.7066,
         "runs": 10
       },
       "12MP_tophat_f32_e31": {
-        "median_ms": 1139.7012,
-        "iqr_ms": 0.2546,
-        "min_ms": 1139.4376,
+        "median_ms": 1133.3395,
+        "iqr_ms": 3.2339,
+        "min_ms": 1130.6704,
+        "runs": 10
+      },
+      "12MP_tophat_f32_e31_tiled": {
+        "median_ms": 68.4697,
+        "iqr_ms": 0.1445,
+        "min_ms": 68.1383,
         "runs": 10
       },
       "12MP_dilate_f32_e15": {
-        "median_ms": 132.8808,
-        "iqr_ms": 0.123,
-        "min_ms": 132.7854,
+        "median_ms": 132.2454,
+        "iqr_ms": 0.7643,
+        "min_ms": 131.2272,
+        "runs": 10
+      },
+      "12MP_dilate_f32_e15_tiled": {
+        "median_ms": 9.5652,
+        "iqr_ms": 1.8613,
+        "min_ms": 9.1592,
         "runs": 10
       },
       "12MP_tophat_u8_e31": {
-        "median_ms": 344.1938,
-        "iqr_ms": 0.0922,
-        "min_ms": 344.0002,
+        "median_ms": 343.039,
+        "iqr_ms": 0.5809,
+        "min_ms": 342.6634,
         "runs": 10
       }
     }
