@@ -464,13 +464,87 @@
   is working. The HAL-intercepted filter and morphology paths do not use the
   threads.
 </p>
+<h3>The workaround</h3>
 <p>
-  AutoScope does not run on the COOL image. This result applies to a pipeline that
-  depends on large-kernel morphology at full resolution. The function benchmark
-  stands for pipelines that do not.
+  The library runs the morphology on one core, so the pipeline hands it work one
+  core can do. <code>parasites.py</code> splits the image into horizontal bands,
+  one per thread, each band carrying a halo as wide as the kernel radius times the
+  number of chained passes, and runs the top-hat and the dilation band by band.
+  Thirty pixels of halo for the top-hat, seven for the dilation. The result is
+  checked against the unsplit call before it is timed, so a wrong answer cannot be
+  reported as a fast one. It is forty lines behind
+  <code>AUTOSCOPE_TILED_MORPH=1</code>, off by default.
+</p>
+<p>
+  With it on, the candidate stage falls from $cool_c8g_cool_stages_cand s to
+  $cool_tiled_candidates s and the COOL image reads $tiled_sph slides an hour
+  against the pip wheel's $stock_sph.
+</p>
+
+<h3>The same answers, on both builds</h3>
+<p>
+  A speed number from a different library only describes AutoScope if the library
+  gives back the same answer. The whole pipeline was run twice on the same
+  $same_fields fields, once on the pip wheel and once on the COOL image with the
+  workaround on, keeping the parasite and white-cell count of every field.
+</p>
+<table>
+  <caption>The same twelve fields, both builds, counts kept.</caption>
+  <thead><tr><th>&nbsp;</th><th>pip wheel on <code>c8g</code></th><th>COOL image on <code>c8g</code></th></tr></thead>
+  <tbody>
+    <tr><td>OpenCV</td><td><code>$same_stock_opencv</code></td><td><code>$same_cool_opencv</code></td></tr>
+    <tr><td>Seconds per field</td><td class="num">$same_stock_per_field</td><td class="num">$same_cool_per_field</td></tr>
+    <tr><td>Slides per hour</td><td class="num">$same_stock_slides_hour</td><td class="num">$same_cool_slides_hour</td></tr>
+    <tr><td>Fields counted differently</td><td class="num">&mdash;</td><td class="num">$same_differ of $same_fields</td></tr>
+  </tbody>
+</table>
+<p>
+  $same_parasites parasites and every white cell, field by field, identical on both
+  builds. The COOL image runs AutoScope at $same_ratio&times; the pip wheel's speed
+  and returns the same counts.
+</p>
+
+<h3>What a slide costs</h3>
+<p>
+  Prices from the AWS Pricing API on $price_fetched, in
+  <code>bench/pricing.json</code>. One Batch job gets 4 vCPU, so a 32-vCPU
+  instance runs eight slides at once; the per-field time is scaled to a 4-vCPU
+  slot before the division.
+</p>
+<table>
+  <caption>Dollars per 1,000 slides, <code>c8g.8xlarge</code> in <code>us-east-1</code>.</caption>
+  <thead><tr><th>Build</th><th class="num">on demand</th><th class="num">Spot</th></tr></thead>
+  <tbody>
+    <tr><td>OpenCV 5, Arm HAL compiled out</td><td class="num">$$$cost_nokleidi</td><td class="num">$$$cost_nokleidi_spot</td></tr>
+    <tr><td>OpenCV 5 pip wheel, what production runs</td><td class="num">$$$cost_stock</td><td class="num">$$$cost_stock_spot</td></tr>
+    <tr><td>COOL image with the workaround</td><td class="num">$$$cost_cool</td><td class="num">$$$cost_cool_spot</td></tr>
+  </tbody>
+</table>
+<p>
+  A thousand slides cost about a dollar on Spot, and the three builds are within
+  seven cents of each other. The build with the Arm HAL compiled out is the
+  cheapest of the three, by the same margin by which it is the fastest on this
+  pipeline. Cost is not where the choice between these builds gets made.
+</p>
+
+<h3>What production runs, and why</h3>
+<p>
+  The Batch container runs the OpenCV 5 pip wheel on <code>c8g</code>, Graviton4.
+  That wheel is built with carotene and KleidiCV 26.03, which is the same Arm
+  acceleration the COOL image carries and one version newer. So the production
+  path is Arm-accelerated OpenCV on Graviton; the COOL Marketplace image is the
+  fourth measured arm, and with the workaround it is interchangeable with the
+  wheel, at $same_ratio&times; and the same counts.
+</p>
+<p>
+  The defect is in the shipped image, not in the idea. It is written up with the
+  reproduction in <code>docs/cool-upstream-issue.md</code> for OpenCV.
 </p>
 <pre>GROUP=pipeline THREADS=0,1 COOL_AMI=&lt;ami&gt; bash bench/run_on_ec2.sh c8g.8xlarge c8g-cool 10
-GROUP=pipeline THREADS=0,1                 bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock 10</pre>
+GROUP=pipeline THREADS=0,1                 bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock 10
+PROFILE=1                                  bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock-counts
+PROFILE=1 TILED_MORPH=1 COOL_AMI=&lt;ami&gt;      bash bench/run_on_ec2.sh c8g.8xlarge c8g-cool-counts
+python bench/compare_counts.py profile-c8g-stock-counts profile-c8g-cool-counts</pre>
 </section>
 
 <section>

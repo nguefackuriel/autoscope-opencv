@@ -1,0 +1,84 @@
+{
+  "label": "c8g-stock-counts",
+  "recorded_utc": "2026-10-16T22:40:14+00:00",
+  "opencv_version": "5.0.0",
+  "machine": "aarch64",
+  "threads": 32,
+  "kleidicv_in_build": true,
+  "fields": 12,
+  "fields_per_slide": 29.6,
+  "seconds_per_field_median": 0.2177,
+  "fields_per_second": 4.5933,
+  "slides_per_hour": 558.64,
+  "stages": {
+    "imread": 0.0561,
+    "assess_field": 0.0544,
+    "prepare (disc + stain)": 0.0237,
+    "white cells": 0.067,
+    "parasite candidates": 0.0738,
+    "patches": 0.0023,
+    "patch network (cv.dnn)": 0.0499
+  },
+  "counts": [
+    {
+      "field": "20170830_103930.jpg",
+      "parasites": 23,
+      "white_cells": 16
+    },
+    {
+      "field": "20170830_171214.jpg",
+      "parasites": 136,
+      "white_cells": 16
+    },
+    {
+      "field": "20170831_122241.jpg",
+      "parasites": 58,
+      "white_cells": 17
+    },
+    {
+      "field": "20170831_213511.jpg",
+      "parasites": 12,
+      "white_cells": 12
+    },
+    {
+      "field": "20170613_172423.jpg",
+      "parasites": 107,
+      "white_cells": 13
+    },
+    {
+      "field": "20170724_121402.jpg",
+      "parasites": 8,
+      "white_cells": 24
+    },
+    {
+      "field": "20170725_154738.jpg",
+      "parasites": 46,
+      "white_cells": 20
+    },
+    {
+      "field": "20170727_173337.jpg",
+      "parasites": 13,
+      "white_cells": 18
+    },
+    {
+      "field": "20170811_153442.jpg",
+      "parasites": 125,
+      "white_cells": 40
+    },
+    {
+      "field": "20170816_222723.jpg",
+      "parasites": 40,
+      "white_cells": 41
+    },
+    {
+      "field": "20170818_135933.jpg",
+      "parasites": 12,
+      "white_cells": 16
+    },
+    {
+      "field": "20170819_164346.jpg",
+      "parasites": 25,
+      "white_cells": 18
+    }
+  ]
+}

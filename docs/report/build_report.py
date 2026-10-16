@@ -124,6 +124,10 @@ footer { margin-top: 9mm; border-top: 1.5pt solid var(--ink); padding-top: 4mm; 
 # figure from the number the whole evaluation turns on. A score keeps its three
 # decimals; a percentage keeps one; a count keeps none.
 _DECIMALS = {
+    "cost_stock": 2, "cost_cool": 2, "cost_nokleidi": 2,
+    "cost_stock_spot": 2, "cost_cool_spot": 2, "cost_nokleidi_spot": 2,
+    "same_stock_slides_hour": 0, "same_cool_slides_hour": 0,
+    "same_stock_per_field": 3, "same_cool_per_field": 3,
     "held_f1": 3, "held_precision": 3, "held_recall": 3, "held_ratio_spearman": 3,
     "candidate_recall": 3, "tz_auc": 3, "tz_auc_density": 3,
     "pv_f1": 3, "pv_recall": 3, "pv_precision": 3,
@@ -270,6 +274,9 @@ def build(f: dict) -> str:
         nokleidi_sph=f"{f['cool_c8g_no_kleidicv_slides_hour']:.0f}",
         stock_spf=f"{f['cool_c8g_stock_per_field']:.3f}",
         cool_spf=f"{f['cool_c8g_cool_per_field']:.3f}",
+        tiled_sph=f"{f['cool_tiled_slides_hour']:.0f}",
+        tiled_spf=f"{f['cool_tiled_per_field']:.3f}",
+        cool_c8g_cool_stages_cand=f"{f['cool_c8g_cool_stages']['parasite candidates']:.3f}",
         cool_hal=f["cool_build_lines"]["Custom HAL"],
         cool_par=f["cool_build_lines"]["Parallel framework"],
         cool_base=f["cool_build_lines"]["Baseline"],

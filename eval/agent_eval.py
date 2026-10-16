@@ -292,8 +292,11 @@ def main():
                     help="a positive with a settled band stops once its error bar is within this")
     ap.add_argument("--sweep-settle", action="store_true", help="sweep the settle width for the decision arms")
     ap.add_argument("--policies", default="who,rule,decision",
-                    help="comma-separated: who, rule, decision, bedrock. The default is the "
-                         "three that cost nothing; bedrock is opt-in because it calls a model.")
+                    help="comma-separated: who, rule, decision, and one name per model "
+                         "arm. `all` is every arm that has a recording, which is the "
+                         "table in the report and costs nothing to replay. The default "
+                         "is the three fixed policies; a model arm is opt-in because "
+                         "with --record it calls a model.")
     ap.add_argument("--bedrock-cache", default="agent_bedrock_calls.jsonl",
                     help="the recorded model calls, under eval/results/")
     ap.add_argument("--record", action="store_true",
@@ -314,6 +317,14 @@ def main():
              "haiku", "deepseek", "devstral", "ministral", "nova", "gemma", "minimax",
              "nemotron", "qwen80", "qwen32", "qwencoder", "qwenvl",
              "opus5", "sonnet5", "gpt6"}
+    # Every arm that has a recording. The three frontier ids are left out on
+    # purpose: the agreements are accepted and the runtime still refuses them,
+    # so "all" would ask for a model that cannot answer and fail the run.
+    RECORDED = ["who", "rule", "decision", "bedrock", "gptoss", "llama", "haiku",
+                "deepseek", "devstral", "ministral", "nova", "gemma", "minimax",
+                "nemotron", "qwen80", "qwen32", "qwencoder", "qwenvl"]
+    if args.policies == ["all"]:
+        args.policies = list(RECORDED)
     unknown = set(args.policies) - known
     if unknown:
         ap.error(f"unknown policies {sorted(unknown)}; pick from {sorted(known)}")

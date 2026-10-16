@@ -33,6 +33,9 @@ ARM_INSTANCE = {
     "c8g-cool": "c8g.8xlarge",
     "c8g-stock": "c8g.8xlarge",
     "c8g-no-kleidicv": "c8g.8xlarge",
+    "c8g-cool-tiled": "c8g.8xlarge",
+    "c8g-stock-counts": "c8g.8xlarge",
+    "c8g-cool-counts": "c8g.8xlarge",
     "c7i-stock": "c7i.8xlarge",
     "local-x86": None,          # a laptop has no hourly price
 }

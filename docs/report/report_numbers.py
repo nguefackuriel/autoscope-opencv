@@ -24,6 +24,7 @@ of what is missing is the more useful outcome.
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -261,6 +262,26 @@ def figures() -> dict:
     f["agent_model_arms"] = sum(1 for _, m, _ in AGENT_ARMS if m)
     f["agent_never_stop"] = never_stop
 
+    # --- what a lab pays. The prices are in bench/pricing.json, fetched from
+    # the Pricing API and marked verified; an unverified file is refused here
+    # rather than printed with a caveat nobody reads.
+    sys.path.insert(0, str(ROOT / "bench"))
+    from cost_model import cost_per_1000, load_pricing  # noqa: E402
+
+    pricing = load_pricing()
+    if not pricing.get("verified"):
+        raise Missing("bench/pricing.json is not verified; run cost_model.py --fetch")
+    f["price_fetched"] = pricing["fetched"]
+    for label, key in (("c8g-stock", "cost_stock"), ("c8g-cool-tiled", "cost_cool"),
+                       ("c8g-no-kleidicv", "cost_nokleidi")):
+        prof = json.loads((BENCH / f"profile-{label}.json").read_text())
+        on_demand = cost_per_1000(prof, pricing, spot=False)
+        spot = cost_per_1000(prof, pricing, spot=True)
+        if not on_demand or not spot:
+            raise Missing(f"no price for {label}")
+        f[key] = on_demand["usd_per_1000_slides"]
+        f[f"{key}_spot"] = spot["usd_per_1000_slides"]
+
     # --- COOL, four arms. The build lines are the proof of which binary ran.
     for label in ("c8g-stock", "c8g-no-kleidicv", "c8g-cool", "c7i-stock"):
         tile = _load(BENCH / f"{label}.json")
@@ -274,6 +295,35 @@ def figures() -> dict:
             f[f"cool_{slug}_per_field"] = p["seconds_per_field_median"]
             f[f"cool_{slug}_slides_hour"] = p["slides_per_hour"]
             f[f"cool_{slug}_stages"] = p["stages"]
+
+    # The same twelve fields read twice, once on each build, with the counts
+    # kept. Identical counts are what makes the speed number a statement about
+    # AutoScope rather than about a benchmark.
+    pairs = {}
+    for label, key in (("c8g-stock-counts", "same_stock"), ("c8g-cool-counts", "same_cool")):
+        d = _load(BENCH / f"profile-{label}.json")
+        if "counts" not in d:
+            raise Missing(f"profile-{label}.json carries no per-field counts")
+        pairs[key] = d
+        f[f"{key}_opencv"] = d["opencv_version"]
+        f[f"{key}_slides_hour"] = d["slides_per_hour"]
+        f[f"{key}_per_field"] = d["seconds_per_field_median"]
+    a = {c["field"]: (c["parasites"], c["white_cells"]) for c in pairs["same_stock"]["counts"]}
+    b = {c["field"]: (c["parasites"], c["white_cells"]) for c in pairs["same_cool"]["counts"]}
+    shared = sorted(set(a) & set(b))
+    f["same_fields"] = len(shared)
+    f["same_differ"] = sum(1 for k in shared if a[k] != b[k])
+    f["same_parasites"] = sum(a[k][0] for k in shared)
+    f["same_ratio"] = round(pairs["same_cool"]["slides_per_hour"]
+                            / pairs["same_stock"]["slides_per_hour"], 2)
+
+    # The workaround arm. No tile benchmark for it: it changes the pipeline, not
+    # the library, so the only honest measurement of it is the pipeline profile.
+    tiled = _load(BENCH / "profile-c8g-cool-tiled.json")
+    f["cool_tiled_per_field"] = tiled["seconds_per_field_median"]
+    f["cool_tiled_slides_hour"] = tiled["slides_per_hour"]
+    f["cool_tiled_opencv"] = tiled["opencv_version"]
+    f["cool_tiled_candidates"] = tiled["stages"]["parasite candidates"]
 
     cool_tile = _load(BENCH / "c8g-cool.json")
     f["cool_build_lines"] = cool_tile["build_lines"]

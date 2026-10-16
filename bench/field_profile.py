@@ -37,8 +37,14 @@ def profile(path: str, scorer) -> dict:
     t0 = time.perf_counter(); cands, _ = par.candidates(prepared, mask, features=False); t["parasite candidates"] = time.perf_counter() - t0
     t0 = time.perf_counter(); patches = par.patches_at(prepared, cands) if cands else None; t["patches"] = time.perf_counter() - t0
     t0 = time.perf_counter(); scorer.score(patches) if cands else None; t["patch network (cv.dnn)"] = time.perf_counter() - t0
-    t0 = time.perf_counter(); count_field(img, scorer=scorer); t["count_field, end to end"] = time.perf_counter() - t0
+    t0 = time.perf_counter(); counted = count_field(img, scorer=scorer); t["count_field, end to end"] = time.perf_counter() - t0
     t["candidates"] = len(cands)
+    # The answer, not only the time. A faster build that counts differently is
+    # not the same pipeline, and a speed claim without this is a claim about a
+    # benchmark rather than about AutoScope.
+    t["field"] = Path(path).name
+    t["parasites"] = counted.parasites
+    t["white_cells"] = counted.white_cells
     return t
 
 
@@ -88,6 +94,10 @@ def main() -> None:
         "fields_per_second": round(fields_per_second, 4),
         "slides_per_hour": round(slides_per_hour, 2),
         "stages": {k: round(float(np.median([r[k] for r in rows])), 4) for k in STAGES},
+        # Per field, so two arms can be diffed directly. The comparison is in
+        # bench/compare_counts.py.
+        "counts": [{"field": r["field"], "parasites": r["parasites"],
+                    "white_cells": r["white_cells"]} for r in rows],
     }
 
     out = Path(__file__).resolve().parent / "results" / f"profile-{args.label}.json"
@@ -95,6 +105,8 @@ def main() -> None:
     out.write_text(json.dumps(report, indent=2))
     print(f"\n{slides_per_hour:.1f} slides/hour, {fields_per_second:.2f} fields/s "
           f"on {threads} threads | kleidicv in build: {report['kleidicv_in_build']}")
+    print("counts: " + ", ".join(f"{r['field']} {r['parasites']}p/{r['white_cells']}w"
+                                 for r in rows))
     print(f"written to {out}")
 
 

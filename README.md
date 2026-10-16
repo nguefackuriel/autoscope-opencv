@@ -19,9 +19,10 @@ Three claims and the one command that checks each. None of them needs an AWS
 account except the benchmark:
 
 ```
-make setup && make test                       # 148 tests, x86 and arm64 in CI
+make setup && make test                       # 152 tests, x86 and arm64 in CI
 .venv/bin/python eval/agent_eval.py           # the agent against the rules, replayed
-                                              # from 3 005 recorded model calls: free
+                                              # from 15 396 recorded model calls across
+                                              # fifteen models: free
 SKIP_TRAIN=1 bash eval/chain.sh               # every held-out and specificity number (~2 h)
 bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock   # one COOL arm; the instance terminates itself
 ```
