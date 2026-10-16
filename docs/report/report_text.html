@@ -203,8 +203,8 @@
 <section>
 <h2><span class="fignum">5</span>On AWS</h2>
 <p class="lede">
-  61 Terraform resources in <code>us-east-1</code>. Four slides have been read end
-  to end.
+  $tf_resources Terraform resources in <code>us-east-1</code>. Four slides have been
+  read end to end.
 </p>
 <table>
   <caption><code>infra/terraform/</code>, one <code>apply</code>.</caption>
@@ -223,6 +223,39 @@
   on x86 and arm64. Benchmark instances run on Spot and terminate themselves. A
   $$100 monthly budget alarm is set. The demo page is public and needs no
   credentials.
+</p>
+
+<h3>What is logged, what is locked down, where a person decides</h3>
+<p>
+  <strong>Observability.</strong> $tf_log_groups CloudWatch log groups,
+  $log_retention_days-day retention: the API, the Step Functions state machine and the
+  Batch jobs. The state machine logs at <code>ALL</code> with execution data on, so
+  every field read, every agent move and the reason it gave are in the log, not only
+  the final answer. Each slide also writes one DynamoDB row per move, which is what
+  the demo page reads back. An alarm fires on more than $alarm_sessions sessions
+  started in five minutes, and two budgets, $$$budget_monthly a month overall and
+  $$$budget_bedrock for Bedrock, email on 80% forecast and 100% actual.
+</p>
+<p>
+  <strong>Security.</strong> $tf_roles IAM roles, one per component, each scoped to
+  the bucket, table, state machine or function it needs by ARN. All
+  $tf_buckets S3 buckets block public access and are encrypted at rest; the demo
+  page is served through CloudFront, not from a public bucket. The API has no
+  write path to anything but the uploads prefix and is throttled to 10 requests a
+  second with a burst of 20, so a loose link cannot run up a bill. Deployments use
+  GitHub OIDC with no long-lived keys. No patient-identifying data exists: the
+  slides are public de-identified research images.
+</p>
+<p>
+  <strong>Human control.</strong> The agent has no way to issue a diagnosis. Its
+  moves are count, refocus, skip, stop and <code>flag_for_human</code>, and the
+  call always comes from <code>decide()</code> on the counts. When the agent
+  stops it may state its own opinion of the call; that opinion is recorded and
+  never used, and the two agreed on all $arm_bedrock_found_agent_agreed of the
+  slides where it gave one. A slide it cannot settle goes to a person:
+  $arm_bedrock_found_escalated of $agent_patients slides with the shipped counter.
+  Every result carries the field images and the per-move reasons that produced it,
+  so a reviewer checks the work rather than taking the number.
 </p>
 </section>
 

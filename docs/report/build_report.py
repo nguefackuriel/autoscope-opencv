@@ -215,8 +215,9 @@ def build(f: dict) -> str:
          f"{f['held_images']} images", f["held_f1"] >= 0.85),
         ("Per-patient sensitivity &ge; 0.95 on infected slides",
          f"<strong>{f['dec_sensitivity']:.2f}</strong> "
-         f"({f['dec_infected_slides'] - f['dec_infected_called_negative']}/"
-         f"{f['dec_infected_slides']}, none called negative)",
+         f"({f['dec_infected_slides'] - f['dec_infected_called_negative'] - f['dec_infected_to_person']}"
+         f"/{f['dec_infected_slides']} called positive, "
+         f"{f['dec_infected_to_person']} to a person, none called negative)",
          f["dec_sensitivity"] >= 0.95),
         ("Per-patient specificity &ge; 0.90 on the uninfected set",
          f"<strong>{f['dec_specificity']:.2f}</strong> "
