@@ -219,28 +219,21 @@ def figures() -> dict:
     # --- the deployed stack, counted from the Terraform state rather than from
     # the .tf files, so the report describes what is running and not what was
     # written.
-    state = json.loads((ROOT / "infra" / "terraform" / "terraform.tfstate").read_text())
-    managed = [r for r in state.get("resources", []) if r.get("mode") == "managed"]
-    if not managed:
-        raise Missing("infra/terraform/terraform.tfstate holds no managed resources")
-    f["tf_resources"] = sum(len(r.get("instances", [])) for r in managed)
-    kinds: dict[str, int] = {}
-    for r in managed:
-        kinds[r["type"]] = kinds.get(r["type"], 0) + len(r.get("instances", []))
+    # deployed.json, not the state file: the state holds credentials and is
+    # gitignored, so reading it here would make the report unbuildable from a
+    # clone. infra/terraform/inventory.py regenerates deployed.json after an
+    # apply and copies across only counts and these four numbers.
+    dep = _load(ROOT / "infra" / "terraform" / "deployed.json")
+    kinds = _dig(dep, "by_type", src="deployed.json")
+    f["tf_resources"] = dep["resources"]
     f["tf_log_groups"] = kinds.get("aws_cloudwatch_log_group", 0)
     f["tf_roles"] = kinds.get("aws_iam_role", 0)
     f["tf_buckets"] = kinds.get("aws_s3_bucket", 0)
     f["tf_alarms"] = kinds.get("aws_cloudwatch_metric_alarm", 0)
-    for r in managed:
-        for inst in r.get("instances", []):
-            a = inst.get("attributes", {})
-            if r["type"] == "aws_budgets_budget":
-                key = "budget_bedrock" if "bedrock" in a.get("name", "") else "budget_monthly"
-                f[key] = int(float(a["limit_amount"]))
-            if r["type"] == "aws_cloudwatch_metric_alarm":
-                f["alarm_sessions"] = int(float(a["threshold"]))
-            if r["type"] == "aws_cloudwatch_log_group":
-                f["log_retention_days"] = int(a.get("retention_in_days") or 0)
+    f["budget_bedrock"] = dep["budgets"]["bedrock"]
+    f["budget_monthly"] = dep["budgets"]["monthly"]
+    f["alarm_sessions"] = dep["alarm_sessions_per_5_min"]
+    f["log_retention_days"] = dep["log_retention_days"]
 
     cache = EVAL / "agent_bedrock_calls.jsonl"
     if not cache.exists():

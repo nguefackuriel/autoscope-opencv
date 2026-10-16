@@ -61,3 +61,4 @@ docs/report/report-print.html
 # source, and `--gif --gif-only` rebuilds all four in seconds. four-sessions.gif
 # IS committed, because the video script names it.
 docs/figures/session/*-agent.gif
+infra/terraform/tfplan

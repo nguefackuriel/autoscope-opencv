@@ -119,6 +119,41 @@ def test_totals_are_rebuilt_from_the_trace_not_carried_in(wired):
     assert (totals.parasites, totals.wbc, totals.fields_read) == (6, 60, 3)
 
 
+def test_a_retried_field_is_not_counted_twice(wired):
+    """A job that reads field 2 again must not see field 2's old row.
+
+    Spot reclaims a container mid-job and Batch runs it again. The retry adds
+    its own counts, so if the rebuild also summed the row the first attempt
+    wrote, the field would land in the totals twice. It did, once: field 0 of
+    TF101_233 came back as 46 parasites in 32 white cells, which is 23 in 16
+    twice.
+    """
+    _, trace, _ = wired
+    for step in range(3):
+        trace.items.append({
+            "session_id": "sess1",
+            "step": step,
+            "counted": json.dumps({"parasites": 2, "wbc": 20}),
+        })
+
+    totals = rf.Totals("sess1", skip_field=2)
+
+    assert (totals.parasites, totals.wbc, totals.fields_read) == (4, 40, 2)
+
+
+def test_skipping_a_field_that_was_never_read_changes_nothing(wired):
+    """The first attempt at a field is the common case and must be untouched."""
+    _, trace, _ = wired
+    trace.items.append({
+        "session_id": "sess1", "step": 0,
+        "counted": json.dumps({"parasites": 2, "wbc": 20}),
+    })
+
+    totals = rf.Totals("sess1", skip_field=1)
+
+    assert (totals.parasites, totals.wbc, totals.fields_read) == (2, 20, 1)
+
+
 def test_a_row_with_no_count_is_not_counted_as_a_field(wired):
     """A skipped field has an observation but no count. Counting it would put a
     field with no white cells into the denominator."""

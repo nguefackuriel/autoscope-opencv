@@ -88,7 +88,7 @@ class Totals:
     trail says they are, not a number that drifted from it.
     """
 
-    def __init__(self, session_id: str) -> None:
+    def __init__(self, session_id: str, skip_field: int | None = None) -> None:
         rows = trace_table().query(
             KeyConditionExpression=Key("session_id").eq(session_id),
             ScanIndexForward=True,
@@ -99,6 +99,12 @@ class Totals:
         self.fields_read = 0
         for row in rows:
             if "counted" not in row:
+                continue
+            # The caller is about to add this field's counts itself. If an
+            # earlier attempt at the same field already wrote a row, summing it
+            # here too counts the field twice. A retry is the normal case on
+            # Spot, so this is not a corner.
+            if skip_field is not None and int(row.get("step", -1)) == skip_field:
                 continue
             counted = json.loads(row["counted"])
             self.parasites += int(counted["parasites"])
@@ -167,13 +173,12 @@ def read(session_id: str, field: int) -> dict[str, Any]:
     counted = count_field(image, scorer=scorer(), scale=scale)
     parasites, wbc = counted.as_tuple()
 
-    # KNOWN: re-reading a field double-counts it. Totals sums every row in the
-    # trace, and this field's row from an earlier run of the same session is
-    # already one of them, so the in-memory addition below counts it twice.
-    # Observed on 10 October: field 0 of TF101_233 reported 46 parasites in 32
-    # white cells, which is exactly 23 in 16 twice. Harmless on a first pass
-    # and wrong on every retry; the fix is for Totals to skip `field`.
-    totals = Totals(session_id)
+    # Re-reading a field used to double-count it: this field's row from an
+    # earlier attempt was already in the sum, and then the attempt added its
+    # counts again. Observed on 10 October, field 0 of TF101_233 reporting 46
+    # parasites in 32 white cells, which is 23 in 16 twice. A retry is the
+    # normal case on Spot, so Totals skips the row for the field being read.
+    totals = Totals(session_id, skip_field=field)
     totals.parasites += parasites
     totals.wbc += wbc
     totals.fields_read += 1
