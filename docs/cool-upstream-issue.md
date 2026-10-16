@@ -77,6 +77,22 @@ With the workaround in the pipeline: 0.229 s per field, 532 slides per hour,
 native `parallel_for_`. On the wheel itself the workaround is slower (77.5 ms
 against 54.7), as expected.
 
+## The two builds give the same answers
+
+A speed comparison across libraries is only about our pipeline if the libraries
+agree. We ran the whole pipeline twice on the same twelve fields, once on each
+build, keeping the parasite and white cell count of every field:
+
+| | pip wheel | COOL image, tiled |
+|---|---|---|
+| OpenCV | 5.0.0 | 4.14.0-pre |
+| seconds per field | 0.218 | 0.225 |
+| slides per hour | 559 | 540 |
+| fields counted differently | — | 0 of 12 |
+
+605 parasites and every white cell, identical. So the numbers above are a
+measurement of the library, not of a difference in what the two builds detect.
+
 ## Reproduce
 
 ```
@@ -84,6 +100,11 @@ GROUP=pipeline THREADS=0,1 COOL_AMI=ami-01db31139bc5615d8 \
     bash bench/run_on_ec2.sh c8g.8xlarge c8g-cool 10
 GROUP=pipeline THREADS=0,1 \
     bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock 10
+
+PROFILE=1 bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock-counts
+PROFILE=1 TILED_MORPH=1 COOL_AMI=ami-01db31139bc5615d8 \
+    bash bench/run_on_ec2.sh c8g.8xlarge c8g-cool-counts
+python bench/compare_counts.py profile-c8g-stock-counts profile-c8g-cool-counts
 ```
 
 Repository: https://github.com/nguefackuriel/autoscope-opencv (private during

@@ -9,6 +9,7 @@ pipeline stops being the pipeline we have numbers for.
 
 import json
 
+import cv2 as cv
 import numpy as np
 import pytest
 
@@ -117,6 +118,21 @@ def test_totals_are_rebuilt_from_the_trace_not_carried_in(wired):
     totals = rf.Totals("sess1")
 
     assert (totals.parasites, totals.wbc, totals.fields_read) == (6, 60, 3)
+
+
+def test_the_row_says_which_opencv_read_the_field():
+    """A speed claim about a build needs the build to travel with the data.
+
+    Parsed from getBuildInformation rather than hard-coded, so a container
+    swap cannot leave the report describing a binary that is not running.
+    """
+    line = rf.build_line()
+
+    assert line["opencv"] == cv.__version__
+    assert line["machine"] in {"x86_64", "aarch64", "arm64"}
+    # Both fields are present whatever the build; on a build with no custom
+    # HAL they are empty strings, not missing keys.
+    assert set(line) == {"opencv", "machine", "hal", "parallel"}
 
 
 def test_a_retried_field_is_not_counted_twice(wired):

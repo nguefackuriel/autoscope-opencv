@@ -143,6 +143,9 @@ def _trace_for(session_id):
             "observation": json.loads(row["observation"]) if "observation" in row else None,
             "move": json.loads(row["move"]) if "move" in row else None,
             "model": row.get("model"),
+            # Which OpenCV binary read this field, on what architecture. The
+            # COOL claim is about a build, so the build travels with the data.
+            "build": json.loads(row["build"]) if "build" in row else None,
         })
     return _json(200, {"session_id": session_id, "steps": steps,
                        "disclaimer": DISCLAIMER})

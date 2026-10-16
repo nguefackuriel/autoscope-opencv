@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import platform
 import time
 from typing import Any
 
@@ -37,6 +38,28 @@ from autoscope.quality import assess_field
 # test that the entrypoint still imports is worth more than the two lines this
 # costs.
 _clients: dict[str, Any] = {}
+
+
+def build_line() -> dict[str, str]:
+    """Which OpenCV read this field, and on what.
+
+    The COOL claim is about a binary, and a result that does not say which
+    binary produced it is not evidence of anything. One line per row is cheap
+    and it is the only place the claim and the data meet. Parsed from
+    getBuildInformation rather than hard-coded, so it cannot drift from the
+    container that is actually running.
+    """
+    info = cv.getBuildInformation()
+    out = {"opencv": cv.__version__, "machine": platform.machine(),
+           "hal": "", "parallel": ""}
+    for line in info.splitlines():
+        label, _, value = line.partition(":")
+        key = label.strip().lower()
+        if key == "custom hal" and not out["hal"]:
+            out["hal"] = value.strip()
+        elif key == "parallel framework" and not out["parallel"]:
+            out["parallel"] = value.strip()
+    return out
 
 
 def _region() -> str:
@@ -194,6 +217,7 @@ def read(session_id: str, field: int) -> dict[str, Any]:
             "counted": json.dumps({"parasites": parasites, "wbc": wbc}),
             "seconds": str(round(time.perf_counter() - started, 3)),
             "scale": str(scale),
+            "build": json.dumps(build_line()),
             "recorded_at": int(time.time()),
             "expires_at": int(time.time()) + 90 * 24 * 3600,
         }

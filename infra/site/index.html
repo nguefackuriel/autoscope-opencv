@@ -211,6 +211,7 @@
           <tr><td>Fields skipped</td><td class="num" id="skipped">—</td></tr>
           <tr><td>Agent calls</td><td class="num" id="calls">—</td></tr>
           <tr><td>Stopped because</td><td id="why">—</td></tr>
+          <tr><td>Read by</td><td id="build">—</td></tr>
         </tbody>
       </table>
       <p class="note" style="margin-bottom:0">
@@ -492,6 +493,16 @@ function recompute() {
   // captures, not a stage, so a short one runs out of fields while the interval
   // is still wide. Leaving a dash there read as a bug. It is a real state, and
   // it is the state that sends a slide to a person.
+  // Which OpenCV binary read these fields, on what. The COOL claim is about a
+  // build, so the build is on the page beside the counts it produced rather
+  // than only in a benchmark file.
+  const build = state.steps.map(s => s.build).filter(Boolean).pop();
+  $("build").textContent = build
+    ? `OpenCV ${build.opencv} on ${build.machine}`
+      + (build.hal ? `, ${build.hal}` : "")
+      + (build.parallel ? `, ${build.parallel}` : "")
+    : "not recorded for this session";
+
   $("why").textContent = stopped ? why
     : (state.steps.length
         ? "the slide ran out of fields before the interval settled, so it goes to a person"
