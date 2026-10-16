@@ -472,3 +472,87 @@ Opus 5, Sonnet 5, Opus 4.8, Opus 4.7, GPT-6.1 Sol, GPT-6, GPT-5.6, Mistral
 Large, DeepSeek v3 and Qwen 3 all answer "not available for this account".
 Every number above comes from what was actually reachable, and the report
 should say so rather than imply a free choice of model.
+
+## 16 October: twelve more models through the same loop
+
+Every model runs the identical loop, the identical five moves and the identical
+prompt through Bedrock's Converse API. The only thing that changes between arms
+is the model id. Fifteen models are now recorded, 15 396 calls in
+`eval/results/agent_bedrock_calls.jsonl`, all replayable at no cost:
+
+```
+.venv/bin/python eval/agent_eval.py --policies who,rule,decision,bedrock,gptoss,\
+llama,haiku,deepseek,devstral,ministral,nova,gemma,minimax,nemotron,qwen80,\
+qwen32,qwencoder,qwenvl
+```
+
+| model | fields read | density error | slides counted | escalated | chose stop | skipped | oracle error |
+|---|---|---|---|---|---|---|---|
+| Qwen3-Next 80B | 81 | 18.3% | 16 | 45 | 19 | 663 | 8.0% |
+| Qwen3-VL 235B | 239 | 36.6% | 50 | 1 | 98 | 26 | 18.5% |
+| Mistral Devstral 2 123B | 264 | 32.4% | 50 | 6 | 88 | 27 | 14.7% |
+| MiniMax M2.5 | 303 | 29.2% | 50 | 18 | 64 | 35 | 14.6% |
+| Qwen3-Coder-Next | 303 | 49.3% | 46 | 23 | 60 | 220 | 13.7% |
+| GPT-OSS 120B | 390 | 29.9% | 50 | 15 | 64 | 36 | 6.9% |
+| **Claude Sonnet 4.6** | **393** | 26.8% | 50 | 14 | 71 | 39 | 8.1% |
+| Qwen3 32B | 479 | 26.5% | 50 | 29 | 37 | 40 | 2.3% |
+| Claude Haiku 4.5 | 524 | 25.8% | 50 | 20 | 58 | 42 | 3.7% |
+| DeepSeek V3.2 | 557 | 25.5% | 50 | 39 | 20 | 41 | 1.4% |
+| Nvidia Nemotron Nano 3 30B | 568 | 25.0% | 50 | 50 | 0 | 22 | 1.2% |
+| Llama 4 Maverick | 575 | 25.2% | 50 | 46 | 10 | 42 | 0.8% |
+| Amazon Nova Pro | 587 | 24.8% | 50 | 50 | 0 | 42 | 0.6% |
+| Gemma 3 27B | 587 | 24.8% | 50 | 50 | 0 | 42 | 0.6% |
+| Ministral 3 14B | 587 | 24.8% | 50 | 50 | 2 | 42 | 0.6% |
+
+The WHO protocol reads 524 fields for 26.5% error. Only six of the fifteen read
+fewer, and three of those six pay for it with an error above 29%.
+
+### What separates them is willingness to stop, not size
+
+`eval/agent_moves.py` counts the move each model chose, from the cache:
+
+```
+.venv/bin/python eval/agent_moves.py
+```
+
+Nova Pro, Gemma 3 27B and Nemotron Nano 3 30B never chose `stop` once, in
+1 218, 1 218 and 1 171 calls. Ministral 3 chose it twice in 1 215. All four read
+every field the slide has and then send the slide to a person because the
+fields ran out, which is why they sit at the bottom of the table with 50
+escalations out of 50 slides. Their 24.8% density error is the best number in
+the column and means nothing: a policy that reads everything and decides nothing
+has not been measured on the thing we are measuring.
+
+Forced tool choice is accepted by all of them. It makes the model return a move.
+It does not make the model willing to pick the move that ends the slide.
+
+At the other end, Qwen3-VL 235B chose `stop` 98 times out of 610 calls and reads
+239 fields, less than half the WHO protocol, for 36.6% error. Devstral 2 and
+MiniMax M2.5 behave the same way. Stopping early is easy; stopping at the right
+time is the task.
+
+### Two models refuse to count
+
+Qwen3-Next 80B answered `skip` 663 times out of 1 185 calls. It counted on 16 of
+50 slides and read 81 fields in total. Its 18.3% error is over those 16 slides
+and is not comparable to any other row. Qwen3-Coder-Next skipped 220 times and
+counted on 46 slides.
+
+A model that declines the work scores well on every column except the one that
+matters. The slides-counted column exists so that this is visible rather than
+flattering.
+
+### Size does not predict any of it
+
+Haiku 4.5 is the smallest Anthropic model on the account and reads 524 fields at
+25.8% error with 58 stops, which is a usable policy. Nova Pro and Gemma 3 27B
+sit at opposite ends of the size range and behave identically, because neither
+stops. The two 235B-class models, Qwen3-VL and Llama 4 Maverick, fail in
+opposite directions. The ranking follows a behaviour, not a parameter count.
+
+### For the entry
+
+This is the measured answer to "does the agent need a frontier model". It does
+not. It needs a model that will end a task. That is a property worth checking in
+one cheap run before a model is considered at all, and it is not on any model
+card.

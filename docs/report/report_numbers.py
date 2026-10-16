@@ -27,6 +27,36 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+
+# Every stopping policy in the agent table: the arm name in agent_eval.json, the
+# Bedrock model id the replay cache records the calls under (None for the three
+# fixed policies), and the label the report prints. The table sorts the models
+# by fields read, so the order here does not matter.
+AGENT_ARMS = (
+    ("who-200", None, "WHO 200-white-cell protocol"),
+    ("rule-based", None, "Rule-based control"),
+    ("decision", None, "Decision rule"),
+    ("bedrock", "us.anthropic.claude-sonnet-4-6", "Claude Sonnet 4.6"),
+    ("haiku-4-5", "us.anthropic.claude-haiku-4-5-20251001-v1:0", "Claude Haiku 4.5"),
+    ("gpt-oss-120b-1", "openai.gpt-oss-120b-1:0", "GPT-OSS 120B"),
+    ("llama4-maverick-17b-instruct-v1", "us.meta.llama4-maverick-17b-instruct-v1:0",
+     "Llama 4 Maverick"),
+    ("nova-pro", "us.amazon.nova-pro-v1:0", "Amazon Nova Pro"),
+    ("deepseek-v3-2", "deepseek.v3.2", "DeepSeek V3.2"),
+    ("devstral-2-123b", "mistral.devstral-2-123b", "Mistral Devstral 2 123B"),
+    ("ministral-3-14b", "mistral.ministral-3-14b-instruct", "Ministral 3 14B"),
+    ("gemma-3-27b", "google.gemma-3-27b-it", "Gemma 3 27B"),
+    ("minimax-m2-5", "minimax.minimax-m2.5", "MiniMax M2.5"),
+    ("nemotron-nano-3-30b", "nvidia.nemotron-nano-3-30b", "Nvidia Nemotron Nano 3 30B"),
+    ("qwen3-32b", "qwen.qwen3-32b-v1:0", "Qwen3 32B"),
+    ("qwen3-next-80b", "qwen.qwen3-next-80b-a3b", "Qwen3-Next 80B"),
+    ("qwen3-coder-next", "qwen.qwen3-coder-next", "Qwen3-Coder-Next"),
+    ("qwen3-vl-235b", "qwen.qwen3-vl-235b-a22b", "Qwen3-VL 235B"),
+)
+
+
+def arm_slug(arm: str) -> str:
+    return arm.replace("-", "_").replace(".", "_")
 EVAL = ROOT / "eval" / "results"
 BENCH = ROOT / "bench" / "results"
 
@@ -159,31 +189,49 @@ def figures() -> dict:
     if not cache.exists():
         raise Missing("eval/results/agent_bedrock_calls.jsonl is missing — "
                       "the agent comparison cannot be replayed without it")
-    models = set()
+    # Moves are counted per model from the cache as well, so "this model never
+    # chose stop" is a count of its recorded calls and not a reading of the
+    # escalation column.
+    moves: dict[str, dict[str, int]] = {}
     n = 0
     for line in cache.read_text().splitlines():
         if not line.strip():
             continue
         n += 1
-        models.add(json.loads(line).get("model", "?"))
+        d = json.loads(line)
+        per = moves.setdefault(d.get("model", "?"), {})
+        name = (d.get("move") or {}).get("name", "?")
+        per[name] = per.get(name, 0) + 1
     f["cache_calls"] = n
-    f["cache_models"] = len(models)
+    f["cache_models"] = len(moves)
 
     # The agent table. `found` is the shipped counter; `truth` is the oracle arm
     # and is reported separately because it is the ceiling, not the product.
-    for arm in ("who-200", "rule-based", "decision", "bedrock",
-                "gpt-oss-120b-1", "llama4-maverick-17b-instruct-v1"):
+    never_stop = 0
+    for arm, model, _label in AGENT_ARMS:
+        slug = arm_slug(arm)
         for counter in ("found", "truth"):
             key = f"{arm}/{counter}"
             if key not in agent["arms"]:
                 raise Missing(f"agent_eval.json: no arm {key}")
             a = agent["arms"][key]
-            slug = arm.replace("-", "_").replace(".", "_")
             f[f"arm_{slug}_{counter}_fields"] = a["fields_read_total"]
             f[f"arm_{slug}_{counter}_mape"] = a["density_mape_pct"]
             f[f"arm_{slug}_{counter}_escalated"] = a["escalated"]
             f[f"arm_{slug}_{counter}_settled"] = a["derived_band_settled"]
             f[f"arm_{slug}_{counter}_positive"] = a["derived_positive"]
+            f[f"arm_{slug}_{counter}_compared"] = a["compared_on"]
+        if model is None:
+            continue
+        if model not in moves:
+            raise Missing(f"agent_bedrock_calls.jsonl: no recorded calls for {model}")
+        f[f"arm_{slug}_calls"] = sum(moves[model].values())
+        f[f"arm_{slug}_stops"] = moves[model].get("stop", 0)
+        f[f"arm_{slug}_skips"] = moves[model].get("skip", 0)
+        f[f"arm_{slug}_flags"] = moves[model].get("flag_for_human", 0)
+        never_stop += f[f"arm_{slug}_stops"] == 0
+    f["agent_model_arms"] = sum(1 for _, m, _ in AGENT_ARMS if m)
+    f["agent_never_stop"] = never_stop
 
     # --- COOL, four arms. The build lines are the proof of which binary ran.
     for label in ("c8g-stock", "c8g-no-kleidicv", "c8g-cool", "c7i-stock"):

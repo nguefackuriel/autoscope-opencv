@@ -26,7 +26,7 @@ from pathlib import Path
 from string import Template
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from report_numbers import figures  # noqa: E402
+from report_numbers import AGENT_ARMS, arm_slug, figures  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -96,6 +96,8 @@ th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 td { padding: 1.5mm 3mm 1.5mm 0; border-bottom: .4pt solid var(--rule); vertical-align: top; }
 tbody tr:last-child td { border-bottom: none; }
 tr.total td { border-top: 1pt solid var(--ink); border-bottom: none; font-weight: 600; }
+tr.group td { border-top: 1pt solid var(--ink); }
+td .muted { color: var(--muted); font-size: 8.2pt; }
 .chip { font-size: 7.6pt; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; padding: .4mm 1.6mm; border-radius: .6mm; white-space: nowrap; }
 .chip.met { color: var(--good); border: .7pt solid var(--good); }
 .chip.missed { color: var(--miss); border: .7pt dashed var(--miss); }
@@ -179,19 +181,28 @@ def build(f: dict) -> str:
             pretty, f"{s32:,.2f}", f"{c32:,.2f}", f"{s1:,.2f}", f"{c1:,.2f}",
             f"{s1/s32:.1f}&times;", f"<strong>{c1/c32:.1f}&times;</strong>"))
 
+    # The three fixed policies first, then every model by fields read. A model
+    # that did not count on every slide says so in its label, because its error
+    # is over fewer slides and cannot be read against the others.
+    fixed = [(arm, label) for arm, model, label in AGENT_ARMS if model is None]
+    models = sorted(((arm, label) for arm, model, label in AGENT_ARMS if model),
+                    key=lambda al: f[f"arm_{arm_slug(al[0])}_found_fields"])
     agent_rows = []
-    for slug, pretty in (("who_200", "WHO 200-white-cell protocol"),
-                         ("rule_based", "Rule-based control"),
-                         ("decision", "Decision rule"),
-                         ("bedrock", "Agent &middot; Claude Sonnet 4.6"),
-                         ("gpt_oss_120b_1", "Agent &middot; GPT-OSS 120B"),
-                         ("llama4_maverick_17b_instruct_v1", "Agent &middot; Llama 4 Maverick")):
+    for i, (arm, label) in enumerate(fixed + models):
+        slug = arm_slug(arm)
+        compared = f[f"arm_{slug}_found_compared"]
+        if compared < f["agent_patients"]:
+            label += (f' <span class="muted">({compared} of {f["agent_patients"]} '
+                      f'slides counted)</span>')
+        stops = f"{f[f'arm_{slug}_stops']}" if f"arm_{slug}_stops" in f else ""
         agent_rows.append(_row(
-            pretty,
+            label,
             f"{f[f'arm_{slug}_found_fields']}",
             _pct(f[f"arm_{slug}_found_mape"]),
             f"{f[f'arm_{slug}_found_settled']}",
-            f"{f[f'arm_{slug}_found_escalated']}"))
+            f"{f[f'arm_{slug}_found_escalated']}",
+            stops,
+            cls="group" if i == len(fixed) else ""))
 
     # the plan's own targets, from docs/plan-2026-09-02.md, against what was measured
     def verdict(ok: bool) -> str:
