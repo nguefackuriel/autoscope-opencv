@@ -174,23 +174,36 @@
   of stopping points only.
 </p>
 <h3>A trace</h3>
-<pre>slide: TF15_C87P48   (the agent stops at 5 fields; the WHO protocol reads 18)
- 1  count_field()   focus=28  even=0.96  debris=0.71   parasites=79  wbc=18
-    counted, running total 79 in 18 white cells
- 2  count_field()   focus=26  even=0.96  debris=0.67   parasites=88  wbc=17
-    counted, running total 167 in 35 white cells
- ...
- 5  count_field()   focus=23  even=0.94  debris=0.67   parasites=71  wbc=20
-    counted, running total 413 in 85 white cells
- 6  stop            focus=23  even=0.96  debris=0.68
-    "413 parasites in 85 white cells is 38 900/uL with a 95% interval of
-     35 300 to 42 800. The interval is already inside the high band; more
-     fields cannot change the call."</pre>
 <p>
-  Every move on every slide is in <code>eval/results/agent_eval.json</code>. Four
-  slides read live on AWS are on the demo page with every field the agent looked at
-  and the reason it gave.
+  One slide, printed from the recorded calls by
+  <code>eval/render_trace.py TF124_S540</code>. The reasons are the model's own
+  words, unedited.
 </p>
+<pre>slide: TF124_S540
+ 1  (0,0) z=0  count_field()  focus=3  even=0.95  debris=0.63  parasites=58  wbc=17
+    counted, running total 58 in 17 white cells
+ 2  (1,0) z=0  count_field()  focus=3  even=0.97  debris=0.68  parasites=42  wbc=24
+    counted, running total 100 in 41 white cells
+ 3  (2,0) z=0  count_field()  focus=3  even=0.97  debris=0.68  parasites=34  wbc=28
+    counted, running total 134 in 69 white cells
+ 4  (3,0) z=0  count_field()  focus=2  even=0.95  debris=0.67  parasites=12  wbc=25
+    counted, running total 146 in 94 white cells
+ 5  (4,0) z=0  count_field()  focus=2  even=0.95  debris=0.62  parasites=0  wbc=24
+    counted, running total 146 in 118 white cells
+ 6  (5,0) z=0  count_field()  focus=3  even=0.96  debris=0.68  parasites=2  wbc=23
+    counted, running total 148 in 141 white cells
+ 7  (6,0) z=0  stop           focus=3  even=0.96  debris=0.74
+    settled: After 6 fields, 141 white cells, the estimate is 8,397/µL with a CI of 7,099–9,864/µL — the entire interval sits within the 1,000–10,000 band, the relative width is 33%, and we are near the 200 WBC WHO target; the density band call is unambiguous.
+read 6 fields, 148 parasites in 141 white cells</pre>
+<p>
+  The smear thins as it goes: 58 parasites on the first field, then 42, 34, 12, 0
+  and 2, while the white cells keep coming at about 23 a field. The agent stops at
+  six of the ten fields this slide has, with 141 white cells against the WHO
+  protocol's 200, because the interval no longer touches a band edge. Every move
+  of every slide is in <code>eval/results/agent_eval.json</code>, and four slides
+  read live on AWS are on the demo page with the field images beside the reasons.
+</p>
+
 <h3>Replay without cost</h3>
 <p>
   Every model call is recorded to a JSONL cache, keyed on the model, the effort

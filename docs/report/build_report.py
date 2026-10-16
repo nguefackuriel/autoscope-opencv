@@ -106,7 +106,7 @@ td .muted { color: var(--muted); font-size: 8.2pt; }
 .note { background: var(--wash); border-left: 2pt solid var(--giemsa); padding: 4mm 5mm; margin: 4mm 0; break-inside: avoid; }
 .note p:last-child { margin-bottom: 0; }
 .note .label { font-family: "IBM Plex Sans", sans-serif; font-size: 7.8pt; letter-spacing: .12em; text-transform: uppercase; color: var(--giemsa); font-weight: 600; display: block; margin-bottom: 1.5mm; }
-pre { font-size: 8pt; line-height: 1.42; background: var(--wash); padding: 3.5mm 4mm; margin: 2mm 0 4mm; overflow: hidden; white-space: pre-wrap; break-inside: avoid; }
+pre { font-size: 7.4pt; line-height: 1.45; background: var(--wash); padding: 3.5mm 4mm; margin: 2mm 0 4mm; overflow: hidden; white-space: pre-wrap; break-inside: avoid; padding-left: 6mm; text-indent: -2.5mm; }
 figure { margin: 3mm 0 5mm; break-inside: avoid; }
 figure img { width: 100%; border: .4pt solid var(--rule); }
 figcaption { font-size: 8.4pt; color: var(--muted); margin-top: 1.5mm; }
