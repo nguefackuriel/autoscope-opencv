@@ -313,11 +313,17 @@ def main() -> None:
     if args.build_pdf:
         if not Path(CHROME).exists():
             raise SystemExit(f"no Chrome at {CHROME}; see the docstring")
-        pdf = ROOT.parent / "AutoScope - Technical Report.pdf"
+        # Into the repository, because the report is the submission and a judge
+        # who clones this should not have to install Chrome to read it. The
+        # copy beside the repository is the one we attach to things.
+        pdf = HERE / "AutoScope-Technical-Report.pdf"
         subprocess.run([CHROME, "--headless", "--disable-gpu",
                         "--no-pdf-header-footer",
                         f"--print-to-pdf={pdf}", str(out)], check=True)
-        print(f"pdf: {pdf}  ({pdf.stat().st_size/1e6:.2f} MB)")
+        print(f"pdf: {pdf.relative_to(ROOT)}  ({pdf.stat().st_size/1e6:.2f} MB)")
+        beside = ROOT.parent / "AutoScope - Technical Report.pdf"
+        beside.write_bytes(pdf.read_bytes())
+        print(f"copied to {beside}")
 
 
 if __name__ == "__main__":

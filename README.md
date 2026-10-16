@@ -17,7 +17,7 @@ Agentic Vision.
 | | |
 |---|---|
 | **Live demo** | <https://d1k2o3z37c1maf.cloudfront.net>, public, no credentials. It opens on a session read live on AWS and plays every field the agent looked at, with the detections drawn and the move it made on each. Four sessions are linked, 3 to 11 fields depending on the slide. |
-| **Technical report** | `docs/report/`. Build it with `.venv/bin/python docs/report/build_report.py --build-pdf`. Every figure in it is read from a committed result file. None is typed by hand. |
+| **Technical report** | `docs/report/AutoScope-Technical-Report.pdf`, committed. Rebuild it with `.venv/bin/python docs/report/build_report.py --build-pdf`. Every figure in it is read from a committed result file. None is typed by hand. |
 | **Architecture** | `docs/proposal/architecture.svg` |
 | **Running it on AWS** | `docs/operations.md`: what is deployed, what is logged, every spend limit and where it is, and how to tear it down. |
 | **Agent trace** | `docs/figures/agent-trace-example.txt`, and every move of every slide in `eval/results/agent_eval.json` |
