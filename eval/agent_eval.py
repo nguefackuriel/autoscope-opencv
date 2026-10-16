@@ -157,7 +157,16 @@ class _LiveClients:
     def converse(self, **kwargs):
         if self._boto is None:
             import boto3
-            self._boto = boto3.client("bedrock-runtime", region_name=self.region)
+            # A long read timeout and adaptive retries. Gemma 3 27B takes
+            # longer than botocore's 60 s default on some observations, and a
+            # timeout mid-arm aborts the recording; resuming from the cache
+            # then re-issues the same slow call and dies at the same place.
+            # Three attempts at 539 of ~900 calls did exactly that.
+            from botocore.config import Config
+            self._boto = boto3.client(
+                "bedrock-runtime", region_name=self.region,
+                config=Config(read_timeout=300, connect_timeout=30,
+                              retries={"max_attempts": 6, "mode": "adaptive"}))
         return self._boto.converse(**kwargs)
 
 

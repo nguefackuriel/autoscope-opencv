@@ -117,7 +117,11 @@ class ConversePolicy:
         if self._client is None:
             import boto3
 
-            self._client = boto3.client("bedrock-runtime", region_name=self.region)
+            from botocore.config import Config
+            self._client = boto3.client(
+                "bedrock-runtime", region_name=self.region,
+                config=Config(read_timeout=300, connect_timeout=30,
+                              retries={"max_attempts": 6, "mode": "adaptive"}))
         return self._client
 
     def next_move(self, quality: FieldQuality, tools: Tools) -> Move:
