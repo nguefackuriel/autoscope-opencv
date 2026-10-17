@@ -393,6 +393,8 @@ are `calcHist` 12.3x, `adaptiveThreshold` 8.4x, `GaussianBlur` 1.6x and
 the Arm HAL compiled out, not against the wheel, and the two baselines must not
 be mixed.
 
+Reported upstream on 17 October 2026: https://github.com/opencv/opencv/issues/30373
+
 What this is worth: a reproducible defect in the shipped image, a diagnosis down
 to the call, and a forty-line workaround that recovers 3.7x on the pipeline,
 measured on the image inside its trial window. That is the thing to send

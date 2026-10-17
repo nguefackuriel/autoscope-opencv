@@ -23,9 +23,11 @@ with two values.
 None of that was posted. The script exists so that class of error cannot
 happen again.
 
-## Where it goes
+## Where it went
 
-Posted to the OpenCV tracker: the dispatch question is theirs, and they can
+**Posted 17 October 2026: https://github.com/opencv/opencv/issues/30373**
+
+The OpenCV tracker: the dispatch question is theirs, and they can
 route it. KleidiCV's own tracker is Arm's GitLab,
 <https://gitlab.arm.com/kleidi/kleidicv>, which needs an Arm account. The AWS
 Marketplace listing for "Cloud Optimized OpenCV for AWS Graviton4" has a

@@ -651,8 +651,11 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   wheel, at $same_ratio&times; and the same counts.
 </p>
 <p>
-  The defect is in the shipped image, not in the idea. It is written up with the
-  reproduction in <code>docs/cool-upstream-issue.md</code> for OpenCV.
+  The defect is in the shipped image, not in the idea. It is reported upstream
+  with the reproduction, <a href="https://github.com/opencv/opencv/issues/30373">opencv/opencv#30373</a>, and the body
+  of that report is generated from <code>bench/results/</code> by
+  <code>bench/upstream_issue.py</code> so it cannot drift from the files it
+  tells a reader to check.
 </p>
 <pre>GROUP=pipeline THREADS=0,1 COOL_AMI=&lt;ami&gt; bash bench/run_on_ec2.sh c8g.8xlarge c8g-cool 10
 GROUP=pipeline THREADS=0,1                 bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock 10
