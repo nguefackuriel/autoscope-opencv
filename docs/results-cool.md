@@ -289,9 +289,13 @@ once, that is the one change that should have moved throughput.
 | OpenCV 5 wheel (shipped) | 0.222 s | 547.4 |
 | COOL image | **0.852 s** | **142.7** |
 
-Six of the seven stages are faster or level on the COOL image — `prepare` 0.62×,
-`white cells` 0.66×, `patches` 0.88×. One stage, `parasite candidates`, is
-**9.5× slower** and swallows all of it.
+Three of the seven stages are faster on the COOL image: `prepare` 0.62x,
+`white cells` 0.66x, `patches` 0.88x. Three are slightly slower: `imread`
+1.13x, `assess_field` 1.07x, the patch network 1.19x. One stage, `parasite
+candidates`, is **9.5x slower** and swallows everything.
+
+(Written here first as "six of seven faster or level", which was wrong in the
+direction that flattered the COOL image. A 19% slower dnn stage is not level.)
 
 The ten tile cases could not say which call did that, because they time a 5×5
 kernel over `uint8` at one megapixel and `parasites.tophat` runs a 31×31 ellipse
@@ -383,8 +387,11 @@ Not faster. The stages COOL accelerates on its own, preparation and white cells,
 are a small share of a field; the stage that dominates is the one its HAL would
 not thread, and once that is worked around the two builds are level. The 1.59x
 from the function benchmark does not carry through because the calls it is
-carried by (`medianBlur` 23x, `calcHist` 12x, `adaptiveThreshold` 8x) are not
-where this pipeline spends its time.
+carried by are not where this pipeline spends its time. Against the wheel those
+are `calcHist` 12.3x, `adaptiveThreshold` 8.4x, `GaussianBlur` 1.6x and
+`medianBlur` 1.2x; the often-quoted `medianBlur` 23x is against a build with
+the Arm HAL compiled out, not against the wheel, and the two baselines must not
+be mixed.
 
 What this is worth: a reproducible defect in the shipped image, a diagnosis down
 to the call, and a forty-line workaround that recovers 3.7x on the pipeline,

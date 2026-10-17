@@ -156,8 +156,8 @@ Do not skip this. It is the most persuasive forty seconds in the video.
 >
 > COOL. On a ten-function benchmark the Marketplace image is 1.59 times faster
 > than the wheel we ship, on the same machine. On our pipeline it was 3.8 times
-> slower: 143 slides an hour against 547. Six of the seven stages are faster.
-> One is nine and a half times slower and swallows the rest.
+> slower: 143 slides an hour against 547. Three of the seven stages are faster
+> on it. One is nine and a half times slower and swallows the rest.
 >
 > So we forced both builds down to a single thread, and they agreed to within
 > six percent on every call. The kernels are the same speed. The stock build
