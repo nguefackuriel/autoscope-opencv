@@ -16,6 +16,7 @@ deterministic, so the policy can be swapped and compared in a second.
 """
 
 import argparse
+import base64
 import json
 from pathlib import Path
 
@@ -84,7 +85,55 @@ class ReplayTools:
                            target_ci_width, min_fields)
 
 
-def replay(rows, floor: float) -> list[dict]:
+def cut_crops(image_name: str, opts: dict) -> list[dict]:
+    """The detections on one field, as small pictures the reader can reject.
+
+    THE PICK IS THE POINT. Not the highest-scoring detections, which are the
+    ones nobody would argue with, but the ones nearest the operating threshold.
+    Those are the calls the detector was least sure about, and they are the
+    ones worth putting in front of a person. The score on each crop says where
+    it sat.
+
+    The patch is cut from the same image the pipeline read and embedded as a
+    data URI, so the recorded session is one file that works with nothing
+    deployed.
+    """
+    import cv2 as cv
+
+    from autoscope.counter import count_field
+    from autoscope.parasites import threshold_for
+
+    path = opts["root"] / image_name
+    if not path.exists():
+        return []
+    image = cv.imread(str(path))
+    if image is None:
+        return []
+    counted = count_field(image, scorer=opts["scorer"])
+    threshold = threshold_for("cnn", None)
+    # Nearest the threshold first.
+    found = sorted(counted.parasite_points, key=lambda d: abs(d.score - threshold))
+
+    half = opts["px"] // 2
+    h, w = image.shape[:2]
+    out = []
+    for det in found[: opts["per_field"]]:
+        x, y = int(round(det.x)), int(round(det.y))
+        x0, y0 = max(x - half, 0), max(y - half, 0)
+        patch = image[y0:min(y0 + opts["px"], h), x0:min(x0 + opts["px"], w)]
+        if patch.size == 0:
+            continue
+        ok, buf = cv.imencode(".jpg", patch, [cv.IMWRITE_JPEG_QUALITY, 82])
+        if not ok:
+            continue
+        out.append({
+            "score": round(float(det.score), 3),
+            "url": "data:image/jpeg;base64," + base64.b64encode(buf.tobytes()).decode(),
+        })
+    return out
+
+
+def replay(rows, floor: float, crops: dict | None = None) -> list[dict]:
     """One session: a step per field, each carrying what was measured, what was
     counted, and the move the rule made."""
     tools = ReplayTools(rows)
@@ -103,6 +152,8 @@ def replay(rows, floor: float) -> list[dict]:
         if action == "count_then_move":
             parasites, wbc = tools.count()
             step["counted"] = {"parasites": parasites, "wbc": wbc}
+            if crops is not None:
+                step["detections"] = cut_crops(tools.row["image"], crops)
             # The totals in the observation were taken before this field was
             # counted; the page shows the running total after it, so restate it.
             step["observation"]["totals"] = {
@@ -142,6 +193,11 @@ def main() -> None:
     ap.add_argument("--list", action="store_true", help="patients available, with their fields")
     ap.add_argument("--out", default=None)
     ap.add_argument("--floor", type=float, default=FLOOR_PER_UL_DEFAULT)
+    ap.add_argument("--crops", type=int, default=0,
+                    help="embed this many detection crops per field, chosen "
+                         "nearest the operating threshold. Needs the images.")
+    ap.add_argument("--raw", default="data/raw", help="where the patient folders are")
+    ap.add_argument("--crop-px", type=int, default=72)
     args = ap.parse_args()
 
     table = json.loads(Path(args.fields).read_text())
@@ -163,7 +219,15 @@ def main() -> None:
     if args.patient not in by_patient:
         raise SystemExit(f"{args.patient} is not in the table. --list shows what is.")
 
-    steps = replay(by_patient[args.patient], args.floor)
+    crops = None
+    if args.crops:
+        from autoscope.parasites import PatchScorer
+        crops = {"root": Path(args.raw) / args.patient, "scorer": PatchScorer.load(),
+                 "px": args.crop_px, "per_field": args.crops}
+        if not crops["root"].is_dir():
+            raise SystemExit(f"no images at {crops['root']}; --raw points at data/raw")
+
+    steps = replay(by_patient[args.patient], args.floor, crops)
     session = {
         "session_id": args.patient,
         "source": "replayed from eval/results/agent_fields.json, the cached field table",
@@ -181,6 +245,9 @@ def main() -> None:
           f"in {wbc} white cells")
     print(f"  {estimate.per_ul:.0f} /uL  [{estimate.low_per_ul:.0f}, {estimate.high_per_ul:.0f}]")
     print(f"  stopped: {steps[-1]['move'].get('reason', '')}")
+    n_crops = sum(len(s.get("detections") or []) for s in steps)
+    if n_crops:
+        print(f"  {n_crops} detection crops embedded, the ones nearest the threshold")
 
     if args.out:
         Path(args.out).write_text(json.dumps(session, indent=2))

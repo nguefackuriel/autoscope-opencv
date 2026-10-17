@@ -14,14 +14,15 @@
     --accent: #7b3fa0;
     --positive: #b23b3b;
     --negative: #2f7d4f;
-    --human: #b8860b;
+    --human: #9a6a06;
+    --link: #6d3691;
     --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #17161a; --panel: #201f24; --ink: #ece9e4; --muted: #9a958e;
       --line: #35333a; --accent: #c39ae0; --positive: #e88a8a;
-      --negative: #7fc79c; --human: #e0be6a;
+      --negative: #7fc79c; --human: #e0be6a; --link: #d4a8ee;
     }
   }
   * { box-sizing: border-box; }
@@ -88,6 +89,15 @@
     border: 1px solid var(--line); background: var(--panel); color: var(--ink);
     max-width: 100%;
   }
+  a { color: var(--link); text-underline-offset: 2px; }
+  /* The five slides are a set, not a list of ids. A table makes the contrast
+     between them readable at a glance, which is the thing being claimed. */
+  table.sessions { margin-top: 2px; }
+  /* text-transform: uppercase turns the micro sign into a Greek capital Mu,
+     so "Parasites/uL" renders as "PARASITES/ML". */
+  th .nocaps { text-transform: none; letter-spacing: normal; font-size: 12px; }
+  table.sessions td.why { color: var(--muted); font-size: 13px; white-space: normal; }
+  table.sessions td { vertical-align: top; }
   button { cursor: pointer; font-weight: 560; }
   /* A keyboard user has to be able to see where they are. The browser default
      outline disappears against the purple buttons, so set one that does not. */
@@ -165,22 +175,24 @@
       <button id="demo">Replay a recorded session</button>
       <span id="status" class="note" role="status" aria-live="polite"></span>
     </div>
-    <p class="note" style="margin:12px 0 0">
-      <strong>Five real sessions read on AWS,</strong> one per density band, so you
-      can watch the agent spend effort in proportion to the evidence:
-      <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF41_UT5">TF41_UT5</a>
-      stops after 3 fields at 90,000/µL,
-      <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF101_233">TF101_233</a>
-      takes 8 to settle at 8,600,
-      <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF22_C104P65">TF22_C104P65</a>
-      reads all 11 it has and still straddles a band boundary at 700, and
-      <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF150_R5">TF150_R5</a>
-      runs out of slide at 288 and goes to a person, and
-      <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF124_S540">TF124_S540</a>
-      stops at 2 fields on 19,500 against the expert's 12,800, the same density
-      band. All five are NLM held-out patients the fit never saw. Each one says
-      under "Read by" which OpenCV binary read its fields, reported by the job
-      itself.
+    <p class="note" style="margin:12px 0 4px">
+      <strong>Five slides read on AWS</strong>, one per density band. The agent
+      spends effort in proportion to the evidence, which is the whole claim:
+    </p>
+    <div class="wide"><table class="sessions">
+      <thead><tr><th>Slide</th><th class="num">Fields read</th><th class="num"><span class="nocaps">Parasites/µL</span></th><th>What it shows</th></tr></thead>
+      <tbody>
+        <tr><td><a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF41_UT5">TF41_UT5</a></td><td class="num">3 of 3</td><td class="num">90,435</td><td class="why">stops on the first field. The parasites are everywhere.</td></tr>
+        <tr><td><a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF124_S540">TF124_S540</a></td><td class="num">2 of 10</td><td class="num">19,512</td><td class="why">stops at two. The expert read 12,800, the same band, so it reads high.</td></tr>
+        <tr><td><a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF101_233">TF101_233</a></td><td class="num">8 of 8</td><td class="num">8,602</td><td class="why">the ordinary case. Reads until the interval sits inside one band.</td></tr>
+        <tr><td><a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF22_C104P65">TF22_C104P65</a></td><td class="num">11 of 11</td><td class="num">~700</td><td class="why">reads everything it has and still straddles a band edge.</td></tr>
+        <tr><td><a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF150_R5">TF150_R5</a></td><td class="num">5 of 5</td><td class="num">288</td><td class="why">runs out of slide before the interval settles. Goes to a person.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note" style="margin:10px 0 0">
+      All five are NLM held-out patients the fit never saw. TF124_S540 records
+      the OpenCV binary that read its fields, under "Read by", as the Batch job
+      reported it; the four older sessions ran before that was recorded.
       Or leave the endpoint blank and “Replay a recorded session” reads
       <code>sample-session.json</code> from this page’s own folder, so the demo
       still works with nothing deployed and a judge can check it offline.
@@ -282,7 +294,8 @@
 
   <div class="card" style="margin-top:20px">
     <h2>Verification: click a detection to reject it</h2>
-    <div class="crops" id="crops">
+    <p class="note" id="cropnote" style="margin:0 0 10px"></p>
+      <div class="crops" id="crops">
       <span class="note">Nothing loaded yet.</span>
     </div>
     <p class="note" id="verifynote" style="margin:14px 0 0">
@@ -428,15 +441,21 @@ function drawCrops() {
     }
   }
   if (!detections.length) {
-    box.innerHTML = '<span class="note">This session carries no detection crops: it '
-      + 'keeps the counts and not the pixels. The field pictures above are the '
-      + 'fields this session read, with every detection drawn on them; the '
-      + 'per-detection crops below them ship only with the recorded sample '
-      + 'session, where you can reject one and watch the density move.</span>';
+    box.innerHTML = '<span class="note">A session read live keeps the counts and '
+      + 'not the pixels, so there are no per-detection crops here. The field '
+      + 'pictures above are the fields this session read, with every detection '
+      + 'drawn on them. Press "Replay a recorded session" to get the crops and '
+      + 'reject one.</span>';
     $("verifynote").style.display = "none";
     return;
   }
   $("verifynote").style.display = "";
+  const note = $("cropnote");
+  if (note) {
+    note.textContent = `${detections.length} detections, the ones whose score sat `
+      + `nearest the operating threshold of 0.53. Those are the calls the `
+      + `detector was least sure about, so they are the ones worth a second look.`;
+  }
   box.innerHTML = detections.map((d, i) => `
     <button type="button" class="crop" data-i="${i}" data-verdict="kept"
             aria-pressed="false"
@@ -505,11 +524,12 @@ function recompute() {
     ? `OpenCV ${build.opencv} on ${build.machine}`
       + (build.hal ? `, ${build.hal}` : "")
       + (build.parallel ? `, ${build.parallel}` : "")
-    : "not recorded for this session";
+    : "not recorded for this session. TF124_S540 records it.";
 
   $("why").textContent = stopped ? why
     : (state.steps.length
-        ? "the slide ran out of fields before the interval settled, so it goes to a person"
+        ? "the slide ran out of fields before the interval settled. The call below "
+          + "is what the rule makes of the counts so far."
         : "—");
 
   if (!wbc) { $("perul").textContent = "—"; $("ci").textContent = "no white cells counted"; return; }
@@ -593,8 +613,14 @@ function useFieldSet(session) {
   card.hidden = false;
   fieldSet = session;
   FIELDS = n;
-  $("viewercap").textContent =
-    `The ${n} field${n === 1 ? "" : "s"} of ${session}, in the order the agent read them.`;
+  // The recorded sample replays the decision rule over the cached field table
+  // and reads further than the live agent did, so it can have more steps than
+  // there are pictures. The first fields are the same images either way.
+  const counted = state.steps.filter(s => s.counted).length;
+  $("viewercap").textContent = (counted > n)
+    ? `The first ${n} fields of ${session}. This reading counted ${counted}; `
+      + `the pictures are the ones read live on AWS, in order.`
+    : `The ${n} field${n === 1 ? "" : "s"} of ${session}, in the order the agent read them.`;
   buildThumbs();
   showField(0);
 }
