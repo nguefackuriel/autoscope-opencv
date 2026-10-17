@@ -1,8 +1,19 @@
 # The submission video: script and shot list
 
-Three minutes. The rubric scores user experience and presentation, but the
-thing a judge is really deciding is whether to believe us. Everything below is
-chosen so that a sceptical viewer can check it afterwards.
+**Five minutes, which is the limit.** The rules ask the video to show the team,
+the working application, its architecture and the principal results. The rubric
+scores presentation, but what a judge is really deciding is whether to believe
+us, so everything below is chosen so a sceptical viewer can check it afterwards.
+
+**Budget: about 780 spoken words.** The word count of each beat is in the
+table, and `python docs/check_script_pace.py` adds them up. Where it stands
+today: 799 words, which is 307 seconds at 156 words a minute and 300 at 160.
+So it fits a five minute video at a normal pace with nothing to spare. If the
+read runs long, the seven seconds come out of the 0:30 beat, which is the most
+compressible.
+
+The first draft of this was 1,183 words, nearly eight minutes, in a document
+whose first line said three. Count before you record, not after.
 
 **The rule for this video: never show a number that is not in the repository.**
 If it is on screen it is in `docs/results-*.md` or `bench/results/`, and the
@@ -10,56 +21,52 @@ video says where.
 
 ## Shape
 
-| | | |
-|---|---|---|
-| 0:00–0:25 | the problem | why a microscope, and why counting |
-| 0:25–0:55 | what AutoScope is | the phone, the pipeline, the agent |
-| 0:55–1:45 | **the live demo** | the page, a real session, the audit trail |
-| 1:45–2:10 | the numbers | held-out, specificity, Tanzania |
-| 2:10–2:25 | what the agent is worth | eighteen policies, fifteen models |
-| 2:25–2:50 | what does not work | vivax, COOL |
-| 2:50–3:00 | close | the URL and the repository |
+| | | | words |
+|---|---|---|---|
+| 0:00-0:30 | the problem | why a microscope, and why counting | 77 |
+| 0:30-1:10 | what AutoScope is | the phone, the pipeline, the agent, the architecture | 118 |
+| 1:10-2:10 | **the live demo** | the page, a real session, the audit trail | 169 |
+| 2:10-2:40 | the numbers | held-out, specificity, Tanzania | 77 |
+| 2:40-3:30 | what the agent is worth | eighteen policies, fifteen models | 126 |
+| 3:30-4:35 | what does not work | vivax, COOL, and the fix we sent upstream | 183 |
+| 4:35-5:00 | close | the team, the URL, the repository | 62 |
 
-## 0:00-0:25, the problem
+## 0:00-0:30, the problem (75 words)
 
 *Shot: the WHO report page with the figures visible, then a thick film down a
 microscope.*
 
-> Malaria killed 610,000 people in 2024, and 282 million got sick. Ninety-four
-> percent of those cases were in Africa.
+> Malaria killed 610,000 people in 2024, 94 percent of them in Africa.
 >
-> Rapid tests are losing ground. Some parasites have stopped making the protein
-> the tests look for. WHO found them in 42 countries. And artemisinin
-> resistance is detected by *counting* parasites on day 0, 2 and 3. Rapid tests
-> cannot count.
+> Rapid tests are losing ground: in 42 countries, parasites have stopped making
+> the protein they look for. And drug resistance is detected by counting
+> parasites. A rapid test cannot count.
 >
-> So the work goes back to the microscope. A technician reads a hundred fields
-> under oil before calling a slide negative. Twenty to thirty minutes, alone,
-> and the mistakes come with fatigue.
+> So the work goes back to the microscope. A hundred fields under oil before a
+> slide can be called negative. Half an hour, alone, and people make more
+> mistakes as they get tired.
 
 Numbers from `docs/reference/WHO-World-Malaria-Report-2025.pdf`, read from the
 report rather than recalled.
 
-## 0:25-0:55, what it is
+## 0:30-1:10, what it is (118 words)
 
 *Shot: `docs/proposal/architecture.svg` building up, one stage at a time.*
 
-> AutoScope turns the microscope they already own into a scanner. A phone films
-> through the eyepiece. In the cloud, OpenCV 5 evens out the lighting and the
-> stain, finds the white cells and the parasites, and turns the counts into
-> parasites per microlitre with a confidence interval.
+> AutoScope turns the microscope they already own into a scanner. A phone
+> shoots the fields through the eyepiece and uploads them. Six OpenCV 5 stages
+> on Graviton4 even out the lighting and the stain, find the white cells and
+> the parasites, and turn the counts into parasites per microlitre with a
+> confidence interval.
 >
-> Then an agent reads those numbers and decides what to do next. Refocus. Skip
-> a dirty field. Keep reading. Stop. Or hand the slide to a person.
+> An agent reads those numbers and picks the next move: refocus, skip a dirty
+> field, keep reading, stop, or hand the slide to a person.
 >
-> All six stages are OpenCV, and they run on AWS Batch on Graviton4. The agent
-> sits outside them: everything it sees is OpenCV output, and the only thing it
-> returns is which field to read next. Step Functions holds the limits on
-> fields, time and money outside the model, so no model can talk its way past
-> them. The call itself comes from a fixed function reading the counts. The
-> agent has no move that issues a diagnosis.
+> It sits outside the pipeline and returns one of those five moves. Step
+> Functions holds the limits. The call comes from a fixed function reading the
+> counts, so the agent has no move that issues a diagnosis.
 
-## 0:55-1:45, the demo, which is the part that matters
+## 1:10-2:10, the demo, which is the part that matters (169 words)
 
 *Shot: screen recording of <https://d1k2o3z37c1maf.cloudfront.net>, no cuts.*
 
@@ -74,115 +81,107 @@ Scroll the log slowly. Let the viewer read the agent's own reasons.
 > Field seven: a hundred and thirty-three white cells, the band is settled.
 > Stop.
 >
-> The agent is not pattern-matching a threshold. It is watching an error bar
-> narrow and stopping when the answer stops changing, which is what a
-> technician does.
+> It is watching an error bar narrow, and it stops when the answer stops
+> moving. That is what a technician does.
 
 Point at the interval bar.
 
 > Eight thousand six hundred parasites per microlitre, interval seven thousand
-> two hundred and fifty to ten thousand one hundred. The grey line is this
-> pipeline's measured noise floor on clean slides. A positive is an interval
-> that clears that line, not a verdict the page asserts.
+> two fifty to ten thousand one thirty. The grey line is this pipeline's
+> measured noise floor on clean slides. The call is positive when the whole
+> interval sits above it.
 
-Then press "Replay a recorded session" and click a detection in the
-verification grid. The per-detection crops ship with that recorded session;
-a session read live keeps the field pictures and the counts, not the crops.
+Then press "Replay a recorded session". Say what changes, because the numbers
+move on screen: it is the same slide replayed from the cached field table, and
+the rule reads eleven fields where the agent read eight. Then click two
+detections in the verification grid and let the density move.
 
-> And a technician can disagree. Reject a detection and the count and the
-> interval recompute. Those corrections are what a deployment keeps as training
-> data.
+> A technician can disagree. These thirty-three are the detections nearest the
+> threshold, the ones it was least sure about. Reject one and the count and the
+> interval recompute. A deployment would keep those corrections.
 
 Last beat, and say it plainly:
 
-> One slide is a data point, not a result. The comparison over all fifty
-> held-out patients is in the repository, and it does not say what you would
-> expect.
+> One slide proves nothing on its own. The comparison over all fifty held-out
+> patients is in the repository.
 
-## 1:45-2:10, the numbers
+## 2:10-2:40, the numbers (77 words)
 
-*Shot: the targets table on page 6 of the report, the one with two MISSED
+*Shot: the targets table on page 8 of the report, the one with two MISSED
 chips in it.*
 
-> Fifty held-out patients the fit never saw.
+> Fifty held-out patients the fit never saw. Parasite F1, 0.79. Limit of
+> detection by dilution, 500 parasites per microlitre.
 >
-> Parasite F1, 0.79. Limit of detection by dilution, 500 parasites per
-> microlitre. Forty-nine of fifty infected slides called positive and not one
-> called negative. On twenty-five clean slides, none called positive, three
-> sent to a person, so specificity is 0.88. We set ourselves 0.90 in
-> September and we missed it.
+> Forty-nine of fifty infected slides called positive, none called negative. On
+> twenty-five clean slides, none called positive and three sent to a person, so
+> specificity is 0.88. We set ourselves 0.90 in September and we missed it.
 >
-> Then a Tanzanian set from a different microscope, a different camera and a
-> different stain, scored once: 99.3% of clean fields report nothing, image
-> level AUC 0.85, after a ten-slide site calibration.
+> Then a Tanzanian set, different microscope, camera and stain, scored once:
+> image level AUC 0.85 after a calibration on ten slides.
 
-## 2:10-2:25, what the agent is actually worth
+## 2:40-3:30, what the agent is actually worth (126 words)
 
-*Shot: the arm table in section 6 of the report.*
+*Shot: the arm table in section 7 of the report, page 10.*
 
-> We ran eighteen stopping policies through the same loop, the same prompt and
-> the same counter. Fifteen of them are models on Bedrock. Fifteen thousand
-> recorded calls ship with the repository, so anyone can replay the whole
-> comparison for nothing.
+> Eighteen stopping policies through the same loop and the same counter.
+> Fifteen are models on Bedrock, every call recorded, so the comparison replays
+> for nothing.
 >
-> Two things came out of it, and neither is the thing we expected.
+> A fixed eight fields does as well as the agent on the totals, with fewer
+> slides sent to a person. No model needed, and the report says that.
 >
-> First: a fixed eight fields per slide does as well as the agent on the
-> totals. Three hundred and ninety fields against three hundred and ninety
-> three, the same error, fewer slides sent to a person. No model needed. We
-> say that in the report in those words.
+> What the agent does instead is spend the budget unevenly: three fields on the
+> ten densest slides, nine or ten on the sparsest.
 >
-> What the agent does instead is spend the budget unevenly. Three fields on
-> the ten densest slides, nine or ten on the ten sparsest, and the correlation
-> with the slide's real density is minus zero point seven. The fixed policy
-> reads eight whatever the slide is. Same cost, same error, put where the
-> evidence is thin, with a reason attached to every move.
->
-> Second: what separates the models is not size. It is whether they are
-> willing to stop. Three of the fifteen never chose stop once in more than a
-> thousand calls each. They read every field a slide has and then hand it over.
-> Forced tool choice makes a model answer. It does not make it finish.
+> And what separates the models is whether they will stop. Three of the fifteen
+> never chose stop once, in a thousand calls each.
 
-## 2:25-2:50, what does not work
+### The provenance shot, 10 seconds inside the COOL beat
 
-Do not skip this. It is the most persuasive forty seconds in the video.
+The demo beat films TF101_233, which ran before the build line was recorded,
+so its "Read by" row says it is not recorded. Cut to
+`?session=TF124_S540` for this one line and hold on that row:
 
-> Two things we could not make work, and we are publishing both.
+> Every field this one read says which binary read it. OpenCV 5 on aarch64,
+> carotene and KleidiCV twenty-six point oh three. The Batch job wrote that
+> itself.
+
+## 3:30-4:35, what does not work (183 words)
+
+> Two things we could not make work, and we publish both.
 >
-> Species. On *P. vivax* the detector reads F1 0.29 against 0.80 on
-> falciparum, and its confidence score does not separate the detections it
-> gets right from the ones it gets wrong, so there is no automatic warning we
-> can give. A slide from a vivax region needs a human reader.
+> Species. On *P. vivax* the detector reads F1 0.29 against 0.79 on falciparum,
+> and its confidence score cannot tell you it is failing. A slide from a vivax
+> region needs a human reader.
 >
 > COOL. On a ten-function benchmark the Marketplace image is 1.59 times faster
-> than the wheel we ship, on the same machine. On our pipeline it was 3.8 times
-> slower: 143 slides an hour against 547. Three of the seven stages are faster
-> on it. One is nine and a half times slower and swallows the rest.
+> than the wheel we ship. On our pipeline it was 3.8 times slower. So we forced
+> both builds to a single thread. They agree to within three
+> percent, so the kernels are the same speed. Then we gave the cores back. The
+> wheel takes fifteen to twenty-six times off those calls. The image takes
+> none, while `cvtColor` speeds up twenty times on both. Its filter and
+> morphology run on one core out of thirty-two.
 >
-> So we forced both builds down to a single thread, and they agreed to within
-> six percent on every call. The kernels are the same speed. The stock build
-> takes fifteen to twenty-five times back off the thirty-two cores. The COOL
-> image takes none, while `cvtColor` parallelises fine on both, which is what
-> makes this a measurement and not a guess.
+> The fix is forty lines: cut the image into bands, one per core, and run the
+> call band by band. That takes it to 532 slides an hour against the wheel's
+> 547, on the same twelve fields, every count identical.
 >
-> The fix is forty lines. We split the image into bands, one per core, each
-> with a halo as wide as the kernel, and run the morphology band by band. The
-> result is checked against the unsplit call before it is timed. With that on,
-> the COOL image reads 532 slides an hour against the wheel's 547.
+> We reported it to OpenCV, issue three zero three seven three.
+
+## 4:35-5:00, close (62 words)
+
+*Shot: the two of us on camera, then the page, then the repository.* The rules
+ask the video to show the team, and nothing else in it does.
+
+> We are Uriel Nguefack Yefou and Alex Bruno Kenfack Anafack.
 >
-> Then we ran the whole pipeline twice on the same twelve fields, once on each
-> build, and kept the counts. Six hundred and five parasites and every white
-> cell, identical. The COOL image runs AutoScope at 0.97 times the wheel and
-> returns the same answers. That defect is a bug report with a reproduction,
-> and it is the half of this work we are proudest of.
-
-## 2:50-3:00, close
-
-*Shot: the page, then the repository.*
-
-> AutoScope. The demo is live, every number is in the repository with the
-> script that produced it, and it is a screening aid, not a diagnostic
-> device. Every result is reviewed by a person.
+> AutoScope is live at that address, no login. Every number you have seen is in
+> the repository beside the script that produced it.
+>
+> It is a screening aid, not a diagnostic device. Never run on a clinical
+> sample, falciparum only, and two of our seven targets missed. A person
+> reviews every result.
 
 ## The footage of the agent reading
 
@@ -214,6 +213,15 @@ over 27 twelve-megapixel captures. Drop `--gif-only` and add
 `--from-api https://fhemydiqba.execute-api.us-east-1.amazonaws.com` to redraw
 them from the live traces. Per-session gifs land beside it as
 `<session>-agent.gif` and are not committed, because that command makes them.
+
+## Check the pace before you record
+
+    python docs/check_script_pace.py
+
+Five minutes is the limit. 750 words is a comfortable five minutes, 900 is a
+fast one, and anything above that is a video that does not fit. The script
+prints the words and the seconds each beat needs, so you can see where you are
+over before you are in front of a microphone, not after.
 
 ## Production notes
 
