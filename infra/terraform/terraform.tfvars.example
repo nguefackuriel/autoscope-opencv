@@ -2,15 +2,20 @@
 
 alert_email = "nguefackuriel@gmail.com"
 
-# From the AWS Marketplace subscription (docs/aws-setup.md §2c). Leave empty
-# until it comes through: the stack still applies and the Batch fleet runs the
-# stock-OpenCV control arm, which is a working pipeline and an honest number.
+# From the AWS Marketplace subscription (docs/aws-setup.md §2c). Leave it
+# empty, which is what we run: the fleet uses our container on the ECS Arm
+# AMI, and that container's opencv-python wheel carries carotene and KleidiCV
+# 26.03 on aarch64. Setting it swaps in the Marketplace COOL image, which is
+# measured as a separate arm and needs AUTOSCOPE_TILED_MORPH=1 to reach parity.
 cool_ami_id = ""
 
 # Confirm against the account before applying:
 #   aws bedrock list-foundation-models --by-provider anthropic \
 #     --query 'modelSummaries[].modelId' --output table
-bedrock_model_id = "anthropic.claude-opus-5"
+# Opus 5 and Sonnet 5 return AccessDenied on this account whatever the
+# agreement says, so the measured arms use what answers. See
+# docs/results-agent.md.
+bedrock_model_id = "us.anthropic.claude-sonnet-4-6"
 
 # Ask Service Quotas for at least this many Spot vCPU first.
 batch_max_vcpus = 64

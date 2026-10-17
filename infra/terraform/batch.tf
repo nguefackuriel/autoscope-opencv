@@ -71,15 +71,27 @@ resource "aws_batch_compute_environment" "graviton_spot" {
     # interruption costs the fields in flight and nothing else.
     bid_percentage = 100
 
-    min_vcpus     = 0
+    min_vcpus = 0
+    # Batch owns this number once the environment exists: it scales up to run a
+    # job and back to min_vcpus when the queue empties. Terraform reading its
+    # own 0 as drift and trying to scale down mid-job gets
+    # "Manually scaling down compute environment is not supported", which
+    # blocks every unrelated apply until the fleet is idle. See the lifecycle
+    # block below.
     desired_vcpus = 0
     max_vcpus     = var.batch_max_vcpus
 
     instance_type = var.batch_instance_types
 
-    # Empty means the ECS-optimised Arm AMI, which runs our own stock-OpenCV
-    # container: the honest control arm. Set cool_ami_id and the same container
-    # runs on the COOL build instead, which is the arm we are claiming.
+    # Empty, and that is what production runs: the ECS-optimised Arm AMI with
+    # our own container, whose opencv-python wheel is built on aarch64 with
+    # carotene and KleidiCV 26.03. That is Arm-accelerated OpenCV on Graviton4,
+    # one KleidiCV version newer than the Marketplace COOL image carries.
+    #
+    # Set cool_ami_id and the same container runs on the COOL build instead.
+    # That is the fourth measured arm (docs/results-cool.md): unmodified it is
+    # 3.8x slower on this pipeline because its morphology runs on one core, and
+    # with AUTOSCOPE_TILED_MORPH=1 it reads the same counts at 0.97x the wheel.
     dynamic "ec2_configuration" {
       for_each = var.cool_ami_id == "" ? [] : [1]
       content {
@@ -101,9 +113,11 @@ resource "aws_batch_compute_environment" "graviton_spot" {
 
   service_role = aws_iam_role.batch_service.arn
 
-  # The compute environment has to be disabled before it can be replaced.
   lifecycle {
+    # The compute environment has to be disabled before it can be replaced.
     create_before_destroy = true
+    # And Batch owns desired_vcpus once the environment exists.
+    ignore_changes = [compute_resources[0].desired_vcpus]
   }
 
   depends_on = [aws_iam_role_policy_attachment.batch_service]

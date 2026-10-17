@@ -166,7 +166,7 @@
       <span id="status" class="note" role="status" aria-live="polite"></span>
     </div>
     <p class="note" style="margin:12px 0 0">
-      <strong>Four real sessions read on AWS,</strong> one per density band, so you
+      <strong>Five real sessions read on AWS,</strong> one per density band, so you
       can watch the agent spend effort in proportion to the evidence:
       <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF41_UT5">TF41_UT5</a>
       stops after 3 fields at 90,000/µL,
@@ -175,8 +175,12 @@
       <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF22_C104P65">TF22_C104P65</a>
       reads all 11 it has and still straddles a band boundary at 700, and
       <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF150_R5">TF150_R5</a>
-      runs out of slide at 288 and goes to a person. All four are NLM held-out
-      patients the fit never saw.
+      runs out of slide at 288 and goes to a person, and
+      <a href="?api=https://fhemydiqba.execute-api.us-east-1.amazonaws.com&amp;session=TF124_S540">TF124_S540</a>
+      stops at 2 fields on 19,500 against the expert's 12,800, the same density
+      band. All five are NLM held-out patients the fit never saw. Each one says
+      under "Read by" which OpenCV binary read its fields, reported by the job
+      itself.
       Or leave the endpoint blank and “Replay a recorded session” reads
       <code>sample-session.json</code> from this page’s own folder, so the demo
       still works with nothing deployed and a judge can check it offline.
@@ -626,8 +630,11 @@ fetch("fields/manifest.json")
   .catch(() => ({}))
   .then(m => {
     fieldSets = m || {};
+    // A requested session with no rendered frames hides the viewer, which
+    // useFieldSet already does. Falling back to the default set here instead
+    // would put one patient's pictures under another patient's numbers.
     const wanted = params.get("session");
-    useFieldSet(fieldSets[wanted] ? wanted : DEFAULT_SET);
+    useFieldSet(wanted || DEFAULT_SET);
   });
 
 // A bare URL has to show the thing working. Load the live session the field
