@@ -393,7 +393,15 @@ are `calcHist` 12.3x, `adaptiveThreshold` 8.4x, `GaussianBlur` 1.6x and
 the Arm HAL compiled out, not against the wheel, and the two baselines must not
 be mixed.
 
-Reported upstream on 17 October 2026: https://github.com/opencv/opencv/issues/30373
+Reported upstream on 17 October 2026:
+https://github.com/opencv/opencv/issues/30373
+
+Triaged on 21 October by Alexander Smorkalov (OpenCV.AI), labelled
+`category: imgproc` and assigned to Abhishek Gola and Varun Jaiswal, both
+OpenCV maintainers; Gola's recent work is HAL dispatch. `bench/repro_hal_threads.py`
+is the one-file reproducer posted for them, and its `cvtColor` control is there
+because the first version announced the bug on a macOS laptop where
+`setNumThreads` does nothing at all.
 
 What this is worth: a reproducible defect in the shipped image, a diagnosis down
 to the call, and a forty-line workaround that recovers 3.7x on the pipeline,
