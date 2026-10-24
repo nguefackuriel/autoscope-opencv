@@ -609,7 +609,8 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   core can do. <code>parasites.py</code> splits the image into horizontal bands,
   one per thread, each band carrying a halo as wide as the kernel radius times the
   number of chained passes, and runs the top-hat and the dilation band by band.
-  Thirty pixels of halo for the top-hat, seven for the dilation. The result is
+  The halo is $halo_tophat pixels for the top-hat and $halo_dilate for the
+  dilation. The result is
   checked against the unsplit call before it is timed, so a wrong answer cannot be
   reported as a fast one. It is forty lines behind
   <code>AUTOSCOPE_TILED_MORPH=1</code>, off by default.

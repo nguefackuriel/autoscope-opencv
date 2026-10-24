@@ -285,6 +285,13 @@ def figures() -> dict:
     f["agent_model_arms"] = sum(1 for _, m, _ in AGENT_ARMS if m)
     f["agent_never_stop"] = never_stop
 
+    # The halo the tiled morphology actually passes. Typed into the prose as
+    # "thirty pixels" once, while the code passed 31.
+    sys.path.insert(0, str(ROOT / "src"))
+    from autoscope.parasites import PEAK_NMS_PX, TOPHAT_PX  # noqa: E402
+    f["halo_tophat"] = TOPHAT_PX
+    f["halo_dilate"] = PEAK_NMS_PX
+
     # --- what a lab pays. The prices are in bench/pricing.json, fetched from
     # the Pricing API and marked verified; an unverified file is refused here
     # rather than printed with a caveat nobody reads.
