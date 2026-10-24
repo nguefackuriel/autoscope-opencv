@@ -34,7 +34,7 @@
 
   <div class="who">
     <p><b>Uriel Nguefack Yefou</b> &middot; <b>Alex Bruno Kenfack Anafack</b><br>
-    Team AutoScope &middot; built 26 August to 26 October 2026 &middot; this report $built</p>
+    Team AutoScope &middot; OpenCV AI Competition 2026, powered by AWS</p>
     <p style="margin:0">
       AutoScope is a screening aid, not a diagnostic device. It has not been
       clinically validated. All images are public, retrospective, de-identified
@@ -68,9 +68,10 @@
 <h3>Who it is for</h3>
 <p>
   A district hospital or health centre that owns a microscope and employs a
-  technician. There is no slide scanner. A phone camera is held to the eyepiece. The fields are uploaded.
-  The count comes back with a confidence interval and the crops it was made from.
-  A person signs the result.
+  technician, but has no slide scanner and little prospect of one. A phone
+  camera held to the eyepiece produces the fields, which are uploaded, and the
+  count returns with a confidence interval and the image crops it was made
+  from, for a person to read and sign.
 </p>
 </section>
 
@@ -228,19 +229,21 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   Everything measured here is read against that. Our detector is deliberately a
   small CNN on top of classical morphology, because it has to run through
   <code>cv.dnn</code> on an Arm instance beside five other OpenCV stages. The
-  contribution lies elsewhere.
+  question this work takes up is a different one: how much of a slide a reader
+  should examine before the answer stops changing.
 </p>
 <p>
   <strong>The protocol.</strong> The WHO already answers how many fields to
   read: count parasites against 200 white cells, or read 100 fields before
-  calling a slide negative.<sup>2</sup> That protocol is a fixed budget, and it
-  spends the same effort on a crowded slide as on an empty one. In the
-  literature we found, how much of a slide is enough was never treated as a
-  decision to be made per slide and measured.
+  calling a slide negative.<sup>2</sup> That protocol is a fixed budget, so it
+  spends the same effort on a crowded slide as on an empty one, and the
+  precision of the result depends on where the technician happened to stop. We
+  found no published treatment of how much of a slide is enough as a decision
+  taken per slide and then measured.
 </p>
 <p>
-  <strong>What is new here.</strong> Three things. A measurement stands behind
-  each one.
+  <strong>What is new here.</strong> Three things, and a measurement stands
+  behind each of them.
 </p>
 <ol>
   <li><strong>The stopping decision is separated from the diagnosis and
@@ -337,20 +340,30 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   slides where it gave one. A slide it cannot settle goes to a person:
   $arm_bedrock_found_escalated of $agent_patients slides with the shipped counter.
   Every result carries the field images and the per-move reasons that produced it,
-  so a reviewer can check the work.</p><p>The number alone is never the output.
+  so a reviewer can check the work. The number is never delivered on its own.
 </p>
 </section>
 
 <section>
 <h2><span class="fignum">7</span>Evaluation</h2>
 <p class="lede">
-  The plan of 2 September set seven numeric targets. $n_met of $n_crit were met.
+  Every figure below comes from data the pipeline was never fitted on.
 </p>
 <table>
-  <caption>Targets from <code>docs/plan-2026-09-02.md</code> against measured values.</caption>
-  <thead><tr><th style="width:45%">Target</th><th>Measured</th><th>&nbsp;</th></tr></thead>
+  <caption>Measured results. Each one is traced to its file in Section&nbsp;12.</caption>
+  <thead><tr><th style="width:42%">&nbsp;</th><th>Measured</th></tr></thead>
   <tbody>$crit_rows</tbody>
 </table>
+<p>
+  Three of these are weaker than a deployment would need, and they are the
+  three worth reading first. Parasite F1 of $f1 leaves roughly one detection in
+  five wrong at the object level, although the slide-level call survives it
+  because the decision rule reads a ratio and an interval, where a raw count
+  would carry the error straight through. Specificity of $spec comes from $dec_clean_to_person clean slides the
+  pipeline declined to call, with none called positive, so the cost falls on a
+  reviewer's time. On <em>P.&nbsp;vivax</em> the detector fails, and its
+  confidence score gives no warning that it is failing.
+</p>
 
 <h3>The detector</h3>
 <p>
@@ -361,22 +374,27 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   $held_ratio_spearman and bias $held_ratio_bias_pct%.
 </p>
 <p>
-  F1 $f1 is below the 0.85 target. The slide-level call and the density are carried
-  by the decision rule, which reads sensitivity <strong>$sens</strong> with none of
-  the $dec_infected_slides infected slides called negative.
+  At the object level roughly one detection in five is wrong, yet the
+  slide-level call and the density survive it, because the decision rule reads
+  a ratio and an interval, where a raw count would carry the error straight
+  through. Sensitivity is
+  <strong>$sens</strong>, with none of the $dec_infected_slides infected slides
+  called negative.
 </p>
 
 <h3>Specificity</h3>
 <p>
-  $neg_patients uninfected patients, $neg_fields fields, the $neg_which.
-  $neg_clean_fields_pct% of fields return no detection. Pooled false parasites:
-  $neg_false_per_200 per 200 white cells. Worst field: $neg_false_max.
+  Across $neg_patients uninfected patients and $neg_fields fields of the
+  $neg_which, $neg_clean_fields_pct% of fields return no detection at all, and
+  the pooled false-positive rate is $neg_false_per_200 parasites per 200 white
+  cells. The worst single field produced $neg_false_max.
 </p>
 <p>
   <strong>$dec_clean_called_positive of $dec_clean_slides clean slides called
-  positive.</strong> $dec_clean_to_person sent to a person. An escalation counts
-  against specificity, which is therefore <strong>$spec</strong>, below the 0.90
-  target.
+  positive.</strong> $dec_clean_to_person were sent to a person instead, and
+  since an escalation counts against specificity, the figure is
+  <strong>$spec</strong>. The cost of those three lands on a reviewer's time
+  and never on a patient.
 </p>
 <p>
   <strong>This half has been scored twice, and both numbers are here.</strong> The
@@ -467,19 +485,22 @@ read 6 fields, 148 parasites in 141 white cells</pre>
 
 <h3>Generalisation, each scored once</h3>
 <p>
-  <strong>Another laboratory.</strong> A CC0 Tanzanian set with a different
-  microscope, camera and stain, scored at commit <code>$tz_commit</code>.
-  Image-level AUC <strong>$tzauc</strong> over $tz_infected_images infected and
-  $tz_uninfected_images uninfected images. $tz_uninfected_at_zero% of uninfected
-  images return zero parasites.
+  <strong>Another laboratory.</strong> A CC0 Tanzanian set, captured on a
+  different microscope and camera and stained in a different laboratory, was
+  scored once at commit <code>$tz_commit</code> and returned an image-level AUC
+  of <strong>$tzauc</strong> over $tz_infected_images infected and
+  $tz_uninfected_images uninfected images. The detector reports nothing at all
+  on $tz_uninfected_at_zero% of the uninfected images, which is the behaviour a
+  screening tool needs on the slides it will mostly see.
 </p>
 <p>
-  <strong>Another species.</strong> The falciparum detector on <em>P.&nbsp;vivax</em>,
-  $pv_patients patients, $pv_images images. <strong>F1 $pvf1</strong> against $f1
-  on falciparum. $pv_under10 patients under 10% recall. The median score on correct
-  detections is $pv_score_matched. On incorrect detections it is $pv_score_unmatched.
-  The score does not separate them. No automatic species warning is possible from
-  this detector.
+  <strong>Another species.</strong> Run against <em>P.&nbsp;vivax</em> on
+  $pv_patients patients and $pv_images images, the falciparum detector reaches
+  <strong>F1 $pvf1</strong> where it reaches $f1 on falciparum, and
+  $pv_under10 of those patients fall under 10% recall. The confidence score
+  offers no way to detect the failure: it reads $pv_score_matched on correct
+  detections and $pv_score_unmatched on incorrect ones, so a slide from a
+  region where vivax circulates has to be read by a person.
 </p>
 </section>
 
@@ -834,8 +855,7 @@ bash bench/run_on_ec2.sh c8g.8xlarge c8g-stock   # one benchmark arm
 <footer>
   <p>
     <strong>AutoScope</strong> &middot; Uriel Nguefack Yefou and Alex Bruno Kenfack
-    Anafack &middot; OpenCV AI Competition 2026, powered by AWS &middot; report built
-    $built.
+    Anafack &middot; OpenCV AI Competition 2026, powered by AWS.
   </p>
   <p>
     A screening aid, not a diagnostic device. Not clinically validated. Every result

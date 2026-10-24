@@ -40,7 +40,9 @@ NOT_BEFORE = re.compile(
     r"|\b(is|was|are|were)\s+not\s+(a|an|one|the)\b"
     r"|\bnot\s+because\b[^.]{0,60}?\bbut\b", re.IGNORECASE)
 THREE_ITEMS = re.compile(
-    r"[\w'-]+(?:\s+[\w'-]+){0,7},\s+[\w'-]+(?:\s+[\w'-]+){0,7},\s+(and|or)\s+[\w'-]+")
+    r"[\w'-]+(?:\s+[\w'-]+){0,7},"
+    r"\s+(?!which|who|that|so|but|because|and|or|if|where|when)"
+    r"[\w'-]+(?:\s+[\w'-]+){0,7},\s+(and|or)\s+[\w'-]+", re.IGNORECASE)
 INFLATED = ("enhance", "boost", "elevate", "ensure", "crucial", "vital",
             "seamless", "leverage", "robust", "unlock", "harness", "pivotal",
             "revolution", "testament", "delve", "fundamentally", "reshape",
@@ -162,6 +164,26 @@ def check(path: Path) -> list[str]:
           f"length {lens[0]} to {lens[-1]}, {passives} passive")
     if lens[-1] - lens[0] < 20:
         problems.append(f"  sentence length spread only {lens[-1] - lens[0]}; vary it")
+
+    # A wide spread across a whole document hides runs of short sentences
+    # inside it. Four or more in a row is the pattern a reader notices, and it
+    # is what made an early draft of this report read as machine-written.
+    worst = []
+    for line in lines:
+        run = []
+        for sent in re.split(r"(?<=[.!?])\s+", line):
+            if not sent.strip():
+                continue
+            if len(sent.split()) <= 9:
+                run.append(sent)
+                if len(run) > len(worst):
+                    worst = list(run)
+            else:
+                run = []
+    if len(worst) >= 4:
+        joined = " ".join(worst)[:150]
+        problems.append(f"  {len(worst)} short sentences in a row; join some\n"
+                        f"      {joined}")
     return problems
 
 
