@@ -5,20 +5,20 @@ the working application, its architecture and the principal results. The rubric
 scores presentation, but what a judge is really deciding is whether to believe
 us, so everything below is chosen so a sceptical viewer can check it afterwards.
 
-**Say it, do not read it.** The lines below are written the way people talk,
-with contractions and short sentences, because the first version of this script
-read like a brochure. If a sentence feels stiff in your mouth, change it. The
-numbers are the only part that must not move: every one of them is in a result
-file.
+**Two checks run on this file.** `python docs/check_script_pace.py` counts the
+spoken words against the five minute limit. `python docs/check_script_style.py`
+reads the same lines against the house style: no contractions, no phrasal
+verbs, no three-item lists, no inflated verbs, at most two participle clauses,
+and a spread of sentence lengths wide enough that the writing does not sound
+machine-made. Both must pass before recording.
 
 **Who speaks** is marked on each line. Uriel takes the problem, the pipeline
-and the numbers. Alex Bruno takes the agent, the demo and COOL. Both of you on
-camera at the end, because the rules ask for it.
+and the numbers. Alex Bruno takes the agent, the demo and COOL. Both of you
+appear at the end, because the rules ask for the team.
 
-**Budget: 790 spoken words**, which is 300 seconds at a normal pace and nothing
-to spare. `python docs/check_script_pace.py` counts them. The first draft was
-1,183 words, nearly eight minutes, in a document whose first line said three.
-Count before you record, not after.
+**Budget: 793 spoken words**, which is five minutes at a normal pace with
+nothing to spare. The first draft was 1,183 words, close to eight minutes, in
+a document whose first line said three. Count before recording, not after.
 
 **The rule for this video: never show a number that is not in the repository.**
 If it is on screen it is in `docs/results-*.md` or `bench/results/`, and the
@@ -41,15 +41,16 @@ video says where.
 *Shot: the WHO report page with the figures visible, then a thick film down a
 microscope.*
 
-> **URIEL.** Last year malaria killed 610,000 people, nearly all in Africa.
+> **URIEL.** Malaria killed 610,000 people last year, and 94 percent of the
+> cases were in Africa.
 >
-> The rapid tests are starting to fail. In 42 countries the parasite stopped
-> making the protein they look for. And to know if a drug still works, you have
-> to count parasites. A rapid test can't count.
+> In 42 countries the parasite no longer produces the protein that rapid tests
+> detect, so those tests are failing. Drug resistance is measured from a
+> parasite count, which a rapid test cannot give.
 >
-> So you go back to the microscope. A hundred fields under oil before you can
-> call a slide negative. Half an hour, on your own, and tired people miss
-> things.
+> The count comes from a microscope. A hundred fields are examined under oil
+> before a slide can be called negative. That takes about half an hour, and
+> accuracy falls as the reader tires.
 
 Numbers from `docs/reference/WHO-World-Malaria-Report-2025.pdf`, read from the
 report rather than recalled.
@@ -58,20 +59,18 @@ report rather than recalled.
 
 *Shot: `docs/proposal/architecture.svg` building up, one stage at a time.*
 
-> **URIEL.** We didn't build a new microscope. We take the one the lab has,
-> and a phone at the eyepiece.
+> **URIEL.** AutoScope uses the microscope a laboratory already owns, with a
+> phone at the eyepiece. The phone uploads each field, and six OpenCV 5 stages
+> run on Graviton. They correct the lighting and the stain, then locate the
+> white cells and the parasites. Those counts become parasites per microlitre,
+> with a confidence interval.
 >
-> The phone sends the fields up. Six OpenCV 5 stages on Graviton even out the
-> light and the stain, find the white cells and the parasites, and turn that
-> into parasites per microlitre with an error bar.
+> **ALEX BRUNO.** An agent reads those numbers and selects one of five moves.
+> It may refocus a soft field or skip a dirty one. It may keep reading, or
+> stop. The fifth move sends the slide to a person.
 >
-> **ALEX BRUNO.** Then an agent looks at those numbers and picks what to do
-> next. Refocus. Skip a dirty field. Keep going. Stop. Or hand the slide to a
-> person.
->
-> That's all it does. It never says what's wrong with the patient. The call
-> comes from a fixed function reading the counts, and the limits live outside
-> the model.
+> The call itself comes from a fixed function that reads the counts, and the
+> limits on fields and time are held in Step Functions, outside the model.
 
 ## 1:14-2:05, the demo, which is the part that matters (134 words)
 
@@ -79,74 +78,75 @@ report rather than recalled.
 
 Open the page. It loads a real session by itself. Let the table fill.
 
-> **ALEX BRUNO.** A real slide, read on AWS. Eight fields on a Graviton spot
-> fleet.
+> **ALEX BRUNO.** This slide was read on AWS, across eight fields on Graviton
+> spot.
 
 Scroll the log slowly. Let the viewer read the agent's own reasons. Do not
 paraphrase them into a clean convergence: the interval goes inside the band,
 comes back out one field later, and only settles on the eighth. That is on
 screen and it is the better story.
 
-> Watch the reasons. First field, sixteen white cells, the error bar is
-> enormous, keep reading. Midway, both ends of the interval drop inside one
-> band. Then a later field pushes it back out, and it keeps going. Eight
-> fields, a hundred and thirty-three white cells, and it stops.
+> The log carries the reason for every move. Sixteen white cells on the first
+> field, and the interval is wide, so the agent continues. Midway it falls
+> inside one density band, and a later field widens it past the edge again. The
+> agent stops at the eighth field, on a hundred and thirty-three cells.
 >
-> Nobody told it eight. It watched the error bar close, and stopped when the
-> answer stopped moving.
+> That stopping point was its own choice. The agent watched the interval
+> narrow and stopped once the estimate settled.
 
 Point at the interval bar.
 
-> Eight thousand six hundred per microlitre. That grey line is the noise floor
-> we measured on clean slides. If the whole interval clears it, the slide is
-> positive.
+> Eight thousand six hundred per microlitre. The grey line marks the noise
+> floor measured on clean slides, and a slide is positive when the whole
+> interval sits above it.
 
 Then press "Replay a recorded session". Say what changes, because the numbers
 move on screen: it is the same slide replayed from the cached field table, and
 the rule reads eleven fields where the agent read eight. Then click two
 detections in the verification grid and let the density move.
 
-> And you can argue with it. These thirty-three are the ones it was least sure
-> about. Click one you don't like. The count drops, the interval moves.
+> The reader may disagree. These thirty-three detections scored closest to the
+> threshold, so they are the least certain. Selecting one removes it, and the
+> interval moves.
 
 Last beat, and say it plainly:
 
-> One slide proves nothing. The fifty-patient comparison is in the repo.
+> A single slide settles nothing. The fifty-patient comparison is in the
+> repository.
 
 ## 2:05-2:35, the numbers (79 words)
 
 *Shot: the targets table on page 8 of the report, the one with two MISSED
 chips in it.*
 
-> **URIEL.** Fifty patients the model never saw while we built it. F1 of 0.79
-> on the parasites. By dilution, we find 500 parasites per microlitre.
+> **URIEL.** Fifty patients were held out of training. Parasite F1 is 0.79.
+> The limit of detection by dilution is 500 parasites per microlitre.
 >
-> Forty-nine of the fifty infected slides came back positive. Not one came back
-> negative. Of twenty-five clean slides, none were called positive and three
-> went to a person. That's 0.88 specificity. In September we said we'd hit
-> 0.90. We missed.
+> Of fifty infected slides, forty-nine were called positive and none negative.
+> Of twenty-five clean slides, none were called positive and three were passed
+> to a person, a specificity of 0.88. The target we set in September was 0.90.
 >
-> A Tanzanian set, different scope, different camera, different stain. We ran
-> it once. AUC 0.85.
+> A Tanzanian set was scored once, on a different microscope and stain.
+> Image-level AUC is 0.85.
 
 ## 2:35-3:30, what the agent is actually worth (146 words)
 
 *Shot: the arm table in section 7 of the report, page 10.*
 
-> **ALEX BRUNO.** Here's the part we didn't expect.
+> **ALEX BRUNO.** Eighteen stopping policies were run through the same loop
+> and counter, fifteen of them models on Bedrock. Every call was recorded, so
+> the comparison replays free.
 >
-> Eighteen stopping policies through the same loop, fifteen of them models on
-> Bedrock. Every call is recorded, so you can replay it all for free.
+> A fixed policy that reads eight fields performs as well as the agent. The
+> density error matches and fewer slides go to a person, which the report
+> states.
 >
-> A dumb rule that reads eight fields does just as well. Same error, fewer
-> slides pushed to a person, no model at all. We say so in the report.
+> The agent allocates effort by slide. It reads three fields on the ten densest
+> slides and nine or ten on the sparsest, where the fixed policy reads eight in
+> both cases.
 >
-> So what's it for? It puts the effort where it's needed. Three fields on the
-> heaviest slides, nine or ten on the thin ones. The dumb rule reads eight
-> either way.
->
-> And what separates the models isn't size. It's whether they'll stop. Three of
-> the fifteen never once chose to stop.
+> Willingness to stop separated the models. Three of the fifteen chose stop
+> zero times, across a thousand calls each.
 
 ### The provenance shot, 10 seconds inside the COOL beat
 
@@ -154,48 +154,48 @@ The demo beat films TF101_233, which ran before the build line was recorded,
 so its "Read by" row says it is not recorded. Cut to
 `?session=TF124_S540` for this one line and hold on that row:
 
-> Every field here records the binary that read it. OpenCV 5 on aarch64,
-> carotene and KleidiCV twenty-six oh three. The job wrote that line itself.
+> Every field in this session records the binary that read it. OpenCV 5 on
+> aarch64, with carotene and KleidiCV twenty-six oh three. The Batch job wrote
+> it.
 
 ## 3:30-4:33, what does not work (166 words)
 
-> **URIEL.** Two things beat us, and we're publishing both.
+> **URIEL.** Two things did not work, and both are published.
 >
-> Species. On *vivax* the detector gets F1 0.29, against 0.79 on falciparum.
-> And its confidence doesn't drop when it's wrong, so we can't even warn you.
-> Where vivax circulates, a person has to read the slide.
+> On *vivax* the detector reaches F1 0.29, against 0.79 on falciparum. The
+> confidence score stays high on incorrect detections, so the failure cannot be
+> flagged. Where vivax circulates, a person must read the slide.
 >
-> **ALEX BRUNO.** COOL. On ten functions the Marketplace image is 1.59 times
-> faster than our wheel. On our pipeline it came out 3.8 times slower. That
-> took us a while to believe.
+> **ALEX BRUNO.** On a ten-function benchmark the COOL image runs 1.59 times
+> faster than our wheel. On our pipeline it ran 3.8 times slower.
 >
-> So we pinned both builds to one thread. Within three percent of each other.
-> Same kernels, same speed. Then we gave the cores back.
-> The wheel gets fifteen to twenty-six times faster. The image gets nothing,
-> while `cvtColor` speeds up twenty times on both. Its morphology is running on
-> one core out of thirty-two.
+> Both builds were then pinned to a single thread. The results agree within
+> three percent, so the kernels run at the same speed. Given every core, the
+> wheel gains fifteen to twenty-six times and the image gains nothing, while
+> `cvtColor` gains about twenty times on both. The morphology path in the image
+> uses one core of thirty-two.
 >
-> The fix was forty lines. Cut the image into strips, one per core. That gives
-> 532 slides an hour against the wheel's 547, same twelve fields, every count
-> identical.
+> The workaround is forty lines. The image is divided into strips, one per
+> core, and the call runs on each. That produces 532 slides an hour against the
+> wheel's 547, with every count on the same twelve fields identical.
 >
-> We sent it to OpenCV. It's assigned to two of their maintainers.
+> The report was sent to OpenCV and assigned to two maintainers.
 
 ## 4:33-5:00, close (68 words)
 
 *Shot: the two of us on camera, then the page, then the repository.* The rules
 ask the video to show the team, and nothing else in it does.
 
-> **URIEL.** I'm Uriel Nguefack Yefou.
+> **URIEL.** I am Uriel Nguefack Yefou.
 >
-> **ALEX BRUNO.** And I'm Alex Bruno Kenfack Anafack.
+> **ALEX BRUNO.** And I am Alex Bruno Kenfack Anafack.
 >
-> **URIEL.** AutoScope is live at that address. No login. Every number you have
-> seen is in the repository, next to the code that made it.
+> **URIEL.** AutoScope runs at that address without a login. Every number shown
+> here is in the repository, beside the code that produced it.
 >
-> It's a screening aid, not a diagnostic. It's never touched a clinical sample,
-> it only knows falciparum, and of our seven targets we missed two. A person
-> reads every result.
+> AutoScope is a screening aid. It has never been used on a clinical sample
+> and it detects falciparum only. Two of our seven targets were missed. A
+> person reviews every result.
 
 ## The footage of the agent reading
 
