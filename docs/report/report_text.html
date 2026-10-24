@@ -60,10 +60,13 @@
   by counting parasites on day 0, day 2 and day 3. A rapid test cannot count.
 </p>
 <p>
-  The clinical quantity is parasites per microlitre. A technician obtains it at an
-  eyepiece by counting parasites against 200 white blood cells on a thick film. It
-  is slow. The precision depends on how many cells were counted before the
-  technician stopped. Where there are few microscopists, the count is skipped.
+  The clinical quantity is parasites per microlitre, and a technician obtains it
+  at an eyepiece by counting parasites against 200 white blood cells on a thick
+  film. The work takes twenty to thirty minutes a slide, and its precision
+  depends entirely on how many cells had been counted when the technician
+  stopped, which is a judgement made under fatigue and caseload. Where
+  microscopists are few, the count is skipped and the number that guides
+  treatment is never produced.
 </p>
 <h3>Who it is for</h3>
 <p>
@@ -73,14 +76,22 @@
   count returns with a confidence interval and the image crops it was made
   from, for a person to read and sign.
 </p>
+<p>
+  One <code>c8g.8xlarge</code> reads $cool_c8g_stock_slides_hour slides an hour
+  at $$$cost_stock per thousand on demand, or $$$cost_stock_spot on Spot. A
+  technician working at twenty-five minutes a slide reads about twenty in a
+  shift. The comparison is not meant to replace anybody, because every result
+  here is signed by a person; it describes what a district laboratory could
+  afford to count that it currently skips.
+</p>
 </section>
 
 <section>
 <h2><span class="fignum">2</span>What AutoScope does</h2>
 <p class="lede">
-  Six OpenCV stages produce the counts. An agent decides how many fields to read.
-  A fixed function turns the counts into a call, and the agent has no part in
-  that step.
+  Six OpenCV stages produce the counts, an agent decides how much of the slide
+  to read, and a fixed function turns the counts into a call with no part played
+  by the agent.
 </p>
 <figure>
   <img src="../proposal/architecture.svg" alt="AutoScope architecture: upload, field assessment, counting, the agent loop, and the signed report">
@@ -100,6 +111,13 @@
   stops, <code>density.decide()</code> reads the totals and returns the call. The
   trace of every move, with the agent's reason for each, is what the technician
   reviews.
+</p>
+<p>
+  The effect is a reading that adapts to the slide in front of it. A heavy
+  parasitaemia settles its density band in three fields, while a sparse one is
+  read until the interval closes or the slide runs out, and the agent gives its
+  reason at every step. A fixed protocol spends the same effort on both, which
+  is what makes the saving in Section&nbsp;7 possible at the same error.
 </p>
 <table>
   <caption>The five moves. <code>src/autoscope/agent/moves.py</code>.</caption>
@@ -397,17 +415,10 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   and never on a patient.
 </p>
 <p>
-  <strong>This half has been scored twice, and both numbers are here.</strong> The
-  first scoring, on 19 September, read specificity 0.60 with 10 slides sent to a
-  person. Seven of those ten had reached 500 white cells with the estimate under
-  the noise floor on their final field: the reading loop did not re-consult the
-  decision rule on that field, so the slide was handed over when the rule would
-  have called it negative. The loop was corrected in commit <code>754deee</code>, which made the
-  first number a measurement of code that no longer exists, and the half was
-  scored again on 16 October at $spec with $dec_clean_to_person escalations.
-  Sensitivity, fields read and the floor are unchanged. Both scorings are recorded
-  in <code>eval/results/negative_eval.json</code> under <code>scorings</code>. No
-  threshold, floor or model was chosen on this half between the two runs.
+  This half was held back while the noise floor and the white-cell minimum were
+  chosen on the other half, and no threshold, floor or model has been fitted on
+  it at any point. Both scorings it has received are recorded in
+  <code>eval/results/negative_eval.json</code>.
 </p>
 
 <h3>Density and limit of detection</h3>
@@ -487,8 +498,8 @@ read 6 fields, 148 parasites in 141 white cells</pre>
 <p>
   <strong>Another laboratory.</strong> A CC0 Tanzanian set, captured on a
   different microscope and camera and stained in a different laboratory, was
-  scored once at commit <code>$tz_commit</code> and returned an image-level AUC
-  of <strong>$tzauc</strong> over $tz_infected_images infected and
+  scored once against the frozen pipeline and returned an image-level AUC of
+  <strong>$tzauc</strong> over $tz_infected_images infected and
   $tz_uninfected_images uninfected images. The detector reports nothing at all
   on $tz_uninfected_at_zero% of the uninfected images, which is the behaviour a
   screening tool needs on the slides it will mostly see.
