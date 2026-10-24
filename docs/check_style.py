@@ -65,7 +65,9 @@ DRAMA = ("no one expected", "here is the part", "what happened next",
 ALLOW = ("screening aid, not a diagnostic device",)
 
 TAG = re.compile(r"<[^>]+>")
-DROP = re.compile(r"<(code|pre|script|style|title)\b.*?</\1>", re.S | re.I)
+DROP = re.compile(r"<(code|pre|script|style|title|footer)\b.*?</\1>", re.S | re.I)
+# A numbered reference list is terse on purpose and is not written by us.
+CITATION = re.compile(r"^\s*\d\.\s+\w|doi:")
 PROSE = re.compile(r"<(p|li|figcaption|caption|td|h[1-6])\b[^>]*>(.*?)</\1>", re.S | re.I)
 
 
@@ -112,7 +114,7 @@ def prose(path: Path) -> list[str]:
         body = re.sub(r"&[a-z]+;|&#\d+;", " ", body)
         body = re.sub(r"\$[a-z_][a-z_0-9]*", "N", body)   # a figure, read as a word
         body = re.sub(r"\s+", " ", body).strip()
-        if body:
+        if body and not CITATION.search(body):
             out.append(body)
     return out
 
@@ -184,6 +186,20 @@ def check(path: Path) -> list[str]:
         joined = " ".join(worst)[:150]
         problems.append(f"  {len(worst)} short sentences in a row; join some\n"
                         f"      {joined}")
+
+    # A run of nine-word sentences is the obvious case. The one that slipped
+    # past was eight sentences averaging eleven words, every one a separate
+    # clause that could have been joined. A paragraph of five or more
+    # sentences whose mean is under sixteen words reads the same way.
+    for line in lines:
+        pieces = [x for x in re.split(r"(?<=[.!?])\s+", line) if x.strip()]
+        if len(pieces) < 5:
+            continue
+        mean = sum(len(x.split()) for x in pieces) / len(pieces)
+        if mean < 16:
+            problems.append(
+                f"  {len(pieces)} sentences averaging {mean:.0f} words in one "
+                f"paragraph; connect them\n      {line[:140]}")
     return problems
 
 

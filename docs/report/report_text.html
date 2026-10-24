@@ -54,10 +54,12 @@
   Region. Three quarters of those deaths were children under five.
 </p>
 <p>
-  Rapid diagnostic tests carry most of the field load. Two things limit them.
-  <em>pfhrp2</em> gene deletions, found in 42 countries, remove the commonest
-  rapid-test target from the parasite. Artemisinin partial resistance is detected
-  by counting parasites on day 0, day 2 and day 3. A rapid test cannot count.
+  Rapid diagnostic tests carry most of the field load, and two things limit
+  them. In 42 countries the parasite has lost the <em>pfhrp2</em> gene and with
+  it the commonest target those tests look for, so the test can read negative on
+  a patient who is infected. Artemisinin partial resistance is measured by
+  counting parasites across the three days after treatment starts, and a rapid
+  test gives no count at all.
 </p>
 <p>
   The clinical quantity is parasites per microlitre, and a technician obtains it
@@ -103,14 +105,15 @@
 </figure>
 <h3>The loop</h3>
 <p>
-  A field arrives. OpenCV finds the lit disc and scores it for focus, evenness
-  and debris. The stain is then normalised and the white cells segmented. A
-  top-hat proposes the parasite candidates, and a small convolutional network
-  scores each one through <code>cv.dnn</code>. The running totals go to the agent with the current density
-  estimate and its Poisson interval. The agent picks one of five moves. When it
-  stops, <code>density.decide()</code> reads the totals and returns the call. The
-  trace of every move, with the agent's reason for each, is what the technician
-  reviews.
+  A field arrives, and OpenCV works through it: the lit disc is found, the
+  field is scored for focus and debris, the stain is normalised and the white
+  cells are segmented. A top-hat then proposes the parasite candidates, and a
+  small convolutional network scores each one through <code>cv.dnn</code>. Those
+  running totals reach the agent along with the density estimate and its Poisson
+  interval, and the agent picks one of five moves. When it stops,
+  <code>density.decide()</code> reads the totals and returns the call, while the
+  trace of every move, with the reason the agent gave for it, is what the
+  technician reviews.
 </p>
 <p>
   The effect is a reading that adapts to the slide in front of it. A heavy
@@ -164,13 +167,14 @@
 </p>
 <h3>Stage 5. Parasite candidates and the patch network</h3>
 <p>
-  A morphological top-hat on the smoothed stain map leaves small dark purple objects.
-  Local maxima above a threshold, outside the white-cell mask, are the candidates.
-  Candidate recall against all annotated parasites is <strong>$candidate_recall</strong>.
-  Each candidate is cut to a 48&nbsp;px patch and scored by a small CNN, exported to
-  ONNX and run through <code>cv.dnn</code>. The same binary runs on the laptop and on
-  Graviton. The operating threshold is <strong>$threshold</strong>, chosen on 20
-  calibration patients by the rule <em>closest to zero count bias</em>.
+  A morphological top-hat on the smoothed stain map leaves small dark purple
+  objects, and the local maxima above a threshold and outside the white-cell mask
+  are the candidates, which recall <strong>$candidate_recall</strong> of all the
+  annotated parasites. Each candidate is cut to a 48&nbsp;px patch and scored by
+  a small CNN that was exported to ONNX and runs through <code>cv.dnn</code>, so
+  the same binary serves the laptop and Graviton. The operating threshold of
+  <strong>$threshold</strong> was chosen on 20 calibration patients by the rule
+  <em>closest to zero count bias</em>.
 </p>
 <h3>Stage 6. Density and interval</h3>
 <p>
@@ -187,11 +191,11 @@
   The agent chooses where to look and when to stop. It does not choose the diagnosis.
 </p>
 <p>
-  The agent returns a structured move. When the move is <code>stop</code>, it also
-  returns its own opinion of the call. That opinion is recorded and not used. The
-  call comes from <code>density.decide()</code>, the same function that serves the
-  rule-based policies. So the comparison between an agent and a rule is a comparison
-  of stopping points only.
+  The agent returns a structured move, and when that move is <code>stop</code>
+  it also returns its own opinion of the call, which is recorded and never used.
+  The call comes from <code>density.decide()</code>, the same function that
+  serves the rule-based policies, so a comparison between an agent and a rule
+  compares stopping points and nothing else.
 </p>
 <h3>A trace</h3>
 <p>
@@ -226,11 +230,12 @@ read 6 fields, 148 parasites in 141 white cells</pre>
 
 <h3>Replay without cost</h3>
 <p>
-  Every model call is recorded to a JSONL cache, keyed on the model, the effort
-  setting, the system prompt, the tool definitions and the observation.
-  <strong>$cache_calls calls across $cache_models models</strong> ship with the
-  repository. A changed prompt changes the key. A cache miss during replay raises
-  instead of calling the model. The comparison re-runs with no AWS account.
+  Every model call is recorded to a JSONL cache. Its key covers the model with
+  its effort setting, the prompt the model was given with the tools it was
+  offered, and the observation it was answering. <strong>$cache_calls calls
+  across $cache_models models</strong> ship with the repository. Editing the prompt changes the key, and a cache miss during a
+  replay raises instead of quietly calling the model, so the comparison re-runs
+  on any laptop with no AWS account.
 </p>
 </section>
 
@@ -242,11 +247,11 @@ read 6 fields, 148 parasites in 141 white cells</pre>
 </p>
 <p>
   <strong>The detector.</strong> Yang et al. is the paper that goes with this
-  dataset: a smartphone-based detector on the same 150 patients, reporting
-  92.6% sensitivity and 94.3% precision at the candidate level.<sup>1</sup>
-  Everything measured here is read against that. Our detector is deliberately a
-  small CNN on top of classical morphology, because it has to run through
-  <code>cv.dnn</code> on an Arm instance beside five other OpenCV stages. The
+  dataset, a smartphone-based detector on the same 150 patients reporting 92.6%
+  sensitivity and 94.3% precision at the candidate level, and everything
+  measured here is read against it.<sup>1</sup> Our own detector is deliberately
+  a small CNN on top of classical morphology, because it has to run through
+  <code>cv.dnn</code> on an Arm instance beside five other OpenCV stages, and the
   question this work takes up is a different one: how much of a slide a reader
   should examine before the answer stops changing.
 </p>
@@ -350,15 +355,17 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   slides are public de-identified research images.
 </p>
 <p>
-  <strong>Human control.</strong> The agent has no way to issue a diagnosis. Its
-  moves are count, refocus, skip, stop and <code>flag_for_human</code>, and the
-  call always comes from <code>decide()</code> on the counts. When the agent
-  stops it may state its own opinion of the call; that opinion is recorded and
-  never used, and the two agreed on all $arm_bedrock_found_agent_agreed of the
-  slides where it gave one. A slide it cannot settle goes to a person:
-  $arm_bedrock_found_escalated of $agent_patients slides with the shipped counter.
-  Every result carries the field images and the per-move reasons that produced it,
-  so a reviewer can check the work. The number is never delivered on its own.
+  <strong>Human control.</strong> The agent has no way to issue a diagnosis,
+  because its moves are count, refocus, skip, stop and
+  <code>flag_for_human</code>, and the call always comes from
+  <code>decide()</code> on the counts. When the agent stops it may state its own
+  opinion of that call; the opinion is recorded and never used, and the two
+  agreed on all $arm_bedrock_found_agent_agreed of the slides where it gave one.
+  A slide it cannot settle goes to a person, which happened on
+  $arm_bedrock_found_escalated of $agent_patients slides with the shipped
+  counter, and every result carries the field images and the per-move reasons
+  that produced it, so a reviewer can check the work instead of taking the
+  number.
 </p>
 </section>
 
@@ -423,12 +430,13 @@ read 6 fields, 148 parasites in 141 white cells</pre>
 
 <h3>Density and limit of detection</h3>
 <p>
-  On $density_slides slides, density is within &plusmn;25% of the expert count on
-  <strong>$density_within_25%</strong> and within &plusmn;50% on
-  $density_within_50%. Mean absolute error $density_mae_pct%. By dilution over
-  $lod_repeats repeats, the limit of detection at 95% sensitivity is
-  <strong>$lod_per_ul parasites/&micro;L</strong>. The noise floor on clean slides is
-  $floor/&micro;L. The rule does not call a slide positive below it.
+  On $density_slides slides the density lands within &plusmn;25% of the expert
+  count on <strong>$density_within_25%</strong> of them and within &plusmn;50% on
+  $density_within_50%, for a mean absolute error of $density_mae_pct%. By
+  dilution over $lod_repeats repeats the limit of detection at 95% sensitivity is
+  <strong>$lod_per_ul parasites/&micro;L</strong>, and since clean slides read at
+  a noise floor of $floor/&micro;L, the rule calls nothing positive below that
+  line.
 </p>
 
 <h3>The agent against the rules</h3>
@@ -462,14 +470,15 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   read a flat eight fields, so a total is not where the agent earns its place.
 </p>
 <p>
-  What separates the models is not their size. It is whether they are willing to
-  stop. Nova Pro, Gemma 3 and Nemotron never chose <code>stop</code> in more than a
-  thousand calls each. They read every field the slide has and send the slide to a
-  person when the fields run out, so they cost more than the WHO protocol. Llama 4
+  Willingness to stop is what separates the models, and their size predicts
+  nothing. Nova Pro, Gemma 3 and Nemotron never chose <code>stop</code> in more
+  than a thousand calls each, so they read every field a slide has and hand it
+  over when the fields run out, which costs more than the WHO protocol; Llama 4
   Maverick and Ministral 3 stop a handful of times and reach the same place.
-  Three models stop too early. Devstral 2, MiniMax M2.5 and Qwen3-VL read fewer
-  than 310 fields and their density error rises to between 29% and 37%. Two Qwen
-  models skip fields instead of counting them. Qwen3-Next skipped
+  Three models have the opposite fault. Devstral 2, MiniMax M2.5 and Qwen3-VL
+  read fewer than 310 fields and their density error rises to between 29% and
+  37%, while two Qwen models skip fields instead of counting them. Qwen3-Next
+  skipped
   $arm_qwen3_next_80b_skips times and counted on only
   $arm_qwen3_next_80b_found_compared slides, so its error is not comparable.
   Qwen3-Coder-Next skipped $arm_qwen3_coder_next_skips times and reached
@@ -488,11 +497,12 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   not.
 </p>
 <p>
-  The measured claim is this. At the same cost and the same error, the agent
-  puts its effort where the evidence is thin and states a reason for every move.
-  That reason sits on the demo page beside the field it was made on. Against an oracle counter it is behind both the rule
+  The measured claim is this: at the same cost and the same error, the agent
+  puts its effort where the evidence is thin and states a reason for every move,
+  and that reason sits on the demo page beside the field it was made on. Against
+  an oracle counter it falls behind both the rule
   ($arm_bedrock_truth_mape% against $arm_decision_truth_mape%) and the fixed
-  policy. Stopping earlier costs accuracy on exact counts.
+  policy, because stopping earlier costs accuracy once the counts are exact.
 </p>
 
 <h3>Generalisation, each scored once</h3>
@@ -582,11 +592,11 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   </tbody>
 </table>
 <p>
-  The COOL image is $cool_vs_stock_pipeline&times; slower on the pipeline. Three
-  of seven stages are faster on it and three are slower by 7 to 19%. The
-  candidate stage is $cand_ratio&times; slower. That stage runs a 31&times;31 ellipse over <code>float32</code> at twelve
-  megapixels. The table below times its real calls at that size, at 32 threads and
-  at 1.
+  The COOL image runs the pipeline $cool_vs_stock_pipeline&times; slower, and
+  although three of its seven stages are faster, three more are slower by 7 to
+  19% and the candidate stage is $cand_ratio&times; slower on its own. That stage
+  runs a 31&times;31 ellipse over <code>float32</code> at twelve megapixels, so
+  the table below times its real calls at that size, at 32 threads and at one.
 </p>
 <table>
   <caption>Candidate-stage calls, 4032&times;3024, median of 10 runs, milliseconds.</caption>
@@ -598,11 +608,12 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   <tbody>$sweep_rows</tbody>
 </table>
 <p>
-  At one thread the two builds agree within 6% on every call. At 32 threads the pip
-  wheel gains 15 to 25&times; on the filter and morphology calls. The COOL image
-  gains nothing on them. <code>cvtColor</code> parallelises equally on both, so TBB
-  is working. The HAL-intercepted filter and morphology paths do not use the
-  threads.
+  At one thread the two builds agree within 6% on every call, so the kernels run
+  at the same speed. At 32 threads the pip wheel gains 15 to 25&times; on the
+  filter and morphology calls while the COOL image gains nothing on them, and
+  since <code>cvtColor</code> parallelises equally on both, TBB is working. What
+  the image does not do is spread the HAL-intercepted filter and morphology paths
+  across the cores.
 </p>
 <h3>The workaround</h3>
 <p>
@@ -722,10 +733,11 @@ python bench/compare_counts.py profile-c8g-stock-counts profile-c8g-cool-counts<
 </p>
 <h3>Data</h3>
 <p>
-  Development and most evaluation use NLM/LHNCBC thick films from one collection.
-  The Tanzanian set is the only transfer evidence. AUC $tzauc there is well below
-  the within-collection figures. A deployment would need local calibration slides.
-  The threshold-choosing script is in the repository for that purpose.
+  Development and most of the evaluation use NLM/LHNCBC thick films from a
+  single collection, and the Tanzanian set is the only evidence of transfer to
+  another one. The AUC of $tzauc there sits well below the within-collection
+  figures, so a deployment would need local calibration slides, and the script
+  that chooses a threshold from them is in the repository.
 </p>
 <h3>Species</h3>
 <p>
@@ -785,15 +797,16 @@ python bench/compare_counts.py profile-c8g-stock-counts profile-c8g-cool-counts<
 </p>
 <h3>What limits it</h3>
 <p>
-  The density error tracks the per-slide spread of the found-to-true parasite
-  ratio, not F1. The spread is false alarms, not recall: across the 50 held-out
+  What the density error tracks is the per-slide spread of the found-to-true
+  parasite ratio, and false alarms drive that spread: across the 50 held-out
   slides the false-alarm rate per true parasite varies with a coefficient of
-  variation of $sc_fa_cv%, recall with $sc_rec_cv%. Nine slides carry
-  $sc_nine_share% of that variance. The other $sc_rest_slides read $sc_rest_err%
-  error with $sc_rest_cv% spread. Six of the nine are sparse slides that
-  over-count on detections scored just above the threshold: rods, streaks and
-  clumps. Three are dense slides with soft focus whose parasites score near
-  zero. Every counter trained for this project fails on the same nine.
+  variation of $sc_fa_cv% where recall varies with $sc_rest_cv%. Nine slides
+  carry $sc_nine_share% of the variance, and the other $sc_rest_slides read
+  $sc_rest_err% error with $sc_rest_cv% spread. Six of the nine are sparse
+  slides that over-count on detections scored just above the threshold, on rods
+  and streaks and clumps, while the remaining three are dense slides with soft
+  focus whose parasites score near zero. Every counter trained for this project
+  fails on the same nine.
 </p>
 <h3>Count by score, not by one each</h3>
 <p>
