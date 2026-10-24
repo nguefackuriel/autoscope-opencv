@@ -67,8 +67,8 @@
 </p>
 <h3>Who it is for</h3>
 <p>
-  A district hospital or health centre with a microscope, a technician, and no
-  slide scanner. A phone camera is held to the eyepiece. The fields are uploaded.
+  A district hospital or health centre that owns a microscope and employs a
+  technician. There is no slide scanner. A phone camera is held to the eyepiece. The fields are uploaded.
   The count comes back with a confidence interval and the crops it was made from.
   A person signs the result.
 </p>
@@ -78,7 +78,8 @@
 <h2><span class="fignum">2</span>What AutoScope does</h2>
 <p class="lede">
   Six OpenCV stages produce the counts. An agent decides how many fields to read.
-  A fixed function, not the agent, turns the counts into a call.
+  A fixed function turns the counts into a call, and the agent has no part in
+  that step.
 </p>
 <figure>
   <img src="../proposal/architecture.svg" alt="AutoScope architecture: upload, field assessment, counting, the agent loop, and the signed report">
@@ -90,10 +91,10 @@
 </figure>
 <h3>The loop</h3>
 <p>
-  A field arrives. OpenCV finds the lit disc, scores focus, evenness and debris,
-  normalises the stain, segments white cells, proposes parasite candidates with a
-  top-hat, and scores each candidate with a small convolutional network through
-  <code>cv.dnn</code>. The running totals go to the agent with the current density
+  A field arrives. OpenCV finds the lit disc and scores it for focus, evenness
+  and debris. The stain is then normalised and the white cells segmented. A
+  top-hat proposes the parasite candidates, and a small convolutional network
+  scores each one through <code>cv.dnn</code>. The running totals go to the agent with the current density
   estimate and its Poisson interval. The agent picks one of five moves. When it
   stops, <code>density.decide()</code> reads the totals and returns the call. The
   trace of every move, with the agent's reason for each, is what the technician
@@ -224,22 +225,22 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   <strong>The detector.</strong> Yang et al. is the paper that goes with this
   dataset: a smartphone-based detector on the same 150 patients, reporting
   92.6% sensitivity and 94.3% precision at the candidate level.<sup>1</sup>
-  Everything measured here is read against that. Our contribution is not a
-  better detector. Our detector is deliberately a small CNN on top of classical
-  morphology, because it has to run through <code>cv.dnn</code> on an Arm
-  instance beside five other OpenCV stages.
+  Everything measured here is read against that. Our detector is deliberately a
+  small CNN on top of classical morphology, because it has to run through
+  <code>cv.dnn</code> on an Arm instance beside five other OpenCV stages. The
+  contribution lies elsewhere.
 </p>
 <p>
-  <strong>The protocol.</strong> How many fields to read is not a modelling
-  question, it is a WHO one: count parasites against 200 white cells, or read
-  100 fields before calling a slide negative.<sup>2</sup> That protocol is a
-  fixed budget. It spends the same effort on a slide swarming with parasites as
-  on an empty one. Nothing in the literature we found treats "how much of this
-  slide is enough" as a decision to be made per slide and measured.
+  <strong>The protocol.</strong> The WHO already answers how many fields to
+  read: count parasites against 200 white cells, or read 100 fields before
+  calling a slide negative.<sup>2</sup> That protocol is a fixed budget, and it
+  spends the same effort on a crowded slide as on an empty one. In the
+  literature we found, how much of a slide is enough was never treated as a
+  decision to be made per slide and measured.
 </p>
 <p>
-  <strong>What is new here.</strong> Three things, and each one is a
-  measurement rather than a claim.
+  <strong>What is new here.</strong> Three things. A measurement stands behind
+  each one.
 </p>
 <ol>
   <li><strong>The stopping decision is separated from the diagnosis and
@@ -247,7 +248,7 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   fields with the same counter and the same <code>decide()</code>; only the
   stopping point changes. That is what makes an agent comparable to a rule at
   all, and it is why the honest answer about a fixed eight fields could be
-  found rather than argued about.</li>
+  found and settled.</li>
   <li><strong>Fifteen models through one loop, replayable for nothing.</strong>
   $cache_calls recorded calls ship with the repository. The finding is that
   model size does not predict anything and willingness to stop does:
@@ -302,8 +303,8 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   the OpenCV version, the custom HAL line, the parallel framework and the
   machine, read from <code>cv.getBuildInformation()</code> in the job itself. A
   speed claim about an accelerated build is only checkable if the build travels
-  with the data, so it is on the demo page under the counts it produced, not only
-  in a benchmark file.
+  with the data, so it appears on the demo page under the counts it produced as
+  well as in the benchmark files.
 </p>
 
 <h3>What is logged, what is locked down, where a person decides</h3>
@@ -311,7 +312,7 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   <strong>Observability.</strong> $tf_log_groups CloudWatch log groups,
   $log_retention_days-day retention: the API, the Step Functions state machine and the
   Batch jobs. The state machine logs at <code>ALL</code> with execution data on, so
-  every field read, every agent move and the reason it gave are in the log, not only
+  the log holds every field read, every agent move and the reason given, down to
   the final answer. Each slide also writes one DynamoDB row per move, which is what
   the demo page reads back. An alarm fires on more than $alarm_sessions sessions
   started in five minutes, and two budgets, $$$budget_monthly a month overall and
@@ -336,7 +337,7 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   slides where it gave one. A slide it cannot settle goes to a person:
   $arm_bedrock_found_escalated of $agent_patients slides with the shipped counter.
   Every result carries the field images and the per-move reasons that produced it,
-  so a reviewer checks the work rather than taking the number.
+  so a reviewer can check the work.</p><p>The number alone is never the output.
 </p>
 </section>
 
@@ -373,16 +374,17 @@ read 6 fields, 148 parasites in 141 white cells</pre>
 </p>
 <p>
   <strong>$dec_clean_called_positive of $dec_clean_slides clean slides called
-  positive.</strong> $dec_clean_to_person sent to a person. An escalation is not a
-  negative, so specificity is <strong>$spec</strong>, below the 0.90 target.
+  positive.</strong> $dec_clean_to_person sent to a person. An escalation counts
+  against specificity, which is therefore <strong>$spec</strong>, below the 0.90
+  target.
 </p>
 <p>
   <strong>This half has been scored twice, and both numbers are here.</strong> The
   first scoring, on 19 September, read specificity 0.60 with 10 slides sent to a
   person. Seven of those ten had reached 500 white cells with the estimate under
   the noise floor on their final field: the reading loop did not re-consult the
-  decision rule on that field, so the slide was handed over rather than called
-  negative. The loop was corrected in commit <code>754deee</code>, which made the
+  decision rule on that field, so the slide was handed over when the rule would
+  have called it negative. The loop was corrected in commit <code>754deee</code>, which made the
   first number a measurement of code that no longer exists, and the half was
   scored again on 16 October at $spec with $dec_clean_to_person escalations.
   Sensitivity, fields read and the floor are unchanged. Both scorings are recorded
@@ -434,7 +436,7 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   stop. Nova Pro, Gemma 3 and Nemotron never chose <code>stop</code> in more than a
   thousand calls each. They read every field the slide has and send the slide to a
   person when the fields run out, so they cost more than the WHO protocol. Llama 4
-  Maverick and Ministral 3 stop a handful of times and end up in the same place.
+  Maverick and Ministral 3 stop a handful of times and reach the same place.
   Three models stop too early. Devstral 2, MiniMax M2.5 and Qwen3-VL read fewer
   than 310 fields and their density error rises to between 29% and 37%. Two Qwen
   models skip fields instead of counting them. Qwen3-Next skipped
@@ -456,10 +458,9 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   not.
 </p>
 <p>
-  So the measured claim is this one, and not a larger one: at the same cost and the
-  same error, the agent puts its effort where the evidence is thin, states a reason
-  for every move, and the reason is on the demo page next to the field it was made
-  on. Against an oracle counter it is behind both the rule
+  The measured claim is this. At the same cost and the same error, the agent
+  puts its effort where the evidence is thin and states a reason for every move.
+  That reason sits on the demo page beside the field it was made on. Against an oracle counter it is behind both the rule
   ($arm_bedrock_truth_mape% against $arm_decision_truth_mape%) and the fixed
   policy. Stopping earlier costs accuracy on exact counts.
 </p>
@@ -730,7 +731,7 @@ python bench/compare_counts.py profile-c8g-stock-counts profile-c8g-cool-counts<
   moves are count, refocus, skip, stop and <code>flag_for_human</code>; the call
   comes from <code>decide()</code> reading the counts. If the agent Lambda raises
   anything at all, the slide goes to a person with the fields read so far
-  already in the trace, rather than the reading failing with no outcome.
+  already in the trace. The reading no longer fails with no outcome at all.
 </p>
 
 <h3>Privacy</h3>

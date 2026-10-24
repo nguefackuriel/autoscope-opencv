@@ -95,10 +95,10 @@ What each set actually contains, and what that allows us to claim, is in
 has only an infected/uninfected label per image, so per-parasite precision and
 recall are measured on NLM and Tanzania answers a different question.
 
-The Tanzania set is the held-out test and we keep it that way. No threshold gets
-fitted on it, no model gets trained on it, and nobody looks at its numbers until
-the pipeline is frozen. A held-out set you have already peeked at is not a
-held-out set, and the generalisation claim in the report depends on this.
+The Tanzania set is the held-out test and we keep it that way. No threshold is
+fitted on it and no model is trained on it. Its numbers stay unread until the
+pipeline is frozen, because the generalisation claim in the report depends on
+the set having been scored once.
 
 Two more NLM sets, same group, fetched by `data/download_nlm_extra.py`:
 
@@ -183,10 +183,10 @@ python bench/cool_bench.py --runs 100 --label c8g-no-kleidicv   # Graviton4, Kle
 python bench/cool_bench.py --runs 100 --label c7i-stock         # x86, the pip wheel
 ```
 
-Four arms, not three, and the reason is in the next paragraph. The third is
-built by `bench/Dockerfile.kleidicv-off`, which fails the build if the
-acceleration is still linked: a control that quietly has KleidiCV in it would
-report a 1.0x speedup as a finding.
+There are four arms. The third is built by
+`bench/Dockerfile.kleidicv-off`, which fails the build if the acceleration is
+still linked. A control with KleidiCV quietly compiled into it would report a
+1.0x speedup as a finding.
 
 Then the two numbers a lab reads, on each machine:
 
@@ -199,7 +199,7 @@ Every result file records `kleidicv_in_build` and the CPU baseline, so a reader
 can tell which build produced the numbers. The COOL claim is worth exactly as
 much as that line. Mind that the pinned pip wheel on aarch64 already ships KleidiCV
 (CI prints `Custom HAL: KleidiCV (ver 26.03)`), so "stock" on Arm means a
-build with KleidiCV switched off, not the wheel.
+build with KleidiCV compiled out. The wheel is a separate arm.
 
 Note for local work: both our laptops are x86, so nothing here can time Arm.
 Correctness on Arm can be checked with `docker buildx --platform linux/arm64`,
