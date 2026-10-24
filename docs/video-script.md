@@ -137,7 +137,7 @@ chips in it.*
 > and counter, fifteen of them models on Bedrock. Every call was recorded, so
 > the comparison replays free.
 >
-> A fixed policy that reads eight fields performs as well as the agent. The
+> A fixed policy that reads eight fields does as well as the agent. The
 > density error matches and fewer slides go to a person, which the report
 > states.
 >

@@ -77,7 +77,7 @@ h2 {
   break-before: auto; break-after: avoid;
 }
 h3 { break-after: avoid; }
-.lede { break-after: avoid; }
+.lede { break-after: avoid; break-inside: avoid; }
 h2 .fignum { color: var(--giemsa); margin-right: 3mm; font-weight: 600; }
 h3 { font-size: 10.2pt; font-weight: 600; margin: 6mm 0 1.5mm; }
 p { margin: 0 0 3mm; max-width: 162mm; orphans: 3; widows: 3; }

@@ -62,8 +62,8 @@
   test gives no count at all.
 </p>
 <p>
-  The clinical quantity is parasites per microlitre, and a technician obtains it
-  at an eyepiece by counting parasites against 200 white blood cells on a thick
+  The clinical quantity is parasites per microlitre, and a technician gets it at an
+  eyepiece by counting parasites against 200 white blood cells on a thick
   film. The work takes twenty to thirty minutes a slide, and its precision
   depends entirely on how many cells had been counted when the technician
   stopped, which is a judgement made under fatigue and caseload. Where
@@ -72,7 +72,7 @@
 </p>
 <h3>Who it is for</h3>
 <p>
-  A district hospital or health centre that owns a microscope and employs a
+  A district hospital or health centre that owns a microscope and has a
   technician, but has no slide scanner and little prospect of one. A phone
   camera held to the eyepiece produces the fields, which are uploaded, and the
   count returns with a confidence interval and the image crops it was made
@@ -119,8 +119,7 @@
   The effect is a reading that adapts to the slide in front of it. A heavy
   parasitaemia settles its density band in three fields, while a sparse one is
   read until the interval closes or the slide runs out, and the agent gives its
-  reason at every step. A fixed protocol spends the same effort on both, which
-  is what makes the saving in Section&nbsp;7 possible at the same error.
+  reason at every step.
 </p>
 <table>
   <caption>The five moves. <code>src/autoscope/agent/moves.py</code>.</caption>
@@ -145,7 +144,7 @@
 <p>
   A phone through an eyepiece gives a bright disc on a black surround.
   <code>fov.detect</code> thresholds the image, closes it with an elliptical kernel
-  and keeps the largest component. Every later stage works inside the disc.
+  and keeps the largest piece. Every later stage works inside the disc.
 </p>
 <h3>Stage 2. Field quality</h3>
 <p>
@@ -163,7 +162,7 @@
 <h3>Stage 4. White cells</h3>
 <p>
   White cells are the denominator of every density. Nuclei are segmented from the
-  stain map and separated with a distance transform and connected components.
+  stain map and separated with a distance transform and connected-component labelling.
 </p>
 <h3>Stage 5. Parasite candidates and the patch network</h3>
 <p>
@@ -321,7 +320,7 @@ read 6 fields, 148 parasites in 141 white cells</pre>
 </table>
 <p>
   The container is the same arm64 image the benchmark times. CI runs the test suite
-  on x86 and arm64. Benchmark instances run on Spot and terminate themselves. The
+  on x86 and arm64. Benchmark instances run on Spot and shut themselves down. The
   demo page is public and needs no credentials.
 </p>
 <p>
@@ -345,7 +344,7 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   $$$budget_bedrock for Bedrock, email on 80% forecast and 100% actual.
 </p>
 <p>
-  <strong>Security.</strong> $tf_roles IAM roles, one per component, each scoped to
+  <strong>Security.</strong> $tf_roles IAM roles, one for each part of the stack, each scoped to
   the bucket, table, state machine or function it needs by ARN. All
   $tf_buckets S3 buckets block public access and are encrypted at rest; the demo
   page is served through CloudFront, not from a public bucket. The API has no
@@ -742,14 +741,14 @@ python bench/compare_counts.py profile-c8g-stock-counts profile-c8g-cool-counts<
 <h3>Species</h3>
 <p>
   Falciparum only. On <em>P.&nbsp;vivax</em> the detector reads F1 $pvf1 and its
-  confidence score does not indicate failure. It cannot be used where vivax
+  confidence score does not show that it has failed. It cannot be used where vivax
   circulates.
 </p>
 <h3>Test-set discipline</h3>
 <p>
   The 50 held-out patients were fixed before any parasite work and never changed.
   The uninfected frozen half, the Tanzanian set and the vivax set were each scored
-  once. Re-scoring requires an explicit flag and a statement in this report. The
+  once. Scoring one again takes an explicit flag and a line in this report. The
   threshold was chosen on 20 calibration patients by a stated rule.
 </p>
 <h3>The guards, and where each one is</h3>

@@ -43,6 +43,41 @@ THREE_ITEMS = re.compile(
     r"[\w'-]+(?:\s+[\w'-]+){0,7},"
     r"\s+(?!which|who|that|so|but|because|and|or|if|where|when)"
     r"[\w'-]+(?:\s+[\w'-]+){0,7},\s+(and|or)\s+[\w'-]+", re.IGNORECASE)
+# Words with a plainer everyday equivalent. The right-hand side is what to
+# write instead. Uriel has asked three times for simple English; a list is
+# more use than another promise.
+SIMPLER = {
+    "obtain": "get", "obtains": "gets", "obtained": "got",
+    "utilise": "use", "utilize": "use", "utilised": "used",
+    "demonstrate": "show", "demonstrates": "shows", "demonstrated": "showed",
+    "indicate": "show", "indicates": "shows", "indicated": "showed",
+    "require": "need", "requires": "needs", "required": "needed",
+    "sufficient": "enough", "insufficient": "too little",
+    "additional": "more", "numerous": "many", "approximately": "about",
+    "subsequently": "then", "consequently": "so", "furthermore": "and",
+    "moreover": "and", "however": "but", "nevertheless": "but",
+    "therefore": "so", "thus": "so", "hence": "so",
+    "prior to": "before", "in order to": "to", "with respect to": "for",
+    "commence": "start", "terminate": "end", "ascertain": "find",
+    "facilitate": "help", "implement": "build", "implemented": "built",
+    "component": "part", "components": "parts", "methodology": "method",
+    "initial": "first", "initially": "at first", "ultimately": "in the end",
+    "attempt": "try", "attempts": "tries", "assist": "help",
+    "possess": "have", "possesses": "has", "purchase": "buy",
+    "sustain": "keep", "comprise": "have", "comprises": "has",
+    "constitute": "make up", "exhibit": "show", "exhibits": "shows",
+    "observe": "see", "observed": "seen", "yield": "give", "yields": "gives",
+    "employ": "use", "employs": "uses", "employed": "used",
+    "determine": "find", "determines": "finds", "determined": "found",
+    "perform": "do", "performs": "does", "performed": "done",
+    "accomplish": "do", "modify": "change", "modified": "changed",
+    "verify": "check", "verifies": "checks", "verified": "checked",
+    "optimal": "best", "minimal": "least", "maximal": "most",
+    "substantial": "large", "significant": "large", "considerable": "large",
+    "approximately": "about", "regarding": "about", "concerning": "about",
+    "whilst": "while", "amongst": "among", "upon": "on",
+}
+
 INFLATED = ("enhance", "boost", "elevate", "ensure", "crucial", "vital",
             "seamless", "leverage", "robust", "unlock", "harness", "pivotal",
             "revolution", "testament", "delve", "fundamentally", "reshape",
@@ -151,6 +186,9 @@ def check(path: Path) -> list[str]:
         for w in DRAMA:
             if w in low:
                 flag("suspense", w, line)
+        for word, plain in SIMPLER.items():
+            if re.search(rf"(?<![\w-])\b{re.escape(word)}\b(?![\w-])", low):
+                flag(f"use {plain!r} instead of", word, line)
 
     parts = [m.group(0) for line in lines for m in PARTICIPLE.finditer(line)
              if m.group(0).strip().split()[-1].lower() not in NOT_PARTICIPLES]
