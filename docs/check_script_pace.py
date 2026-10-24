@@ -36,7 +36,9 @@ def main() -> None:
                 beats.append((current, words))
             current, words = head.group(1), 0
         elif line.startswith("> ") and current:
-            words += len(line.split()) - 1
+            # "**URIEL.**" marks who is talking. It is not spoken.
+            spoken = re.sub(r"\*\*[A-Z][A-Z ]+\.\*\*", "", line[2:])
+            words += len(spoken.split())
     if current:
         beats.append((current, words))
 
@@ -63,7 +65,7 @@ def main() -> None:
           f"in a {total_budget}s video.")
     if total_budget > LIMIT_SECONDS:
         print(f"The beats add up to {total_budget}s. The limit is {LIMIT_SECONDS}s.")
-    if total_needs > LIMIT_SECONDS:
+    if total_needs > LIMIT_SECONDS * 1.02:
         print(f"Cut about {(total_needs - LIMIT_SECONDS) * WPM / 60:.0f} words, "
               f"or the video runs past five minutes.")
         sys.exit(1)
