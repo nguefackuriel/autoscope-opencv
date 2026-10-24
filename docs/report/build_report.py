@@ -42,7 +42,7 @@ CSS = """
 html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 body {
   margin: 0; background: #fff; color: var(--ink);
-  font: 10.2pt/1.5 "Source Serif 4", Georgia, "Times New Roman", serif;
+  font: 9.6pt/1.46 "Source Serif 4", Georgia, "Times New Roman", serif;
 }
 h1, h2, h3, .eyebrow, th, .chip, figcaption, .fignum {
   font-family: "IBM Plex Sans", -apple-system, "Helvetica Neue", sans-serif;
@@ -72,32 +72,34 @@ h1 { font-size: 40pt; line-height: 1; letter-spacing: -.025em; margin: 7mm 0 4mm
 section { margin-top: 9mm; }
 section:first-of-type { margin-top: 0; }
 h2 {
-  font-size: 15pt; font-weight: 600; letter-spacing: -.012em; margin: 0 0 1mm;
+  font-size: 14pt; font-weight: 600; letter-spacing: -.012em; margin: 0 0 1mm;
   padding-bottom: 2mm; border-bottom: 1.5pt solid var(--ink);
   break-before: auto; break-after: avoid;
 }
 h3 { break-after: avoid; }
 .lede { break-after: avoid; }
 h2 .fignum { color: var(--giemsa); margin-right: 3mm; font-weight: 600; }
-h3 { font-size: 10.8pt; font-weight: 600; margin: 7mm 0 1.5mm; }
-p { margin: 0 0 3.2mm; max-width: 162mm; orphans: 3; widows: 3; }
-.lede { font-size: 11.4pt; color: var(--muted); margin: 3mm 0 5mm; }
+h3 { font-size: 10.2pt; font-weight: 600; margin: 6mm 0 1.5mm; }
+p { margin: 0 0 3mm; max-width: 162mm; orphans: 3; widows: 3; }
+.lede { font-size: 10.6pt; color: var(--muted); margin: 2.5mm 0 4mm; }
 ul, ol { margin: 0 0 3.2mm; padding-left: 5mm; }
 li { margin-bottom: 1.4mm; }
 strong { font-weight: 600; }
-code { font-size: 8.8pt; background: var(--wash); padding: .3mm 1mm; border-radius: .6mm; }
+code { font-size: 8.3pt; background: var(--wash); padding: .3mm 1mm; border-radius: .6mm; }
 a { color: var(--giemsa); text-decoration: none; border-bottom: .4pt solid var(--rule); }
 
 /* ---- tables ---- */
-table { width: 100%; border-collapse: collapse; font-size: 9.1pt; margin: 2mm 0 4mm; break-inside: avoid; }
-caption { caption-side: top; text-align: left; font-size: 8.4pt; color: var(--muted); padding-bottom: 1.5mm; font-family: "IBM Plex Sans", sans-serif; }
-th { text-align: left; font-size: 7.8pt; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 0 3mm 1.6mm 0; border-bottom: 1pt solid var(--ink); }
+table { width: 100%; border-collapse: collapse; font-size: 8.4pt; margin: 2mm 0 3.5mm; break-inside: avoid; }
+caption { caption-side: top; text-align: left; font-size: 7.9pt; color: var(--muted); padding-bottom: 1.5mm; font-family: "IBM Plex Sans", sans-serif; }
+th { text-align: left; font-size: 7.2pt; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 0 3mm 1.6mm 0; border-bottom: 1pt solid var(--ink); }
 th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-td { padding: 1.5mm 3mm 1.5mm 0; border-bottom: .4pt solid var(--rule); vertical-align: top; }
+td { padding: 1.1mm 2.6mm 1.1mm 0; border-bottom: .4pt solid var(--rule); vertical-align: top; }
 tbody tr:last-child td { border-bottom: none; }
 tr.total td { border-top: 1pt solid var(--ink); border-bottom: none; font-weight: 600; }
 tr.group td { border-top: 1pt solid var(--ink); }
-td .muted { color: var(--muted); font-size: 8.2pt; }
+table.arms td, table.arms th { padding-top: .55mm; padding-bottom: .55mm; }
+table.arms { font-size: 7.7pt; margin-top: 1mm; }
+td .muted { color: var(--muted); font-size: 7.6pt; }
 .chip { font-size: 7.6pt; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; padding: .4mm 1.6mm; border-radius: .6mm; white-space: nowrap; }
 .chip.met { color: var(--good); border: .7pt solid var(--good); }
 .chip.missed { color: var(--miss); border: .7pt dashed var(--miss); }
@@ -106,10 +108,10 @@ td .muted { color: var(--muted); font-size: 8.2pt; }
 .note { background: var(--wash); border-left: 2pt solid var(--giemsa); padding: 4mm 5mm; margin: 4mm 0; break-inside: avoid; }
 .note p:last-child { margin-bottom: 0; }
 .note .label { font-family: "IBM Plex Sans", sans-serif; font-size: 7.8pt; letter-spacing: .12em; text-transform: uppercase; color: var(--giemsa); font-weight: 600; display: block; margin-bottom: 1.5mm; }
-pre { font-size: 7.4pt; line-height: 1.45; background: var(--wash); padding: 3.5mm 4mm; margin: 2mm 0 4mm; overflow: hidden; white-space: pre-wrap; break-inside: avoid; padding-left: 6mm; text-indent: -2.5mm; }
+pre { font-size: 7pt; line-height: 1.42; background: var(--wash); padding: 3.5mm 4mm; margin: 2mm 0 4mm; overflow: hidden; white-space: pre-wrap; break-inside: avoid; padding-left: 6mm; text-indent: -2.5mm; }
 figure { margin: 3mm 0 5mm; break-inside: avoid; }
 figure img { width: 100%; border: .4pt solid var(--rule); }
-figcaption { font-size: 8.4pt; color: var(--muted); margin-top: 1.5mm; }
+figcaption { font-size: 7.9pt; color: var(--muted); margin-top: 1.5mm; }
 footer { margin-top: 9mm; border-top: 1.5pt solid var(--ink); padding-top: 4mm; font-size: 8.8pt; color: var(--muted); }
 """
 
@@ -199,8 +201,8 @@ def build(f: dict) -> str:
         slug = arm_slug(arm)
         compared = f[f"arm_{slug}_found_compared"]
         if compared < f["agent_patients"]:
-            label += (f' <span class="muted">({compared} of {f["agent_patients"]} '
-                      f'slides counted)</span>')
+            label += (f' <span class="muted">({compared}/'
+                      f'{f["agent_patients"]})</span>')
         stops = f"{f[f'arm_{slug}_stops']}" if f"arm_{slug}_stops" in f else ""
         agent_rows.append(_row(
             label,

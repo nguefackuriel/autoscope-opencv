@@ -439,8 +439,9 @@ read 6 fields, 148 parasites in 141 white cells</pre>
   the same prompt and the same moves. The last column counts how many times each
   model chose <code>stop</code> in its recorded calls.
 </p>
-<table>
-  <caption>Shipped counter. Fields read is the cost. Models in order of fields read.</caption>
+<table class="arms">
+  <caption>Shipped counter. Fields read is the cost. Models in order of fields read.
+  A slash marks a policy that counted on fewer than $agent_patients slides.</caption>
   <thead><tr><th>Stopping policy</th><th class="num">Fields read</th><th class="num">Density error</th><th class="num">Bands settled</th><th class="num">To a person</th><th class="num">Chose stop</th></tr></thead>
   <tbody>$agent_rows</tbody>
 </table>
