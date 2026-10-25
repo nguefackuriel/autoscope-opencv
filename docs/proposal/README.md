@@ -4,16 +4,10 @@
 19 August 2026. Nine pages. Both award paths: Best Use of COOL and Agentic
 Vision.
 
-`proposal.md` is the same text in markdown, split by form field.
-`architecture.svg` is Figure 1 as a standalone file.
-`proposal-print.html` is the source the PDF is rendered from:
-
-```
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
-  --headless --disable-gpu --no-pdf-header-footer \
-  --print-to-pdf="AutoScope-Proposal-OpenCV-AI-Competition-2026.pdf" \
-  proposal-print.html
-```
+`proposal.md` is the same text in markdown, split by form field, and
+`architecture.svg` is Figure 1 as a standalone file. That figure is kept
+current: it has been corrected to match what was built, so it differs from the
+one inside the submitted PDF.
 
 ## What the data has already changed
 

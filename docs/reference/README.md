@@ -17,14 +17,16 @@ The figures we cite come from the **2025** report, which covers the year 2024:
 | African deaths in children under five | more than 75% | African Region section |
 | countries with pfhrp2 deletions | 42, as of 2024 | biological threats section |
 
-The 2023 and 2024 reports are here for the trend. Note that the 2024 report puts
-2023 at 246 million cases and 569 000 deaths, so anyone quoting "263 million" or
-"597 000" is quoting neither report and should check again.
+The 2023 and 2024 reports are no longer kept here. They were held for the trend
+and nothing cites them, and the 2025 report is the one every figure in the
+technical report comes from. Both are published at
+<https://www.who.int/teams/global-malaria-programme/reports>. For the record,
+the 2024 report puts 2023 at 246 million cases and 569 000 deaths, so a figure
+of "263 million" or "597 000" comes from neither report.
 
 The 100 fields and the 200 white cells in our method come from the WHO malaria
 microscopy standard operating procedures, a separate document, not from these
 reports. Do not cite a World Malaria Report for them.
 
-These three PDFs are about 35 MB together and git keeps them forever. That was a
-deliberate trade: the proposal makes checkable claims, and a reviewer should not
-have to trust us about where the numbers came from.
+The 2025 report stays in the repository because the technical report cites it
+and a reader should not have to trust us about where a figure came from.
