@@ -1,7 +1,7 @@
 # House style for anything people outside the team will read
 
 Set by Uriel on 24 October 2026, after two rewrites of the video script still
-read as machine-written. `docs/check_script_style.py` enforces the parts of
+read as machine-written. `docs/check_style.py` enforces the parts of
 this that a regular expression can see. The rest is judgement.
 
 The rules apply to the report, the demo page, the video script and anything
@@ -36,7 +36,7 @@ posted in the team's name. They do not apply to code comments or to the
 
 ## Running the check
 
-    python docs/check_script_style.py
+    python docs/check_style.py
 
 It reports every hit with the sentence around it and exits non-zero, so the
 text cannot drift back. The check is only as good as its patterns: an early

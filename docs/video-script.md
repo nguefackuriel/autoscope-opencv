@@ -6,11 +6,9 @@ scores presentation, but what a judge is really deciding is whether to believe
 us, so everything below is chosen so a sceptical viewer can check it afterwards.
 
 **Two checks run on this file.** `python docs/check_script_pace.py` counts the
-spoken words against the five minute limit. `python docs/check_script_style.py`
-reads the same lines against the house style: no contractions, no phrasal
-verbs, no three-item lists, no inflated verbs, at most two participle clauses,
-and a spread of sentence lengths wide enough that the writing does not sound
-machine-made. Both must pass before recording.
+spoken words against the five minute limit. `python docs/check_style.py` reads
+the same lines against the house style in `docs/style-rules.md`, and it reads
+the report and the demo page too. Both must pass before recording.
 
 **Who speaks** is marked on each line. Uriel takes the problem, the pipeline
 and the numbers. Alex Bruno takes the agent, the demo and COOL. Both of you
