@@ -37,16 +37,16 @@
     <line x1="64" y1="218" x2="282" y2="218" stroke="#E2DEE7" stroke-width="1"/>
 
     <rect x="64" y="230" width="218" height="180" rx="6" fill="#5E2B8F" fill-opacity="0.06" stroke="#5E2B8F" stroke-width="0.8"/>
-    <text x="76" y="250" font-size="11" font-weight="700" fill="#5E2B8F">COOL + OpenCV 5</text>
+    <text x="76" y="250" font-size="11" font-weight="700" fill="#5E2B8F">OpenCV 5 on Arm</text>
     <g font-family="IBM Plex Mono, ui-monospace, Menlo, monospace" font-size="9" fill="#1C1720">
-      <text x="76" y="272">1  Laplacian focus · calcHist</text>
-      <text x="76" y="290">2  flat-field · Lab stain norm</text>
-      <text x="76" y="308">3  ORB + findHomography</text>
-      <text x="76" y="326">4  watershed · findContours</text>
-      <text x="76" y="344">5  cv::dnn ONNX, FP16</text>
-      <text x="76" y="362">6  parasites/µL + CI</text>
+      <text x="76" y="272">1  fov · lit disc</text>
+      <text x="76" y="290">2  focus · evenness · debris</text>
+      <text x="76" y="308">3  Lab stain normalisation</text>
+      <text x="76" y="326">4  white cells · distance transform</text>
+      <text x="76" y="344">5  top-hat + cv.dnn ONNX patch net</text>
+      <text x="76" y="362">6  parasites/µL + Poisson CI</text>
     </g>
-    <text x="76" y="390" font-size="9.5" font-weight="600" fill="#5E2B8F">core workload, runs on Arm</text>
+    <text x="76" y="390" font-size="9.5" font-weight="600" fill="#5E2B8F">carotene + KleidiCV 26.03, aarch64</text>
 
     <!-- perceive -> decide -->
     <line x1="298" y1="242" x2="420" y2="242" stroke="#1C1720" stroke-width="1.2" marker-end="url(#ar)"/>
@@ -58,10 +58,10 @@
     <text x="436" y="207" font-size="10" fill="#6B6472">Amazon Bedrock · Claude, tool use</text>
     <line x1="436" y1="218" x2="664" y2="218" stroke="#E2DEE7" stroke-width="1"/>
     <g font-family="IBM Plex Mono, ui-monospace, Menlo, monospace" font-size="9" fill="#1C1720">
-      <text x="436" y="240">assess_field   refocus</text>
-      <text x="436" y="258">move_stage     count_field</text>
-      <text x="436" y="276">estimate_parasitaemia</text>
-      <text x="436" y="294">decide_stop    flag_for_human</text>
+      <text x="436" y="240">count_then_move   refocus</text>
+      <text x="436" y="258">skip              stop</text>
+      <text x="436" y="276">flag_for_human</text>
+      <text x="436" y="294">the call comes from decide()</text>
     </g>
 
     <!-- decide -> act -->
@@ -71,13 +71,13 @@
     <!-- act -->
     <rect x="420" y="376" width="260" height="64" rx="8" fill="none" stroke="#5E2B8F" stroke-width="1.6"/>
     <text x="436" y="400" font-size="12" font-weight="700" fill="#5E2B8F" letter-spacing="0.08em">ACT</text>
-    <text x="436" y="420" font-size="10" fill="#1C1720">refocus z · move stage · stop · escalate</text>
+    <text x="436" y="420" font-size="10" fill="#1C1720">read next field · stop · send to a person</text>
 
     <!-- loop back -->
     <path d="M 420 408 H 366 V 500 H 173 V 432" fill="none" stroke="#5E2B8F" stroke-width="1.6" marker-end="url(#arA)"/>
-    <text x="270" y="493" font-size="9.5" fill="#5E2B8F" text-anchor="middle">next tile / next z-plane</text>
+    <text x="270" y="493" font-size="9.5" fill="#5E2B8F" text-anchor="middle">next field</text>
 
-    <text x="42" y="548" font-size="9.5" fill="#6B6472">Caps on fields, wall-clock and spend are set here, not by the model.</text>
+    <text x="42" y="548" font-size="9.5" fill="#6B6472">Caps on fields, time and spend are set here, outside the model.</text>
 
     <!-- right column -->
     <line x1="704" y1="200" x2="730" y2="200" stroke="#1C1720" stroke-width="1.2" marker-end="url(#ar)"/>
@@ -89,14 +89,14 @@
     <line x1="704" y1="310" x2="730" y2="310" stroke="#1C1720" stroke-width="1.2" marker-end="url(#ar)"/>
     <rect x="730" y="266" width="206" height="88" rx="6" fill="none" stroke="#1C1720" stroke-width="1.2"/>
     <text x="746" y="288" font-size="11" font-weight="600">API Gateway · CloudFront</text>
-    <text x="746" y="305" font-size="9.5" fill="#6B6472">judge endpoint: live mosaic,</text>
-    <text x="746" y="319" font-size="9.5" fill="#6B6472">streaming trace,</text>
+    <text x="746" y="305" font-size="9.5" fill="#6B6472">public demo, no login:</text>
+    <text x="746" y="319" font-size="9.5" fill="#6B6472">the trace and the fields,</text>
     <text x="746" y="333" font-size="9.5" fill="#6B6472">parasites/µL ± CI</text>
 
     <line x1="704" y1="420" x2="730" y2="420" stroke="#1C1720" stroke-width="1.2" marker-end="url(#ar)"/>
     <rect x="730" y="386" width="206" height="68" rx="6" fill="none" stroke="#1C1720" stroke-width="1.2"/>
     <text x="746" y="408" font-size="11" font-weight="600">S3 artefacts</text>
-    <text x="746" y="425" font-size="9.5" fill="#6B6472">mosaics, annotated fields,</text>
+    <text x="746" y="425" font-size="9.5" fill="#6B6472">annotated fields,</text>
     <text x="746" y="439" font-size="9.5" fill="#6B6472">PDF report</text>
 
     <rect x="730" y="486" width="206" height="68" rx="6" fill="none" stroke="#6B6472" stroke-width="1" stroke-dasharray="4 3"/>
