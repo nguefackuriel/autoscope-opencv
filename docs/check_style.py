@@ -1,12 +1,12 @@
 """Check prose against the house style in docs/style-rules.md.
 
-    python docs/check_style.py                       # everything we publish
-    python docs/check_style.py docs/video-script.md  # one file
+    python docs/check_style.py                        # everything we publish
+    python docs/check_style.py docs/report/report_text.html   # one file
 
 Reads only prose. In HTML that means the text inside paragraphs, list items,
 captions and table cells, with the contents of <code>, <pre>, <script> and
-<style> removed first, because an identifier is not a sentence. In the video
-script it means the lines beginning with "> ", which are the spoken ones.
+<style> removed first, because an identifier is not a sentence. In markdown it means
+everything outside a fenced block.
 
 Quoted material is skipped. The report prints a reading trace in the model's
 own words and the agent's reasons appear on the demo page; editing either to
@@ -20,8 +20,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT = ["docs/video-script.md", "docs/report/report_text.html",
-           "infra/site/index.html", "README.md"]
+DEFAULT = ["docs/report/report_text.html", "infra/site/index.html", "README.md"]
 
 CONTRACTION = re.compile(
     r"\b[A-Za-z]+'(t|re|ll|ve|m)\b"
@@ -109,12 +108,9 @@ PROSE = re.compile(r"<(p|li|figcaption|caption|td|h[1-6])\b[^>]*>(.*?)</\1>", re
 def prose(path: Path) -> list[str]:
     text = path.read_text()
     if path.suffix == ".md":
-        if path.name == "video-script.md":
-            lines = [re.sub(r"\*\*[A-Z][A-Z ]+\.\*\*", "", l[2:])
-                     for l in text.splitlines() if l.startswith("> ")]
-        else:
-            # Everything between ``` fences is code, not prose. Excluding only
-            # the fence lines left a directory tree being read as sentences.
+        # Everything between ``` fences is code, not prose. Excluding only
+        # the fence lines left a directory tree being read as sentences.
+        if True:
             lines, fenced = [], False
             for line in text.splitlines():
                 if line.startswith("```"):

@@ -1,7 +1,7 @@
 """Tiles for the learned detector: half-resolution crops of the prepared
 field with every annotated parasite inside them, from the fit patients.
 
-6 September 2026, plan-2026-09-05-hospital-grade.md step 4. The candidate
+6 September 2026. The candidate
 stage caps recall at 0.91 (peaks closer than 7 px merge, the white cell
 exclusion zone, the rim) and the patch network judges each candidate
 without its neighbours. A fully convolutional network on the whole field

@@ -1,8 +1,8 @@
 # Tanzania: another microscope, another camera, another stain, run once
 
 12 September 2026. `src/autoscope/site.py`, `eval/tanzania_eval.py`,
-results in `eval/results/tanzania_*.json`. The generalisation number of the
-plan's step 5 (`docs/plan-2026-09-05-hospital-grade.md`).
+results in `eval/results/tanzania_*.json`. This is the generalisation number
+the report quotes in Section 7.
 
 ## What the set is, and what it can and cannot say
 

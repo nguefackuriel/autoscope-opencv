@@ -2,10 +2,11 @@
 
 It implements the same `Policy` protocol as `RuleBased` and `DecisionRule`, so
 `read_slide` cannot tell the difference and `agent_eval.py` can replay all
-three over the same cached field table. That is the point. The plan says it
-plainly (`docs/plan-2026-09-02.md` §6): if the model cannot beat the rule, the
-agent is decoration and the report says so. Keeping it behind the same
-interface is what makes that claim checkable rather than asserted.
+three over the same cached field table. That is the point: if the model cannot
+beat the rule, the agent is decoration and the report says so. Keeping it
+behind the same interface is what makes that claim checkable rather than
+asserted. Section 7 of the report carries the answer, and it is not the
+flattering one.
 
 WHAT THE MODEL IS AND IS NOT ALLOWED TO DO
 

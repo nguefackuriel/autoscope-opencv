@@ -126,7 +126,6 @@ Two warnings, both of which change what the benchmark means:
    wheel" compares two KleidiCV builds and measures close to nothing. The
    honest third arm is a source build with `-DWITH_KLEIDICV=OFF`, which is what
    `bench/Dockerfile.kleidicv-off` builds. All three arms go in the report.
-   See `docs/plan-2026-09-02.md` §7.
 
 ## 3. An IAM role for Terraform and one for CI
 

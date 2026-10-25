@@ -1,6 +1,6 @@
 #!/bin/bash
 # Chain 3, 5 September 2026: sparse-field false alarms without new data.
-# docs/plan-2026-09-05-hospital-grade.md, step 1. Run it as
+# Run it as
 #
 #     caffeinate -dims bash eval/chain.sh
 #

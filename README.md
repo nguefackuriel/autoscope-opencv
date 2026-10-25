@@ -123,7 +123,6 @@ docs/proposal/                what we submitted, and what the data has since
                               contradicted
 docs/reference/               the WHO reports our numbers come from
 docs/data-notes.md            what the data actually is. Read before coding.
-docs/plan-2026-09-02.md       where we stand, what is wrong, the plan to 26 Oct
 src/autoscope/
   fov.py                      find the round eyepiece view. Runs first.
   quality.py         stage 1  is this field worth counting, and frame_motion

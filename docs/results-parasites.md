@@ -667,8 +667,7 @@ slides of section 13:
 slides still under-count parasites with the white cells right: TF124_S540
 -56% (12 203/µL), TF134_US28 -47%, TF2N_159R -44%. That is the candidate
 stage (peaks closer than 7 px merge, section 2) and the classifier on
-crowded patches, and it is what the learned detector of
-`plan-2026-09-05-hospital-grade.md` step 4 is for. And the density bias
+crowded patches, and it is what the learned detector is for. And the density bias
 through the protocol is now **-8.1% with the parasite count at -1.1%**: the
 white cell count is +6% on both bands, +26 to +30% on TF70, TF1N_1522 and
 TF46_UW23, so the denominator has become the larger of the two errors.
@@ -708,7 +707,7 @@ list.
 
 ## 16. The learned detector: alone, a negative result at the slide level; as the proposer, F1 0.859
 
-6 September 2026, plan step 4 (`docs/plan-2026-09-05-hospital-grade.md`).
+6 September 2026.
 `eval/parasite_tiles.py`, `eval/parasite_heatmap_train.py`,
 `parasites.HeatmapScorer`; logs `chain_2026-09-06_heatmap.log` and
 `heat_cnn_scores.log`.

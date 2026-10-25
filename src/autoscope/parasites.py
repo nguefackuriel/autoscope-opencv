@@ -118,8 +118,7 @@ CNN_PATH = MODELS_DIR / "parasite_cnn.onnx"
 DEFAULT_THRESHOLD = 0.53
 HYBRID_PATH = MODELS_DIR / "parasite_hybrid.onnx"
 
-# The learned detector (6 September 2026, docs/plan-2026-09-05-hospital-grade.md
-# step 4): a small U-Net on the half-resolution field whose peaks are the
+# The learned detector (6 September 2026): a small U-Net on the half-resolution field whose peaks are the
 # parasites. No candidate stage in front of it, so no 7 px merge, no white
 # cell exclusion zone and no rim margin; trained by eval/parasite_heatmap_train.py
 # from the point annotations. Its threshold is chosen like the patch

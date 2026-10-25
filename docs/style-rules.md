@@ -1,12 +1,11 @@
 # House style for anything people outside the team will read
 
-Set by Uriel on 24 October 2026, after two rewrites of the video script still
-read as machine-written. `docs/check_style.py` enforces the parts of
-this that a regular expression can see. The rest is judgement.
+`docs/check_style.py` enforces the parts of this that a regular expression can
+see, and the rest is judgement.
 
-The rules apply to the report, the demo page, the video script and anything
-posted in the team's name. They do not apply to code comments or to the
-`docs/results-*.md` laboratory notes, which are written for ourselves.
+The rules apply to the technical report, the demo page, the README and
+anything else posted in the team's name. They do not apply to code comments or
+to the `docs/results-*.md` laboratory notes, which are written for ourselves.
 
 1. Mix short, direct sentences with long ones carrying several clauses. A page
    where every sentence runs to the same length reads as generated, whatever
